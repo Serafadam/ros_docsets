@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::NodeTimeSource" name="rclcpp::node_interfaces::NodeTimeSource">
+<area shape="rect" id="node1" title="Implementation of the NodeTimeSource part of the Node API." alt="" coords="18,95,191,136"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1node__interfaces_1_1NodeTimeSourceInterface.html" title="Pure virtual interface class for the NodeTimeSource part of the Node API." alt="" coords="5,5,204,47"/>
+</map>

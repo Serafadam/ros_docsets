@@ -1,0 +1,5 @@
+<map id="rclcpp::PublisherOptionsBase" name="rclcpp::PublisherOptionsBase">
+<area shape="rect" id="node1" title="Non&#45;templated part of PublisherOptionsWithAllocator&lt;Allocator&gt;." alt="" coords="137,95,348,121"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1PublisherEventCallbacks.html" title="Contains callbacks for various types of events a Publisher can receive from the middleware." alt="" coords="5,5,235,32"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1QosOverridingOptions.html" title="Options that are passed in subscription/publisher constructor to specify QoSConfigurability." alt="" coords="259,5,471,32"/>
+</map>

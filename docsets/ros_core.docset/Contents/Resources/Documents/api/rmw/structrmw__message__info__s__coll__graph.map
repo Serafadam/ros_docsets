@@ -1,0 +1,4 @@
+<map id="rmw_message_info_s" name="rmw_message_info_s">
+<area shape="rect" id="node1" title="Information describing an rmw message." alt="" coords="5,95,168,121"/>
+<area shape="rect" id="node2" href="$structrmw__gid__s.html" title="ROS graph ID of the topic." alt="" coords="41,5,133,32"/>
+</map>

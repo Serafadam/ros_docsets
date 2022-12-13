@@ -1,0 +1,4 @@
+<map id="rclcpp::subscription_traits::has_message_type&lt; CallbackT, AllocatorT, typename, typename, typename, typename &gt;" name="rclcpp::subscription_traits::has_message_type&lt; CallbackT, AllocatorT, typename, typename, typename, typename &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="304,13,548,98"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1subscription__traits_1_1extract__message__type.html" title=" " alt="" coords="5,5,256,105"/>
+</map>

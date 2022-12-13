@@ -1,0 +1,4 @@
+<map id="rclcpp::exceptions::InvalidNodeError" name="rclcpp::exceptions::InvalidNodeError">
+<area shape="rect" id="node1" title="Thrown when a method is trying to use a node, but it is invalid." alt="" coords="5,80,145,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="6,5,145,32"/>
+</map>

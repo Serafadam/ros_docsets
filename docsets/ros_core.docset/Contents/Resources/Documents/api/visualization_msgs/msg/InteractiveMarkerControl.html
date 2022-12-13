@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/InteractiveMarkerControl Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">visualization_msgs</a>/msg/InteractiveMarkerControl Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">visualization_msgs/msg/InteractiveMarkerControl.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text"># Represents a control that is to be displayed together with an interactive marker</div><br>
+          <br>
+          <div class="comment-text"># Identifying string for this control.</div><br>
+          <div class="comment-text"># You need to assign a unique value to this to receive feedback from the GUI</div><br>
+          <div class="comment-text"># on what actions the user performs on this control (e.g. a button click).</div><br>
+          string name<br>
+          <br>
+          <br>
+          <div class="comment-text"># Defines the local coordinate frame (relative to the pose of the parent</div><br>
+          <div class="comment-text"># interactive marker) in which is being rotated and translated.</div><br>
+          <div class="comment-text"># Default: Identity</div><br>
+          geometry_msgs/Quaternion orientation<br>
+          <br>
+          <br>
+          <div class="comment-text"># Orientation mode: controls how orientation changes.</div><br>
+          <div class="comment-text"># INHERIT: Follow orientation of interactive marker</div><br>
+          <div class="comment-text"># FIXED: Keep orientation fixed at initial state</div><br>
+          <div class="comment-text"># VIEW_FACING: Align y-z plane with screen (x: forward, y:left, z:up).</div><br>
+          uint8 INHERIT = 0<br>
+          uint8 FIXED = 1<br>
+          uint8 VIEW_FACING = 2<br>
+          <br>
+          uint8 orientation_mode<br>
+          <br>
+          <div class="comment-text"># Interaction mode for this control</div><br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># NONE: This control is only meant for visualization; no context menu.</div><br>
+          <div class="comment-text"># MENU: Like NONE, but right-click menu is active.</div><br>
+          <div class="comment-text"># BUTTON: Element can be left-clicked.</div><br>
+          <div class="comment-text"># MOVE_AXIS: Translate along local x-axis.</div><br>
+          <div class="comment-text"># MOVE_PLANE: Translate in local y-z plane.</div><br>
+          <div class="comment-text"># ROTATE_AXIS: Rotate around local x-axis.</div><br>
+          <div class="comment-text"># MOVE_ROTATE: Combines MOVE_PLANE and ROTATE_AXIS.</div><br>
+          uint8 NONE = 0<br>
+          uint8 MENU = 1<br>
+          uint8 BUTTON = 2<br>
+          uint8 MOVE_AXIS = 3<br>
+          uint8 MOVE_PLANE = 4<br>
+          uint8 ROTATE_AXIS = 5<br>
+          uint8 MOVE_ROTATE = 6<br>
+          <div class="comment-text"># &quot;3D&quot; interaction modes work with the mouse+SHIFT+CTRL or with 3D cursors.</div><br>
+          <div class="comment-text"># MOVE_3D: Translate freely in 3D space.</div><br>
+          <div class="comment-text"># ROTATE_3D: Rotate freely in 3D space about the origin of parent frame.</div><br>
+          <div class="comment-text"># MOVE_ROTATE_3D: Full 6-DOF freedom of translation and rotation about the cursor origin.</div><br>
+          uint8 MOVE_3D = 7<br>
+          uint8 ROTATE_3D = 8<br>
+          uint8 MOVE_ROTATE_3D = 9<br>
+          <br>
+          uint8 interaction_mode<br>
+          <br>
+          <br>
+          <div class="comment-text"># If true, the contained markers will also be visible</div><br>
+          <div class="comment-text"># when the gui is not in interactive mode.</div><br>
+          bool always_visible<br>
+          <br>
+          <br>
+          <div class="comment-text"># Markers to be displayed as custom visual representation.</div><br>
+          <div class="comment-text"># Leave this empty to use the default control handles.</div><br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Note:</div><br>
+          <div class="comment-text"># - The markers can be defined in an arbitrary coordinate frame,</div><br>
+          <div class="comment-text">#   but will be transformed into the local frame of the interactive marker.</div><br>
+          <div class="comment-text"># - If the header of a marker is empty, its pose will be interpreted as</div><br>
+          <div class="comment-text">#   relative to the pose of the parent interactive marker.</div><br>
+          Marker[] markers<br>
+          <br>
+          <br>
+          <div class="comment-text"># In VIEW_FACING mode, set this to true if you don&#x27;t want the markers</div><br>
+          <div class="comment-text"># to be aligned with the camera view point. The markers will show up</div><br>
+          <div class="comment-text"># as in INHERIT mode.</div><br>
+          bool independent_marker_orientation<br>
+          <br>
+          <br>
+          <div class="comment-text"># Short description (&lt; 40 characters) of what this control does,</div><br>
+          <div class="comment-text"># e.g. &quot;Move the robot&quot;.</div><br>
+          <div class="comment-text"># Default: A generic description based on the interaction mode</div><br>
+          string description<br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          uint8 INHERIT=0<br>
+          uint8 FIXED=1<br>
+          uint8 VIEW_FACING=2<br>
+          uint8 NONE=0<br>
+          uint8 MENU=1<br>
+          uint8 BUTTON=2<br>
+          uint8 MOVE_AXIS=3<br>
+          uint8 MOVE_PLANE=4<br>
+          uint8 ROTATE_AXIS=5<br>
+          uint8 MOVE_ROTATE=6<br>
+          uint8 MOVE_3D=7<br>
+          uint8 ROTATE_3D=8<br>
+          uint8 MOVE_ROTATE_3D=9<br>
+          string name<br>
+          <a href="../../geometry_msgs/msg/Quaternion.html"> geometry_msgs/msg/Quaternion</a> orientation<br>
+          uint8 orientation_mode<br>
+          uint8 interaction_mode<br>
+          boolean always_visible<br>
+          <a href="../../visualization_msgs/msg/Marker.html"> visualization_msgs/msg/Marker[]</a> markers<br>
+          boolean independent_marker_orientation<br>
+          string description<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Dec 13 2022 12:38:05</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<map id="rmw_guard_condition_s" name="rmw_guard_condition_s">
+<area shape="rect" id="node1" title="Handle for an rmw guard condition." alt="" coords="99,273,275,300"/>
+<area shape="rect" id="node2" href="$structrmw__context__s.html" title="Initialization context structure which is used to store init specific information." alt="" coords="126,184,247,211"/>
+<area shape="rect" id="node3" href="$structrmw__init__options__s.html" title="Options structure used during rmw_init()." alt="" coords="113,95,261,121"/>
+<area shape="rect" id="node4" href="$structrmw__security__options__s.html" title=" " alt="" coords="5,5,184,32"/>
+<area shape="rect" id="node5" href="/tmp/tmp.ShHB3ofVs6/doxygen_tag_files/rcutils.tag$structrcutils__allocator__s.html" title=" " alt="" coords="209,5,349,32"/>
+</map>

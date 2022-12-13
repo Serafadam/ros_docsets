@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/BatteryState Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">sensor_msgs</a>/msg/BatteryState Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">sensor_msgs/msg/BatteryState.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <br>
+          <div class="comment-text"># Constants are chosen to match the enums in the linux kernel</div><br>
+          <div class="comment-text"># defined in include/linux/power_supply.h as of version 3.7</div><br>
+          <div class="comment-text"># The one difference is for style reasons the constants are</div><br>
+          <div class="comment-text"># all uppercase not mixed case.</div><br>
+          <br>
+          <div class="comment-text"># Power supply status constants</div><br>
+          uint8 POWER_SUPPLY_STATUS_UNKNOWN = 0<br>
+          uint8 POWER_SUPPLY_STATUS_CHARGING = 1<br>
+          uint8 POWER_SUPPLY_STATUS_DISCHARGING = 2<br>
+          uint8 POWER_SUPPLY_STATUS_NOT_CHARGING = 3<br>
+          uint8 POWER_SUPPLY_STATUS_FULL = 4<br>
+          <br>
+          <div class="comment-text"># Power supply health constants</div><br>
+          uint8 POWER_SUPPLY_HEALTH_UNKNOWN = 0<br>
+          uint8 POWER_SUPPLY_HEALTH_GOOD = 1<br>
+          uint8 POWER_SUPPLY_HEALTH_OVERHEAT = 2<br>
+          uint8 POWER_SUPPLY_HEALTH_DEAD = 3<br>
+          uint8 POWER_SUPPLY_HEALTH_OVERVOLTAGE = 4<br>
+          uint8 POWER_SUPPLY_HEALTH_UNSPEC_FAILURE = 5<br>
+          uint8 POWER_SUPPLY_HEALTH_COLD = 6<br>
+          uint8 POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE = 7<br>
+          uint8 POWER_SUPPLY_HEALTH_SAFETY_TIMER_EXPIRE = 8<br>
+          <br>
+          <div class="comment-text"># Power supply technology (chemistry) constants</div><br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_UNKNOWN = 0<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_NIMH = 1<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LION = 2<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIPO = 3<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIFE = 4<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_NICD = 5<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIMN = 6<br>
+          <br>
+          std_msgs/Header  header<br>
+          <div class="comment-text">#float32 voltage          # Voltage in Volts (Mandatory)</div><br>
+          <div class="comment-text">#float32 temperature      # Temperature in Degrees Celsius (If unmeasured NaN)</div><br>
+          <div class="comment-text">#float32 current          # Negative when discharging (A)  (If unmeasured NaN)</div><br>
+          <div class="comment-text">#float32 charge           # Current charge in Ah  (If unmeasured NaN)</div><br>
+          <div class="comment-text">#float32 capacity         # Capacity in Ah (last full capacity)  (If unmeasured NaN)</div><br>
+          <div class="comment-text">#float32 design_capacity  # Capacity in Ah (design capacity)  (If unmeasured NaN)</div><br>
+          <div class="comment-text">#float32 percentage       # Charge percentage on 0 to 1 range  (If unmeasured NaN)</div><br>
+          <div class="comment-text">#uint8   power_supply_status     # The charging status as reported. Values defined above</div><br>
+          <div class="comment-text">#uint8   power_supply_health     # The battery health metric. Values defined above</div><br>
+          <div class="comment-text">#uint8   power_supply_technology # The battery chemistry. Values defined above</div><br>
+          <div class="comment-text">#bool    present          # True if the battery is present</div><br>
+          <br>
+          <div class="comment-text">#float32[] cell_voltage   # An array of individual cell voltages for each cell in the pack</div><br>
+          <div class="comment-text">#                         # If individual voltages unknown but number of cells known set each to NaN</div><br>
+          <div class="comment-text">#float32[] cell_temperature # An array of individual cell temperatures for each cell in the pack</div><br>
+          <div class="comment-text">#                           # If individual temperatures unknown but number of cells known set each to NaN</div><br>
+          <div class="comment-text">#string location          # The location into which the battery is inserted. (slot number or plug)</div><br>
+          <div class="comment-text">#string serial_number     # The best approximation of the battery serial number</div><br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          uint8 POWER_SUPPLY_STATUS_UNKNOWN=0<br>
+          uint8 POWER_SUPPLY_STATUS_CHARGING=1<br>
+          uint8 POWER_SUPPLY_STATUS_DISCHARGING=2<br>
+          uint8 POWER_SUPPLY_STATUS_NOT_CHARGING=3<br>
+          uint8 POWER_SUPPLY_STATUS_FULL=4<br>
+          uint8 POWER_SUPPLY_HEALTH_UNKNOWN=0<br>
+          uint8 POWER_SUPPLY_HEALTH_GOOD=1<br>
+          uint8 POWER_SUPPLY_HEALTH_OVERHEAT=2<br>
+          uint8 POWER_SUPPLY_HEALTH_DEAD=3<br>
+          uint8 POWER_SUPPLY_HEALTH_OVERVOLTAGE=4<br>
+          uint8 POWER_SUPPLY_HEALTH_UNSPEC_FAILURE=5<br>
+          uint8 POWER_SUPPLY_HEALTH_COLD=6<br>
+          uint8 POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE=7<br>
+          uint8 POWER_SUPPLY_HEALTH_SAFETY_TIMER_EXPIRE=8<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_UNKNOWN=0<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_NIMH=1<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LION=2<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIPO=3<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIFE=4<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_NICD=5<br>
+          uint8 POWER_SUPPLY_TECHNOLOGY_LIMN=6<br>
+          <a href="../../std_msgs/msg/Header.html"> std_msgs/msg/Header</a> header<br>
+          float voltage<br>
+          float temperature<br>
+          float current<br>
+          float charge<br>
+          float capacity<br>
+          float design_capacity<br>
+          float percentage<br>
+          uint8 power_supply_status<br>
+          uint8 power_supply_health<br>
+          uint8 power_supply_technology<br>
+          boolean present<br>
+          float[] cell_voltage<br>
+          float[] cell_temperature<br>
+          string location<br>
+          string serial_number<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Dec 13 2022 12:38:05</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+<map id="rmw_qos_profile_s" name="rmw_qos_profile_s">
+<area shape="rect" id="node1" title="ROS MiddleWare quality of service profile." alt="" coords="5,139,148,165"/>
+<area shape="rect" id="node2" href="$structrmw__time__s.html" title="A struct representing a duration or relative time in RMW &#45; does not encode an origin." alt="" coords="25,5,128,32"/>
+</map>

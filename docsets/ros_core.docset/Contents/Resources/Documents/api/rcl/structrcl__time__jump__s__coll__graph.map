@@ -1,0 +1,4 @@
+<map id="rcl_time_jump_s" name="rcl_time_jump_s">
+<area shape="rect" id="node1" title="Struct to describe a jump in time." alt="" coords="5,95,135,121"/>
+<area shape="rect" id="node2" href="$structrcl__duration__s.html" title="A duration of time, measured in nanoseconds and its source." alt="" coords="13,5,127,32"/>
+</map>

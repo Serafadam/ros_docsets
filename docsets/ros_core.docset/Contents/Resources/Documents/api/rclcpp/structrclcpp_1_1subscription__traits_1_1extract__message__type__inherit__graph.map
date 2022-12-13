@@ -1,0 +1,5 @@
+<map id="rclcpp::subscription_traits::extract_message_type&lt; MessageT &gt;" name="rclcpp::subscription_traits::extract_message_type&lt; MessageT &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,61,188,117"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1subscription__traits_1_1extract__message__type_3_01std_1_1shared__ptr_3_01MessageT_01_4_01_4.html" title=" " alt="" coords="236,5,419,76"/>
+<area shape="rect" id="node3" href="$structrclcpp_1_1subscription__traits_1_1extract__message__type_3_01std_1_1unique__ptr_3_01MessageT_00_01Deleter_01_4_01_4.html" title=" " alt="" coords="236,100,419,171"/>
+</map>

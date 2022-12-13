@@ -1,0 +1,4 @@
+<map id="rclcpp_components::NodeFactoryTemplate&lt; NodeT &gt;" name="rclcpp_components::NodeFactoryTemplate&lt; NodeT &gt;">
+<area shape="rect" id="node1" title="NodeFactoryTemplate is a convenience class for instantiating components." alt="" coords="5,95,168,151"/>
+<area shape="rect" id="node2" href="$classrclcpp__components_1_1NodeFactory.html" title="The NodeFactory interface is used by the class loader to instantiate components." alt="" coords="9,5,165,47"/>
+</map>

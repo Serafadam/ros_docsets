@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::has_node_clock_interface&lt; T, typename std::enable_if&lt; std::is_same&lt; std::shared_ptr&lt; rclcpp::node_interfaces::NodeClockInterface &gt;, decltype(std::declval&lt; T &gt;().get_node_clock_interface())&gt;::value &gt;::type &gt;" name="rclcpp::node_interfaces::has_node_clock_interface&lt; T, typename std::enable_if&lt; std::is_same&lt; std::shared_ptr&lt; rclcpp::node_interfaces::NodeClockInterface &gt;, decltype(std::declval&lt; T &gt;().get_node_clock_interface())&gt;::value &gt;::type &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,260,209"/>
+<area shape="rect" id="node2" title=" " alt="" coords="77,5,189,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="rclcpp::exceptions::RCLBadAlloc" name="rclcpp::exceptions::RCLBadAlloc">
+<area shape="rect" id="node1" title="Created when the ret is RCL_RET_BAD_ALLOC." alt="" coords="80,95,220,136"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1exceptions_1_1RCLErrorBase.html" title=" " alt="" coords="5,5,145,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="170,13,282,39"/>
+</map>

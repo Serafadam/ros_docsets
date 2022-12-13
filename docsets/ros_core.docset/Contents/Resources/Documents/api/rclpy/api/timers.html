@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer &#8212; rclpy 3.2.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parameters" href="parameters.html" />
+    <link rel="prev" title="Actions" href="actions.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rclpy.timer">
+<span id="timer"></span><h1>Timer<a class="headerlink" href="#module-rclpy.timer" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.timer.Rate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.timer.</span></span><span class="sig-name descname"><span class="pre">Rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timer</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>A utility for sleeping at a fixed rate.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Rate.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Rate.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Rate.sleep">
+<span class="sig-name descname"><span class="pre">sleep</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Rate.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block until timer triggers.</p>
+<p>Care should be taken when calling this from a callback.
+This may block forever if called in a callback in a SingleThreadedExecutor.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.timer.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.timer.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timer_period_ns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clock</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.clock">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clock</span></span><a class="headerlink" href="#rclpy.timer.Timer.clock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.handle">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">handle</span></span><a class="headerlink" href="#rclpy.timer.Timer.handle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.is_canceled">
+<span class="sig-name descname"><span class="pre">is_canceled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.is_canceled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.is_ready">
+<span class="sig-name descname"><span class="pre">is_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.is_ready" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.time_since_last_call">
+<span class="sig-name descname"><span class="pre">time_since_last_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.time_since_last_call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.time_until_next_call">
+<span class="sig-name descname"><span class="pre">time_until_next_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rclpy.timer.Timer.time_until_next_call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.timer.Timer.timer_period_ns">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timer_period_ns</span></span><a class="headerlink" href="#rclpy.timer.Timer.timer_period_ns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">rclpy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="init_shutdown.html">Initialization, Shutdown, and Spinning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Timer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.timer.Rate"><code class="docutils literal notranslate"><span class="pre">Rate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.timer.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_and_callbacks.html">Execution and Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qos.html">Quality of Service</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="actions.html" title="previous chapter">Actions</a></li>
+      <li>Next: <a href="parameters.html" title="next chapter">Parameters</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016-2022, Open Source Robotics Foundation, Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/timers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

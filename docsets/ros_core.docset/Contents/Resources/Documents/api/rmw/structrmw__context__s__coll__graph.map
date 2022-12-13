@@ -1,0 +1,6 @@
+<map id="rmw_context_s" name="rmw_context_s">
+<area shape="rect" id="node1" title="Initialization context structure which is used to store init specific information." alt="" coords="126,184,247,211"/>
+<area shape="rect" id="node2" href="$structrmw__init__options__s.html" title="Options structure used during rmw_init()." alt="" coords="113,95,261,121"/>
+<area shape="rect" id="node3" href="$structrmw__security__options__s.html" title=" " alt="" coords="5,5,184,32"/>
+<area shape="rect" id="node4" href="/tmp/tmp.ShHB3ofVs6/doxygen_tag_files/rcutils.tag$structrcutils__allocator__s.html" title=" " alt="" coords="209,5,349,32"/>
+</map>

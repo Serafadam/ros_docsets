@@ -1,0 +1,9 @@
+<map id="rcl_variant_s" name="rcl_variant_s">
+<area shape="rect" id="node1" title="variant_t stores the value of a parameter" alt="" coords="599,107,704,133"/>
+<area shape="rect" id="node2" href="$structrcl__bool__array__s.html" title="Array of bool values." alt="" coords="271,5,399,32"/>
+<area shape="rect" id="node3" href="$structrcl__double__array__s.html" title="Array of double values." alt="" coords="263,56,407,83"/>
+<area shape="rect" id="node4" href="$structrcl__int64__array__s.html" title="Array of int64_t values." alt="" coords="269,107,402,133"/>
+<area shape="rect" id="node5" href="/tmp/tmp.ShHB3ofVs6/doxygen_tag_files/rcutils.tag$structrcutils__string__array__s.html" title=" " alt="" coords="255,157,416,184"/>
+<area shape="rect" id="node6" href="/tmp/tmp.ShHB3ofVs6/doxygen_tag_files/rcutils.tag$structrcutils__allocator__s.html" title=" " alt="" coords="5,157,145,184"/>
+<area shape="rect" id="node7" href="$structrcl__byte__array__s.html" title="Array of byte values." alt="" coords="271,208,400,235"/>
+</map>

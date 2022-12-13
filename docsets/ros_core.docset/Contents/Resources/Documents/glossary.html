@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Glossary — ros_core foxy documentation</title>
+<link href="_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+<script src="_static/doctools.js"></script>
+<script src="_static/sphinx_highlight.js"></script>
+<script src="_static/js/theme.js"></script>
+<link href="/favicon.png" rel="icon" type="image/png"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="developer_overview.html" rel="prev" title="Core Stack Developer Overview"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="index.html"> ros_core
+          </a>
+<div class="version">
+                foxy
+              </div>
+<div role="search">
+<form action="search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="developer_overview.html">Core Stack Developer Overview</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_overview.html#build-system">Build System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-ament-package-package">The <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-ament-cmake-repository">The <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-ament-lint-repository">The <code class="docutils literal notranslate"><span class="pre">ament_lint</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#build-tools">Build tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer_overview.html#internal-ros-interfaces">Internal ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#internal-api-architecture-overview">Internal API Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#type-specific-interfaces">Type Specific Interfaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="developer_overview.html#static-type-support">Static Type Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developer_overview.html#static-type-support-with-dds">Static Type Support with DDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developer_overview.html#dynamic-type-support">Dynamic Type Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rcl-repository">The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rmw-repository">The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rosidl-repository">The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rcutils-repository">The <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer_overview.html#ros-middleware-implementations">ROS Middleware Implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#common-packages-for-dds-middleware-packages">Common Packages for DDS Middleware Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#structure-of-ros-middleware-implementations">Structure of ROS Middleware Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer_overview.html#ros-client-interfaces-client-libraries">ROS Client Interfaces (Client Libraries)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rclcpp-package">The <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer_overview.html#the-rclpy-package">The <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> Package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="index.html">ros_core</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="index.html"></a></li>
+<li class="breadcrumb-item"><a href="developer_overview.html">Core Stack Developer Overview</a></li>
+<li class="breadcrumb-item active">Glossary</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros_core_documentation/blob/master/source/glossary.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this heading">¶</a></h1>
+<p>Glossary of terms used throughout this documentation:</p>
+<dl class="glossary simple">
+<a class="dashAnchor" name="//apple_ref/cpp/Word/API"></a><dt id="term-API">API<a class="headerlink" href="#term-API" title="Permalink to this term">¶</a></dt><dd><p>An API, or Application Programming Interface, is an interface that is provided by an “application”, which in this case is usually a shared library or other language appropriate shared resource. APIs are made up of files that define a contract between the software using the interface and the software providing the interface. These files typically manifest as header files in C and C++ and as Python files in Python. In either case it is important that APIs are grouped and described in documentation and that they are declared as either public or private. Public interfaces are subject to change rules and changes to the public interfaces prompt a new version number of the software that provides them.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/client_library"></a><dt id="term-client_library">client_library<a class="headerlink" href="#term-client_library" title="Permalink to this term">¶</a></dt><dd><p>A client library is an <a class="reference internal" href="#term-API"><span class="xref std std-term">API</span></a> that provides access to the ROS graph using primitive middleware concepts like Topics, Services, and Actions.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/package"></a><dt id="term-package">package<a class="headerlink" href="#term-package" title="Permalink to this term">¶</a></dt><dd><p>A single unit of software, including source code, build system files, documentation, tests, and other associated resources.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/REP"></a><dt id="term-REP">REP<a class="headerlink" href="#term-REP" title="Permalink to this term">¶</a></dt><dd><p>ROS Enhancement Proposal. A document that describes an enhancement, standardization, or convention for the ROS community.
+The associated REP approval process allows the community to iterate on a proposal until some consensus has been made, at which point it can be ratified and implemented, at which point it becomes documentation.
+All REPs are viewable from the <a class="reference external" href="http://www.ros.org/reps/rep-0000.html">REP index</a>.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/VCS"></a><dt id="term-VCS">VCS<a class="headerlink" href="#term-VCS" title="Permalink to this term">¶</a></dt><dd><p>Version Control System, such as CVS, SVN, git, mercurial, etc…</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/rclcpp"></a><dt id="term-rclcpp">rclcpp<a class="headerlink" href="#term-rclcpp" title="Permalink to this term">¶</a></dt><dd><p>The C++ specific <a class="reference internal" href="#term-client_library"><span class="xref std std-term">Client Library</span></a> for ROS. This includes any middleware related APIs as well as the related message generation of C++ data structures based on interface definitions like Messages, Services, and Actions.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/repository"></a><dt id="term-repository">repository<a class="headerlink" href="#term-repository" title="Permalink to this term">¶</a></dt><dd><p>A collection of packages usually managed using a <a class="reference internal" href="#term-VCS"><span class="xref std std-term">VCS</span></a> like git or mercurial and usually hosted on a site like GitHub or BitBucket.
+In the context of this document repositories usually contain one or more <a class="reference internal" href="#term-package"><span class="xref std std-term">packages</span></a> of one type or another.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="developer_overview.html" rel="prev" title="Core Stack Developer Overview"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2014, Open Source Robotics Foundation, Inc.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

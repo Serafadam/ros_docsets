@@ -1,0 +1,5 @@
+<map id="rclcpp::Subscription&lt; MessageT, AllocatorT, SubscribedT, ROSMessageT, MessageMemoryStrategyT &gt;" name="rclcpp::Subscription&lt; MessageT, AllocatorT, SubscribedT, ROSMessageT, MessageMemoryStrategyT &gt;">
+<area shape="rect" id="node1" title="Subscription implementation, templated on the type of message this subscription receives." alt="" coords="14,169,230,240"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1SubscriptionBase.html" title=" " alt="" coords="31,95,213,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,239,47"/>
+</map>

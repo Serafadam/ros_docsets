@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classrclcpp__components_1_1ComponentManagerIsolated.html" title="ComponentManagerIsolated uses dedicated single&#45;threaded executors for each components." alt="" coords="5,5,212,61"/>
+<area shape="rect" id="node2" href="$classrclcpp__components_1_1ComponentManager.html" title="ComponentManager handles the services to load, unload, and get the list of loaded components." alt="" coords="260,13,416,54"/>
+</map>

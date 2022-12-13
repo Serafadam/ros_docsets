@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/Marker Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">visualization_msgs</a>/msg/Marker Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">visualization_msgs/msg/Marker.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text"># See:</div><br>
+          <div class="comment-text">#  - http://www.ros.org/wiki/rviz/DisplayTypes/Marker</div><br>
+          <div class="comment-text">#  - http://www.ros.org/wiki/rviz/Tutorials/Markers%3A%20Basic%20Shapes</div><br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># for more information on using this message with rviz.</div><br>
+          <br>
+          int32 ARROW=0<br>
+          int32 CUBE=1<br>
+          int32 SPHERE=2<br>
+          int32 CYLINDER=3<br>
+          int32 LINE_STRIP=4<br>
+          int32 LINE_LIST=5<br>
+          int32 CUBE_LIST=6<br>
+          int32 SPHERE_LIST=7<br>
+          int32 POINTS=8<br>
+          int32 TEXT_VIEW_FACING=9<br>
+          int32 MESH_RESOURCE=10<br>
+          int32 TRIANGLE_LIST=11<br>
+          <br>
+          int32 ADD=0<br>
+          int32 MODIFY=0<br>
+          int32 DELETE=2<br>
+          int32 DELETEALL=3<br>
+          <br>
+          <div class="comment-text"># Header for timestamp and frame id.</div><br>
+          std_msgs/Header header<br>
+          <div class="comment-text"># Namespace in which to place the object.</div><br>
+          <div class="comment-text"># Used in conjunction with id to create a unique name for the object.</div><br>
+          string ns<br>
+          <div class="comment-text"># Object ID used in conjunction with the namespace for manipulating and deleting the object later.</div><br>
+          int32 id<br>
+          <div class="comment-text"># Type of object.</div><br>
+          int32 type<br>
+          <div class="comment-text"># Action to take; one of:</div><br>
+          <div class="comment-text">#  - 0 add/modify an object</div><br>
+          <div class="comment-text">#  - 1 (deprecated)</div><br>
+          <div class="comment-text">#  - 2 deletes an object (with the given ns and id)</div><br>
+          <div class="comment-text">#  - 3 deletes all objects (or those with the given ns if any)</div><br>
+          int32 action<br>
+          <div class="comment-text"># Pose of the object with respect the frame_id specified in the header.</div><br>
+          geometry_msgs/Pose pose<br>
+          <div class="comment-text"># Scale of the object; 1,1,1 means default (usually 1 meter square).</div><br>
+          geometry_msgs/Vector3 scale<br>
+          <div class="comment-text"># Color of the object; in the range: [0.0-1.0]</div><br>
+          std_msgs/ColorRGBA color<br>
+          <div class="comment-text"># How long the object should last before being automatically deleted.</div><br>
+          <div class="comment-text"># 0 indicates forever.</div><br>
+          builtin_interfaces/Duration lifetime<br>
+          <div class="comment-text"># If this marker should be frame-locked, i.e. retransformed into its frame every timestep.</div><br>
+          bool frame_locked<br>
+          <br>
+          <div class="comment-text"># Only used if the type specified has some use for them (eg. POINTS, LINE_STRIP, etc.)</div><br>
+          geometry_msgs/Point[] points<br>
+          <div class="comment-text"># Only used if the type specified has some use for them (eg. POINTS, LINE_STRIP, etc.)</div><br>
+          <div class="comment-text"># The number of colors provided must either be 0 or equal to the number of points provided.</div><br>
+          <div class="comment-text"># NOTE: alpha is not yet used</div><br>
+          std_msgs/ColorRGBA[] colors<br>
+          <br>
+          <div class="comment-text"># Texture resource is a special URI that can either reference a texture file in</div><br>
+          <div class="comment-text"># a format acceptable to (resource retriever)[https://index.ros.org/p/resource_retriever/]</div><br>
+          <div class="comment-text"># or an embedded texture via a string matching the format:</div><br>
+          <div class="comment-text">#   &quot;embedded://texture_name&quot;</div><br>
+          string texture_resource<br>
+          <div class="comment-text"># An image to be loaded into the rendering engine as the texture for this marker.</div><br>
+          <div class="comment-text"># This will be used iff texture_resource is set to embedded.</div><br>
+          sensor_msgs/CompressedImage texture<br>
+          <div class="comment-text"># Location of each vertex within the texture; in the range: [0.0-1.0]</div><br>
+          UVCoordinate[] uv_coordinates<br>
+          <br>
+          <div class="comment-text"># Only used for text markers</div><br>
+          string text<br>
+          <br>
+          <div class="comment-text"># Only used for MESH_RESOURCE markers.</div><br>
+          <div class="comment-text"># Similar to texture_resource, mesh_resource uses resource retriever to load a mesh.</div><br>
+          <div class="comment-text"># Optionally, a mesh file can be sent in-message via the mesh_file field. If doing so,</div><br>
+          <div class="comment-text"># use the following format for mesh_resource:</div><br>
+          <div class="comment-text">#   &quot;embedded://mesh_name&quot;</div><br>
+          string mesh_resource<br>
+          MeshFile mesh_file<br>
+          bool mesh_use_embedded_materials<br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          int32 ARROW=0<br>
+          int32 CUBE=1<br>
+          int32 SPHERE=2<br>
+          int32 CYLINDER=3<br>
+          int32 LINE_STRIP=4<br>
+          int32 LINE_LIST=5<br>
+          int32 CUBE_LIST=6<br>
+          int32 SPHERE_LIST=7<br>
+          int32 POINTS=8<br>
+          int32 TEXT_VIEW_FACING=9<br>
+          int32 MESH_RESOURCE=10<br>
+          int32 TRIANGLE_LIST=11<br>
+          int32 ADD=0<br>
+          int32 MODIFY=0<br>
+          int32 DELETE=2<br>
+          int32 DELETEALL=3<br>
+          <a href="../../std_msgs/msg/Header.html"> std_msgs/msg/Header</a> header<br>
+          string ns<br>
+          int32 id<br>
+          int32 type<br>
+          int32 action<br>
+          <a href="../../geometry_msgs/msg/Pose.html"> geometry_msgs/msg/Pose</a> pose<br>
+          <a href="../../geometry_msgs/msg/Vector3.html"> geometry_msgs/msg/Vector3</a> scale<br>
+          <a href="../../std_msgs/msg/ColorRGBA.html"> std_msgs/msg/ColorRGBA</a> color<br>
+          <a href="../../builtin_interfaces/msg/Duration.html"> builtin_interfaces/msg/Duration</a> lifetime<br>
+          boolean frame_locked<br>
+          <a href="../../geometry_msgs/msg/Point.html"> geometry_msgs/msg/Point[]</a> points<br>
+          <a href="../../std_msgs/msg/ColorRGBA.html"> std_msgs/msg/ColorRGBA[]</a> colors<br>
+          string texture_resource<br>
+          <a href="../../sensor_msgs/msg/CompressedImage.html"> sensor_msgs/msg/CompressedImage</a> texture<br>
+          <a href="../../visualization_msgs/msg/UVCoordinate.html"> visualization_msgs/msg/UVCoordinate[]</a> uv_coordinates<br>
+          string text<br>
+          string mesh_resource<br>
+          <a href="../../visualization_msgs/msg/MeshFile.html"> visualization_msgs/msg/MeshFile</a> mesh_file<br>
+          boolean mesh_use_embedded_materials<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Dec 13 2022 12:38:05</p>
+    </div>
+  </body>
+</html>

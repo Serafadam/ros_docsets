@@ -1,0 +1,4 @@
+<map id="rmw_wait_set_s" name="rmw_wait_set_s">
+<area shape="rect" id="node1" title="Container for guard conditions to be waited on." alt="" coords="33,95,160,121"/>
+<area shape="rect" id="node2" href="$structrmw__guard__conditions__s.html" title="Array of guard condition handles." alt="" coords="5,5,188,32"/>
+</map>

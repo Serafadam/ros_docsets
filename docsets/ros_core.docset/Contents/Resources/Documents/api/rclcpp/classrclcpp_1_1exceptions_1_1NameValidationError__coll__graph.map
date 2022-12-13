@@ -1,0 +1,4 @@
+<map id="rclcpp::exceptions::NameValidationError" name="rclcpp::exceptions::NameValidationError">
+<area shape="rect" id="node1" title="Thrown when a any kind of name (node, namespace, topic, etc.) is invalid." alt="" coords="5,80,171,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="6,5,170,32"/>
+</map>

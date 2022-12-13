@@ -1,0 +1,5 @@
+<map id="rclcpp::node_interfaces::NodeBase" name="rclcpp::node_interfaces::NodeBase">
+<area shape="rect" id="node1" title="Implementation of the NodeBase part of the Node API." alt="" coords="240,39,413,80"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1node__interfaces_1_1NodeBaseInterface.html" title="Pure virtual interface class for the NodeBase part of the Node API." alt="" coords="12,5,185,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,71,192,112"/>
+</map>

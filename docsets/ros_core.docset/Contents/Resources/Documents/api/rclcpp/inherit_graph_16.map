@@ -1,0 +1,18 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,1006,117,1033"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1detail_1_1can__be__nullptr_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1declv2b0537326719f6c6b725aee5acf99efb.html" title=" " alt="" coords="243,5,438,105"/>
+<area shape="rect" id="node3" href="$structrclcpp_1_1is__type__adapter_3_01TypeAdapter_3_01Ts_8_8_8_01_4_01_4.html" title="Helper template to determine if a type is a TypeAdapter, true specialization." alt="" coords="247,129,435,171"/>
+<area shape="rect" id="node4" href="$structrclcpp_1_1node__interfaces_1_1has__node__base__interface_3_01T_00_01typename_01std_1_1enab711c261d3af8f3af0ed0c98bea032892.html" title=" " alt="" coords="215,195,467,324"/>
+<area shape="rect" id="node5" href="$structrclcpp_1_1node__interfaces_1_1has__node__clock__interface_3_01T_00_01typename_01std_1_1ena51ea25abc6fe9eeded44e7fe91252e67.html" title=" " alt="" coords="213,348,468,477"/>
+<area shape="rect" id="node6" href="$structrclcpp_1_1node__interfaces_1_1has__node__graph__interface_3_01T_00_01typename_01std_1_1ena74eda27bf8a9f1254fd79d3efcc5781a.html" title=" " alt="" coords="211,501,470,631"/>
+<area shape="rect" id="node7" href="$structrclcpp_1_1node__interfaces_1_1has__node__logging__interface_3_01T_00_01typename_01std_1_1eddc5bb065612d31605da7222489ce2bc.html" title=" " alt="" coords="206,655,475,784"/>
+<area shape="rect" id="node8" href="$structrclcpp_1_1node__interfaces_1_1has__node__parameters__interface_3_01T_00_01typename_01std_17efc1a94c723f4c588db6268bf3ccd4e.html" title=" " alt="" coords="168,808,513,937"/>
+<area shape="rect" id="node9" href="$structrclcpp_1_1node__interfaces_1_1has__node__services__interface_3_01T_00_01typename_01std_1_115636ca78459b6d9a0dc6cfc08930290.html" title=" " alt="" coords="169,962,512,1077"/>
+<area shape="rect" id="node10" href="$structrclcpp_1_1node__interfaces_1_1has__node__time__source__interface_3_01T_00_01typename_01std49ad4c3dc3aa0092d09ba48c0e5bab37.html" title=" " alt="" coords="165,1101,516,1231"/>
+<area shape="rect" id="node11" href="$structrclcpp_1_1node__interfaces_1_1has__node__timers__interface_3_01T_00_01typename_01std_1_1en4e5af4fb8e55b6f4a59e42db6ac42034.html" title=" " alt="" coords="209,1255,472,1384"/>
+<area shape="rect" id="node12" href="$structrclcpp_1_1node__interfaces_1_1has__node__topics__interface_3_01T_00_01typename_01std_1_1en0e78527445209bfd3c29b49661e271b0.html" title=" " alt="" coords="211,1408,471,1537"/>
+<area shape="rect" id="node13" href="$structrclcpp_1_1node__interfaces_1_1has__node__waitables__interface_3_01T_00_01typename_01std_1_df32de05b9cee06b24caa1944f3466af.html" title=" " alt="" coords="193,1561,488,1691"/>
+<area shape="rect" id="node14" href="$structrclcpp_1_1serialization__traits_1_1is__serialized__message__class_3_01SerializedMessage_01_4.html" title=" " alt="" coords="201,1715,481,1771"/>
+<area shape="rect" id="node15" href="$structrclcpp_1_1subscription__traits_1_1is__serialized__subscription__argument_3_01SerializedMessage_01_4.html" title=" " alt="" coords="251,1796,430,1867"/>
+<area shape="rect" id="node16" href="$structrclcpp_1_1subscription__traits_1_1is__serialized__subscription__argument_3_01std_1_1shared2bb0fb927f725533e666e6cdeb44c7a5.html" title=" " alt="" coords="190,1891,491,1961"/>
+</map>

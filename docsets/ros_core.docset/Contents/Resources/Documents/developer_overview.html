@@ -1,0 +1,533 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Core Stack Developer Overview — ros_core foxy documentation</title>
+<link href="_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+<script src="_static/doctools.js"></script>
+<script src="_static/sphinx_highlight.js"></script>
+<script src="_static/js/theme.js"></script>
+<link href="/favicon.png" rel="icon" type="image/png"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="glossary.html" rel="next" title="Glossary"/>
+<link href="index.html" rel="prev" title="ROS 2 Overview"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="index.html"> ros_core
+          </a>
+<div class="version">
+                foxy
+              </div>
+<div role="search">
+<form action="search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Stack Developer Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-system">Build System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-ament-package-package">The <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-ament-cmake-repository">The <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-ament-lint-repository">The <code class="docutils literal notranslate"><span class="pre">ament_lint</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-tools">Build tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#internal-ros-interfaces">Internal ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#internal-api-architecture-overview">Internal API Architecture Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-specific-interfaces">Type Specific Interfaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#static-type-support">Static Type Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#static-type-support-with-dds">Static Type Support with DDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dynamic-type-support">Dynamic Type Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-rcl-repository">The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-rmw-repository">The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-rosidl-repository">The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-rcutils-repository">The <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-middleware-implementations">ROS Middleware Implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-packages-for-dds-middleware-packages">Common Packages for DDS Middleware Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structure-of-ros-middleware-implementations">Structure of ROS Middleware Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-client-interfaces-client-libraries">ROS Client Interfaces (Client Libraries)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-rclcpp-package">The <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-rclpy-package">The <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> Package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="index.html">ros_core</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="index.html"></a></li>
+<li class="breadcrumb-item active">Core Stack Developer Overview</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros_core_documentation/blob/master/source/developer_overview.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="core-stack-developer-overview">
+<h1>Core Stack Developer Overview<a class="headerlink" href="#core-stack-developer-overview" title="Permalink to this heading">¶</a></h1>
+<p>The ROS 2 core software stack breaks down into a few discrete but related parts:</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#build-system" id="id8">Build System</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-ament-package-package" id="id9">The <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> Package</a></p></li>
+<li><p><a class="reference internal" href="#the-ament-cmake-repository" id="id10">The <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#the-ament-lint-repository" id="id11">The <code class="docutils literal notranslate"><span class="pre">ament_lint</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#build-tools" id="id12">Build tools</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#internal-ros-interfaces" id="id13">Internal ROS Interfaces</a></p>
+<ul>
+<li><p><a class="reference internal" href="#internal-api-architecture-overview" id="id14">Internal API Architecture Overview</a></p></li>
+<li><p><a class="reference internal" href="#type-specific-interfaces" id="id15">Type Specific Interfaces</a></p></li>
+<li><p><a class="reference internal" href="#the-rcl-repository" id="id16">The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#the-rmw-repository" id="id17">The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#the-rosidl-repository" id="id18">The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#the-rcutils-repository" id="id19">The <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> Repository</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ros-middleware-implementations" id="id20">ROS Middleware Implementations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-packages-for-dds-middleware-packages" id="id21">Common Packages for DDS Middleware Packages</a></p></li>
+<li><p><a class="reference internal" href="#structure-of-ros-middleware-implementations" id="id22">Structure of ROS Middleware Implementations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ros-client-interfaces-client-libraries" id="id23">ROS Client Interfaces (Client Libraries)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-rclcpp-package" id="id24">The <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> Package</a></p></li>
+<li><p><a class="reference internal" href="#the-rclpy-package" id="id25">The <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> Package</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>When reading this document, references to an “interface” or an “<a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>” generally imply a set of C or C++ headers which are installed, public, and subject to change control.
+Also, when references to an “implementation” are made that generally implies a set of source files, e.g. <code class="docutils literal notranslate"><span class="pre">.c</span></code> or <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> files, that implement one of the described <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a>.</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Build System"></a><div class="section" id="build-system">
+<span id="id1"></span><h2><a class="toc-backref" href="#id8">Build System</a><a class="headerlink" href="#build-system" title="Permalink to this heading">¶</a></h2>
+<p>Under everything is the build system.
+Iterating on <code class="docutils literal notranslate"><span class="pre">catkin</span></code> from ROS 1 we have created a set of <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> under the moniker <code class="docutils literal notranslate"><span class="pre">ament</span></code>.
+Some of the reasons for changing the name to <code class="docutils literal notranslate"><span class="pre">ament</span></code> are that we wanted it to not collide with <code class="docutils literal notranslate"><span class="pre">catkin</span></code> (in case we want mix them at some point) and to prevent confusion with existing <code class="docutils literal notranslate"><span class="pre">catkin</span></code> documentation.
+<code class="docutils literal notranslate"><span class="pre">ament</span></code>’s primary responsibility is to make it easier to develop and maintain ROS 2 core <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>.
+However, this responsibility extends to any user who is willing to make use of our build system conventions and tools.
+Additionally it should make <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> conventional, such that developers should be able to pick up any <code class="docutils literal notranslate"><span class="pre">ament</span></code> based <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> and make some assumptions about how it works, how to introspect it, and how to build or use it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ament</span></code> consists of a few important repositories which are all in the <code class="docutils literal notranslate"><span class="pre">ament</span></code> <a class="reference external" href="https://github.com/">GitHub</a> organization:</p>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-ament-package-package" id="id26">The <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> Package</a></p></li>
+<li><p><a class="reference internal" href="#the-ament-cmake-repository" id="id27">The <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#the-ament-lint-repository" id="id28">The <code class="docutils literal notranslate"><span class="pre">ament_lint</span></code> Repository</a></p></li>
+<li><p><a class="reference internal" href="#build-tools" id="id29">Build tools</a></p></li>
+</ul>
+</div>
+<div class="section" id="the-ament-package-package">
+<h3><a class="toc-backref" href="#id26">The <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> Package</a><a class="headerlink" href="#the-ament-package-package" title="Permalink to this heading">¶</a></h3>
+<p>Located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ament/ament_package">ament/ament_package</a>, this repository contains a single <a class="reference internal" href="#term-ament-Python-package"><span class="xref std std-term">ament Python package</span></a> that provides various utilities for <a class="reference internal" href="#term-ament-package"><span class="xref std std-term">ament packages</span></a>, e.g. templates for environment hooks.</p>
+<p>All <a class="reference internal" href="#term-ament-package"><span class="xref std std-term">ament packages</span></a> must contain a single <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> file at the root of the package regardless of their underlying build system.
+The <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> “manifest” file contains information that is required in order to process and operate on a <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>.
+This <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> information includes things like the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>’s name, which is globally unique, and the package’s dependencies.
+The <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> file also serves as the marker file which indicates the location of the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> on the file system.</p>
+<p>Parsing of the <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> files is provided by <code class="docutils literal notranslate"><span class="pre">catkin_pkg</span></code> (as in ROS 1), while functionality to locate <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> by searching the file system for these <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> files is provided by build tools such as <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+<dl class="glossary simple">
+<a class="dashAnchor" name="//apple_ref/cpp/Word/package.xml"></a><dt id="term-package.xml">package.xml<a class="headerlink" href="#term-package.xml" title="Permalink to this term">¶</a></dt><dd><p>Package manifest file which marks the root of a <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> and contains meta information about the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> including its name, version, description, maintainer, license, dependencies, and more.
+The contents of the manifest are in machine readable XML format and the contents are described in the <a class="reference internal" href="glossary.html#term-REP"><span class="xref std std-term">REPs</span></a> <a class="reference external" href="http://www.ros.org/reps/rep-0127.html">127</a> and <a class="reference external" href="http://www.ros.org/reps/rep-0140.html">140</a>, with the possibility of further modifications in future <a class="reference internal" href="glossary.html#term-REP"><span class="xref std std-term">REPs</span></a>.</p>
+</dd>
+</dl>
+<p>So anytime some <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> is referred to as an <a class="reference internal" href="#term-ament-package"><span class="xref std std-term">ament package</span></a>, it means that it is a single unit of software (source code, build files, tests, documentation, and other resources) which is described using a <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> manifest file.</p>
+<dl class="glossary simple">
+<a class="dashAnchor" name="//apple_ref/cpp/Word/ament package"></a><dt id="term-ament-package">ament package<a class="headerlink" href="#term-ament-package" title="Permalink to this term">¶</a></dt><dd><p>Any <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> which contains a <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> and follows the packaging guidelines of <code class="docutils literal notranslate"><span class="pre">ament</span></code>, regardless of the underlying build system.</p>
+</dd>
+</dl>
+<p>Since the term <a class="reference internal" href="#term-ament-package"><span class="xref std std-term">ament package</span></a> is build system agnostic, there can be different kinds of <a class="reference internal" href="#term-ament-package"><span class="xref std std-term">ament packages</span></a>, e.g. <a class="reference internal" href="#term-ament-CMake-package"><span class="xref std std-term">ament CMake package</span></a>, <a class="reference internal" href="#term-ament-Python-package"><span class="xref std std-term">ament Python package</span></a>, etc.</p>
+<p>Here is a list of common package types that you might run into in this software stack:</p>
+<dl class="glossary simple">
+<a class="dashAnchor" name="//apple_ref/cpp/Word/CMake package"></a><dt id="term-CMake-package">CMake package<a class="headerlink" href="#term-CMake-package" title="Permalink to this term">¶</a></dt><dd><p>Any <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> containing a plain CMake project and a <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> manifest file.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/ament CMake package"></a><dt id="term-ament-CMake-package">ament CMake package<a class="headerlink" href="#term-ament-CMake-package" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-CMake-package"><span class="xref std std-term">CMake package</span></a> that also follows the <code class="docutils literal notranslate"><span class="pre">ament</span></code> packaging guidelines.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/Python package"></a><dt id="term-Python-package">Python package<a class="headerlink" href="#term-Python-package" title="Permalink to this term">¶</a></dt><dd><p>Any <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> containing a <a class="reference external" href="http://pythonhosted.org/setuptools/">setuptools</a> based Python project and a <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> manifest file.</p>
+</dd>
+<a class="dashAnchor" name="//apple_ref/cpp/Word/ament Python package"></a><dt id="term-ament-Python-package">ament Python package<a class="headerlink" href="#term-ament-Python-package" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-Python-package"><span class="xref std std-term">Python package</span></a> that also follows the <code class="docutils literal notranslate"><span class="pre">ament</span></code> packaging guidelines.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-ament-cmake-repository">
+<h3><a class="toc-backref" href="#id27">The <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> Repository</a><a class="headerlink" href="#the-ament-cmake-repository" title="Permalink to this heading">¶</a></h3>
+<p>Located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ament/ament_cmake">ament/ament_cmake</a>, this repository contains many “ament CMake” and pure CMake packages which provide the infrastructure in CMake that is required to create “ament CMake” packages.
+In this context “ament CMake” packages means: <code class="docutils literal notranslate"><span class="pre">ament</span></code> packages that are built using CMake.
+So the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in this repository provide the necessary CMake functions/macros and CMake Modules to facilitate creating more “ament CMake” (or <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code>) packages.
+Packages of this type are identified with the <code class="docutils literal notranslate"><span class="pre">&lt;build_type&gt;ament_cmake&lt;/build_type&gt;</span></code> tag in the <code class="docutils literal notranslate"><span class="pre">&lt;export&gt;</span></code> tag of the <a class="reference internal" href="#term-package.xml"><span class="xref std std-term">package.xml</span></a> file.</p>
+<p>The <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in this repository are extremely modular, but there is a single “bottleneck” <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> called <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code>.
+Anyone can depend on the <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> to get all of the aggregate functionality of the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in this repository.
+Here a list of the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in the repository along with a short description:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code></p>
+<ul>
+<li><p>aggregates all other <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in this repository, users need only to depend on this.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_auto</span></code></p>
+<ul>
+<li><p>provides convenience CMake functions which automatically handle a lot of the tedious parts of writing a <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>’s <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_core</span></code></p>
+<ul>
+<li><p>provides all built-in core concepts for <code class="docutils literal notranslate"><span class="pre">ament</span></code>, e.g. environment hooks, resource indexing, symbolic linking install and others</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_gmock</span></code></p>
+<ul>
+<li><p>adds convenience functions for making gmock based unit tests</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_gtest</span></code></p>
+<ul>
+<li><p>adds convenience functions for making gtest based automated tests</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_nose</span></code></p>
+<ul>
+<li><p>adds convenience functions for making nosetests based python automated tests</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_python</span></code></p>
+<ul>
+<li><p>provides CMake functions for <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> that contain Python code</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ament_cmake_test</span></code></p>
+<ul>
+<li><p>aggregates different kinds of tests, e.g. gtest and nosetests, under a single target using <a class="reference external" href="https://cmake.org/Wiki/CMake/Testing_With_CTest">CTest</a></p></li>
+</ul>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">ament_cmake_core</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> contains a lot of the CMake infrastructure that makes it possible to cleanly pass information between <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> using conventional interfaces.
+This makes the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> have more decoupled build interfaces with other <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>, promoting their reuse and encouraging conventions in the build systems of different <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>.
+For instance it provides a standard way to pass include directories, libraries, definitions, and dependencies between <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> so that consumers of this information can access this information in a conventional way.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ament_cmake_core</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> also provides features of the <code class="docutils literal notranslate"><span class="pre">ament</span></code> build system like symbolic link installation, which allows you to symbolically link files from either the source space or the build space into the install space rather than copying them.
+This allows you to install once and then edit non-generated resources like Python code and configuration files without having to rerun the install step for them to take effect.
+This feature essentially replaces the “devel space” from <code class="docutils literal notranslate"><span class="pre">catkin</span></code> because it has most of the advantages with few of the complications or drawbacks.</p>
+<p>Another feature provided by <code class="docutils literal notranslate"><span class="pre">ament_cmake_core</span></code> is the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> resource indexing which is a way for <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> to indicate that they contain a resource of some type.
+The design of this feature makes it much more efficient to answer simple questions like what <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> are in this prefix (e.g. <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>) because it only requires that you list the files in a single possible location under that prefix.
+You can read more about this feature in the <a class="reference external" href="https://github.com/ament/ament_cmake/blob/master/ament_cmake_core/doc/resource_index.md">design docs</a> for the resource index.</p>
+<p>Like <code class="docutils literal notranslate"><span class="pre">catkin</span></code>, <code class="docutils literal notranslate"><span class="pre">ament_cmake_core</span></code> also provides environment setup files and <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> specific environment hooks.
+The environment setup files, often named something like <code class="docutils literal notranslate"><span class="pre">setup.bash</span></code>, are a place for <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> developers to define changes to the environment that are needed to utilize their <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>.
+The developers are able to do this using an “environment hook” which is basically an arbitrary bit of shell code that can set or modify environment variables, define shell functions, setup auto-completion rules, etc…
+This feature is how, for example, ROS 1 set the <code class="docutils literal notranslate"><span class="pre">ROS_DISTRO</span></code> environment variable without <code class="docutils literal notranslate"><span class="pre">catkin</span></code> knowing anything about the ROS distribution.</p>
+</div>
+<div class="section" id="the-ament-lint-repository">
+<h3><a class="toc-backref" href="#id28">The <code class="docutils literal notranslate"><span class="pre">ament_lint</span></code> Repository</a><a class="headerlink" href="#the-ament-lint-repository" title="Permalink to this heading">¶</a></h3>
+<p>Located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ament/ament_lint">ament/ament_lint</a>, this repository provides several <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> which provide linting and testing services in a convenient and consistent manner.
+Currently there are <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> to support C++ style linting using <code class="docutils literal notranslate"><span class="pre">uncrustify</span></code>, static C++ code checks using <code class="docutils literal notranslate"><span class="pre">cppcheck</span></code>, checking for copyright in source code, Python style linting using <code class="docutils literal notranslate"><span class="pre">pep8</span></code>, and other things.
+The list of helper packages will likely grow in the future.</p>
+</div>
+<div class="section" id="build-tools">
+<h3><a class="toc-backref" href="#id29">Build tools</a><a class="headerlink" href="#build-tools" title="Permalink to this heading">¶</a></h3>
+<p>A build tool performs the task of building a workspace of packages together at once with a single invocation.
+For ROS 2 releases up to Ardent, the build tool providing this functionality is called <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code>.
+As of ROS 2 Bouncy, <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> has been superseded by <code class="docutils literal notranslate"><span class="pre">colcon</span></code>, as described in <a class="reference external" href="http://design.ros2.org/articles/build_tool.html">the universal build tool article</a>.</p>
+</div>
+</div>
+<div class="section" id="internal-ros-interfaces">
+<h2><a class="toc-backref" href="#id13">Internal ROS Interfaces</a><a class="headerlink" href="#internal-ros-interfaces" title="Permalink to this heading">¶</a></h2>
+<p>The internal ROS interfaces are public C <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a> that are intended for use by developers who are creating <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a> or adding a new underlying middleware, but are not intended for use by typical ROS users.
+The ROS <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a> provide the user facing <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a> that most ROS users are familiar with, and may come in a variety of programming languages.</p>
+<div class="section" id="internal-api-architecture-overview">
+<h3><a class="toc-backref" href="#id14">Internal API Architecture Overview</a><a class="headerlink" href="#internal-api-architecture-overview" title="Permalink to this heading">¶</a></h3>
+<p>There are two main internal interfaces:</p>
+<ul class="simple">
+<li><p>the ROS middleware interface (<code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>)</p></li>
+<li><p>the ROS client library interface (<code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>)</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> is the interface between the ROS 2 software stack and the underlying middleware implementation.
+The underlying middleware used for ROS 2 is either a DDS or RTPS implementation, and is responsible for discovery, publish and subscribe mechanics, request-reply mechanics for services, and serialization of message types.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> is a slightly higher level <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> which is used to implement the <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a> and does not touch the middleware implementation directly, but rather does so through the ROS middleware interface (<code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>) abstraction.</p>
+<div class="figure align-default">
+<img alt="ros2 software stack" src="_images/ros_client_library_api_stack.png"/>
+</div>
+<p>As the diagram shows, these <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a> are stacked such that the typical ROS user will use the <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client library</span></a> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>, to implement their code (executable or library).
+The implementation of the <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>, use the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> interface which provides access to the ROS graph and graph events.
+The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> implementation in turn uses the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> to access the ROS graph.
+The purpose of the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> implementation is to provide a common implementation for more complex ROS concepts and utilities that may be used by various <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a>, while remaining agnostic to the underlying middleware being used.
+The purpose of the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> interface is to capture the absolute minimum middleware functionality needed to support ROS’s client libraries.
+Finally, the implementation of the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> is provided by a middleware implementation specific <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">rmw_fastrtps_cpp</span></code>, the library of which is compiled against vendor specific DDS interfaces and types.</p>
+<p>In the diagram above there is also a box labeled <code class="docutils literal notranslate"><span class="pre">ros_to_dds</span></code>, and the purpose of this box is to represent a category of possible packages which allow the user to access DDS vendor specific objects and settings using the ROS equivalents.
+One of the goals of this abstraction interface is to completely insulate the ROS user space code from the middleware being used, so that changing DDS vendors or even middleware technology has a minimal impact on the users code.
+However, we recognize that on occasion it is useful to reach into the implementation and manually adjust settings despite the consequences that might have.
+By requiring the use of one of these packages in order to access the underlying DDS vendor’s objects, we can avoid exposing vendor specific symbols and headers in the normal interface.
+It also makes it easy to see what code is potentially violating the vendor portability by inspecting the package’s dependencies to see if one of these <code class="docutils literal notranslate"><span class="pre">ros_to_dds</span></code> packages are being used.</p>
+</div>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Type Specific Interfaces"></a><div class="section" id="type-specific-interfaces">
+<span id="id5"></span><h3><a class="toc-backref" href="#id15">Type Specific Interfaces</a><a class="headerlink" href="#type-specific-interfaces" title="Permalink to this heading">¶</a></h3>
+<p>All along the way there are some parts of the <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a> that are necessarily specific to the message types being exchanged, e.g. publishing a message or subscribing to a topic, and therefore require generated code for each message type.
+The following diagram layouts the path from user defined <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files, e.g. <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files, to the type specific code used by the user and system to perform type specific functions:</p>
+<div class="figure align-default" id="id6">
+<img alt="ros2 idl static type support stack" src="_images/ros_idl_api_stack_static.png"/>
+<p class="caption"><span class="caption-text">Figure: flow chart of “static” type support generation, from <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files to user facing code.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>The right hand side of the diagram shows how the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files are passed directly to language specific code generators, e.g. <code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp</span></code> or <code class="docutils literal notranslate"><span class="pre">rosidl_generator_py</span></code>.
+These generators are responsible for creating the code that the user will include (or import) and use as the in-memory representation of the messages that were defined in the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files.
+For example, consider the message <code class="docutils literal notranslate"><span class="pre">std_msgs/String</span></code>, a user might use this file in C++ with the statement <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;std_msgs/msg/string.hpp&gt;</span></code>, or they might use the statement <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">std_msgs.msg</span> <span class="pre">import</span> <span class="pre">String</span></code> in Python.
+These statements work because of the files generated by these language specific (but middleware agnostic) generator packages.</p>
+<p>Separately, the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files are used to generate type support code for each type.
+In this context, type support means: meta data or functions that are specific to a given type and that are used by the system to perform particular tasks for the given type.
+The type support for a given message might include things like a list of the names and types for each field in the message.
+It might also contain a reference to code that can perform particular tasks for that type, e.g. publish a message.</p>
+<div class="section" id="static-type-support">
+<h4>Static Type Support<a class="headerlink" href="#static-type-support" title="Permalink to this heading">¶</a></h4>
+<p>When the type support references code to do particular functions for a specific message type, that code sometimes needs to do middleware specific work.
+For example, consider the type specific publish function, when using “vendor A” the function will need to call some of “vendor A“‘s <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, but when using “vendor B” it will need to call “vendor B“‘s <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>.
+To allow for middleware vendor specific code, the user defined <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files may result in the generation of vendor specific code.
+This vendor specific code is still hidden from the user through the type support abstraction, which is similar to how the “Private Implementation” (or Pimpl) pattern works.</p>
+</div>
+<div class="section" id="static-type-support-with-dds">
+<h4>Static Type Support with DDS<a class="headerlink" href="#static-type-support-with-dds" title="Permalink to this heading">¶</a></h4>
+<p>For middleware vendors based on DDS, and specifically those which generate code based on the OMG IDL files (<code class="docutils literal notranslate"><span class="pre">.idl</span></code> files), the user defined <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files (<code class="docutils literal notranslate"><span class="pre">.msg</span></code> files) are converted into equivalent OMG IDL files (<code class="docutils literal notranslate"><span class="pre">.idl</span></code> files).
+From these OMG IDL files, vendor specific code is created and then used within the type specific functions which are referenced by the type support for a given type.
+The above diagram shows this on the left hand side, where the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files are consumed by the <code class="docutils literal notranslate"><span class="pre">rosidl_dds</span></code> package to produce <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files, and then those <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files are given to language specific and DDS vendor specific type support generation packages.</p>
+<p>For example, consider the Connext DDS implementation, it has a package called <code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_connext_cpp</span></code>.
+This package is responsible for generating code to handle do things like publish to a topic for the C++ version of a given message type, using the <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files generated by the <code class="docutils literal notranslate"><span class="pre">rosidl_dds</span></code> package to do so.
+Again, this code, while specific to Connext, is still not exposed to the user because of the abstraction in the type support.</p>
+</div>
+<div class="section" id="dynamic-type-support">
+<h4>Dynamic Type Support<a class="headerlink" href="#dynamic-type-support" title="Permalink to this heading">¶</a></h4>
+<p>Another way to implement type support is to have generic functions for things like publishing to a topic, rather than generating a version of the function for each message type.
+In order to accomplish this, this generic function needs some meta information about the message type being published, things like a list of field names and types in the order in which they appear in the message type.
+Then to publish a message, you call a generic publish function and pass a message to be published along with a structure which contains the necessary meta data about the message type.
+This is referred to as “dynamic” type support, as opposed to “static” type support which requires generated versions of a function for each type.</p>
+<div class="figure align-default" id="id7">
+<img alt="ros2 idl dynamic type support stack" src="_images/ros_idl_api_stack_dynamic.png"/>
+<p class="caption"><span class="caption-text">Figure: flow chart of “dynamic” type support generation, from <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files to user facing code.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>The above diagram shows the flow from user defined <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files to generated user facing code.
+It is very similar to the diagram for static type support, and differs only in how the type support is generated which is represented by the left hand side of the diagram.
+In dynamic type support the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files are converted directly into user facing code.</p>
+<p>This code is also middleware agnostic, because it only contains meta information about the messages.
+The function to actually do the work, e.g. publishing to a topic, is generic to the message type and will make any necessary calls to the middleware specific <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a>.
+Note that rather than dds vendor specific packages providing the type support code, which is the case in static type support, this method has middleware agnostic package for each language, e.g. <code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_introspection_c</span></code> and <code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_introspection_cpp</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">introspection</span></code> part of the package name refers to the ability to introspect any message instance with the generated meta data for the message type.
+This is the fundamental capability that allows for generic implementations of functions like “publish to a topic”.</p>
+<p>This approach has the advantage that all generated code is middleware agnostic, which means it can be reused for different middleware implementations, so long as they allow for dynamic type support.
+It also results in less generated code, which reduces compile time and code size.</p>
+<p>However, dynamic type support requires that the underlying middleware support a similar form of dynamic type support.
+In the case of DDS the DDS-XTypes standard allows for publishing of messages using meta information rather than generated code.
+DDS-XTypes, or something like it, is required in the underlying middleware in order to support dynamic type support.
+Also, this approach to type support is normally slower than the static type support alternative.
+The type specific generated code in static type support can be written to be more efficient as it does not need to iterate over the message type’s meta data to perform things like serialization.</p>
+</div>
+</div>
+<div class="section" id="the-rcl-repository">
+<h3><a class="toc-backref" href="#id16">The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> Repository</a><a class="headerlink" href="#the-rcl-repository" title="Permalink to this heading">¶</a></h3>
+<p>The ROS Client Library interface (<code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>) can be used by <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a> (e.g. <code class="docutils literal notranslate"><span class="pre">rclc</span></code>, <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>, <code class="docutils literal notranslate"><span class="pre">rclpy</span></code>, etc.) in order to avoid duplicating logic and features.
+By reusing the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, client libraries can be smaller and more consistent with each other.
+Some parts of the client library are intentionally left out of the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> because the language idiomatic method should be used to implement those parts of the system.
+A good example of this is the execution model, which <code class="docutils literal notranslate"><span class="pre">rcl</span></code> does not address at all.
+Instead the client library should provide a language idiomatic solution like <code class="docutils literal notranslate"><span class="pre">pthreads</span></code> in C, <code class="docutils literal notranslate"><span class="pre">std::thread</span></code> in C++11, and <code class="docutils literal notranslate"><span class="pre">threading.Thread</span></code> in Python.
+Generally the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> interface provides functions that are not specific to a language pattern and are not specific to a particular message type.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> is located in the <a class="reference external" href="https://github.com/ros2/rcl">ros2/rcl</a> repository on <a class="reference external" href="https://github.com/">GitHub</a> and contains the interface as C headers.
+The <code class="docutils literal notranslate"><span class="pre">rcl</span></code> C implementation is provided by the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> in the same repository.
+This implementation avoids direct contact with the middleware by instead using the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> and <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a>.</p>
+<p>For a complete definition of the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, see its <a href="#id30"><span class="problematic" id="id31">`API documentation&lt;api/rcl/index.html&gt;`_</span></a>:</p>
+</div>
+<div class="section" id="the-rmw-repository">
+<h3><a class="toc-backref" href="#id17">The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> Repository</a><a class="headerlink" href="#the-rmw-repository" title="Permalink to this heading">¶</a></h3>
+<p>The ROS middleware interface (<code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>) is the minimal set of primitive middleware capabilities needed to build ROS on top.
+Providers of different middleware implementations must implement this interface in order to support the entire ROS stack on top.
+Currently all of the middleware implementations are for different DDS vendors.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> is located in the <a class="reference external" href="https://github.com/ros2/rmw">ros2/rmw</a> repository.
+The <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> contains the C headers which define the interface, the implementation of which is provided by the various <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> of rmw implementations for different DDS vendors.</p>
+<p>For a definition of the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, see the <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> docs:</p>
+<p><a class="reference external" href="api/rmw/index.html">api/rmw/index.html</a></p>
+</div>
+<div class="section" id="the-rosidl-repository">
+<h3><a class="toc-backref" href="#id18">The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> Repository</a><a class="headerlink" href="#the-rosidl-repository" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> consists of a few message related static functions and types along with a definition of what code should be generated by messages in different languages.
+The generated message code specified in the <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> will be language specific, but may or may not reuse generated code for other languages.
+The generated message code specified in the <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> contains things like the message data structure, functions for construction, destruction, etc.
+The <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> will also implement a way to get the type support structure for the message type, which is used when publishing or subscribing to a topic of that message type.</p>
+<p>There are several repositories that play a role in the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> and implementation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> repository, located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ros2/rosidl">ros2/rosidl</a>, defines the message IDL syntax, i.e. syntax of <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files, <code class="docutils literal notranslate"><span class="pre">.srv</span></code> files, etc., and contains <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> for parsing the files, for providing CMake infrastructure to generate code from the messages, for generating implementation agnostic code (headers and source files), and for establishing the default set of generators.
+The repository contains these <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_cmake</span></code>: provides CMake functions and CMake Modules for generating code from <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files, e.g. <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files, <code class="docutils literal notranslate"><span class="pre">.srv</span></code> files, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_default_generators</span></code>: defines the list of default generators which ensures that they are installed as dependencies, but other injected generators can also be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_generator_c</span></code>: provides tools to generate C header files (<code class="docutils literal notranslate"><span class="pre">.h</span></code>) for <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp</span></code>: provides tools to generate C++ header files (<code class="docutils literal notranslate"><span class="pre">.hpp</span></code>) for <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_generator_py</span></code>: provides tools to generate Python modules for <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_parser</span></code>: provides Python <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> for parsing <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files.</p></li>
+</ul>
+<p>Generators for other languages, e.g. <code class="docutils literal notranslate"><span class="pre">rosidl_generator_java</span></code>, are hosted externally (in different repositories) but would use the same mechanism that the above generators use to “register” themselves as a <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> generator.</p>
+<p>In addition to the aforementioned <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> for parsing and generating headers for the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files, the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> repository also contains <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> concerned with “type support” for the message types defined in the files.
+Type support refers to the ability to interpret and manipulate the information represented by ROS message instances of particular types (publishing the messages, for example).
+Type support can either be provided by code that is generated at compile time or it can be done programmatically based on the contents of the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> file, e.g. the <code class="docutils literal notranslate"><span class="pre">.msg</span></code> or <code class="docutils literal notranslate"><span class="pre">.srv</span></code> file, and the data received, by introspecting the data.
+In the case of the latter, where type support is done through runtime interpretation of the messages, the message code generated by ROS 2 can be agnostic to the rmw implementation.
+The packages that provide this type support through introspection of the data are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_introspection_c</span></code>: provides tools for generating C code for supporting <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> message data types.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_introspection_cpp</span></code>: provides tools for generating C++ code for supporting <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> message data types.</p></li>
+</ul>
+<p>In the case where type support is to be generated at compile time instead of being generated programmatically, a package specific to the rmw implementation will need to be used.
+This is because typically a particular rmw implementation will require data to be stored and manipulated in a manner that is specific to the DDS vendor in order for the DDS implementation to make use of it.
+See the <a class="reference internal" href="#type-specific-interfaces"><span class="std std-ref">Type Specific Interfaces</span></a> section above for more details.</p>
+<p>For more information on what exactly is in the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> (static and generated) see this page:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>TODO: link to definition of <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a></p>
+</div>
+</div>
+<div class="section" id="the-rcutils-repository">
+<h3><a class="toc-backref" href="#id19">The <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> Repository</a><a class="headerlink" href="#the-rcutils-repository" title="Permalink to this heading">¶</a></h3>
+<p>ROS 2 C Utilities (<code class="docutils literal notranslate"><span class="pre">rcutils</span></code>) is a C <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> composed of macros, functions, and data structures used throughout the ROS 2 codebase.
+These are mainly used for error handling, commandline argument parsing, and logging which are not specific to the client or middleware layers and can be shared by both.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> and implementation are located in the <a class="reference external" href="https://github.com/ros2/rcutils">ros2/rcutils</a> repository on <a class="reference external" href="https://github.com/">GitHub</a> which contains the interface as C headers.</p>
+<p>For a complete definition of the <code class="docutils literal notranslate"><span class="pre">rcutils</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, see <a class="reference external" href="api/rcutils/index.html">its API documentation</a></p>
+</div>
+</div>
+<div class="section" id="ros-middleware-implementations">
+<h2><a class="toc-backref" href="#id20">ROS Middleware Implementations</a><a class="headerlink" href="#ros-middleware-implementations" title="Permalink to this heading">¶</a></h2>
+<p>ROS middleware implementations are sets of <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> that implement some of the internal ROS interfaces, e.g. the <code class="docutils literal notranslate"><span class="pre">rmw</span></code>, <code class="docutils literal notranslate"><span class="pre">rcl</span></code>, and <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a>.</p>
+<div class="section" id="common-packages-for-dds-middleware-packages">
+<h3><a class="toc-backref" href="#id21">Common Packages for DDS Middleware Packages</a><a class="headerlink" href="#common-packages-for-dds-middleware-packages" title="Permalink to this heading">¶</a></h3>
+<p>All of the current ROS middleware implementations are based on full or partial DDS implementations.
+For example, there is a middleware implementation that uses RTI’s Connext DDS and an implementation which uses eProsima’s Fast-RTPS.
+Because of this, there are some shared <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> amongst most DDS based middleware implementations.</p>
+<p>In the <a class="reference external" href="https://github.com/ros2/rosidl_dds">ros2/rosidl_dds</a> repository on <a class="reference external" href="https://github.com/">GitHub</a>, there is the following <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_generator_dds_idl</span></code>: provides tools to generate DDS <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files from <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files, e.g. <code class="docutils literal notranslate"><span class="pre">.msg</span></code> files, <code class="docutils literal notranslate"><span class="pre">.srv</span></code> files, etc.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">rosidl_generator_dds_idl</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> generates a DDS <code class="docutils literal notranslate"><span class="pre">.idl</span></code> file for each <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> file, e.g. <code class="docutils literal notranslate"><span class="pre">.msg</span></code> file, defined by <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> containing messages.
+Currently DDS based ROS middleware implementations make use of this generator’s output <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files to generate pre-compiled type support that is vendor specific.</p>
+</div>
+<div class="section" id="structure-of-ros-middleware-implementations">
+<h3><a class="toc-backref" href="#id22">Structure of ROS Middleware Implementations</a><a class="headerlink" href="#structure-of-ros-middleware-implementations" title="Permalink to this heading">¶</a></h3>
+<p>A ROS middleware implementation is typically made up of a few <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a> in a single repository:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;implementation_name&gt;_cmake_module</span></code>: contains CMake Module for discovering and exposing required dependencies</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rmw_&lt;implementation_name&gt;_&lt;language&gt;</span></code>: contains the implementation of the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> in a particular language, typically C++</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_&lt;implementation_name&gt;_&lt;language&gt;</span></code>: contains tools to generate static type support code for <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> files, tailored to the implementation in a particular language, typically C or C++</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;implementation_name&gt;_cmake_module</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> contains any CMake Modules and functions needed to find the supporting dependencies for the middleware implementation.
+In the case of <code class="docutils literal notranslate"><span class="pre">connext_cmake_module</span></code> it has CMake Modules for finding the RTI Connext implementation in different places on the system since it does not ship with a CMake Module itself.
+Not all repositories will have a package like this, for example eProsima’s Fast-RTPS provides a CMake module and so no additional one is required.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rmw_&lt;implementation_name&gt;_&lt;language&gt;</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> implements the <code class="docutils literal notranslate"><span class="pre">rmw</span></code> C <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> in a particular language.
+The implementation itself can be C++, it just must expose the header’s symbols as <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">"C"</span></code> so that C applications can link against it.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_&lt;implementation_name&gt;_&lt;language&gt;</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> provides a generator which generates DDS code in a particular language.
+This is done using the <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files generated by the <code class="docutils literal notranslate"><span class="pre">rosidl_generator_dds_idl</span></code> <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> and the DDS IDL code generator provided by the DDS vendor.
+It also generates code for converting ROS message structures to and from DDS message structures.
+This generator is also responsible for creating a shared library for the message package it is being used in, which is specific to the messages in the message package and to the DDS vendor being used.</p>
+<p>As mentioned above, the <code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_introspection_&lt;language&gt;</span></code> may be used instead of a vendor specific type support package if an rmw implementation supports runtime interpretation of messages.
+This ability to programmatically send and receive types over topics without generating code beforehand is achieved by supporting the <a class="reference external" href="http://www.omg.org/spec/DDS-XTypes">DDS X-Types Dynamic Data standard</a>.
+As such, rmw implementations may provide support for the X-Types standard, and/or provide a package for type support generated at compile time specific to their DDS implementation.</p>
+<p>As an example of an rmw implementation repository, the <code class="docutils literal notranslate"><span class="pre">opensplice</span></code> ROS middleware implementation lives on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ros2/rmw_opensplice">ros2/rmw_opensplice</a> and has these <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">opensplice_cmake_module</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rmw_opensplice_cpp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_opensplice_c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosidl_typesupport_opensplice_cpp</span></code></p></li>
+</ul>
+<p>In addition to the <code class="docutils literal notranslate"><span class="pre">opensplice</span></code> repository of <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>, there is the <code class="docutils literal notranslate"><span class="pre">connext</span></code> implementation on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ros2/rmw_connext">ros2/rmw_connext</a>.
+It contains mostly the same <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">packages</span></a>, but it additionally contains a <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> to support the type support introspection using the DDS X-Types standard.</p>
+<p>The rmw implementation using <code class="docutils literal notranslate"><span class="pre">FastRTPS</span></code> is on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/eProsima/ROS-RMW-Fast-RTPS-cpp">eProsima/ROS-RMW-Fast-RTPS-cpp</a>.
+As <code class="docutils literal notranslate"><span class="pre">FastRTPS</span></code> currently only supports the type support introspection, there is no vendor specific type support package in this repository.</p>
+<p>To learn more about what is required to create a new middleware implementation for ROS see this page:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>TODO: Link to more detailed middleware implementation docs and/or tutorial.</p>
+</div>
+</div>
+</div>
+<div class="section" id="ros-client-interfaces-client-libraries">
+<h2><a class="toc-backref" href="#id23">ROS Client Interfaces (Client Libraries)</a><a class="headerlink" href="#ros-client-interfaces-client-libraries" title="Permalink to this heading">¶</a></h2>
+<p>ROS Client Interfaces, a.k.a. <a class="reference internal" href="glossary.html#term-client_library"><span class="xref std std-term">client libraries</span></a>, are user facing interfaces which provide the high level functionality and are built on top of the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> and <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">APIs</span></a>.</p>
+<div class="section" id="the-rclcpp-package">
+<h3><a class="toc-backref" href="#id24">The <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> Package</a><a class="headerlink" href="#the-rclcpp-package" title="Permalink to this heading">¶</a></h3>
+<p>The ROS Client Library for C++ (<code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>) is the user facing, C++ idiomatic interface which provides all of the ROS client functionality like creating nodes, publisher, and subscribers.
+<code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> builds on top of <code class="docutils literal notranslate"><span class="pre">rcl</span></code> and the <code class="docutils literal notranslate"><span class="pre">rosidl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>, and it is designed to be used with the C++ messages generated by <code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> makes use of all the features of C++ and C++11 to make the interface as easy to use as possible, but since it reuses the implementation in <code class="docutils literal notranslate"><span class="pre">rcl</span></code> it is able maintain a consistent behavior with the other client libraries that use the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> repository is located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ros2/rclcpp">ros2/rclcpp</a> and contains the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>.
+The generated <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> documentation is here:</p>
+<p><a class="reference external" href="api/rclcpp/index.html">api/rclcpp/index.html</a></p>
+</div>
+<div class="section" id="the-rclpy-package">
+<h3><a class="toc-backref" href="#id25">The <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> Package</a><a class="headerlink" href="#the-rclpy-package" title="Permalink to this heading">¶</a></h3>
+<p>The ROS Client Library for Python (<code class="docutils literal notranslate"><span class="pre">rclpy</span></code>) is the Python counterpart to the C++ client library.
+Like the C++ client library, <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> also builds on top of the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> C API for its implementation.
+The interface provides an idiomatic Python experience which uses native Python types and patterns like lists and context objects, but by using the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> in the implementation it stays consistent with the other client libraries in terms of feature parity and behavior.
+In addition to providing Python idiomatic bindings around the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> and Python classes for each message, the Python client library takes care of the execution model, using <code class="docutils literal notranslate"><span class="pre">threading.Thread</span></code> or similar to run the functions in the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>.</p>
+<p>Like C++ it generates custom Python code for each ROS message that the user interacts with, but unlike C++ it eventually converts the native Python message object into the C version of the message.
+All operations happen on the Python version of the messages until they need to be passed into the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> layer, at which point they are converted into the plain C version of the message so it can be passed into the <code class="docutils literal notranslate"><span class="pre">rcl</span></code> C <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a>.
+This is avoided if possible when communicating between publishers and subscribers in the same process to cut down on the conversion into and out of Python.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> repository is located on <a class="reference external" href="https://github.com/">GitHub</a> at <a class="reference external" href="https://github.com/ros2/rclpy">ros2/rclpy</a> and contains the <a class="reference internal" href="glossary.html#term-package"><span class="xref std std-term">package</span></a> <code class="docutils literal notranslate"><span class="pre">rclpy</span></code>.
+The generated <a class="reference internal" href="glossary.html#term-API"><span class="xref std std-term">API</span></a> documentation is here:</p>
+<p><a class="reference external" href="api/rclpy/index.html">api/rclpy/index.html</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="index.html" rel="prev" title="ROS 2 Overview"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="glossary.html" rel="next" title="Glossary">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2014, Open Source Robotics Foundation, Inc.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

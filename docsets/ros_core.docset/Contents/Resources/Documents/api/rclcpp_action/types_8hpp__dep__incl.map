@@ -1,0 +1,11 @@
+<map id="include/rclcpp_action/types.hpp" name="include/rclcpp_action/types.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="356,5,515,47"/>
+<area shape="rect" id="node2" href="$client_8hpp.html" title=" " alt="" coords="56,184,215,225"/>
+<area shape="rect" id="node5" href="$client__goal__handle_8hpp.html" title=" " alt="" coords="285,95,461,136"/>
+<area shape="rect" id="node7" href="$server_8hpp.html" title=" " alt="" coords="525,184,684,225"/>
+<area shape="rect" id="node9" href="$server__goal__handle_8hpp.html" title=" " alt="" coords="535,95,717,136"/>
+<area shape="rect" id="node3" href="$create__client_8hpp.html" title=" " alt="" coords="5,273,164,315"/>
+<area shape="rect" id="node4" href="$rclcpp__action_8hpp.html" title=" " alt="" coords="221,363,380,404"/>
+<area shape="rect" id="node6" href="$client__goal__handle__impl_8hpp.html" title=" " alt="" coords="289,184,501,225"/>
+<area shape="rect" id="node8" href="$create__server_8hpp.html" title=" " alt="" coords="480,273,639,315"/>
+</map>

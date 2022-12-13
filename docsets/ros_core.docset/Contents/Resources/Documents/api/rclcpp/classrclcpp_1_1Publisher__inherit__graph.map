@@ -1,0 +1,5 @@
+<map id="rclcpp::Publisher&lt; MessageT, AllocatorT &gt;" name="rclcpp::Publisher&lt; MessageT, AllocatorT &gt;">
+<area shape="rect" id="node1" title="A publisher publishes messages of any type to a topic." alt="" coords="21,169,203,211"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1PublisherBase.html" title=" " alt="" coords="31,95,193,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,219,47"/>
+</map>

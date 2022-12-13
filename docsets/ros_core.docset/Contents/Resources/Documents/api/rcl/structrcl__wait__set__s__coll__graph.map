@@ -1,0 +1,11 @@
+<map id="rcl_wait_set_s" name="rcl_wait_set_s">
+<area shape="rect" id="node1" title="Container for subscription&#39;s, guard condition&#39;s, etc to be waited on." alt="" coords="840,129,955,156"/>
+<area shape="rect" id="node2" href="$structrcl__event__s.html" title="Structure which encapsulates a ROS QoS event handle." alt="" coords="547,5,643,32"/>
+<area shape="rect" id="node3" href="$structrcl__subscription__s.html" title="Structure which encapsulates a ROS Subscription." alt="" coords="525,56,664,83"/>
+<area shape="rect" id="node4" href="$structrcl__service__s.html" title="Structure which encapsulates a ROS Service." alt="" coords="541,107,648,133"/>
+<area shape="rect" id="node5" href="$structrcl__guard__condition__s.html" title="Handle for a rcl guard condition." alt="" coords="513,157,676,184"/>
+<area shape="rect" id="node6" href="$structrcl__context__s.html" title="Encapsulates the non&#45;global state of an init/shutdown cycle." alt="" coords="304,157,412,184"/>
+<area shape="rect" id="node7" href="$structrcl__arguments__s.html" title="Hold output of parsing command line arguments." alt="" coords="5,157,135,184"/>
+<area shape="rect" id="node8" href="$structrcl__client__s.html" title="Structure which encapsulates a ROS Client." alt="" coords="547,208,642,235"/>
+<area shape="rect" id="node9" href="$structrcl__timer__s.html" title="Structure which encapsulates a ROS Timer." alt="" coords="547,259,642,285"/>
+</map>

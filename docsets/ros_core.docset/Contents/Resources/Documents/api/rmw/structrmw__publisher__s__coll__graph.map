@@ -1,0 +1,4 @@
+<map id="rmw_publisher_s" name="rmw_publisher_s">
+<area shape="rect" id="node1" title="Structure which encapsulates an rmw publisher." alt="" coords="33,95,165,121"/>
+<area shape="rect" id="node2" href="$structrmw__publisher__options__s.html" title="Options that can be used to configure the creation of a publisher in rmw." alt="" coords="5,5,192,32"/>
+</map>

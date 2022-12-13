@@ -1,0 +1,5 @@
+<map id="rcl_log_levels_s" name="rcl_log_levels_s">
+<area shape="rect" id="node1" title="Hold default logger level and other logger setting." alt="" coords="104,95,229,121"/>
+<area shape="rect" id="node2" href="$structrcl__logger__setting__s.html" title="A logger item to specify a name and a log level." alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node3" href="/tmp/tmp.ShHB3ofVs6/doxygen_tag_files/rcutils.tag$structrcutils__allocator__s.html" title=" " alt="" coords="182,5,322,32"/>
+</map>
