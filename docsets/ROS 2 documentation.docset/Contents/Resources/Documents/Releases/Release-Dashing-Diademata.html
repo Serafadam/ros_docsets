@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashing Diademata (dashing) — ROS 2 documentation  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://docs.ros.org/en/Releases/Release-Dashing-Diademata.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/clipboard.min.js"></script>
+<script src="../_static/copybutton.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="Release-Crystal-Clemmys.html" rel="next" title="Crystal Clemmys (crystal)"/>
+<link href="Release-Eloquent-Elusor.html" rel="prev" title="Eloquent Elusor (eloquent)"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../index.html"> ROS 2 documentation
+          </a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../Releases.html">Distributions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Release-Humble-Hawksbill.html">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="End-of-Life.html">End-of-Life Distributions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Advanced.html">Advanced</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Simulation-Main.html">Simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Webots.html">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../How-To-Guides.html">How-to Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installation-Troubleshooting.html">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Documentation.html">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The-ROS2-Project.html">The ROS 2 Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Governance.html">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Citations.html">Citations</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">ROS 2 documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../Releases.html">Distributions</a></li>
+<li class="breadcrumb-item"><a href="End-of-Life.html">End-of-Life Distributions</a></li>
+<li class="breadcrumb-item active">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros2_documentation/blob/rolling/source/Releases/Release-Dashing-Diademata.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="dashing-diademata-dashing">
+<h1>Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)<a class="headerlink" href="#dashing-diademata-dashing" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#supported-platforms" id="id4">Supported Platforms</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id5">Installation</a></p></li>
+<li><p><a class="reference internal" href="#new-features-in-this-ros-2-release" id="id6">New features in this ROS 2 release</a></p></li>
+<li><p><a class="reference internal" href="#changes-since-the-crystal-release" id="id7">Changes since the Crystal release</a></p>
+<ul>
+<li><p><a class="reference internal" href="#declaring-parameters" id="id8">Declaring Parameters</a></p></li>
+<li><p><a class="reference internal" href="#ament-cmake" id="id9">ament_cmake</a></p></li>
+<li><p><a class="reference internal" href="#rclcpp" id="id10">rclcpp</a></p></li>
+<li><p><a class="reference internal" href="#rclcpp-components" id="id11">rclcpp_components</a></p></li>
+<li><p><a class="reference internal" href="#rclpy" id="id12">rclpy</a></p></li>
+<li><p><a class="reference internal" href="#rosidl" id="id13">rosidl</a></p></li>
+<li><p><a class="reference internal" href="#rosidl-generator-cpp" id="id14">rosidl_generator_cpp</a></p></li>
+<li><p><a class="reference internal" href="#rosidl-generator-py" id="id15">rosidl_generator_py</a></p></li>
+<li><p><a class="reference internal" href="#launch" id="id16">launch</a></p></li>
+<li><p><a class="reference internal" href="#rmw" id="id17">rmw</a></p></li>
+<li><p><a class="reference internal" href="#actions" id="id18">actions</a></p></li>
+<li><p><a class="reference internal" href="#rviz" id="id19">rviz</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#known-issues" id="id20">Known Issues</a></p></li>
+<li><p><a class="reference internal" href="#timeline-before-the-release" id="id21">Timeline before the release</a></p></li>
+</ul>
+</div>
+<p><em>Dashing Diademata</em> is the fourth release of ROS 2.</p>
+<div class="section" id="supported-platforms">
+<h2><a class="toc-backref" href="#id4">Supported Platforms</a><a class="headerlink" href="#supported-platforms" title="Permalink to this headline"></a></h2>
+<p>Dashing Diademata is primarily supported on the following platforms:</p>
+<p>Tier 1 platforms:</p>
+<ul class="simple">
+<li><p>Ubuntu 18.04 (Bionic): <code class="docutils literal notranslate"><span class="pre">amd64</span></code> and <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></li>
+<li><p>Mac macOS 10.12 (Sierra)</p></li>
+<li><p>Windows 10 (Visual Studio 2019)</p></li>
+</ul>
+<p>Tier 2 platforms:</p>
+<ul class="simple">
+<li><p>Ubuntu 18.04 (Bionic): <code class="docutils literal notranslate"><span class="pre">arm32</span></code></p></li>
+</ul>
+<p>Tier 3 platforms:</p>
+<ul class="simple">
+<li><p>Debian Stretch (9): <code class="docutils literal notranslate"><span class="pre">amd64</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code> and <code class="docutils literal notranslate"><span class="pre">arm32</span></code></p></li>
+<li><p>OpenEmbedded Thud (2.6) / webOS OSE: <code class="docutils literal notranslate"><span class="pre">arm32</span></code> and <code class="docutils literal notranslate"><span class="pre">x86</span></code></p></li>
+</ul>
+<p>For more information about RMW implementations, compiler / interpreter versions, and system dependency versions see <a class="reference external" href="https://www.ros.org/reps/rep-2000.html#dashing-diademata-may-2019-may-2021">REP 2000</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id5">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p><a class="reference external" href="../../dashing/Installation.html">Install Dashing Diademata</a></p>
+</div>
+<div class="section" id="new-features-in-this-ros-2-release">
+<h2><a class="toc-backref" href="#id6">New features in this ROS 2 release</a><a class="headerlink" href="#new-features-in-this-ros-2-release" title="Permalink to this headline"></a></h2>
+<p>A few features and improvements we would like to highlight:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../Tutorials/Intermediate/Composition.html"><span class="doc">Components</span></a> are now the recommended way to write your node.
+They can be used standalone as well as being composed within a process and both ways are fully support from <code class="docutils literal notranslate"><span class="pre">launch</span></code> files.</p></li>
+<li><p>The <a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html"><span class="doc">intra-process communication</span></a> (C++ only) has been improved - both in terms of latency as well as minimizing copies.</p></li>
+<li><p>The Python client library has been updated to match most of the C++ equivalent and some important bug fixes and improvements have landed related to memory usage and performance.</p></li>
+<li><p>Parameters are now a complete alternative to <code class="docutils literal notranslate"><span class="pre">dynamic_reconfigure</span></code> from ROS 1 including constraints like ranges or being read-only.</p></li>
+<li><p>By relying on (a subset of) <a class="reference external" href="https://www.omg.org/spec/IDL/4.2">IDL 4.2</a> for the message generation pipeline it is now possible to use <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files (beside <code class="docutils literal notranslate"><span class="pre">.msg</span></code> / <code class="docutils literal notranslate"><span class="pre">.srv</span></code> / <code class="docutils literal notranslate"><span class="pre">.action</span></code> files).
+This change comes with support for optional UTF-8 encoding for ordinary strings as well as UTF-16 encoded multi-byte strings (see <a class="reference external" href="https://design.ros2.org/articles/wide_strings.html">wide strings design article</a>).</p></li>
+<li><p>Command line tools related to <code class="docutils literal notranslate"><span class="pre">actions</span></code> and <code class="docutils literal notranslate"><span class="pre">components</span></code>.</p></li>
+<li><p>Support for Deadline, Lifespan &amp; Liveliness quality of service settings.</p></li>
+<li><p>MoveIt 2 <a class="reference external" href="https://github.com/AcutronicRobotics/moveit2/releases/tag/moveit_2_alpha">alpha release</a>.</p></li>
+</ul>
+<p>Please see the <a class="reference external" href="https://github.com/ros2/ros2/issues/607">Dashing meta ticket</a> on GitHub, which contains more information as well as references to specific tickets with additional details.</p>
+</div>
+<div class="section" id="changes-since-the-crystal-release">
+<h2><a class="toc-backref" href="#id7">Changes since the Crystal release</a><a class="headerlink" href="#changes-since-the-crystal-release" title="Permalink to this headline"></a></h2>
+<div class="section" id="declaring-parameters">
+<h3><a class="toc-backref" href="#id8">Declaring Parameters</a><a class="headerlink" href="#declaring-parameters" title="Permalink to this headline"></a></h3>
+<p>There have been some changes to the behavior of parameters starting in Dashing, which have also lead to some new API’s and the deprecation of other API’s.
+See the <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> and <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> sections below for more information about API changes.</p>
+<div class="section" id="getting-and-setting-undeclared-parameters">
+<h4>Getting and Setting Undeclared Parameters<a class="headerlink" href="#getting-and-setting-undeclared-parameters" title="Permalink to this headline"></a></h4>
+<p>As of Dashing, parameters now need to be declared before being accessed or set.</p>
+<p>Before Dashing, you could call <code class="docutils literal notranslate"><span class="pre">get_parameter(name)</span></code> and get either a value, if it had been previously set, or a parameter of type <code class="docutils literal notranslate"><span class="pre">PARAMETER_NOT_SET</span></code>.
+You could also call <code class="docutils literal notranslate"><span class="pre">set_parameter(name,</span> <span class="pre">value)</span></code> at any point, even if the parameter was previously unset.</p>
+<p>Since Dashing, you need to first declare a parameter before getting or setting it.
+If you try to get or set an undeclared parameter you will either get an exception thrown, e.g. ParameterNotDeclaredException, or in certain cases you will get an unsuccessful result communicated in a variety of ways (see specific functions for more details).</p>
+<p>However, you can get the old behavior (mostly, see the note in the next paragraph) by using the <code class="docutils literal notranslate"><span class="pre">allow_undeclared_parameters</span></code> option when creating your node.
+You might want to do this in order to avoid code changes for now, or in order to fulfill some uncommon use cases.
+For example, a “global parameter server” or “parameter blackboard” may want to allow external nodes to set new parameters on itself without first declaring them, so it may use the <code class="docutils literal notranslate"><span class="pre">allow_undeclared_parameters</span></code> option to accomplish that.
+In most cases, however, this option is not recommended because it makes the rest of the parameter API less safe to bugs like parameter name typos and “use before set” logical errors.</p>
+<p>Note that using <code class="docutils literal notranslate"><span class="pre">allow_undeclared_parameters</span></code> will get you most of the old behavior specifically for “get” and “set” methods, but it will not revert all the behavior changes related to parameters back to how it was for ROS Crystal.
+For that you need to also set the <code class="docutils literal notranslate"><span class="pre">automatically_declare_parameters_from_overrides</span></code> option to <code class="docutils literal notranslate"><span class="pre">true</span></code>, which is described below in <a class="reference internal" href="#parameter-configuration-using-a-yaml-file"><span class="std std-ref">Parameter Configuration using a YAML File</span></a>.</p>
+</div>
+<div class="section" id="declaring-a-parameter-with-a-parameterdescriptor">
+<h4>Declaring a Parameter with a ParameterDescriptor<a class="headerlink" href="#declaring-a-parameter-with-a-parameterdescriptor" title="Permalink to this headline"></a></h4>
+<p>Another benefit to declaring your parameters before using them, is that it allows you to declare a parameter descriptor at the same time.</p>
+<p>Now when declaring a parameter you may include a custom <code class="docutils literal notranslate"><span class="pre">ParameterDescriptor</span></code> as well as a name and default value.
+The <code class="docutils literal notranslate"><span class="pre">ParameterDescriptor</span></code> is defined as a message in <code class="docutils literal notranslate"><span class="pre">rcl_interfaces/msg/ParameterDescriptor</span></code> and contains meta data like <code class="docutils literal notranslate"><span class="pre">description</span></code> and constraints like <code class="docutils literal notranslate"><span class="pre">read_only</span></code> or <code class="docutils literal notranslate"><span class="pre">integer_range</span></code>.
+These constraints can be used to reject invalid values when setting parameters and/or as hints to external tools about what values are valid for a given parameter.
+The <code class="docutils literal notranslate"><span class="pre">read_only</span></code> constraint will prevent the parameter’s value from changing after being declared, as well as prevent if from being undeclared.</p>
+<p>For reference, here’s a link to the <code class="docutils literal notranslate"><span class="pre">ParameterDescriptor</span></code> message as of the time of writing this:</p>
+<p><a class="reference external" href="https://github.com/ros2/rcl_interfaces/blob/0aba5a142878c2077d7a03977087e7d74d40ee68/rcl_interfaces/msg/ParameterDescriptor.msg#L1">https://github.com/ros2/rcl_interfaces/blob/0aba5a142878c2077d7a03977087e7d74d40ee68/rcl_interfaces/msg/ParameterDescriptor.msg#L1</a></p>
+</div>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Parameter Configuration using a YAML File"></a><div class="section" id="parameter-configuration-using-a-yaml-file">
+<span id="id1"></span><h4>Parameter Configuration using a YAML File<a class="headerlink" href="#parameter-configuration-using-a-yaml-file" title="Permalink to this headline"></a></h4>
+<p>As of Dashing, parameters in a YAML configuration file, e.g. passed to the node via the command line argument <code class="docutils literal notranslate"><span class="pre">__params:=</span></code>, are only used to override a parameter’s default value when declaring the parameter.</p>
+<p>Before Dashing, any parameters you passed via a YAML file would be implicitly set on the node.</p>
+<p>Since Dashing, this is no longer the case, as parameters need to be declared in order to appear on the node to external observers, like <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span> <span class="pre">list</span></code>.</p>
+<p>The old behavior may be achieved using the <code class="docutils literal notranslate"><span class="pre">automatically_declare_parameters_from_overrides</span></code> option when creating a node.
+This option, if set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, will automatically declare all parameters in the input YAML file when the node is constructed.
+This may be used to avoid major changes to your existing code or to serve specific use cases.
+For example, a “global parameter server” may want to be seeded with arbitrary parameters on launch, which it could not have declared ahead of time.
+Most of the time, however, this option is not recommended, as it may lead to setting a parameter in a YAML file with the assumption that the node will use it, even if the node does not actually use it.</p>
+<p>In the future we hope to have a checker that will warn you if you pass a parameter to a node that it was not expecting.</p>
+<p>The parameters in the YAML file will continue to influence the value of parameters when they are first declared.</p>
+</div>
+</div>
+<div class="section" id="ament-cmake">
+<h3><a class="toc-backref" href="#id9">ament_cmake</a><a class="headerlink" href="#ament-cmake" title="Permalink to this headline"></a></h3>
+<p>The CMake function <code class="docutils literal notranslate"><span class="pre">ament_index_has_resource</span></code> was returning either <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.
+As of <a class="reference external" href="https://github.com/ament/ament_cmake/pull/155">this release</a> it returns either the prefix path in case the resource was found or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p>
+<p>If you are using the return value in a CMake condition like this:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_index_has_resource</span><span class="p">(</span><span class="s">var</span><span class="w"> </span><span class="s">...</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="o">${</span><span class="nv">var</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>you need to update the condition to ensure it considers a string value as <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="p">(</span><span class="s">var</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rclcpp">
+<h3><a class="toc-backref" href="#id10">rclcpp</a><a class="headerlink" href="#rclcpp" title="Permalink to this headline"></a></h3>
+<div class="section" id="behavior-change-for-node-get-node-names">
+<h4>Behavior Change for <code class="docutils literal notranslate"><span class="pre">Node::get_node_names()</span></code><a class="headerlink" href="#behavior-change-for-node-get-node-names" title="Permalink to this headline"></a></h4>
+<p>The function <code class="docutils literal notranslate"><span class="pre">NodeGraph::get_node_names()</span></code>, and therefore also <code class="docutils literal notranslate"><span class="pre">Node::get_node_names()</span></code>, now returns a <code class="docutils literal notranslate"><span class="pre">std::vector&lt;std::string&gt;</span></code> containing fully qualified node names with their namespaces included, instead of just the node names.</p>
+</div>
+<div class="section" id="changed-the-way-that-options-are-passed-to-nodes">
+<h4>Changed the Way that Options are Passed to Nodes<a class="headerlink" href="#changed-the-way-that-options-are-passed-to-nodes" title="Permalink to this headline"></a></h4>
+<p>Extended arguments (beyond name and namespace) to the <code class="docutils literal notranslate"><span class="pre">rclcpp::Node()</span></code> constructor have been replaced with a <code class="docutils literal notranslate"><span class="pre">rclcpp::NodeOptions</span></code> structure.
+See <a class="reference external" href="https://github.com/ros2/rclcpp/pull/622/files">ros2/rclcpp#622</a> for details about the structure and default values of the options.</p>
+<p>If you are using any of the extended arguments to <code class="docutils literal notranslate"><span class="pre">rclcpp::Node()</span></code> like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">contexts</span><span class="o">::</span><span class="n">default_context</span><span class="o">::</span><span class="n">get_global_default_context</span><span class="p">();</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">args</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="p">(</span><span class="s">"use_sim_time"</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"foo_node"</span><span class="p">,</span><span class="w"> </span><span class="s">"bar_namespace"</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>You need to update to use the <code class="docutils literal notranslate"><span class="pre">NodeOptions</span></code> structure</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">args</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="p">(</span><span class="s">"use_sim_time"</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="w"> </span><span class="n">node_options</span><span class="p">;</span><span class="w"></span>
+<span class="n">node_options</span><span class="p">.</span><span class="n">arguments</span><span class="p">(</span><span class="n">args</span><span class="p">);</span><span class="w"></span>
+<span class="n">node_options</span><span class="p">.</span><span class="n">parameter_overrides</span><span class="p">(</span><span class="n">params</span><span class="p">);</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"foo_node"</span><span class="p">,</span><span class="w"> </span><span class="s">"bar_namespace"</span><span class="p">,</span><span class="w"> </span><span class="n">node_options</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changes-to-creating-publishers-and-subscriptions">
+<h4>Changes to Creating Publishers and Subscriptions<a class="headerlink" href="#changes-to-creating-publishers-and-subscriptions" title="Permalink to this headline"></a></h4>
+<p>There have been a few changes to creating publishers and subscriptions which are new in Dashing:</p>
+<ul class="simple">
+<li><p>QoS settings are now passed using the new <code class="docutils literal notranslate"><span class="pre">rclcpp::QoS</span></code> class, and the API encourages the user to specify at least the history depth.</p></li>
+<li><p>Options are now passed as an object, i.e. <code class="docutils literal notranslate"><span class="pre">rclcpp::PublisherOptions</span></code> and <code class="docutils literal notranslate"><span class="pre">rclcpp::SubscriptionOptions</span></code>.</p></li>
+</ul>
+<p>All changes are backwards compatible (no code changes are required), but several existing call styles have been deprecated.
+Users are encouraged to update to the new signatures.</p>
+<hr class="docutils"/>
+<p>In the past, when creating a publisher or subscription, you could either not specify any QoS settings (e.g. just provide topic name for a publisher) or you could specify a “qos profile” data structure (of type <code class="docutils literal notranslate"><span class="pre">rmw_qos_profile_t</span></code>) with all the settings already set.
+Now you must use the new <code class="docutils literal notranslate"><span class="pre">rclcpp::QoS</span></code> object to specify your QoS and at least the history settings for your QoS.
+This encourages the user to specify a history depth when using <code class="docutils literal notranslate"><span class="pre">KEEP_LAST</span></code>, rather than defaulting it to a value that may or may not be appropriate.</p>
+<p>In ROS 1, this was known as the <code class="docutils literal notranslate"><span class="pre">queue_size</span></code> and it was required in both C++ and Python.
+We’re changing the ROS 2 API to bring this requirement back.</p>
+<hr class="docutils"/>
+<p>Also, any options which could previously be passed during creation of a publisher or subscription have now been encapsulated in an <code class="docutils literal notranslate"><span class="pre">rclcpp::PublisherOptions</span></code> and <code class="docutils literal notranslate"><span class="pre">rclcpp::SubscriptionOptions</span></code> class respectively.
+This allows for shorter signatures, more convenient use, and for adding new future options without breaking API.</p>
+<hr class="docutils"/>
+<p>Some signatures for creating publishers and subscribers are now deprecated, and new signatures have been added to allow you to use the new <code class="docutils literal notranslate"><span class="pre">rclcpp::QoS</span></code> and publisher/subscription option classes.</p>
+<p>These are the new and recommended API’s:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">AllocatorT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">PublisherT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">MessageT</span><span class="p">,</span><span class="w"> </span><span class="n">AllocatorT</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">PublisherT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_publisher</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">QoS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">qos</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">PublisherOptionsWithAllocator</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">PublisherOptionsWithAllocator</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="p">()</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">CallbackT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">AllocatorT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">SubscriptionT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Subscription</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">AllocatorT</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SubscriptionT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_subscription</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">QoS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">qos</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">CallbackT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">callback</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">SubscriptionOptionsWithAllocator</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">SubscriptionOptionsWithAllocator</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">message_memory_strategy</span><span class="o">::</span><span class="n">MessageMemoryStrategy</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">AllocatorT</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg_mem_strat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And these are the deprecated ones:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">AllocatorT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">PublisherT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">MessageT</span><span class="p">,</span><span class="w"> </span><span class="n">AllocatorT</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use create_publisher(const std::string &amp;, const rclcpp::QoS &amp;, ...) instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">PublisherT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_publisher</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">qos_history_depth</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocator</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">AllocatorT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">PublisherT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">::</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">MessageT</span><span class="p">,</span><span class="w"> </span><span class="n">AllocatorT</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use create_publisher(const std::string &amp;, const rclcpp::QoS &amp;, ...) instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">PublisherT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_publisher</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rmw_qos_profile_t</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">qos_profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rmw_qos_profile_default</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">AllocatorT</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">CallbackT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">Alloc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">SubscriptionT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Subscription</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">Alloc</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="s">"use create_subscription(const std::string &amp;, const rclcpp::QoS &amp;, CallbackT, ...) instead"</span><span class="w"></span>
+<span class="p">)]]</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SubscriptionT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_subscription</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">CallbackT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">callback</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rmw_qos_profile_t</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">qos_profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rmw_qos_profile_default</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">callback_group</span><span class="o">::</span><span class="n">CallbackGroup</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ignore_local_publications</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">message_memory_strategy</span><span class="o">::</span><span class="n">MessageMemoryStrategy</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">Alloc</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg_mem_strat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Alloc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">MessageT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">CallbackT</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">Alloc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">SubscriptionT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Subscription</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">Alloc</span><span class="o">&gt;&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="s">"use create_subscription(const std::string &amp;, const rclcpp::QoS &amp;, CallbackT, ...) instead"</span><span class="w"></span>
+<span class="p">)]]</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SubscriptionT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">create_subscription</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">topic_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">CallbackT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">callback</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">qos_history_depth</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">callback_group</span><span class="o">::</span><span class="n">CallbackGroup</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">ignore_local_publications</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">message_memory_strategy</span><span class="o">::</span><span class="n">MessageMemoryStrategy</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typename</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">subscription_traits</span><span class="o">::</span><span class="n">has_message_type</span><span class="o">&lt;</span><span class="n">CallbackT</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">Alloc</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg_mem_strat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Alloc</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<hr class="docutils"/>
+<p>The change to how QoS is passed is most likely to impact users.</p>
+<p>A typical change for a publisher looks like this:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- pub_ = create_publisher&lt;std_msgs::msg::String&gt;("chatter");</span><span class="w"></span>
+<span class="gi">+ pub_ = create_publisher&lt;std_msgs::msg::String&gt;("chatter", 10);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And for a subscription:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- sub_ = create_subscription&lt;std_msgs::msg::String&gt;("chatter", callback);</span><span class="w"></span>
+<span class="gi">+ sub_ = create_subscription&lt;std_msgs::msg::String&gt;("chatter", 10, callback);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If you have no idea what depth to use and don’t care right now (maybe just prototyping), then we recommend using <code class="docutils literal notranslate"><span class="pre">10</span></code>, as that was the default before and should preserve existing behavior.</p>
+<p>More in depth documentation about how to select an appropriate depth is forthcoming.</p>
+<p>This is an example of a slightly more involved change to avoid the newly deprecated API’s:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- // Creates a latched topic</span><span class="w"></span>
+<span class="gd">- rmw_qos_profile_t qos = rmw_qos_profile_default;</span><span class="w"></span>
+<span class="gd">- qos.depth = 1;</span><span class="w"></span>
+<span class="gd">- qos.durability = RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL;</span><span class="w"></span>
+<span class="gd">-</span><span class="w"></span>
+<span class="w"> </span> model_xml_.data = model_xml;<span class="w"></span>
+<span class="w"> </span> node_handle-&gt;declare_parameter("robot_description", model_xml);<span class="w"></span>
+<span class="w"> </span> description_pub_ = node_handle-&gt;create_publisher&lt;std_msgs::msg::String&gt;(<span class="w"></span>
+<span class="gd">-   "robot_description", qos);</span><span class="w"></span>
+<span class="gi">+   "robot_description",</span><span class="w"></span>
+<span class="gi">+   // Transient local is similar to latching in ROS 1.</span><span class="w"></span>
+<span class="gi">+   rclcpp::QoS(1).transient_local());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>See the pull request (and connected pull requests) that introduced the QoS change for more examples and details:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/pull/713">https://github.com/ros2/rclcpp/pull/713</a></p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/ros2/demos/pull/332">https://github.com/ros2/demos/pull/332</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/robot_state_publisher/pull/19">https://github.com/ros2/robot_state_publisher/pull/19</a></p></li>
+<li><p>and others…</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="changes-due-to-declare-parameter-change">
+<h4>Changes Due to Declare Parameter Change<a class="headerlink" href="#changes-due-to-declare-parameter-change" title="Permalink to this headline"></a></h4>
+<p>For details about the actual behavior change, see <a class="reference internal" href="#declaring-parameters">Declaring Parameters</a> above.</p>
+<p>There are several new API calls in the <code class="docutils literal notranslate"><span class="pre">rclcpp::Node</span></code>’s interface:</p>
+<ul>
+<li><p>Methods that declare parameters given a name, optional default value, optional descriptor, and return the value actually set:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">ParameterValue</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="nf">rclcpp::Node::declare_parameter</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">ParameterValue</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">default_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">ParameterValue</span><span class="p">(),</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">parameter_descriptor</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="p">());</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">auto</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">declare_parameter</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">ParameterT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">default_value</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">parameter_descriptor</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="p">());</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">declare_parameters</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">namespace_</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">ParameterT</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">parameters</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">declare_parameters</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">namespace_</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">ParameterT</span><span class="p">,</span><span class="w"> </span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">parameters</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>A method to undeclare parameters and to check if a parameter has been declared:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"></span>
+<span class="nf">rclcpp::Node::undeclare_parameter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">bool</span><span class="w"></span>
+<span class="nf">rclcpp::Node::has_parameter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>Some convenience methods that did not previously exist:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SetParametersResult</span><span class="w"></span>
+<span class="nf">rclcpp::Node::set_parameter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">parameter</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Parameter</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">get_parameters</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">names</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">rcl_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">ParameterDescriptor</span><span class="w"></span>
+<span class="nf">rclcpp::Node::describe_parameter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>A new method to set the callback which is called anytime a parameter will be changed, giving you the opportunity to reject it:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">OnParametersSetCallbackType</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">node_interfaces</span><span class="o">::</span><span class="n">NodeParametersInterface</span><span class="o">::</span><span class="n">OnParametersSetCallbackType</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">OnParametersSetCallbackType</span><span class="w"></span>
+<span class="nf">rclcpp::Node::set_on_parameters_set_callback</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">OnParametersSetCallbackType</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>There were also several deprecated methods:</p>
+<blockquote>
+<div><div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use declare_parameter() instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="kt">void</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">set_parameter_if_not_set</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">ParameterT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use declare_parameters() instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="kt">void</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">set_parameters_if_not_set</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">ParameterT</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">values</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ParameterT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use declare_parameter() and it's return value instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="kt">void</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">get_parameter_or_set</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">ParameterT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">ParameterT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">alternative_value</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">CallbackT</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">[[</span><span class="n">deprecated</span><span class="p">(</span><span class="s">"use set_on_parameters_set_callback() instead"</span><span class="p">)]]</span><span class="w"></span>
+<span class="kt">void</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">register_param_change_callback</span><span class="p">(</span><span class="n">CallbackT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="memory-strategy">
+<h4>Memory Strategy<a class="headerlink" href="#memory-strategy" title="Permalink to this headline"></a></h4>
+<p>The interface <code class="docutils literal notranslate"><span class="pre">rclcpp::memory_strategy::MemoryStrategy</span></code> was using the typedef <code class="docutils literal notranslate"><span class="pre">WeakNodeVector</span></code> in various method signatures.
+As of Dashing the typedef has been been changed to <code class="docutils literal notranslate"><span class="pre">WeakNodeList</span></code> and with it the type of the parameter in various methods.
+Any custom memory strategy needs to be updated to match the modified interface.</p>
+<p>The relevant API change can be found in <a class="reference external" href="https://github.com/ros2/rclcpp/pull/741">ros2/rclcpp#741</a>.</p>
+</div>
+</div>
+<div class="section" id="rclcpp-components">
+<h3><a class="toc-backref" href="#id11">rclcpp_components</a><a class="headerlink" href="#rclcpp-components" title="Permalink to this headline"></a></h3>
+<p>The correct way to implement composition in Dashing is by utilizing the <code class="docutils literal notranslate"><span class="pre">rclcpp_components</span></code> package.</p>
+<p>The following changes must be made to nodes in order to correctly implement runtime composition:</p>
+<p>The Node must have a constructor that takes <code class="docutils literal notranslate"><span class="pre">rclcpp::NodeOptions</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Listener</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">Listener</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="s">"listener"</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>C++ registration macros (if present) need to be updated to use the <code class="docutils literal notranslate"><span class="pre">rclcpp_components</span></code> equivalent.
+If not present, registration macros must be added in one translation unit.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Insert at bottom of translation unit, e.g. listener.cpp</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"rclcpp_components/register_node_macro.hpp"</span><span class="cp"></span>
+<span class="c1">// Use fully-qualifed name in registration</span>
+<span class="n">RCLCPP_COMPONENTS_REGISTER_NODE</span><span class="p">(</span><span class="n">composition</span><span class="o">::</span><span class="n">Listener</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>CMake registration macros (if present) need to be updated.
+If not present, registration macros must be added to the project’s CMake.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_library</span><span class="p">(</span><span class="s">listener</span><span class="w"> </span><span class="s">src/listener.cpp</span><span class="p">)</span>
+<span class="nb">rclcpp_components_register_nodes</span><span class="p">(</span><span class="s">listener</span><span class="w"> </span><span class="s2">"composition::Listener"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information on composition, see <a class="reference external" href="https://index.ros.org/doc/ros2/Tutorials/Composition/">the tutorial</a></p>
+</div>
+<div class="section" id="rclpy">
+<h3><a class="toc-backref" href="#id12">rclpy</a><a class="headerlink" href="#rclpy" title="Permalink to this headline"></a></h3>
+<div class="section" id="changes-to-creating-publishers-subscriptions-and-qos-profiles">
+<h4>Changes to Creating Publishers, Subscriptions, and QoS Profiles<a class="headerlink" href="#changes-to-creating-publishers-subscriptions-and-qos-profiles" title="Permalink to this headline"></a></h4>
+<p>Prior to Dashing, you could optionally provide a <code class="docutils literal notranslate"><span class="pre">QoSProfile</span></code> object when creating a publisher or subscription.
+In an effort to encourage users to specify a history depth for message queues, we now <strong>require</strong> that a depth value or <code class="docutils literal notranslate"><span class="pre">QoSProfile</span></code> object is given when creating publishers or subscriptions.</p>
+<p>To create a publisher, previously you would have written:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Empty</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">)</span>
+<span class="c1"># Or using a keyword argument for QoSProfile</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Empty</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In Dashing, prefer the following API that provides a depth value or <code class="docutils literal notranslate"><span class="pre">QoSProfile</span></code> object as a third positional argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume a history setting of KEEP_LAST with depth 10</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Empty</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Or pass a QoSProfile object directly</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Empty</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Likewise for subscriptions, previously you would have written:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">BasicTypes</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+<span class="c1"># Or using a keyword argument for QoSProfile</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">BasicTypes</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In Dashing:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume a history setting of KEEP_LAST with depth 10</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">BasicTypes</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Or pass a QoSProfile object directly</span>
+<span class="n">node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">BasicTypes</span><span class="p">,</span> <span class="s1">'chatter'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To ease the transition, users who do not use the new API will see deprecation warnings.</p>
+<p>Furthermore, we also require that when constructing <code class="docutils literal notranslate"><span class="pre">QoSProfile</span></code> objects that a history policy and/or depth is set.
+If a history policy of <code class="docutils literal notranslate"><span class="pre">KEEP_LAST</span></code> is provided, then a depth argument is also required.
+For example, these calls are valid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">QoSProfile</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">QoSHistoryPolicy</span><span class="o">.</span><span class="n">RMW_QOS_POLICY_HISTORY_KEEP_ALL</span><span class="p">)</span>
+<span class="n">QoSProfile</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">QoSHistoryPolicy</span><span class="o">.</span><span class="n">RMW_QOS_POLICY_HISTORY_KEEP_LAST</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">QoSProfile</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># equivalent to the previous line</span>
+</pre></div>
+</div>
+<p>And these calls will cause a deprecation warning:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">QoSProfile</span><span class="p">()</span>
+<span class="n">QoSProfile</span><span class="p">(</span><span class="n">reliability</span><span class="o">=</span><span class="n">QoSReliabilityPolicy</span><span class="o">.</span><span class="n">RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT</span><span class="p">)</span>
+<span class="c1"># KEEP_LAST but no depth</span>
+<span class="n">QoSProfile</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">QoSHistoryPolicy</span><span class="o">.</span><span class="n">RMW_QOS_POLICY_HISTORY_KEEP_LAST</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See the issue and pull request related to introducing this change for more details:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rclpy/issues/342">https://github.com/ros2/rclpy/issues/342</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclpy/pull/344">https://github.com/ros2/rclpy/pull/344</a></p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h4>Changes Due to Declare Parameter Change<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<p>For details about the actual behavior change, see <a class="reference internal" href="#declaring-parameters">Declaring Parameters</a> above. The changes are analogous to the ones in <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code>.</p>
+<p>These are the new API methods available in <code class="docutils literal notranslate"><span class="pre">rclpy.node.Node</span></code> interface:</p>
+<ul>
+<li><p>To declare parameters given a name, an optional default value (supported by <code class="docutils literal notranslate"><span class="pre">rcl_interfaces.msg.ParameterValue</span></code>) and an optional descriptor, returning the value actually set:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">declare_parameter</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">descriptor</span><span class="p">:</span> <span class="n">ParameterDescriptor</span> <span class="o">=</span> <span class="n">ParameterDescriptor</span><span class="p">()</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parameter</span>
+
+<span class="k">def</span> <span class="nf">declare_parameters</span><span class="p">(</span>
+  <span class="n">namespace</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+  <span class="n">parameters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span>
+      <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+      <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+      <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ParameterDescriptor</span><span class="p">],</span>
+  <span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>To undeclare previously declared parameters and to check if a parameter has been declared beforehand:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">undeclare_parameter</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">has_parameter</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+</li>
+<li><p>To get and set parameter descriptors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">describe_parameter</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParameterDescriptor</span>
+
+<span class="k">def</span> <span class="nf">describe_parameters</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ParameterDescriptor</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">set_descriptor</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">descriptor</span><span class="p">:</span> <span class="n">ParameterDescriptor</span><span class="p">,</span>
+    <span class="n">alternative_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParameterValue</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParameterValue</span>
+</pre></div>
+</div>
+</li>
+<li><p>A convenience method to get parameters that may not have been declared:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_parameter_or</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">alternative_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parameter</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="other-changes">
+<h4>Other changes<a class="headerlink" href="#other-changes" title="Permalink to this headline"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">rclpy.parameter.Parameter</span></code> can now guess its type without explicitly setting it (as long as it’s one of the supported ones by <code class="docutils literal notranslate"><span class="pre">rcl_interfaces.msg.ParameterValue</span></code>).
+For example, this code:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">'myparam'</span><span class="p">,</span> <span class="n">Parameter</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">DOUBLE</span><span class="p">,</span> <span class="mf">2.41</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Is equivalent to this code:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">'myparam'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">2.41</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This change does not break existing API.</p>
+</div>
+</div>
+<div class="section" id="rosidl">
+<h3><a class="toc-backref" href="#id13">rosidl</a><a class="headerlink" href="#rosidl" title="Permalink to this headline"></a></h3>
+<p>Until Crystal each message generator package registered itself using the <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> extension point <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code> and was passed a set of <code class="docutils literal notranslate"><span class="pre">.msg</span></code> / <code class="docutils literal notranslate"><span class="pre">.srv</span></code> / <code class="docutils literal notranslate"><span class="pre">.action</span></code> files.
+As of Dashing the message generation pipeline is based on <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files instead.</p>
+<p>Any message generator package needs to change and register itself using the new extension point <code class="docutils literal notranslate"><span class="pre">rosidl_generate_idl_interfaces</span></code> which passes only <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files instead.
+The message generators for the commonly supported languages C, C++, and Python as well as the typesupport packages for introspection, Fast RTPS, Connext and OpenSplice have already been updated (see <a class="reference external" href="https://github.com/ros2/rosidl/pull/334/files">ros2/rosidl#334</a>).
+The CMake code calling <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces()</span></code> can either pass <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files directly or pass <code class="docutils literal notranslate"><span class="pre">.msg</span></code> / <code class="docutils literal notranslate"><span class="pre">.srv</span></code> / <code class="docutils literal notranslate"><span class="pre">.action</span></code> which will then internally be converted into <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files before being passed to each message generator.</p>
+<p>The format of <code class="docutils literal notranslate"><span class="pre">.msg</span></code> / <code class="docutils literal notranslate"><span class="pre">.srv</span></code> / <code class="docutils literal notranslate"><span class="pre">.action</span></code> files is not being evolved in the future.
+The mapping between <code class="docutils literal notranslate"><span class="pre">.msg</span></code> / <code class="docutils literal notranslate"><span class="pre">.srv</span></code> / <code class="docutils literal notranslate"><span class="pre">.action</span></code> files and <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files is described in <a class="reference external" href="https://design.ros2.org/articles/legacy_interface_definition.html">this design article</a>.
+A <a class="reference external" href="https://design.ros2.org/articles/idl_interface_definition.html">second design article</a> describes the supported features in <code class="docutils literal notranslate"><span class="pre">.idl</span></code> files.
+In order to leverage any of the new features existing interfaces need to be converted (e.g. using the command line tools  <code class="docutils literal notranslate"><span class="pre">msg2idl</span></code> / <code class="docutils literal notranslate"><span class="pre">srv2idl</span></code> / <code class="docutils literal notranslate"><span class="pre">action2idl</span></code>).</p>
+<p>To distinguish same type names, but with different namespaces, the introspection structs now contain a namespace field that replaces the package name (see <a class="reference external" href="https://github.com/ros2/rosidl/pull/355/files">ros2/rosidl#335</a>).</p>
+<div class="section" id="mapping-of-char-in-msg-files">
+<h4>Mapping of char in .msg files<a class="headerlink" href="#mapping-of-char-in-msg-files" title="Permalink to this headline"></a></h4>
+<p>In <a class="reference external" href="https://wiki.ros.org/msg#Fields">ROS 1</a> <code class="docutils literal notranslate"><span class="pre">char</span></code> has been deprecated for a long time and is being mapped to <code class="docutils literal notranslate"><span class="pre">uint8</span></code>.
+In ROS 2 until Crystal <code class="docutils literal notranslate"><span class="pre">char</span></code> was mapped to a single character (<code class="docutils literal notranslate"><span class="pre">char</span></code> in C / C++, <code class="docutils literal notranslate"><span class="pre">str</span></code> with length 1 in Python) in an effort to provide a more natural mapping.
+As of Dashing the ROS 1 semantic has been restored and <code class="docutils literal notranslate"><span class="pre">char</span></code> maps to <code class="docutils literal notranslate"><span class="pre">uint8</span></code> again.</p>
+</div>
+</div>
+<div class="section" id="rosidl-generator-cpp">
+<h3><a class="toc-backref" href="#id14">rosidl_generator_cpp</a><a class="headerlink" href="#rosidl-generator-cpp" title="Permalink to this headline"></a></h3>
+<p>The C++ data structures generated for messages, services and actions provide setter methods for each field.
+Until Crystal each setter returned a pointer to the data structure itself to enable the named parameter idiom.
+As of Dashing these setters <a class="reference external" href="https://github.com/ros2/rosidl/pull/353">return a reference</a> instead since that seems to be the more common signature as well as it clarifies that the returned value can’t be a <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>.</p>
+</div>
+<div class="section" id="rosidl-generator-py">
+<h3><a class="toc-backref" href="#id15">rosidl_generator_py</a><a class="headerlink" href="#rosidl-generator-py" title="Permalink to this headline"></a></h3>
+<p>Until Crystal an array (fixed size) or sequence (dynamic size, optionally with an upper boundary) field in a message was stored as a <code class="docutils literal notranslate"><span class="pre">list</span></code> in Python.
+As of Dashing the Python type for arrays / sequences of numeric values has been changed:</p>
+<ul class="simple">
+<li><p>an array of numeric values is stored as a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> (the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is chosen to match the type of the numeric value)</p></li>
+<li><p>a sequence of numeric values is stored as an <code class="docutils literal notranslate"><span class="pre">array.array</span></code> (the <code class="docutils literal notranslate"><span class="pre">typename</span></code> is chosen to match the type of the numeric value)</p></li>
+</ul>
+<p>As before an array / sequence of non-numeric types is still represented as a <code class="docutils literal notranslate"><span class="pre">list</span></code> in Python.</p>
+<p>This change brings a number of benefits:</p>
+<ul class="simple">
+<li><p>The new data structures ensure that each item in the array / sequence complies with the value range restrictions of the numeric type.</p></li>
+<li><p>The numeric values can be stored more efficiently in memory which avoid the overhead of Python objects for each item.</p></li>
+<li><p>The memory layout of both data structures allows to read and write all items of the array / sequence in a single operation which makes the conversion from and to Python significantly faster / more efficient.</p></li>
+</ul>
+</div>
+<div class="section" id="launch">
+<h3><a class="toc-backref" href="#id16">launch</a><a class="headerlink" href="#launch" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">launch_testing</span></code> package caught up with the <code class="docutils literal notranslate"><span class="pre">launch</span></code> package redesign done in Bouncy Bolson.
+The legacy Python API, already moved into the <code class="docutils literal notranslate"><span class="pre">launch.legacy</span></code> submodule, has thus been deprecated and removed.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">launch</span></code> <a class="reference external" href="https://github.com/ros2/launch/tree/dashing/launch/examples">examples</a> and <a class="reference external" href="https://github.com/ros2/launch/tree/dashing/launch/doc">documentation</a> for reference on how to use its new API.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/demos">demos tests</a> for reference on how to use the new <code class="docutils literal notranslate"><span class="pre">launch_testing</span></code> API.</p>
+</div>
+<div class="section" id="rmw">
+<h3><a class="toc-backref" href="#id17">rmw</a><a class="headerlink" href="#rmw" title="Permalink to this headline"></a></h3>
+<p>Changes since the <a class="reference internal" href="Release-Crystal-Clemmys.html"><span class="doc">Crystal Clemmys</span></a> release:</p>
+<ul class="simple">
+<li><p>New API in <code class="docutils literal notranslate"><span class="pre">rmw</span></code>, a fini function for <code class="docutils literal notranslate"><span class="pre">rmw_context_t</span></code>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/c518842f6f82910482470b40c221c268d30691bd/rmw/include/rmw/init.h#L111-L136">rmw_context_fini</a></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Modification of <code class="docutils literal notranslate"><span class="pre">rmw</span></code>, now passes <code class="docutils literal notranslate"><span class="pre">rmw_context_t</span></code> to <code class="docutils literal notranslate"><span class="pre">rmw_create_wait_set</span></code>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/c518842f6f82910482470b40c221c268d30691bd/rmw/include/rmw/rmw.h#L522-L543">rmw_create_wait_set</a></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>New APIs in <code class="docutils literal notranslate"><span class="pre">rmw</span></code> for preallocating space for published and subscribed messages:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L262">rmw_init_publisher_allocation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L279">rmw_fini_publisher_allocation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L489">rmw_init_subscription_allocation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L506">rmw_fini_subscription_allocation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L395">rmw_serialized_message_size</a></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Modification of <code class="docutils literal notranslate"><span class="pre">rmw</span></code>, now passes <code class="docutils literal notranslate"><span class="pre">rmw_publisher_allocation_t</span></code> or <code class="docutils literal notranslate"><span class="pre">rmw_subscription_allocation_t</span></code> to <code class="docutils literal notranslate"><span class="pre">rmw_publish</span></code> and <code class="docutils literal notranslate"><span class="pre">rmw_take</span></code>, respectively.
+Note that this argument can be <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>, which keeps existing Crystal behavior.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L310">rmw_publish</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rmw/blob/dc7b2f49f1f961d6cf2c173adc54736451be8938/rmw/include/rmw/rmw.h#L556">rmw_take</a></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Type names returned by <code class="docutils literal notranslate"><span class="pre">rmw_get_*_names_and_types*</span></code> functions should have a fully-qualified namespace.
+For example, instead of <code class="docutils literal notranslate"><span class="pre">rcl_interfaces/Parameter</span></code> and <code class="docutils literal notranslate"><span class="pre">rcl_interfaces/GetParameters</span></code>, the returned type names should be <code class="docutils literal notranslate"><span class="pre">rcl_interface/msg/Parameter</span></code> and <code class="docutils literal notranslate"><span class="pre">rcl_interfaces/srv/GetParameters</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="actions">
+<h3><a class="toc-backref" href="#id18">actions</a><a class="headerlink" href="#actions" title="Permalink to this headline"></a></h3>
+<ul>
+<li><p>Changes to <code class="docutils literal notranslate"><span class="pre">rclcpp_action::Client</span></code> signatures:</p>
+<p>The signature of <a class="reference external" href="https://github.com/ros2/rclcpp/blob/ef41059a751702274667e2164182c062b47c453d/rclcpp_action/include/rclcpp_action/client.hpp#L343">rclcpp_action::Client::async_send_goal</a> has changed.
+Now users can optionally provide callback functions for the <strong>goal response</strong> and the <strong>result</strong> using the new
+<a class="reference external" href="https://github.com/ros2/rclcpp/blob/ef41059a751702274667e2164182c062b47c453d/rclcpp_action/include/rclcpp_action/client.hpp#L276">SendGoalOptions</a> struct.
+The goal response callback is called when an action server accepts or rejects the goal and the result callback is called when the result for the goal is received.
+Optional callbacks were also added to <a class="reference external" href="https://github.com/ros2/rclcpp/blob/ef41059a751702274667e2164182c062b47c453d/rclcpp_action/include/rclcpp_action/client.hpp#L432-L434">rclcpp_action::Client::async_cancel_goal</a>
+and <a class="reference external" href="https://github.com/ros2/rclcpp/blob/ef41059a751702274667e2164182c062b47c453d/rclcpp_action/include/rclcpp_action/client.hpp#L399-L401">rclcpp_action::Client::async_get_result</a>.</p>
+</li>
+<li><p>Changes to goal transition names:</p>
+<p>The names of goal state transitions have been refactored to reflect the design documention.
+This affects <code class="docutils literal notranslate"><span class="pre">rcl_action</span></code>, <code class="docutils literal notranslate"><span class="pre">rclcpp_action</span></code>, and <code class="docutils literal notranslate"><span class="pre">rclpy</span></code>.
+Here is a list of the event name changes (<em>Old name -&gt; New name</em>):</p>
+<ul class="simple">
+<li><p>GOAL_EVENT_CANCEL -&gt; GOAL_EVENT_CANCEL_GOAL</p></li>
+<li><p>GOAL_EVENT_SET_SUCCEEDED -&gt; GOAL_EVENT_SUCCEED</p></li>
+<li><p>GOAL_EVENT_SET_ABORTED -&gt; GOAL_EVENT_ABORT</p></li>
+<li><p>GOAL_EVENT_SET_CANCELED -&gt; GOAL_EVENT_CANCELED</p></li>
+</ul>
+</li>
+<li><p>Changes to <code class="docutils literal notranslate"><span class="pre">CancelGoal.srv</span></code>:</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">return_code</span></code> field was added to the response message of the <code class="docutils literal notranslate"><span class="pre">CancelGoal</span></code> service.
+This is to better communicate a reason for a failed service call.
+See the <a class="reference external" href="https://github.com/ros2/rcl_interfaces/pull/76">pull request</a> and connected issue for details.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="rviz">
+<h3><a class="toc-backref" href="#id19">rviz</a><a class="headerlink" href="#rviz" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Plugins should use fully qualified type names otherwise a warning will be logged.
+For <a class="reference external" href="https://github.com/ros2/rviz/blob/dfceae319d49546f1e4ad39689853c18fef0001e/rviz_default_plugins/plugins_description.xml#L13">example</a>, use the type <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/Image</span></code> instead of <code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code>.
+See <a class="reference external" href="https://github.com/ros2/rviz/pull/387">PR introducing this change</a> for more details.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="known-issues">
+<h2><a class="toc-backref" href="#id20">Known Issues</a><a class="headerlink" href="#known-issues" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/issues/715">[ros2/rclcpp#715]</a> There is an inconsistency in the way that parameter YAML files are loaded between standalone ROS 2 nodes and composed ROS 2 nodes.
+Currently available workarounds are noted in an <a class="reference external" href="https://github.com/ros2/rclcpp/issues/715#issuecomment-497392626">issue comment</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclpy/issues/360">[ros2/rclpy#360]</a> rclpy nodes ignore <code class="docutils literal notranslate"><span class="pre">ctrl-c</span></code> when using OpenSplice on Windows.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rosidl_typesupport_opensplice/issues/30">[ros2/rosidl_typesupport_opensplice#30]</a> There is a bug preventing nesting a message inside of a service or action definition with the same name when using OpenSplice.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/pull/781">[ros2/rclcpp#781]</a> Calling <code class="docutils literal notranslate"><span class="pre">get_parameter</span></code>/<code class="docutils literal notranslate"><span class="pre">list_parameter</span></code> from within <code class="docutils literal notranslate"><span class="pre">on_set_parameter_callback</span></code> causes a deadlock on Dashing.  This is fixed for Eloquent, but is an ABI break so has not been backported to Dashing.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/issues/912">[ros2/rclcpp#912]</a> Inter-process communication forces a message copy when intra-process communication takes place between an <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> publisher and a single <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> subscription (published <code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> is internally being promoted to an <code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code>).</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rosbag2/issues/125">[ros2/rosbag2#125]</a> Topics with unreliable QOS are not recorded.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/issues/715">[ros2/rclcpp#715]</a> Composable nodes cannot receive parameters via remapping. Supplying parameters to composable nodes can be accomplished using the methods described in <a class="reference external" href="https://github.com/ros2/rclcpp/issues/715#issuecomment-497392626">[this comment]</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rclcpp/issues/893">[ros2/rclcpp#893]</a> <code class="docutils literal notranslate"><span class="pre">rclcpp::Context</span></code> is not destroyed because of a reference cycle with <code class="docutils literal notranslate"><span class="pre">rclcpp::GraphListener</span></code>. This causes a memory leak. A fix has not been backported because of the risk of breaking ABI.</p></li>
+</ul>
+</div>
+<div class="section" id="timeline-before-the-release">
+<h2><a class="toc-backref" href="#id21">Timeline before the release</a><a class="headerlink" href="#timeline-before-the-release" title="Permalink to this headline"></a></h2>
+<p>A few milestones leading up to the release:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Mon. Apr 8th (alpha)</dt><dd><p>First releases of core packages available.
+Testing can happen from now on (some features might not have landed yet).</p>
+</dd>
+<dt>Thu. May 2nd</dt><dd><p>API freeze for core packages</p>
+</dd>
+<dt>Mon. May 6th (beta)</dt><dd><p>Updated releases of core packages available.
+Additional testing of the latest features.</p>
+</dd>
+<dt>Thu. May 16th</dt><dd><p>Feature freeze.
+Only bug fix releases should be made after this point.
+New packages can be released independently.</p>
+</dd>
+<dt>Mon. May 20th (release candidate)</dt><dd><p>Updated releases of core packages available.</p>
+</dd>
+<dt>Wed. May 29th</dt><dd><p>Freeze rosdistro.
+No PRs for Dashing on the <a class="reference external" href="http://docs.ros.org/en/independent/api/rosdistro/html/rosdistro.html#module-rosdistro" title="(in rosdistro)"><code class="xref any docutils literal notranslate"><span class="pre">rosdistro</span></code></a> repo will be merged (reopens after the release announcement).</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="Release-Eloquent-Elusor.html" rel="prev" title="Eloquent Elusor (eloquent)"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="Release-Crystal-Clemmys.html" rel="next" title="Crystal Clemmys (crystal)">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, Open Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

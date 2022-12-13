@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Executor arguments — colcon  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/colcon.ico" rel="shortcut icon"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="event-handler-arguments.html" rel="next" title="Event handler arguments"/>
+<link href="global-arguments.html" rel="prev" title="Global arguments"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../index.html">
+<img alt="Logo" class="logo" src="../_static/colcon.svg"/>
+</a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">colcon</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item active">Executor arguments</li>
+<li class="wy-breadcrumbs-aside">
+<a href="../_sources/reference/executor-arguments.rst.txt" rel="nofollow"> View page source</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="executor-arguments">
+<h1>Executor arguments<a class="headerlink" href="#executor-arguments" title="Permalink to this headline"></a></h1>
+<p>The executor is responsible for processing jobs in verbs which have more than
+one item of work.
+For each argument the name in brackets indicates which package contributes it.</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/executor-args_executor_arg"></a><dl id="executor-args-executor-arg">
+<dt>\–executor EXECUTOR [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>The executor to process all jobs.
+The default is chosen based on the priorities of all available executor
+extensions.
+To see a complete list invoke
+<code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">extensions</span> <span class="pre">colcon_core.executor</span> <span class="pre">--verbose</span></code>.</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/executor-args_executor_arg_sequential"></a><ul id="executor-args-executor-arg-sequential">
+<li><p><code class="docutils literal notranslate"><span class="pre">sequential</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</p>
+<p>Process one package at a time.</p>
+</li>
+</ul>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/executor-args_executor_arg_parallel"></a><ul id="executor-args-executor-arg-parallel">
+<li><p><code class="docutils literal notranslate"><span class="pre">parallel</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-parallel-executor</span></code>]</p>
+<p>Process multiple jobs in parallel.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/executor-args_parallel-workers_arg"></a><dl class="simple" id="executor-args-parallel-workers-arg">
+<dt>\–parallel-workers NUMBER [<code class="docutils literal notranslate"><span class="pre">colcon-parallel-executor</span></code>]</dt><dd><p>The maximum number of jobs to process in parallel.
+The default value is the number of logical CPU cores as reported by
+<a class="reference external" href="https://docs.python.org/3/library/os.html#os.cpu_count">os.cpu_count()</a>.
+This option only affects <code class="docutils literal notranslate"><span class="pre">--executor</span> <span class="pre">parallel</span></code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="global-arguments.html" rel="prev" title="Global arguments"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="event-handler-arguments.html" rel="next" title="Event handler arguments">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

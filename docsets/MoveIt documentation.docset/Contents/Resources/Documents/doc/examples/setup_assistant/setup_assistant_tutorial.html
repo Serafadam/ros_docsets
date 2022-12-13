@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveIt Setup Assistant &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/setup_assistant/setup_assistant_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="URDF and SRDF" href="../urdf_srdf/urdf_srdf_tutorial.html" />
+    <link rel="prev" title="Planning For Differential-Drive Mobile Base and an Arm" href="../mobile_base_arm/mobile_base_arm_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MoveIt Setup Assistant</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-start">Step 1: Start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-generate-self-collision-matrix">Step 2: Generate Self-Collision Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-add-virtual-joints">Step 3: Add Virtual Joints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-add-planning-groups">Step 4: Add Planning Groups</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-add-robot-poses">Step 5: Add Robot Poses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-label-end-effectors">Step 6: Label End Effectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-add-passive-joints">Step 7: Add Passive Joints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-8-3d-perception">Step 8: 3D Perception</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-9-gazebo-simulation">Step 9: Gazebo Simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-10-ros-control">Step 10: ROS Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-11-add-author-information">Step 11: Add Author Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-12-generate-configuration-files">Step 12: Generate Configuration Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-s-next">What’s Next</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-reading">Additional Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">MoveIt Setup Assistant</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/setup_assistant/setup_assistant_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="moveit-setup-assistant">
+<h1>MoveIt Setup Assistant<a class="headerlink" href="#moveit-setup-assistant" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/MoveIt_setup_assistant_launch.png"><img alt="../../../_images/MoveIt_setup_assistant_launch.png" src="../../../_images/MoveIt_setup_assistant_launch.png" style="width: 700px;" /></a>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p>The MoveIt Setup Assistant is a graphical user interface for
+configuring any robot for use with MoveIt. Its primary function is
+generating a Semantic Robot Description Format (SRDF) file for your
+robot. Additionally, it generates other necessary configuration files
+for use with the MoveIt pipeline. To learn more about the SRDF, you
+can go through the <a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html"><span class="doc">URDF/SRDF Overview</span></a>
+page.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>MoveIt and ROS</p>
+<ul>
+<li><p>Follow the instructions for <a class="reference external" href="http://moveit.ros.org/install/">installing MoveIt</a>
+first if you have not already done that.</p></li>
+<li><p>If you haven’t already done so, make sure you have the <a class="reference external" href="https://github.com/frankaemika/franka_ros">Franka description
+package</a> for Noetic:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">noetic</span><span class="o">-</span><span class="n">franka</span><span class="o">-</span><span class="n">description</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you have the <code class="docutils literal notranslate"><span class="pre">panda_moveit_config</span></code> package already git-cloned from the <em>Getting Started</em> page, be sure to delete that now since this tutorial will teach you how to create it from scratch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">src</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">panda_moveit_config</span>
+<span class="n">catkin</span> <span class="n">clean</span> <span class="n">panda_moveit_config</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="step-1-start">
+<h2>Step 1: Start<a class="headerlink" href="#step-1-start" title="Permalink to this headline"></a></h2>
+<ul>
+<li><p>To start the MoveIt Setup Assistant:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_setup_assistant</span> <span class="n">setup_assistant</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</li>
+<li><p>This will bring up the start screen with two choices: <em>Create New
+MoveIt Configuration Package</em> or <em>Edit Existing MoveIt
+Configuration Package</em>.</p></li>
+<li><p>Click on the <em>Create New MoveIt Configuration Package</em> button to
+bring up the following screen:</p></li>
+</ul>
+<img alt="../../../_images/setup_assistant_start.png" src="../../../_images/setup_assistant_start.png" />
+<ul class="simple">
+<li><p>Click on the browse button and navigate to the <em>panda_arm_hand.urdf.xacro</em> file
+installed when you installed the Franka package above. (This file
+gets installed in
+/opt/ros/noetic/share/franka_description/robots/panda_arm_hand.urdf.xacro on Ubuntu
+with ROS Noetic.)  Choose that file and then click <em>Load Files</em>. The
+Setup Assistant will load the files (this might take a few seconds)
+and present you with this screen:</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_100.png"><img alt="../../../_images/setup_assistant_panda_100.png" src="../../../_images/setup_assistant_panda_100.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-2-generate-self-collision-matrix">
+<h2>Step 2: Generate Self-Collision Matrix<a class="headerlink" href="#step-2-generate-self-collision-matrix" title="Permalink to this headline"></a></h2>
+<p>The Default Self-Collision Matrix Generator searches for pairs of
+links on the robot that can safely be disabled from collision
+checking, decreasing motion planning processing time. These pairs of
+links are disabled when they are always in collision, never in
+collision, in collision in the robot’s default position or when the
+links are adjacent to each other on the kinematic chain. The sampling
+density specifies how many random robot positions to check for self
+collision. Higher densities require more computation time while lower
+densities have a higher possibility of disabling pairs that should not
+be disabled. The default value is 10,000 collision checks. Collision
+checking is done in parallel to decrease processing time.</p>
+<ul class="simple">
+<li><p>Click on the <em>Self-Collisions</em> pane selector on the left-hand side
+and click on the <em>Generate Collision Matrix</em> button. The
+Setup Assistant will work for a few second before presenting you the
+results of its computation in the main table.</p></li>
+</ul>
+<p><a class="reference internal" href="../../../_images/setup_assistant_panda_self_collisions.png"><img alt="before" class="align-middle" src="../../../_images/setup_assistant_panda_self_collisions.png" style="width: 500px;" /></a> → <a class="reference internal" href="../../../_images/setup_assistant_panda_self_collisions_done.png"><img alt="after" class="align-middle" src="../../../_images/setup_assistant_panda_self_collisions_done.png" style="width: 500px;" /></a></p>
+</div>
+<div class="section" id="step-3-add-virtual-joints">
+<h2>Step 3: Add Virtual Joints<a class="headerlink" href="#step-3-add-virtual-joints" title="Permalink to this headline"></a></h2>
+<p>Virtual joints are used primarily to attach the robot to the
+world. For the Panda we will define only one virtual joint attaching the
+<em>panda_link0</em> of the Panda to the <em>world</em> world
+frame. This virtual joint represents the motion of the base of the
+robot in a plane.</p>
+<ul class="simple">
+<li><p>Click on the <em>Virtual Joints</em> pane selector. Click on <em>Add Virtual Joint</em></p></li>
+<li><p>Set the joint name as “virtual_joint”</p></li>
+<li><p>Set the child link as “panda_link0” and the parent frame name as “world”.</p></li>
+<li><p>Set the Joint Type as “fixed”.</p></li>
+<li><p>Click <em>Save</em> and you should see this screen:</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_virtual_joints.png"><img alt="../../../_images/setup_assistant_panda_virtual_joints.png" src="../../../_images/setup_assistant_panda_virtual_joints.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-4-add-planning-groups">
+<h2>Step 4: Add Planning Groups<a class="headerlink" href="#step-4-add-planning-groups" title="Permalink to this headline"></a></h2>
+<p>Planning groups are used for semantically describing different parts
+of your robot, such as defining what an arm is, or an end effector.</p>
+<ul class="simple">
+<li><p>Click on the <em>Planning Groups</em> pane selector.</p></li>
+<li><p>Click on <em>Add Group</em> and you should see the following screen:</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_planning_groups.png"><img alt="../../../_images/setup_assistant_panda_planning_groups.png" src="../../../_images/setup_assistant_panda_planning_groups.png" style="width: 700px;" /></a>
+<p>Add the arm</p>
+<ul class="simple">
+<li><p>We will first add Panda arm as a planning group</p>
+<ul>
+<li><p>Enter <em>Group Name</em> as <strong>panda_arm</strong></p></li>
+<li><p>Choose <em>kdl_kinematics_plugin/KDLKinematicsPlugin</em> as the
+kinematics solver. <em>Note: if you have a custom robot and would
+like a powerful custom IK solver, see</em> <a class="reference internal" href="../ikfast/ikfast_tutorial.html"><span class="doc">Kinematics/IKFast</span></a></p></li>
+<li><p>Let <em>Kin. Search Resolution</em> and <em>Kin. Search Timeout</em> stay at
+their default values.</p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_arm.png"><img alt="../../../_images/setup_assistant_panda_arm.png" src="../../../_images/setup_assistant_panda_arm.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Now, click on the <em>Add Joints</em> button. You will see a
+list of joints on the left hand side. You need to choose all the
+joints that belong to the arm and add them to the right hand
+side. The joints are arranged in the order that they are stored in
+an internal tree structure. This makes it easy to select a serial
+chain of joints.</p>
+<ul>
+<li><p>Click on <strong>virtual_joint</strong>, hold down the <strong>Shift</strong>
+button on your keyboard and then click on the
+<em>panda_joint8</em>. Now click on the <strong>&gt;</strong> button to add these
+joints into the list of selected joints on the right.</p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_arm_joints.png"><img alt="../../../_images/setup_assistant_panda_arm_joints.png" src="../../../_images/setup_assistant_panda_arm_joints.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Click <em>Save</em> to save the selected group.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_arm_joints_saved.png"><img alt="../../../_images/setup_assistant_panda_arm_joints_saved.png" src="../../../_images/setup_assistant_panda_arm_joints_saved.png" style="width: 700px;" /></a>
+<p>Add the gripper</p>
+<ul class="simple">
+<li><p>We will also add a group for the end
+effector. NOTE that you will do this using a different procedure
+than adding the arm.</p>
+<ul>
+<li><p>Click on the <em>Add Group</em> button.</p></li>
+<li><p>Enter <em>Group Name</em> as <strong>hand</strong></p></li>
+<li><p>Let <em>Kinematic Solver</em> stay at its default value; <strong>None</strong>.</p></li>
+<li><p>Let <em>Kin. Search Resolution</em> and <em>Kin. Search Timeout</em> stay at their default values.</p></li>
+<li><p>Click on the <em>Add Links</em> button.</p></li>
+<li><p>Choose <strong>panda_hand</strong>, <strong>panda_leftfinger</strong>, and <strong>panda_rightfinger</strong> and add them
+to the list of <em>Selected Links</em> on the right hand side.</p></li>
+<li><p>Click <em>Save</em></p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_planning_groups_gripper.png"><img alt="../../../_images/setup_assistant_panda_planning_groups_gripper.png" src="../../../_images/setup_assistant_panda_planning_groups_gripper.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-5-add-robot-poses">
+<h2>Step 5: Add Robot Poses<a class="headerlink" href="#step-5-add-robot-poses" title="Permalink to this headline"></a></h2>
+<p>The Setup Assistant allows you to add certain fixed poses into the
+configuration. This helps if, for example, you want to define a
+certain position of the robot as a <strong>Home</strong> position.</p>
+<ul class="simple">
+<li><p>Click on the <em>Robot Poses</em> pane.</p></li>
+<li><p>Click <em>Add Pose</em>. Choose a name for the pose. The robot will be in
+its <em>Default</em> position where the joint values are set to the
+mid-range of the allowed joint value range. Move the individual
+joints around until you are happy and then <em>Save</em> the pose. Note
+how poses are associated with particular groups. You can save
+individual poses for each group.</p></li>
+<li><p><strong>IMPORTANT TIP</strong>: Try to move all the joints around. If there is
+something wrong with the joint limits in your URDF, you should be able
+to see it immediately here.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_saved_poses.png"><img alt="../../../_images/setup_assistant_panda_saved_poses.png" src="../../../_images/setup_assistant_panda_saved_poses.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-6-label-end-effectors">
+<h2>Step 6: Label End Effectors<a class="headerlink" href="#step-6-label-end-effectors" title="Permalink to this headline"></a></h2>
+<p>We have already added the gripper of the Panda. Now, we
+will designate this group as a special group:
+<strong>end effectors</strong>. Designating this group as end effectors allows
+some special operations to happen on them internally.</p>
+<ul class="simple">
+<li><p>Click on the <em>End Effectors</em> pane.</p></li>
+<li><p>Click <em>Add End Effector</em>.</p></li>
+<li><p>Choose <strong>hand</strong> as the <em>End Effector Name</em> for the gripper.</p></li>
+<li><p>Select <strong>hand</strong> as the <em>End Effector Group</em>.</p></li>
+<li><p>Select <strong>panda_link8</strong> as the <em>Parent Link</em> for this end-effector.</p></li>
+<li><p>Leave <em>Parent Group</em> blank.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_end_effector_add.png"><img alt="../../../_images/setup_assistant_panda_end_effector_add.png" src="../../../_images/setup_assistant_panda_end_effector_add.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-7-add-passive-joints">
+<h2>Step 7: Add Passive Joints<a class="headerlink" href="#step-7-add-passive-joints" title="Permalink to this headline"></a></h2>
+<p>The passive joints tab is meant to allow specification of any passive
+joints that might exist in a robot. These are joints that are unactuated
+on a robot (e.g. passive casters.) This tells the planners that they
+cannot (kinematically) plan for these joints because they can’t be
+directly controlled. The Panda does not have any passive
+joints so we will skip this step.</p>
+</div>
+<div class="section" id="step-8-3d-perception">
+<h2>Step 8: 3D Perception<a class="headerlink" href="#step-8-3d-perception" title="Permalink to this headline"></a></h2>
+<p>The 3D Perception tab is meant to set the parameters of the YAML configuration file
+for configuring the 3D sensors <strong>sensors_3d.yaml</strong>.</p>
+<p>e.g. <strong>point_cloud</strong> parameters:</p>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_3d_perception_point_cloud.png"><img alt="../../../_images/setup_assistant_panda_3d_perception_point_cloud.png" src="../../../_images/setup_assistant_panda_3d_perception_point_cloud.png" style="width: 700px;" /></a>
+<p>For more details about those parameters please see perception pipeline <a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html"><span class="doc">tutorial</span></a></p>
+<p>In case of <strong>sensors_3d.yaml</strong> was not needed, choose <strong>None</strong>.</p>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_3d_perception.png"><img alt="../../../_images/setup_assistant_panda_3d_perception.png" src="../../../_images/setup_assistant_panda_3d_perception.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-9-gazebo-simulation">
+<h2>Step 9: Gazebo Simulation<a class="headerlink" href="#step-9-gazebo-simulation" title="Permalink to this headline"></a></h2>
+<p>The Simulation tab can be used to help you simulate your robot with Gazebo by generating a new Gazebo compatible urdf if needed.</p>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_simulation_screen.png"><img alt="../../../_images/setup_assistant_panda_simulation_screen.png" src="../../../_images/setup_assistant_panda_simulation_screen.png" style="width: 700px;" /></a>
+<p>You can use the generated robot <strong>urdf</strong> to spawn the robot in Gazebo in the following way.</p>
+<ul>
+<li><p>Use rosrun to start gazebo empty world:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">gazebo_ros</span> <span class="n">empty_world</span><span class="o">.</span><span class="n">launch</span> <span class="n">paused</span><span class="o">:=</span><span class="n">true</span> <span class="n">use_sim_time</span><span class="o">:=</span><span class="n">false</span> <span class="n">gui</span><span class="o">:=</span><span class="n">true</span> <span class="n">throttled</span><span class="o">:=</span><span class="n">false</span> <span class="n">recording</span><span class="o">:=</span><span class="n">false</span> <span class="n">debug</span><span class="o">:=</span><span class="n">true</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use rosrun to spawn the robot:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">gazebo_ros</span> <span class="n">spawn_model</span> <span class="o">-</span><span class="n">file</span> <span class="o">&lt;/</span><span class="n">path_to_new_urdf</span><span class="o">/</span><span class="n">file_name</span><span class="o">.</span><span class="n">urdf</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">urdf</span> <span class="o">-</span><span class="n">x</span> <span class="mi">0</span> <span class="o">-</span><span class="n">y</span> <span class="mi">0</span> <span class="o">-</span><span class="n">z</span> <span class="mi">1</span> <span class="o">-</span><span class="n">model</span> <span class="n">panda</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_gazebo.png"><img alt="../../../_images/setup_assistant_panda_gazebo.png" src="../../../_images/setup_assistant_panda_gazebo.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-10-ros-control">
+<h2>Step 10: ROS Control<a class="headerlink" href="#step-10-ros-control" title="Permalink to this headline"></a></h2>
+<p>ROS Control is a set of packages that include controller interfaces, controller managers, transmissions and hardware_interfaces, for more details please look at <a class="reference external" href="http://wiki.ros.org/ros_control">ros_control documentation</a></p>
+<p>ROS Control tab can be used to auto generate simulated controllers to actuate the joints of your robot. This will allow us to provide the correct ROS interfaces MoveIt.</p>
+<ul class="simple">
+<li><p>Click on the <em>ROS Control</em> pane selector.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_ros_control.png"><img alt="../../../_images/setup_assistant_panda_ros_control.png" src="../../../_images/setup_assistant_panda_ros_control.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Click on <em>Add Controller</em> and you should see the following screen:</p></li>
+<li><p>We will first add Panda arm position controller</p></li>
+<li><p>Enter <em>Controller Name</em> as <strong>arm_position_controller</strong></p></li>
+<li><p>Choose <strong>position_controllers/JointPositionController</strong> as the controller type</p></li>
+<li><p>Next you have to choose this controller joints, you can add joints individually or add all the joints in a planning group all together.</p></li>
+<li><p>Now, click on Add Planning Group Joints.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_ros_control_create.png"><img alt="../../../_images/setup_assistant_panda_ros_control_create.png" src="../../../_images/setup_assistant_panda_ros_control_create.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Choose panda_arm planning group to add all the joints in that group to the arm controller.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_ros_control_add_joints.png"><img alt="../../../_images/setup_assistant_panda_ros_control_add_joints.png" src="../../../_images/setup_assistant_panda_ros_control_add_joints.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Click <em>Save</em> to save the selected controller.</p></li>
+</ul>
+</div>
+<div class="section" id="step-11-add-author-information">
+<h2>Step 11: Add Author Information<a class="headerlink" href="#step-11-add-author-information" title="Permalink to this headline"></a></h2>
+<p>Catkin requires author information for publishing purposes</p>
+<ul class="simple">
+<li><p>Click on the <em>Author Information</em> pane.</p></li>
+<li><p>Enter your name and email address.</p></li>
+</ul>
+</div>
+<div class="section" id="step-12-generate-configuration-files">
+<h2>Step 12: Generate Configuration Files<a class="headerlink" href="#step-12-generate-configuration-files" title="Permalink to this headline"></a></h2>
+<p>You are almost there. One last step - generating all the configuration
+files that you will need to start using MoveIt</p>
+<ul class="simple">
+<li><p>Click on the <em>Configuration Files</em> pane. Choose a location and
+name for the ROS package that will be generated containing your new
+set of configuration files. Click browse, select a good
+location (for example, your home directory), click <strong>Create New Folder</strong>, call it
+“panda_moveit_config”, and click <strong>Choose</strong>.
+“panda_moveit_config” is the location used in the rest of the
+documentation on this wiki. This package does not have to be within your
+ROS package path. All generated files will go directly into the
+directory you have chosen.</p></li>
+<li><p>Click on the <em>Generate Package</em> button. The Setup Assistant will
+now generate and write a set of launch and config files into the
+directory of your choosing. All the generated files will appear in the
+Generated Files/Folders tab and you can click on each of them for a
+description of what they contain.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/setup_assistant_panda_done.png"><img alt="../../../_images/setup_assistant_panda_done.png" src="../../../_images/setup_assistant_panda_done.png" style="width: 700px;" /></a>
+<ul class="simple">
+<li><p>Congratulations!! - You are now done generating the configuration
+files you need for MoveIt</p></li>
+</ul>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s Next<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>The MoveIt RViz plugin</p>
+<ul class="simple">
+<li><p>Start looking at how you can use the generated configuration files
+to play with MoveIt using the
+<a class="reference internal" href="../../tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">MoveIt RViz Plugin</span></a>.</p></li>
+</ul>
+<p>Setup IKFast Inverse Kinematics Solver</p>
+<ul class="simple">
+<li><p>A faster IK solver than the default KDL solver, but takes some
+additional steps to setup:
+<a class="reference internal" href="../ikfast/ikfast_tutorial.html"><span class="doc">Kinematics/IKFast</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="additional-reading">
+<h2>Additional Reading<a class="headerlink" href="#additional-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>See the <a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html"><span class="doc">URDF and SRDF</span></a> page for more
+details on the components of the URDF and SRDF mentioned in this tutorial.</p></li>
+</ul>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../mobile_base_arm/mobile_base_arm_tutorial.html" class="btn btn-neutral float-left" title="Planning For Differential-Drive Mobile Base and an Arm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../urdf_srdf/urdf_srdf_tutorial.html" class="btn btn-neutral float-right" title="URDF and SRDF" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

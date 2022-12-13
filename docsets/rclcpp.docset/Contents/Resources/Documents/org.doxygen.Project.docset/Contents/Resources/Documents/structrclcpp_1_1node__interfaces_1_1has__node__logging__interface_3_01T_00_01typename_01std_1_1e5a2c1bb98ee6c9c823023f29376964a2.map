@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::has_node_logging_interface&lt; T, typename std::enable_if&lt; std::is_same&lt; std::shared_ptr&lt; rclcpp::node_interfaces::NodeLoggingInterface &gt;, decltype(std::declval&lt; T &gt;().get_node_logging_interface())&gt;::value &gt;::type &gt;" name="rclcpp::node_interfaces::has_node_logging_interface&lt; T, typename std::enable_if&lt; std::is_same&lt; std::shared_ptr&lt; rclcpp::node_interfaces::NodeLoggingInterface &gt;, decltype(std::declval&lt; T &gt;().get_node_logging_interface())&gt;::value &gt;::type &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,275,209"/>
+<area shape="rect" id="node2" title=" " alt="" coords="84,5,196,32"/>
+</map>

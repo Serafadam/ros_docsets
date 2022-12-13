@@ -1,0 +1,4 @@
+<map id="rclcpp::experimental::buffers::RingBufferImplementation&lt; BufferT &gt;" name="rclcpp::experimental::buffers::RingBufferImplementation&lt; BufferT &gt;">
+<area shape="rect" id="node1" title="Store elements in a fixed&#45;size, FIFO buffer." alt="" coords="5,109,260,165"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1experimental_1_1buffers_1_1BufferImplementationBase.html" title=" " alt="" coords="19,5,246,61"/>
+</map>

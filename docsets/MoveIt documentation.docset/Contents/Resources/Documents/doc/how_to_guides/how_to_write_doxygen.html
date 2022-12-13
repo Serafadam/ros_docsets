@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Contribute Doxygen Comments &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/how_to_guides/how_to_write_doxygen.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using OMPL Constrained Planning" href="using_ompl_constrained_planning/ompl_constrained_planning.html" />
+    <link rel="prev" title="How to Set Up MoveIt 2 Docker Containers in Ubuntu" href="how_to_setup_docker_containers_in_ubuntu.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_to_guide.html">How-To Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_generate_api_doxygen_locally.html">How To Generate API Doxygen Reference Locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_setup_docker_containers_in_ubuntu.html">How to Set Up MoveIt 2 Docker Containers in Ubuntu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Contribute Doxygen Comments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instructions">Instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="using_ompl_constrained_planning/ompl_constrained_planning.html">Using OMPL Constrained Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_planning/parallel_planning_tutorial.html">Running Multiple Planning Pipelines in Parallel with MoveItCpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controller_teleoperation/controller_teleoperation.html">How to Teleoperate a Robotic Arm with a Gamepad</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">How to Contribute Doxygen Comments</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/how_to_write_doxygen.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="how-to-contribute-doxygen-comments">
+<h1>How to Contribute Doxygen Comments<a class="headerlink" href="#how-to-contribute-doxygen-comments" title="Permalink to this headline"></a></h1>
+<p>This guide will provide an introduction and overview to good practices for contributing Doxygen comments.</p>
+<div class="section" id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>How to write helpful Doxygen Comments</p></li>
+<li><p>Some useful Doxygen Plugins</p></li>
+</ul>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline"></a></h2>
+<p>When making a contribution to MoveIt (or any code, really), make sure your code is readable and well-commented throughout.
+Using Doxygen comments allows for standardization of documentation and ensures that all contributions have certain information included with them.
+One of the primary benefits of Doxygen is that it allows for automatic generation of API documentation in a consistent, readable format.</p>
+<p>Plugins exist to automate the creation of Doxygen documentation for</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://packagecontrol.io/packages/DoxyDoxygen">SublimeText</a></p></li>
+<li><p><a class="reference external" href="https://www.vim.org/scripts/script.php?script_id=987">VIM</a></p></li>
+<li><p><a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen">VSCode</a></p></li>
+</ul>
+<p>As well as for <a class="reference external" href="https://www.doxygen.nl/helpers.html">many other IDEs</a>.</p>
+<p>In general, a Doxygen comment should include a brief description of the thing it is commenting on at the very least.
+Descriptions of the input parameters (if any) as well as the output parameters (if any) is helpful as well.</p>
+<p>Several examples are provided below:</p>
+<blockquote>
+<div><div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/** @brief Check for robot self collision. Any collision between any pair of links is checked for, NO collisions are</span>
+<span class="cm">*   ignored.</span>
+<span class="cm">*</span>
+<span class="cm">*  @param req A CollisionRequest object that encapsulates the collision request</span>
+<span class="cm">*  @param res A CollisionResult object that encapsulates the collision result</span>
+<span class="cm">*  @param state The kinematic state for which checks are being made */</span><span class="w"></span>
+<span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">checkSelfCollision</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CollisionRequest</span><span class="o">&amp;</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">CollisionResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">res</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/** @brief A bounding volume hierarchy (BVH) implementation of a tesseract contact manager */</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BulletBVHManager</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="cm">/** @brief Instantiate and return a instance of a subclass of Type using our</span>
+<span class="cm">*         pluginlib::ClassLoader.</span>
+<span class="cm">* @param class_id A string identifying the class uniquely among</span>
+<span class="cm">*        classes of its parent class.  rviz::GridDisplay might be</span>
+<span class="cm">*        rviz/Grid, for example.</span>
+<span class="cm">* @param error_return If non-NULL and there is an error, *error_return is set to a description of the problem.</span>
+<span class="cm">* @return A new instance of the class identified by class_id, or NULL if there was an error.</span>
+<span class="cm">*</span>
+<span class="cm">* If makeRaw() returns NULL and error_return is not NULL, *error_return will be set.</span>
+<span class="cm">* On success, *error_return will not be changed. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="n">Type</span><span class="o">*</span><span class="w"> </span><span class="nf">makeRaw</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">QString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">class_id</span><span class="p">,</span><span class="w"> </span><span class="n">QString</span><span class="o">*</span><span class="w"> </span><span class="n">error_return</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>These examples serve to provide the types and descriptions of inputs and outputs and capture what the function or class is doing, in brief.</p>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<p>Feel free to look around in the repositories to see additional examples of Doxygen comments.
+Looking at a similar piece of code to what you will be contributing and seeing its comments is the easiest way to learn.</p>
+<p>See the how-to guide on how to generate Doxygen API locally <a class="reference internal" href="how_to_generate_api_doxygen_locally.html"><span class="doc">here</span></a>.</p>
+<p>See the Doxygen documentation guide <a class="reference external" href="https://www.doxygen.nl/manual/docblocks.html">here</a>.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how_to_setup_docker_containers_in_ubuntu.html" class="btn btn-neutral float-left" title="How to Set Up MoveIt 2 Docker Containers in Ubuntu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_ompl_constrained_planning/ompl_constrained_planning.html" class="btn btn-neutral float-right" title="Using OMPL Constrained Planning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

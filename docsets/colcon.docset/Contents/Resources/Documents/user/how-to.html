@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How to — colcon  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/colcon.ico" rel="shortcut icon"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="what-is-a-workspace.html" rel="next" title="What is a Workspace?"/>
+<link href="configuration.html" rel="prev" title="Configuration"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../index.html">
+<img alt="Logo" class="logo" src="../_static/colcon.svg"/>
+</a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#show-all-output-immediately-on-the-console">Show all output immediately on the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#show-all-output-on-the-console-after-a-package-has-finished">Show all output on the console after a package has finished</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-only-a-single-package-or-selected-packages">Build only a single package (or selected packages)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-selected-packages-including-their-dependencies">Build selected packages including their dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rebuild-packages-which-depend-on-a-specific-package">Rebuild packages which depend on a specific package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-packages-that-create-a-python-c-c-extension">Build packages that create a Python C/C++ Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-selected-packages-as-well-as-their-dependents">Test selected packages as well as their dependents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-specific-tests">Run specific tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-packages-using-pytest">Python packages using pytest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cmake-packages-using-ctest">CMake packages using CTest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-cmake-packages-without-configuring-tests">Build CMake packages without configuring tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmake-packages-generating-compile-commands-json">CMake packages generating compile_commands.json</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enable-additional-output-for-debugging">Enable additional output for debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">colcon</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item active">How to</li>
+<li class="wy-breadcrumbs-aside">
+<a href="../_sources/user/how-to.rst.txt" rel="nofollow"> View page source</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="how-to">
+<h1>How to<a class="headerlink" href="#how-to" title="Permalink to this headline"></a></h1>
+<p>This section describe how to perform common tasks.</p>
+<div class="section" id="show-all-output-immediately-on-the-console">
+<h2>Show all output immediately on the console<a class="headerlink" href="#show-all-output-immediately-on-the-console" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon &lt;verb&gt; --event-handlers console_direct+
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use the parallel executor (which is the default when that extension is installed) the output of packages processed in parallel will be interleaved.</p>
+</div>
+</div>
+<div class="section" id="show-all-output-on-the-console-after-a-package-has-finished">
+<h2>Show all output on the console after a package has finished<a class="headerlink" href="#show-all-output-on-the-console-after-a-package-has-finished" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon &lt;verb&gt; --event-handlers console_cohesion+
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While this delays the output until a package has finished, it avoids interleaving the output when using the parallel executor.</p>
+</div>
+</div>
+<div class="section" id="build-only-a-single-package-or-selected-packages">
+<h2>Build only a single package (or selected packages)<a class="headerlink" href="#build-only-a-single-package-or-selected-packages" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --packages-select &lt;name-of-pkg&gt;
+$ colcon build --packages-select &lt;name-of-pkg&gt; &lt;name-of-another-pkg&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This assumes that you have built dependencies of the selected packages within the workspace before.</p>
+</div>
+</div>
+<div class="section" id="build-selected-packages-including-their-dependencies">
+<h2>Build selected packages including their dependencies<a class="headerlink" href="#build-selected-packages-including-their-dependencies" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --packages-up-to &lt;name-of-pkg&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="rebuild-packages-which-depend-on-a-specific-package">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Rebuild packages which depend on a specific package"></a><span id="rebuild-packages"></span><h2>Rebuild packages which depend on a specific package<a class="headerlink" href="#rebuild-packages-which-depend-on-a-specific-package" title="Permalink to this headline"></a></h2>
+<p>Assuming you have built the whole workspace before and then made changes to one package.
+In order to rebuild this package as well as all packages which (recursively) depend on this package invoke:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --packages-above &lt;name-of-pkg&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-packages-that-create-a-python-c-c-extension">
+<h2>Build packages that create a Python C/C++ Extension<a class="headerlink" href="#build-packages-that-create-a-python-c-c-extension" title="Permalink to this headline"></a></h2>
+<p>To be able to build a C/C++ extension when using the option <code class="docutils literal notranslate"><span class="pre">--symlink-install</span></code>, you must include the following lines in your package’s <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'one.cpp'</span><span class="p">,</span> <span class="s1">'two.cpp'</span><span class="p">]</span>  <span class="c1"># This will contain all C/C++ source files</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a.h'</span><span class="p">,</span> <span class="s1">'b.hpp'</span><span class="p">,</span> <span class="s1">'c.h'</span><span class="p">]</span>  <span class="c1"># Any included header files must be listed here</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">[(</span><span class="s1">'.'</span><span class="p">,</span> <span class="n">sources</span> <span class="o">+</span> <span class="n">headers</span><span class="p">)]</span>  <span class="c1"># Assuming that your source and header files are</span>
+                                           <span class="c1"># on the same level as setup.py, this will copy</span>
+                                           <span class="c1"># all required files to the colcon build folder</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, run <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span> <span class="pre">--symlink-install</span></code> as usual.</p>
+</div>
+<div class="section" id="test-selected-packages-as-well-as-their-dependents">
+<h2>Test selected packages as well as their dependents<a class="headerlink" href="#test-selected-packages-as-well-as-their-dependents" title="Permalink to this headline"></a></h2>
+<p>If you have built the relevant packages before you can run the tests the same way as described in the <a class="reference internal" href="#rebuild-packages"><span class="std std-ref">previous section</span></a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon <span class="nb">test</span> --packages-above &lt;name-of-pkg&gt;
+</pre></div>
+</div>
+<p>If you haven’t built the relevant packages before you can build the to-be-tested packages as well as their recursive dependencies with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --packages-above-and-dependencies &lt;name-of-pkg&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-specific-tests">
+<h2>Run specific tests<a class="headerlink" href="#run-specific-tests" title="Permalink to this headline"></a></h2>
+<p>Depending on the type of the package a different tool is being used to run tests.</p>
+<div class="section" id="python-packages-using-pytest">
+<h3>Python packages using pytest<a class="headerlink" href="#python-packages-using-pytest" title="Permalink to this headline"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon <span class="nb">test</span> --packages-select &lt;name-of-pkg&gt; --pytest-args ...
+</pre></div>
+</div>
+<p>Pytest provides multiple ways to select individual tests:</p>
+<ul>
+<li><p>Tests can be identified by their name:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ... --pytest-args -k name_of_the_test_function
+</pre></div>
+</div>
+</li>
+<li><p>Tests can be identified using markers if the tests have been decorated with markers before:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ... --pytest-args -m marker_name
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Both approaches also support logical expressions like <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code>.
+For more information see the <a class="reference external" href="https://docs.pytest.org/en/latest/example/markers.html">pytest documentation</a>.</p>
+</div>
+<div class="section" id="cmake-packages-using-ctest">
+<h3>CMake packages using CTest<a class="headerlink" href="#cmake-packages-using-ctest" title="Permalink to this headline"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon <span class="nb">test</span> --packages-select &lt;name-of-pkg&gt; --ctest-args ...
+</pre></div>
+</div>
+<p>CTest provides multiple ways to select individual tests:</p>
+<ul>
+<li><p>Tests can be selected / excluded using a regular expression matching their name:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ... --ctest-args -R regex
+$ ... --ctest-args -E regex
+</pre></div>
+</div>
+</li>
+<li><p>Tests can be selected / excluded using a regular expression matching their label (which have to be assigned to each test when adding the test in the CMake code):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ... --ctest-args -L regex
+$ ... --ctest-args -LE regex
+</pre></div>
+</div>
+</li>
+</ul>
+<p>For more information see the <a class="reference external" href="https://cmake.org/cmake/help/latest/manual/ctest.1.html#options">CTest documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="build-cmake-packages-without-configuring-tests">
+<h2>Build CMake packages without configuring tests<a class="headerlink" href="#build-cmake-packages-without-configuring-tests" title="Permalink to this headline"></a></h2>
+<p>For CMake packages which use the CMake option <code class="docutils literal notranslate"><span class="pre">BUILD_TESTING</span></code> (which is the standard in the <a class="reference external" href="https://cmake.org/cmake/help/v3.0/module/CTest.html">CTest module</a>) you can skip configuring and building tests to improve the build time:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --cmake-args -DBUILD_TESTING<span class="o">=</span>OFF
+</pre></div>
+</div>
+</div>
+<div class="section" id="cmake-packages-generating-compile-commands-json">
+<h2>CMake packages generating compile_commands.json<a class="headerlink" href="#cmake-packages-generating-compile-commands-json" title="Permalink to this headline"></a></h2>
+<p>When the CMake option <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html">CMAKE_EXPORT_COMPILE_COMMANDS</a> is enabled a <code class="docutils literal notranslate"><span class="pre">compile_commands.json</span></code> file is generated in the package specific build directory containing the exact compiler calls for all translation units of the project in machine-readable form:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS<span class="o">=</span>ON
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">colcon-cmake</span></code> will additionally generate a workspace-level <code class="docutils literal notranslate"><span class="pre">compile_commands.json</span></code> in the build directory which aggregates the information from all package specific json files.</p>
+</div>
+<div class="section" id="enable-additional-output-for-debugging">
+<h2>Enable additional output for debugging<a class="headerlink" href="#enable-additional-output-for-debugging" title="Permalink to this headline"></a></h2>
+<p>Beside the output of the actually invoked commands to build or test packages the tool by default only outputs warning or error messages.
+For debugging purposes you can enable logging messages with other levels (e.g. <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">debug</span></code>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon --log-level info &lt;verb&gt; ...
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="configuration.html" rel="prev" title="Configuration"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="what-is-a-workspace.html" rel="next" title="What is a Workspace?">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

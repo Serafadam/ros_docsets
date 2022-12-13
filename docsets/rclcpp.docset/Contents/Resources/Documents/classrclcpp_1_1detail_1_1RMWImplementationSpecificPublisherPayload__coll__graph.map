@@ -1,0 +1,4 @@
+<map id="rclcpp::detail::RMWImplementationSpecificPublisherPayload" name="rclcpp::detail::RMWImplementationSpecificPublisherPayload">
+<area shape="rect" id="node1" title=" " alt="" coords="5,95,257,136"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1detail_1_1RMWImplementationSpecificPayload.html" title="Mechanism for passing rmw implementation specific settings through the ROS interfaces." alt="" coords="5,5,257,47"/>
+</map>

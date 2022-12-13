@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Governance — ROS 2 documentation  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://docs.ros.org/en/The-ROS2-Project/Governance.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/clipboard.min.js"></script>
+<script src="../_static/copybutton.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="Governance/ROS2-TSC-Charter.html" rel="next" title="ROS 2 Technical Steering Committee Charter"/>
+<link href="ROSCon-Content.html" rel="prev" title="ROSCon Talks"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../index.html"> ROS 2 documentation
+          </a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Releases.html">Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Humble-Hawksbill.html">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/End-of-Life.html">End-of-Life Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Releases/Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Dashing-Diademata.html">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Advanced.html">Advanced</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Simulation-Main.html">Simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Webots.html">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../How-To-Guides.html">How-to Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installation-Troubleshooting.html">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Documentation.html">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Contact.html">Contact</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../The-ROS2-Project.html">The ROS 2 Project</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Citations.html">Citations</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">ROS 2 documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../The-ROS2-Project.html">The ROS 2 Project</a></li>
+<li class="breadcrumb-item active">Project Governance</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros2_documentation/blob/rolling/source/The-ROS2-Project/Governance.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="project-governance">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Project Governance"></a><span id="governance"></span><h1>Project Governance<a class="headerlink" href="#project-governance" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#technical-steering-committee-tsc" id="id1">Technical Steering Committee (TSC)</a></p></li>
+<li><p><a class="reference internal" href="#working-groups-wgs" id="id2">Working Groups (WGs)</a></p></li>
+<li><p><a class="reference internal" href="#community-working-groups" id="id3">Community Working Groups</a></p></li>
+<li><p><a class="reference internal" href="#upcoming-ros-events" id="id4">Upcoming ROS Events</a></p></li>
+</ul>
+</div>
+<div class="section" id="technical-steering-committee-tsc">
+<h2><a class="toc-backref" href="#id1">Technical Steering Committee (TSC)</a><a class="headerlink" href="#technical-steering-committee-tsc" title="Permalink to this headline"></a></h2>
+<p>Since the beginning of ROS, the project has been overseen and prioritized primarily by one organization, first Willow Garage and now Open Robotics.
+That approach has worked well enough, as evidenced by the widespread adoption of ROS around the world.</p>
+<p>But with ROS 2, we want to broaden participation to accelerate ROS 2 delivery, starting with these areas: determining the roadmap, developing core tools and libraries, and establishing working groups to focus on important topics.
+To that end, we’ve established a Technical Steering Committee (TSC).
+As described in the <a class="reference internal" href="Governance/ROS2-TSC-Charter.html"><span class="doc">charter</span></a>, the TSC comprises representatives of organizations that are contributing to the development of ROS 2, and it has the responsibility to set the technical direction for the project.</p>
+<p>Packages relevant to this ROS 2 TSC are listed in <a class="reference external" href="https://www.ros.org/reps/rep-2005.html">REP 2005</a>.</p>
+<p>Meeting notes can be found on <a class="reference external" href="https://discourse.ros.org/tag/tsc">ROS Discourse</a>.</p>
+<p>The current members of the ROS 2 TSC are (23 as of 2022-02-01):</p>
+<!--
+The CSS and HTML below generate the list of TSC members.
+It is currently using raw HTML because there was no way that I could see to make the
+ReStructured Text "list-tables" directive make the logos a consistent size.
+-->
+<style>
+table.tscclass {
+  border: 1px solid #e1e4e5;
+  border-top-color: rgb(225, 228, 229);
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-right-color: rgb(225, 228, 229);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-bottom-color: rgb(225, 228, 229);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: rgb(225, 228, 229);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  width: 100%;
+}
+td.tscclass {
+  border-top-color: rgb(225, 228, 229);
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-right-color: rgb(225, 228, 229);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-bottom-color: rgb(225, 228, 229);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: rgb(225, 228, 229);
+  border-left-style: solid;
+  border-left-width: 1px;
+  padding-left: 15px;
+}
+tr.tscclass:nth-child(2n-1) {
+  background-color: #f3f6f6;
+}
+</style>
+<table class="tscclass">
+<tbody>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.adlinktech.com"><img alt="ADLINK Technology logo" src="../_images/adlink.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>ADLINK Technology: Angelo Corsaro</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.amazon.com"><img alt="Amazon logo" src="../_images/amazon.svg" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Amazon: Camilo Buscaron</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.apex.ai"><img alt="Apex.AI logo" src="../_images/apex.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Apex.AI: Lyle Johnson</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.bosch.com"><img alt="Bosch logo" src="../_images/bosch_75h.jpg" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Bosch: Ralph Lange</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://ubuntu.com"><img alt="Ubuntu logo" src="../_images/ubuntu.svg" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Canonical: Jeremie Deray</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://eprosima.com"><img alt="eProsima logo" src="../_images/eprosima.svg" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>eProsima: Jaime Martin Losa</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://gvsc.army.mil"><img alt="GVSC logo" src="../_images/gvsc.png" style="height: 50px;"/></a></p></td>
+<td align="center" class="tscclass"><p>GVSC: Jerry Towler (SwRI)</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.intel.com"><img alt="Intel logo" src="../_images/intel.svg" style="height: 50px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Intel: Harold Yang</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.irobot.com"><img alt="iRobot logo" src="../_images/irobot.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>iRobot: Alberto Soragna</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.microsoft.com"><img alt="Microsoft logo" src="../_images/microsoft.svg" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Microsoft: Lou Amadio</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.openrobotics.org"><img alt="Open Robotics logo" src="../_images/openrobotics-logo-stacked.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Open Robotics: Chris Lalancette</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://picknik.ai"><img alt="PickNik logo" src="../_images/picknik.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>PickNik: Henning Kayser</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.robotis.com"><img alt="ROBOTIS logo" src="../_images/robotis.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>ROBOTIS: Will Son</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://rosindustrial.org/about/description/"><img alt="ROS Industriallogo" src="../_images/ros-industrial.png" style="height: 35px;"/></a></p></td>
+<td align="center" class="tscclass"><p>ROS-Industrial: Matt Robinson</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.samsung.com"><img alt="Samsung logo" src="../_images/samsung.svg" style="height: 25px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Samsung: Steven Macenski</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.sony.com"><img alt="Sony logo" src="../_images/sony.png" style="height: 60px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Sony: Tomoya Fujita</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.tri.global"><img alt="TRI logo" src="../_images/tri_logo_landscape-web.svg" style="height: 50px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Toyota Research Institute: Ian McMahon</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.windriver.com"><img alt="Wind River logo" src="../_images/windriver.png" style="height: 60px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Wind River: Andrei Kholodnyi</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><a class="reference internal" href="https://www.foxglove.dev"><img alt="Foxglove logo" src="../_images/foxglove.png" style="height: 60px;"/></a></p></td>
+<td align="center" class="tscclass"><p>Foxglove:  Adrian Macneil</p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><img alt="ROS 2 logo" src="../_images/ros2_logo.png" style="height: 60px;"/></p></td>
+<td align="center" class="tscclass"><p>Community Representative: <a href="https://github.com/omichel"> Oliver Michel </a> </p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><img alt="ROS 2 logo" src="../_images/ros2_logo.png" style="height: 60px;"/></p></td>
+<td align="center" class="tscclass"><p>Community Representative: <a href="https://github.com/pmusau17"> Patrick Musau </a></p></td>
+</tr>
+<tr class="tscclass">
+<td align="center" class="tscclass"><p><img alt="ROS 2 logo" src="../_images/ros2_logo.png" style="height: 60px;"/></p></td>
+<td align="center" class="tscclass"><p>Community Representative:  <a href="https://www.linkedin.com/in/brett-aldrich-42915b97/">Brett Aldrich </a></p></td>
+</tr>
+</tbody>
+</table>
+<br/><p>If you are interested in joining the ROS 2 TSC, please inquire via <a class="reference external" href="mailto:info%40openrobotics.org">info<span>@</span>openrobotics<span>.</span>org</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="working-groups-wgs">
+<h2><a class="toc-backref" href="#id2">Working Groups (WGs)</a><a class="headerlink" href="#working-groups-wgs" title="Permalink to this headline"></a></h2>
+<p>As described in its <a class="reference internal" href="Governance/ROS2-TSC-Charter.html"><span class="doc">charter</span></a>, the TSC establishes working groups (WGs) to discuss and make progress on specific topics.</p>
+<p>The current WGs are (12 as of 2021-01-12):</p>
+<div class="section" id="client-libraries">
+<h3>Client Libraries<a class="headerlink" href="#client-libraries" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Geoffrey Biggs, Alberto Soragna</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Meeting invite group: <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-client-libraries-working-group-invites">ros-client-libraries-working-group-invites@googlegroups.com</a></p></li>
+<li><p><a class="reference external" href="https://docs.google.com/document/d/1MAMQisfbITOR4eDyCBhTEaFJ3QBNW38S7Z7RpBBSSvg/edit">Meeting minutes and agendas</a></p></li>
+<li><p>Working group charter: <a class="reference external" href="https://github.com/ros2-client-libraries-wg/community">https://github.com/ros2-client-libraries-wg/community</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tags/wg-client-libraries">wg-client-libraries</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="control">
+<h3>Control<a class="headerlink" href="#control" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Bence Magyar</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Webite link: <a class="reference external" href="https://control.ros.org">https://control.ros.org</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-control-working-group-invites">ros-control-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tags/wg-ros2-control">wg-ros2-control</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="edge-ai">
+<h3>Edge AI<a class="headerlink" href="#edge-ai" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): TBD</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-edge-ai-working-group-invites">ros-edge-ai-working-group-invites</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-edgeai">wg-edgeai</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="embedded-systems">
+<h3>Embedded Systems<a class="headerlink" href="#embedded-systems" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Lara Moreno, Pablo Garrido</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://discourse.ros.org/uploads/short-url/z1caIm7m5IVP4cPJUwg3Chq36wO.pdf">2019-07-29 meeting notes</a></p></li>
+<li><p><a class="reference external" href="https://discourse.ros.org/t/ros2-embedded-sig-meeting-2/7243/5">2019-01-15 meeting notes</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-embedded-working-group-invites">ros-embedded-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-embedded">wg-embedded</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="middleware">
+<h3>Middleware<a class="headerlink" href="#middleware" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): William Woodall</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-middleware-working-group-invites">ros-middleware-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-middleware">wg-middleware</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="navigation">
+<h3>Navigation<a class="headerlink" href="#navigation" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Steve Macenski</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://discourse.ros.org/t/ros2-navigation-wg-thursday-3-00-pm-pacific-gmt-7-00/7586/9">2019-03-17 meeting notes</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-navigation-working-group-invites">ros-navigation-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-navigation">wg-navigation</a></p></li>
+<li><p>Discourse Channel: <a class="reference external" href="https://discourse.ros.org/c/navigation/44">Navigation Stack</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="manipulation">
+<h3>Manipulation<a class="headerlink" href="#manipulation" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Dave Coleman, Mark Moll</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://discourse.ros.org/t/moveit-maintainer-meeting-all-invited-july-25th/9899">About our working group meetings</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-manipulation-working-group-invites">ros-manipulation-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/moveit2">wg-moveit</a></p></li>
+<li><p>Discourse Channel: <a class="reference external" href="https://discourse.ros.org/c/moveit">MoveIt</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="real-time">
+<h3>Real-time<a class="headerlink" href="#real-time" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Andrei Kholodnyi, Carlos San Vicente</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://real-time-working-group.readthedocs.io/">Working group website</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros-realtime/community">Working Group Community</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-real-time-working-group-invites">ros-real-time-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-real-time">wg-real-time</a></p></li>
+<li><p>Matrix chat <a class="reference external" href="https://matrix.to/#/+ros-realtime:matrix.org">+ros-realtime:matrix.org</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="safety">
+<h3>Safety<a class="headerlink" href="#safety" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Geoffrey Biggs</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros-safety/safety_working_group">Working group website</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros-safety/safety_working_group">Working group Community</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-safety-working-group-invites">ros-safety-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-safety-critical">wg-safety-critical</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="security">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Security"></a><span id="security-working-group"></span><h3>Security<a class="headerlink" href="#security" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Jeremie Deray</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros-security/community">ROS 2 Security Working Group Community</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-security-working-group-invites">ros-security-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-security">wg-security</a></p></li>
+<li><p>Matrix chat <a class="reference external" href="https://matrix.to/#/+rosorg-security:matrix.org">+rosorg-security:matrix.org</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="tooling">
+<h3>Tooling<a class="headerlink" href="#tooling" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Emerson Knapp</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros-tooling/community">Charter</a></p></li>
+<li><p><a class="reference external" href="https://docs.google.com/document/d/1UXWaEkT6ji0Z0uTtJJSni5Y6fiopM9qOOzv4ldeNaAM/edit">Meeting Notes</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-tooling-working-group-invites">ros-tooling-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-tooling">wg-tooling</a></p></li>
+<li><p>Matrix chat <a class="reference external" href="https://matrix.to/#/+ros-tooling:matrix.org">+ros-tooling:matrix.org</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="webtools">
+<h3>WebTools<a class="headerlink" href="#webtools" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Emerson Knapp</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/RobotWebTools/community">Charter</a></p></li>
+<li><p><a class="reference external" href="https://docs.google.com/document/d/1esrRj2x80TSCEHOwuh-cT_bQvAqqvloQAQr8mPMzcTc/edit">Meeting Notes</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/playlist?list=PLpUh4ScdBhSMb98_C0q_zIT8GNMehYBd">Video Recordings</a></p></li>
+<li><p><a class="reference external" href="https://groups.google.com/g/ros-webtools-working-group">Google Group</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-webtools">wg-webtools</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="community-working-groups">
+<h2><a class="toc-backref" href="#id3">Community Working Groups</a><a class="headerlink" href="#community-working-groups" title="Permalink to this headline"></a></h2>
+<p>The ROS 2 TSC is interested in encouraging and promoting working groups outside its direct purview.
+To provide extra visibility the TSC maintains a list of the community driven working groups here as well as working with the community to provide them with the same infrastructure.</p>
+<div class="section" id="hardware-acceleration">
+<h3>Hardware Acceleration<a class="headerlink" href="#hardware-acceleration" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Víctor Mayoral Vilches</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/g/ros-2-hardware-acceleration-wg">ROS 2 Hardware Acceleration WG Google Group</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-acceleration">wg-acceleration</a></p></li>
+<li><p>Github organization: <a class="reference external" href="https://github.com/ros-acceleration">ros-acceleration</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="rust">
+<h3>Rust<a class="headerlink" href="#rust" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Lead(s): Esteve Fernandez, Jacob Hassold</p></li>
+<li><p>Resources:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2-rust/rust-wg">Working group Community</a></p></li>
+<li><p>Meeting invite group <a class="reference external" href="https://groups.google.com/forum/#!forum/ros-rust-working-group-invites">ros-rust-working-group-invites@googlegroups.com</a></p></li>
+<li><p>Discourse tag: <a class="reference external" href="https://discourse.ros.org/tag/wg-rust">wg-rust</a></p></li>
+<li><p>Matrix chat <a class="reference external" href="https://matrix.to/#/+rosorg-rust:matrix.org">+rosorg-rust:matrix.org</a></p></li>
+</ul>
+</div></blockquote>
+<p>If you’d like to join an existing ROS 2 WG, please contact the appropriate group lead(s) directly.
+If you’d like to create a new WG, please inquire via <a class="reference external" href="mailto:info%40openrobotics.org">info<span>@</span>openrobotics<span>.</span>org</a>.</p>
+<p>Working Group Policies</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Meetings should be posted to the Google calendar as well as announced on Discourse.</p></li>
+<li><p>Meetings should have notes and be posted to Discourse using appropriate working group tag.</p></li>
+<li><p>For attending the groups meetings please join the associated google group to get invites automatically.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="upcoming-ros-events">
+<h2><a class="toc-backref" href="#id4">Upcoming ROS Events</a><a class="headerlink" href="#upcoming-ros-events" title="Permalink to this headline"></a></h2>
+<p>Upcoming Working group meetings can be found in this <a class="reference external" href="https://calendar.google.com/calendar/embed?src=agf3kajirket8khktupm9go748%40group.calendar.google.com&amp;ctz=America%2FLos_Angeles">Google Calendar</a>.
+It can be accessed via <a class="reference external" href="https://calendar.google.com/calendar/ical/agf3kajirket8khktupm9go748%40group.calendar.google.com/public/basic.ics">iCal</a>.</p>
+<iframe frameborder="0" height="600" scrolling="no" src="https://calendar.google.com/calendar/embed?src=agf3kajirket8khktupm9go748%40group.calendar.google.com" style="border: 0" width="800"></iframe><p>If you have an individual event or series of events that you’d like to post please contact <a class="reference external" href="mailto:info%40openrobotics.org">info<span>@</span>openrobotics<span>.</span>org</a></p>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="ROSCon-Content.html" rel="prev" title="ROSCon Talks"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="Governance/ROS2-TSC-Charter.html" rel="next" title="ROS 2 Technical Steering Committee Charter">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, Open Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

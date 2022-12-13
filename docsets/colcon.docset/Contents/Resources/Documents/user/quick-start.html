@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick start &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tl-dr">TL;DR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-ros-2-packages">Build ROS 2 packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-ros-1-packages">Build ROS 1 packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test-ros-1-packages">Test ROS 1 packages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-gazebo-and-the-ignition-packages">Build Gazebo and the ignition packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Quick start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/quick-start.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="quick-start">
+<h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline"></a></h1>
+<p>This section gives a high-level overview of how to use the <code class="docutils literal notranslate"><span class="pre">colcon</span></code> command.</p>
+<div class="section" id="tl-dr">
+<h2>TL;DR<a class="headerlink" href="#tl-dr" title="Permalink to this headline"></a></h2>
+<p>The following is an example workflow and sequence of commands using default settings:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p /tmp/workspace/src     <span class="c1"># Make a workspace directory with a src subdirectory</span>
+$ <span class="nb">cd</span> /tmp/workspace               <span class="c1"># Change directory to the workspace root</span>
+$ &lt;...&gt;                           <span class="c1"># Populate the `src` directory with packages</span>
+$ colcon list                     <span class="c1"># List all packages in the workspace</span>
+$ colcon graph                    <span class="c1"># List all packages in the workspace in topological order</span>
+                                  <span class="c1"># and visualize their dependencies</span>
+$ colcon build                    <span class="c1"># Build all packages in the workspace</span>
+$ colcon <span class="nb">test</span>                     <span class="c1"># Test all packages in the workspace</span>
+$ colcon test-result --all        <span class="c1"># Enumerate all test results</span>
+$ . install/local_setup.bash      <span class="c1"># Setup the environment to use the built packages</span>
+$ &lt;...&gt;                           <span class="c1"># Use the built packages</span>
+</pre></div>
+</div>
+<p>The most commonly used arguments for the <code class="docutils literal notranslate"><span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">test</span></code> verbs are to only process a specific package or a specific package including all the recursive dependencies it needs.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --packages-select &lt;name-of-pkg&gt;
+$ colcon build --packages-up-to &lt;name-of-pkg&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The log files of the latest invocation can be found in the log directory which is by default in <code class="docutils literal notranslate"><span class="pre">~/.colcon/log/latest</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to see the output of each package after it finished you can pass the argument <code class="docutils literal notranslate"><span class="pre">--event-handlers</span> <span class="pre">console_cohesion+</span></code>.</p>
+</div>
+</div>
+<div class="section" id="build-ros-2-packages">
+<h2>Build ROS 2 packages<a class="headerlink" href="#build-ros-2-packages" title="Permalink to this headline"></a></h2>
+<p>The process of building <a class="reference external" href="http://www.ros2.org/">ROS 2</a> packages is described in the <a class="reference external" href="https://github.com/ros2/ros2/wiki/Installation#building-from-source">ROS 2 building from source</a> instructions.
+Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> instead of the recommended tool <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> only changes a couple of the steps.</p>
+<p>Instead of invoking <code class="docutils literal notranslate"><span class="pre">ament</span> <span class="pre">build</span></code> you can invoke <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build
+</pre></div>
+</div>
+<p>In order to use the built packages you need to source the <code class="docutils literal notranslate"><span class="pre">install/local_setup.&lt;ext&gt;</span></code> script mentioned in the instructions.</p>
+<p>For detailed information how command line arguments of <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> are mapped to <code class="docutils literal notranslate"><span class="pre">colcon</span></code> please see the <a class="reference internal" href="../migration/ament_tools.html"><span class="doc">ament_tools migration guide</span></a>.</p>
+</div>
+<div class="section" id="build-ros-1-packages">
+<h2>Build ROS 1 packages<a class="headerlink" href="#build-ros-1-packages" title="Permalink to this headline"></a></h2>
+<p>The process of building <a class="reference external" href="http://www.ros.org/">ROS 1</a> packages is described in the <a class="reference external" href="http://wiki.ros.org/melodic/Installation/Source">distro specific</a> building from source instructions.
+Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> instead of the recommended tool <code class="docutils literal notranslate"><span class="pre">catkin_make_isolated</span></code> only changes a couple of the steps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">colcon-ros</span></code> requires at least version 0.7.13 of <code class="docutils literal notranslate"><span class="pre">catkin</span></code> which provides a new CMake option the tool uses.</p>
+</div>
+<p>Instead of invoking <code class="docutils literal notranslate"><span class="pre">catkin_make_isolated</span> <span class="pre">--install</span></code> you can invoke <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">colcon</span></code> does by design not support the concept of a “devel space” as it exists in ROS 1.
+Instead it requires each package to be installed so each package must declare an install step in order to work with <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+</div>
+<p>In order to use the built packages you need to source the <code class="docutils literal notranslate"><span class="pre">install/local_setup.&lt;ext&gt;</span></code> rather than the <code class="docutils literal notranslate"><span class="pre">setup.&lt;ext&gt;</span></code> script mentioned in the instructions.
+For <code class="docutils literal notranslate"><span class="pre">bash</span></code> the command would be:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> install/local_setup.bash
+</pre></div>
+</div>
+<p>For detailed information how command line arguments of <code class="docutils literal notranslate"><span class="pre">catkin_make_isolated</span></code> are mapped to <code class="docutils literal notranslate"><span class="pre">colcon</span></code> please see the <a class="reference internal" href="../migration/catkin_make_isolated.html"><span class="doc">catkin_make_isolated migration guide</span></a>.
+For detailed information how command line arguments of <code class="docutils literal notranslate"><span class="pre">catkin_tools</span></code> are mapped to <code class="docutils literal notranslate"><span class="pre">colcon</span></code> please see the <a class="reference internal" href="../migration/catkin_tools.html"><span class="doc">catkin_tools migration guide</span></a>.</p>
+<div class="section" id="test-ros-1-packages">
+<h3>Test ROS 1 packages<a class="headerlink" href="#test-ros-1-packages" title="Permalink to this headline"></a></h3>
+<p>As of <code class="docutils literal notranslate"><span class="pre">colcon-ros</span></code> version 0.3.6 the <code class="docutils literal notranslate"><span class="pre">build</span></code> verb builds the test targets for ROS 1 packages implicitly (when available).</p>
+<p>In earlier versions you must build the custom <code class="docutils literal notranslate"><span class="pre">tests</span></code> target explicitly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon build --cmake-target tests
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="build-gazebo-and-the-ignition-packages">
+<h2>Build Gazebo and the ignition packages<a class="headerlink" href="#build-gazebo-and-the-ignition-packages" title="Permalink to this headline"></a></h2>
+<p>In more recent versions <a class="reference external" href="http://www.gazebosim.org/">Gazebo</a> has been refactored to split out a lot of the functionality into <a class="reference external" href="https://bitbucket.org/ignitionrobotics/">ignition</a> libraries.
+While that makes the project more modular it also increases the effort necessary to build all these packages from source.
+<code class="docutils literal notranslate"><span class="pre">colcon</span></code> can make this process easy again.</p>
+<p>In order to build a specific Gazebo version you need the right versions of the ignition libraries.
+At the time of writing Gazebo 9 is the latest release so we will use that for the purpose of this example.
+The following steps use a <code class="docutils literal notranslate"><span class="pre">.repos</span></code> to specify the various repositories with specific branches.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p /tmp/gazebo/src <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /tmp/gazebo
+$ wget https://gist.githubusercontent.com/dirk-thomas/6c1ca2a7f5f8c70ce7d3e1ef10a9f678/raw/490aaba72321284af956c9db12f9ef1550ef88cf/Gazebo9.repos
+$ vcs import src &lt; Gazebo9.repos
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Gist containing the repository list should be replaced with an “official” URL coming from the Gazebo project.</p>
+</div>
+<p>Before building the workspace with <code class="docutils literal notranslate"><span class="pre">colcon</span></code> the steps also fetch some additional metadata for Gazebo from a public repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ colcon metadata add default https://raw.githubusercontent.com/colcon/colcon-metadata-repository/master/index.yaml
+$ colcon metadata update
+$ colcon build
+</pre></div>
+</div>
+<p>To run Gazebo, which requires environment variables for e.g., the model paths, the same commands as for other packages can be used.
+Using the additional metadata the source script will also automatically source the Gazebo specific file <code class="docutils literal notranslate"><span class="pre">share/gazebo/setup.sh</span></code> which defines these environment variables.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ . install/local_setup.bash
+$ gazebo
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

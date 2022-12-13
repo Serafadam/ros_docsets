@@ -1,0 +1,8 @@
+<map id="rclcpp::exceptions::RCLErrorBase" name="rclcpp::exceptions::RCLErrorBase">
+<area shape="rect" id="node1" title=" " alt="" coords="5,136,145,177"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1UnsupportedEventTypeException.html" title=" " alt="" coords="193,5,383,47"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1exceptions_1_1RCLBadAlloc.html" title="Created when the ret is RCL_RET_BAD_ALLOC." alt="" coords="218,71,358,112"/>
+<area shape="rect" id="node4" href="$classrclcpp_1_1exceptions_1_1RCLError.html" title="Created when the return code does not match one of the other specialized exceptions." alt="" coords="218,136,358,177"/>
+<area shape="rect" id="node5" href="$classrclcpp_1_1exceptions_1_1RCLInvalidArgument.html" title="Created when the ret is RCL_RET_INVALID_ARGUMENT." alt="" coords="207,201,369,243"/>
+<area shape="rect" id="node6" href="$classrclcpp_1_1exceptions_1_1RCLInvalidROSArgsError.html" title="Created when the ret is RCL_RET_INVALID_ROS_ARGS." alt="" coords="195,267,381,308"/>
+</map>

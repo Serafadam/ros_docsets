@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ament_cmake user documentation &mdash; ROS 2 documentation  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="canonical" href="https://docs.ros.org/en/How-To-Guides/Ament-CMake-Documentation.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ament_cmake_python user documentation" href="Ament-CMake-Python-Documentation.html" />
+    <link rel="prev" title="Developing a ROS 2 package" href="Developing-a-ROS-2-Package.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> ROS 2 documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Releases.html">Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Humble-Hawksbill.html">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/End-of-Life.html">End-of-Life Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Releases/Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Dashing-Diademata.html">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Advanced.html">Advanced</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Simulation-Main.html">Simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Webots.html">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../How-To-Guides.html">How-to Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Installation-Troubleshooting.html">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The-ROS2-Project.html">The ROS 2 Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Governance.html">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Citations.html">Citations</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ROS 2 documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../How-To-Guides.html">How-to Guides</a></li>
+      <li class="breadcrumb-item active">ament_cmake user documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros2/ros2_documentation/blob/rolling/source/How-To-Guides/Ament-CMake-Documentation.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="ament-cmake-user-documentation">
+<h1>ament_cmake user documentation<a class="headerlink" href="#ament-cmake-user-documentation" title="Permalink to this headline"></a></h1>
+<p>ament_cmake is the build system for CMake based packages in ROS 2 (in particular, it will be used for most if not all C/C++ projects).
+It is a set of scripts enhancing CMake and adding convenience functionality for package authors.
+Knowing the basics of <a class="reference external" href="https://cmake.org/cmake/help/v3.5/">CMake</a> will be very helpful, an official tutorial can be found <a class="reference external" href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html">here</a>.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#basics" id="id1">Basics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#basic-project-outline" id="id2">Basic project outline</a></p></li>
+<li><p><a class="reference internal" href="#adding-files-and-headers" id="id3">Adding files and headers</a></p></li>
+<li><p><a class="reference internal" href="#adding-dependencies" id="id4">Adding Dependencies</a></p></li>
+<li><p><a class="reference internal" href="#building-a-library" id="id5">Building a Library</a></p></li>
+<li><p><a class="reference internal" href="#compiler-and-linker-options" id="id6">Compiler and linker options</a></p></li>
+<li><p><a class="reference internal" href="#building-libraries-on-windows" id="id7">Building libraries on Windows</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-and-linting" id="id8">Testing and Linting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#linting" id="id9">Linting</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id10">Testing</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#extending-ament" id="id11">Extending ament</a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-a-function-macro-to-ament" id="id12">Adding a function/macro to ament</a></p></li>
+<li><p><a class="reference internal" href="#adding-to-extension-points" id="id13">Adding to extension points</a></p></li>
+<li><p><a class="reference internal" href="#adding-extension-points" id="id14">Adding extension points</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#adding-resources" id="id15">Adding resources</a></p>
+<ul>
+<li><p><a class="reference internal" href="#the-ament-index-explained" id="id16">The ament index explained</a></p></li>
+<li><p><a class="reference internal" href="#querying-the-ament-index" id="id17">Querying the ament index</a></p></li>
+<li><p><a class="reference internal" href="#adding-to-the-ament-index" id="id18">Adding to the ament index</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="basics">
+<h2><a class="toc-backref" href="#id1">Basics</a><a class="headerlink" href="#basics" title="Permalink to this headline"></a></h2>
+<p>A basic CMake outline can be produced using <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">pkg</span> <span class="pre">create</span> <span class="pre">&lt;package_name&gt;</span></code> on the command line.
+The basic build information is then gathered in two files: the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> and the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> must contain all dependencies and a bit of metadata to allow colcon to find the correct build order for your packages, to install the required dependencies in CI as well as provide the information for a release with <code class="docutils literal notranslate"><span class="pre">bloom</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> contains the commands to build and package executables and libraries and will be the main focus of this document.</p>
+<div class="section" id="basic-project-outline">
+<h3><a class="toc-backref" href="#id2">Basic project outline</a><a class="headerlink" href="#basic-project-outline" title="Permalink to this headline"></a></h3>
+<p>The basic outline of the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> of an ament package contains:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.5</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">my_project</span><span class="p">)</span>
+
+<span class="nb">ament_package</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The argument to <code class="docutils literal notranslate"><span class="pre">project</span></code> will be the package name and must be identical to the package name in the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code>.</p>
+<p>The project setup is done by <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> and this call must occur exactly once per package.
+<code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> installs the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code>, registers the package with the ament index, and installs config (and possibly target) files for CMake so that it can be found by other packages using <code class="docutils literal notranslate"><span class="pre">find_package</span></code>.
+Since <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> gathers a lot of information from the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> it should be the last call in your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>.
+Although it is possible to follow calls to <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> by calls to <code class="docutils literal notranslate"><span class="pre">install</span></code> functions copying files and directories, it is simpler to just keep <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> the last call.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ament_package</span></code> can be given additional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS</span></code>: a list of CMake files (<code class="docutils literal notranslate"><span class="pre">.cmake</span></code> or <code class="docutils literal notranslate"><span class="pre">.cmake.in</span></code> templates expanded by <code class="docutils literal notranslate"><span class="pre">configure_file()</span></code>) which should be available to clients of the package.
+For an example of when to use these arguments, see the discussion in <a class="reference internal" href="#adding-resources">Adding resources</a>.
+For more information on how to use template files, see <a class="reference external" href="https://cmake.org/cmake/help/v3.5/command/configure_file.html">the official documentation</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS_POST</span></code>: same as <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS</span></code>, but the order in which the files are added differs.
+While <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS</span></code> files are included before the files generated for the <code class="docutils literal notranslate"><span class="pre">ament_export_*</span></code> calls the files from <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS_POST</span></code> are included afterwards.</p></li>
+</ul>
+<p>Instead of adding to <code class="docutils literal notranslate"><span class="pre">ament_package</span></code>, you can also add to the variable <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_CONFIG_EXTRAS</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_CONFIG_EXTRAS_POST</span></code> with the same effect.
+The only difference is again the order in which the files are added with the following total order:</p>
+<ul class="simple">
+<li><p>files added by <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS</span></code></p></li>
+<li><p>files added by appending to <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_CONFIG_EXTRAS</span></code></p></li>
+<li><p>files added by appending to <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_CONFIG_EXTRAS_POST</span></code></p></li>
+<li><p>files added by <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRAS_POST</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="adding-files-and-headers">
+<h3><a class="toc-backref" href="#id3">Adding files and headers</a><a class="headerlink" href="#adding-files-and-headers" title="Permalink to this headline"></a></h3>
+<p>There are two main targets to build: libraries and executables which are built by <code class="docutils literal notranslate"><span class="pre">add_library</span></code> and <code class="docutils literal notranslate"><span class="pre">add_executable</span></code> respectively.</p>
+<p>With the separation of header files and implementation in C/C++, it is not always necessary to add both files as argument to <code class="docutils literal notranslate"><span class="pre">add_library</span></code>/ <code class="docutils literal notranslate"><span class="pre">add_executable</span></code>.</p>
+<p>The following best practice is proposed:</p>
+<ul class="simple">
+<li><p>if you are building a library, put all headers which should be usable by clients and therefore must be installed into a subdirectory of the <code class="docutils literal notranslate"><span class="pre">include</span></code> folder named like the package, while all other files (<code class="docutils literal notranslate"><span class="pre">.c/.cpp</span></code> and header files which should not be exported) are inside the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder.</p></li>
+<li><p>only cpp files are explicitly referenced in the call to <code class="docutils literal notranslate"><span class="pre">add_library</span></code> or <code class="docutils literal notranslate"><span class="pre">add_executable</span></code></p></li>
+<li><p>allow to find headers via</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">my_target</span>
+<span class="w">  </span><span class="s">PUBLIC</span>
+<span class="w">    </span><span class="o">$&lt;</span><span class="nv">BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">$&lt;</span><span class="nv">INSTALL_INTERFACE:include</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This adds all files in the folder <code class="docutils literal notranslate"><span class="pre">${CMAKE_CURRENT_SOURCE_DIR}/include</span></code> to the public interface during build time and all files in the include folder (relative to <code class="docutils literal notranslate"><span class="pre">${CMAKE_INSTALL_DIR}</span></code>) when being installed.</p>
+<p>In principle, using generator expressions here is not necessary if both folders are called <code class="docutils literal notranslate"><span class="pre">include</span></code> and top-level with respect to <code class="docutils literal notranslate"><span class="pre">${CMAKE_CURRENT_SOURCE_DIR}</span></code> and <code class="docutils literal notranslate"><span class="pre">${CMAKE_INSTALL_DIR}</span></code>, but it is very common.</p>
+</div>
+<div class="section" id="adding-dependencies">
+<h3><a class="toc-backref" href="#id4">Adding Dependencies</a><a class="headerlink" href="#adding-dependencies" title="Permalink to this headline"></a></h3>
+<p>There are two ways to link your packages against a new dependency.</p>
+<p>The first and recommended way is to use the ament macro <code class="docutils literal notranslate"><span class="pre">ament_target_dependencies</span></code>.
+As an example, suppose we want to link <code class="docutils literal notranslate"><span class="pre">my_target</span></code> against the linear algebra library Eigen3.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">ament_target_dependencies</span><span class="p">(</span><span class="s">my_target</span><span class="w"> </span><span class="s">Eigen3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It includes the necessary headers and libraries and their dependencies to be correctly found by the project.
+It will also ensure that the include directories of all dependencies are ordered correctly when using overlay workspaces.</p>
+<p>The second way is to use <code class="docutils literal notranslate"><span class="pre">target_link_libraries</span></code>.</p>
+<p>The recommended way in modern CMake is to only use targets, exporting and linking against them.
+CMake targets are namespaced, similar to C++.
+For instance, <code class="docutils literal notranslate"><span class="pre">Eigen3</span></code> defines the target <code class="docutils literal notranslate"><span class="pre">Eigen3::Eigen</span></code>.</p>
+<p>At least until <code class="docutils literal notranslate"><span class="pre">Crystal</span> <span class="pre">Clemmys</span></code> target names are not supported in the <code class="docutils literal notranslate"><span class="pre">ament_target_dependencies</span></code> macro.
+Sometimes it will be necessary to call the <code class="docutils literal notranslate"><span class="pre">target_link_libaries</span></code> CMake function.
+In the example of Eigen3, the call should then look like</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_target</span><span class="w"> </span><span class="s">Eigen3::Eigen</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will also include necessary headers, libraries and their dependencies, but in contrast to <code class="docutils literal notranslate"><span class="pre">ament_target_dependencies</span></code> it might not correctly order the dependencies when using overlay workspaces.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It should never be necessary to <code class="docutils literal notranslate"><span class="pre">find_package</span></code> a library that is not explicitly needed but is a dependency of another dependency that is explicitly needed.
+If that is the case, file a bug against the corresponding package.</p>
+</div>
+</div>
+<div class="section" id="building-a-library">
+<h3><a class="toc-backref" href="#id5">Building a Library</a><a class="headerlink" href="#building-a-library" title="Permalink to this headline"></a></h3>
+<p>When building a reusable library, some information needs to be exported for downstream packages to easily use it.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_export_targets</span><span class="p">(</span><span class="s">my_libraryTargets</span><span class="w"> </span><span class="s">HAS_LIBRARY_TARGET</span><span class="p">)</span>
+<span class="nb">ament_export_dependencies</span><span class="p">(</span><span class="s">some_dependency</span><span class="p">)</span>
+
+<span class="nb">install</span><span class="p">(</span>
+<span class="w">  </span><span class="s">DIRECTORY</span><span class="w"> </span><span class="s">include/</span>
+<span class="w">  </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">include</span>
+<span class="p">)</span>
+
+<span class="nb">install</span><span class="p">(</span>
+<span class="w">  </span><span class="s">TARGETS</span><span class="w"> </span><span class="s">my_library</span>
+<span class="w">  </span><span class="s">EXPORT</span><span class="w"> </span><span class="s">my_libraryTargets</span>
+<span class="w">  </span><span class="s">LIBRARY</span><span class="w"> </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">lib</span>
+<span class="w">  </span><span class="s">ARCHIVE</span><span class="w"> </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">lib</span>
+<span class="w">  </span><span class="s">RUNTIME</span><span class="w"> </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">bin</span>
+<span class="w">  </span><span class="s">INCLUDES</span><span class="w"> </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">include</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, we assume that the folder <code class="docutils literal notranslate"><span class="pre">include</span></code> contains the headers which need to be exported.
+Note that it is not necessary to put all headers into a separate folder, only those that should be included by clients.</p>
+<p>Here is what’s happening in the snippet above:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ament_export_targets</span></code> macro exports the targets for CMake.
+This is necessary to allow your library’s clients to use the <code class="docutils literal notranslate"><span class="pre">target_link_libraries(client</span> <span class="pre">my_library::my_library)</span></code> syntax.
+<code class="docutils literal notranslate"><span class="pre">ament_export_targets</span></code> can take an arbitrary list of targets named as <code class="docutils literal notranslate"><span class="pre">EXPORT</span></code> in an install call and an additional option <code class="docutils literal notranslate"><span class="pre">HAS_LIBRARY_TARGET</span></code>, which adds potential libraries to environment variables.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ament_export_dependencies</span></code> exports dependencies to downstream packages.
+This is necessary so that the user of the library does not have to call <code class="docutils literal notranslate"><span class="pre">find_package</span></code> for those dependencies, too.</p></li>
+<li><p>The first <code class="docutils literal notranslate"><span class="pre">install</span></code> commands installs the header files which should be available to clients.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">ament_export_targets</span></code>, <code class="docutils literal notranslate"><span class="pre">ament_export_dependencies</span></code>, or other ament commands from a CMake subdirectory will not work as expected.
+This is because the CMake subdirectory has no way of setting necessary variables in the parent scope where <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> is called.</p>
+</div>
+<ul class="simple">
+<li><p>The last large install command installs the library.
+Archive and library files will be exported to the lib folder, runtime binaries will be installed to the bin folder and the path to installed headers is <code class="docutils literal notranslate"><span class="pre">include</span></code>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows DLLs are treated as runtime artifacts and installed into the <code class="docutils literal notranslate"><span class="pre">RUNTIME</span> <span class="pre">DESTINATION</span></code> folder.
+It is therefore advised to not leave out the <code class="docutils literal notranslate"><span class="pre">RUNTIME</span></code> install even when developing libraries on Unix based systems.</p>
+</div>
+<ul class="simple">
+<li><p>Regarding the <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">directory</span></code>, the install command only adds information to CMake, it does not actually install the includes folder.
+This is done by copying the headers via <code class="docutils literal notranslate"><span class="pre">install(DIRECTORY</span> <span class="pre">&lt;dir&gt;</span> <span class="pre">DESTINATION</span> <span class="pre">&lt;dest&gt;)</span></code> as described above.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">EXPORT</span></code> notation of the install call requires additional attention:
+It installs the CMake files for the <code class="docutils literal notranslate"><span class="pre">my_library</span></code> target.
+It is named exactly like the argument in <code class="docutils literal notranslate"><span class="pre">ament_export_targets</span></code> and could be named like the library.
+However, this will then prohibit using the <code class="docutils literal notranslate"><span class="pre">ament_target_dependencies</span></code> way of including your library.
+To allow for full flexibility, it is advised to prepend the export target with something like <code class="docutils literal notranslate"><span class="pre">&lt;target&gt;Targets</span></code>.</p></li>
+<li><p>All install paths are relative to <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>, which is already set correctly by colcon/ament</p></li>
+</ul>
+<p>There are two additional functions which can be used but are superfluous for target based installs:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_export_include_directories</span><span class="p">(</span><span class="s">include</span><span class="p">)</span>
+<span class="nb">ament_export_libraries</span><span class="p">(</span><span class="s">my_library</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first macro marks the directory of the exported include directories (this is achieved by <code class="docutils literal notranslate"><span class="pre">INCLUDES</span> <span class="pre">DESTINATION</span></code> in the target <code class="docutils literal notranslate"><span class="pre">install</span></code> call).
+The second macro marks the location of the installed library (this is done by the <code class="docutils literal notranslate"><span class="pre">HAS_LIBRARY_TARGET</span></code> argument in the call to <code class="docutils literal notranslate"><span class="pre">ament_export_targets</span></code>).</p>
+<p>Some of the macros can take different types of arguments for non-target exports, but since the recommended way for modern Make is to use targets, we will not cover them here.
+Documentation of these options can be found in the source code itself.</p>
+</div>
+<div class="section" id="compiler-and-linker-options">
+<h3><a class="toc-backref" href="#id6">Compiler and linker options</a><a class="headerlink" href="#compiler-and-linker-options" title="Permalink to this headline"></a></h3>
+<p>ROS 2 targets compilers which comply with the C++14 and C99 standard until at least <code class="docutils literal notranslate"><span class="pre">Crystal</span> <span class="pre">Clemmys</span></code>.
+Newer versions might be targeted in the future and are referenced <a class="reference external" href="https://www.ros.org/reps/rep-2000.html">here</a>.
+Therefore it is customary to set the corresponding CMake flags:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">CMAKE_C_STANDARD</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_STANDARD</span><span class="w"> </span><span class="s">99</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">CMAKE_CXX_STANDARD</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">14</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To keep the code clean, compilers should throw warnings for questionable code and these warnings should be fixed.</p>
+<p>It is recommended to at least cover the following warning levels:</p>
+<ul class="simple">
+<li><p>For Visual Studio, the default <code class="docutils literal notranslate"><span class="pre">W1</span></code> warnings are kept</p></li>
+<li><p>For GCC and Clang: <code class="docutils literal notranslate"><span class="pre">-Wall</span> <span class="pre">-Wextra</span> <span class="pre">-Wpedantic</span></code> are required and <code class="docutils literal notranslate"><span class="pre">-Wshadow</span> <span class="pre">-Werror</span></code> are advisable (the latter makes warnings errors).</p></li>
+</ul>
+<p>Although modern CMake advises to add compiler flags on a target basis, i.e. call</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">my_target</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">-Wall</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>it is at the moment recommended to use the directory level function <code class="docutils literal notranslate"><span class="pre">add_compile_options(-Wall)</span></code> to not clutter the code with target-based compile options for all executables and tests.</p>
+</div>
+<div class="section" id="building-libraries-on-windows">
+<h3><a class="toc-backref" href="#id7">Building libraries on Windows</a><a class="headerlink" href="#building-libraries-on-windows" title="Permalink to this headline"></a></h3>
+<p>Since Linux, Mac and Windows are all officially supported platforms, to have maximum impact any package should also build on Windows.
+The Windows library format enforces symbol visibility:
+Every symbol which should be used from a client has to be explicitly exported by the library (and data symbols need to be implicitly imported).</p>
+<p>To keep this compatible with Clang and GCC builds, it is advised to use the logic in <a class="reference external" href="https://gcc.gnu.org/wiki/Visibility">the GCC wiki</a>.
+To use it for a package called <code class="docutils literal notranslate"><span class="pre">my_library</span></code>:</p>
+<ul class="simple">
+<li><p>Copy the logic in the link into a header file called <code class="docutils literal notranslate"><span class="pre">visibility_control.hpp</span></code>.</p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">DLL</span></code> by <code class="docutils literal notranslate"><span class="pre">MY_LIBRARY</span></code> (for an example, see visibility control of <a class="reference external" href="https://github.com/ros2/rviz/blob/ros2/rviz_rendering/include/rviz_rendering/visibility_control.hpp">rviz_rendering</a>).</p></li>
+<li><p>Use the macros “MY_LIBRARY_PUBLIC” for all symbols you need to export (i.e. classes or functions).</p></li>
+<li><p>In the project <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> use:</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_compile_definitions</span><span class="p">(</span><span class="s">my_library</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s2">&quot;MY_LIBRARY_BUILDING_LIBRARY&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more details, see <a class="reference internal" href="../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html#windows-symbol-visibility"><span class="std std-ref">Windows Symbol Visibility in the Windows Tips and Tricks document</span></a>.</p>
+</div>
+</div>
+<div class="section" id="testing-and-linting">
+<h2><a class="toc-backref" href="#id8">Testing and Linting</a><a class="headerlink" href="#testing-and-linting" title="Permalink to this headline"></a></h2>
+<p>In order to separate testing from building the library with colcon, wrap all calls to linters and tests in a conditional:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="p">(</span><span class="s">BUILD_TESTING</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_gtest</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">ament_add_gtest</span><span class="p">(</span><span class="s">&lt;tests&gt;</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="linting">
+<h3><a class="toc-backref" href="#id9">Linting</a><a class="headerlink" href="#linting" title="Permalink to this headline"></a></h3>
+<p>It’s advised to use the combined call from <a class="reference external" href="https://github.com/ament/ament_lint/blob/rolling/ament_lint_auto/doc/index.rst#ament_lint_auto">ament_lint_auto</a>:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_lint_auto</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">ament_lint_auto_find_test_dependencies</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will run linters as defined in the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code>.
+It is recommended to use the set of linters defined by the package <code class="docutils literal notranslate"><span class="pre">ament_lint_common</span></code>.
+The individual linters included there, as well as their functions, can be seen in the <a class="reference external" href="https://github.com/ament/ament_lint/blob/rolling/ament_lint_common/doc/index.rst">ament_lint_common docs</a>.</p>
+<p>Linters provided by ament can also be added separately, instead of running <code class="docutils literal notranslate"><span class="pre">ament_lint_auto</span></code>.
+One example of how to do so can be found in the <a class="reference external" href="https://github.com/ament/ament_lint/blob/rolling/ament_cmake_lint_cmake/doc/index.rst">ament_cmake_lint_cmake documentation</a>.</p>
+</div>
+<div class="section" id="testing">
+<h3><a class="toc-backref" href="#id10">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<p>Ament contains CMake macros to simplify setting up GTests. Call:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_gtest</span><span class="p">)</span>
+<span class="nb">ament_add_gtest</span><span class="p">(</span><span class="s">some_test</span><span class="w"> </span><span class="s">&lt;test_sources&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to add a GTest.
+This is then a regular target which can be linked against other libraries (such as the project library).
+The macros have additional parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">APPEND_ENV</span></code>: append environment variables.
+For instance you can add to the ament prefix path by calling:</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_gtest</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">ament_add_gtest</span><span class="p">(</span><span class="s">some_test</span><span class="w"> </span><span class="s">&lt;test_sources&gt;</span>
+<span class="w">  </span><span class="s">APPEND_ENV</span><span class="w"> </span><span class="s">PATH=some/addtional/path/for/testing/resources</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">APPEND_LIBRARY_DIRS</span></code>: append libraries so that they can be found by the linker at runtime.
+This can be achieved by setting environment variables like <code class="docutils literal notranslate"><span class="pre">PATH</span></code> on Windows and <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> on Linux, but this makes the call platform specific.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ENV</span></code>: set environment variables (same syntax as <code class="docutils literal notranslate"><span class="pre">APPEND_ENV</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TIMEOUT</span></code>: set a test timeout in second. The default for GTests is 60 seconds.  For example:</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_add_gtest</span><span class="p">(</span><span class="s">some_test</span><span class="w"> </span><span class="s">&lt;test_sources&gt;</span><span class="w"> </span><span class="s">TIMEOUT</span><span class="w"> </span><span class="s">120</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SKIP_TEST</span></code>: skip this test (will be shown as “passed” in the console output).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SKIP_LINKING_MAIN_LIBRARIES</span></code>: Don’t link against GTest.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WORKING_DIRECTORY</span></code>: set the working directory for the test.</p></li>
+</ul>
+<p>The default working directory otherwise is the <code class="docutils literal notranslate"><span class="pre">CMAKE_CURRENT_BINARY_DIR</span></code>, which is described in the <a class="reference external" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_BINARY_DIR.html">CMake documentation</a>.</p>
+<p>Similarly, there is a CMake macro to set up GTest including GMock:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_gmock</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">ament_add_gmock</span><span class="p">(</span><span class="s">some_test</span><span class="w"> </span><span class="s">&lt;test_sources&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It has the same additional parameters as <code class="docutils literal notranslate"><span class="pre">ament_add_gtest</span></code>.</p>
+</div>
+</div>
+<div class="section" id="extending-ament">
+<h2><a class="toc-backref" href="#id11">Extending ament</a><a class="headerlink" href="#extending-ament" title="Permalink to this headline"></a></h2>
+<p>It is possible to register additional macros/functions with <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> and extend it in several ways.</p>
+<div class="section" id="adding-a-function-macro-to-ament">
+<h3><a class="toc-backref" href="#id12">Adding a function/macro to ament</a><a class="headerlink" href="#adding-a-function-macro-to-ament" title="Permalink to this headline"></a></h3>
+<p>Extending ament will often times mean that you want to have some functions available to other packages.
+The best way to provide the macro to client packages is to register it with ament.</p>
+<p>This can be done by appending the <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_CONFIG_EXTRAS</span></code> variable, which is used by <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> via</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="s">APPEND</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="s">_CONFIG_EXTRAS</span>
+<span class="w">  </span><span class="s">path/to/file.cmake</span><span class="s2">&quot;</span>
+<span class="s2">  other/pathto/file.cmake&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, you can directly add the files to the <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> call:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_package</span><span class="p">(</span><span class="s">CONFIG_EXTRAS</span>
+<span class="w">  </span><span class="s">path/to/file.cmake</span>
+<span class="w">  </span><span class="s">other/pathto/file.cmake</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-to-extension-points">
+<h3><a class="toc-backref" href="#id13">Adding to extension points</a><a class="headerlink" href="#adding-to-extension-points" title="Permalink to this headline"></a></h3>
+<p>In addition to simple files with functions that can be used in other packages, you can also add extensions to ament.
+Those extensions are scripts which are executed with the function which defines the extension point.
+The most common use-case for ament extensions is probably registering rosidl message generators:
+When writing a generator, you normally want to generate all messages and services with your generator also without modifying the code for the message/service definition packages.
+This is possible by registering the generator as an extension to <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code>.</p>
+<p>As an example, see</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_register_extension</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">&quot;rosidl_generate_interfaces&quot;</span>
+<span class="w">  </span><span class="s2">&quot;rosidl_generator_cpp&quot;</span>
+<span class="w">  </span><span class="s2">&quot;rosidl_generator_cpp_generate_interfaces.cmake&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which registers the macro <code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp_generate_interfaces.cmake</span></code> for the package <code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp</span></code> to the extension point <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code>.
+When the extension point gets executed, this will trigger the execution of the script <code class="docutils literal notranslate"><span class="pre">rosidl_generator_cpp_generate_interfaces.cmake</span></code> here.
+In particular, this will call the generator whenever the function <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code> gets executed.</p>
+<p>The most important extension point for generators, aside from <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code>, is <code class="docutils literal notranslate"><span class="pre">ament_package</span></code>, which will simply execute scripts with the <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code> call.
+This extension point is useful when registering resources (see below).</p>
+<p><code class="docutils literal notranslate"><span class="pre">ament_register_extension</span></code> is a function which takes exactly three arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">extension_point</span></code>: The name of the extension point (most of the time this will be one of <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> or <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">package_name</span></code>: The name of the package containing the CMake file (i.e. the project name of the project where the file is written to)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake_filename</span></code>: The CMake file executed when the extension point is run</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is possible to define custom extension points in a similar manner to <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> and <code class="docutils literal notranslate"><span class="pre">rosidl_generate_interfaces</span></code>, but this should hardly be necessary.</p>
+</div>
+</div>
+<div class="section" id="adding-extension-points">
+<h3><a class="toc-backref" href="#id14">Adding extension points</a><a class="headerlink" href="#adding-extension-points" title="Permalink to this headline"></a></h3>
+<p>Very rarely, it might be interesting to define a new extension point to ament.</p>
+<p>Extension points can be registered within a macro so that all extensions will be executed when the corresponding macro is called.
+To do so:</p>
+<ul class="simple">
+<li><p>Define and document a name for your extension (e.g. <code class="docutils literal notranslate"><span class="pre">my_extension_point</span></code>), which is the name passed to the <code class="docutils literal notranslate"><span class="pre">ament_register_extension</span></code> macro when using the extension point.</p></li>
+<li><p>In the macro/function which should execute the extensions call:</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_execute_extensions</span><span class="p">(</span><span class="s">my_extension_point</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ament extensions work by defining a variable containing the name of the extension point and filling it with the macros to be executed.
+Upon calling <code class="docutils literal notranslate"><span class="pre">ament_execute_extensions</span></code>, the scripts defined in the variable are then executed one after another.</p>
+</div>
+</div>
+<div class="section" id="adding-resources">
+<h2><a class="toc-backref" href="#id15">Adding resources</a><a class="headerlink" href="#adding-resources" title="Permalink to this headline"></a></h2>
+<p>Especially when developing plugins or packages which allow plugins it is often essential to add resources to one ROS package from another (e.g. a plugin).
+Examples can be plugins for tools using the pluginlib.</p>
+<p>This can be achieved using the ament index (also called “resource index”).</p>
+<div class="section" id="the-ament-index-explained">
+<h3><a class="toc-backref" href="#id16">The ament index explained</a><a class="headerlink" href="#the-ament-index-explained" title="Permalink to this headline"></a></h3>
+<p>For details on the design and intentions, see <a class="reference external" href="https://github.com/ament/ament_cmake/blob/rolling/ament_cmake_core/doc/resource_index.md">here</a></p>
+<p>In principle, the ament index is contained in a folder within the install/share folder of your package.
+It contains shallow subfolders named after different types of resources.
+Within the subfolder, each package providing said resource is referenced by name with a “marker file”.
+The file may contain whatever content necessary to obtain the resources, e.g. relative paths to the installation directories of the resource, it may also be simply empty.</p>
+<p>To give an example, consider providing display plugins for RViz:
+When providing RViz plugins in a project named <code class="docutils literal notranslate"><span class="pre">my_rviz_displays</span></code> which will be read by the pluginlib, you will provide a <code class="docutils literal notranslate"><span class="pre">plugin_description.xml</span></code> file, which will be installed and used by the pluginlib to load the plugins.
+To achieve this, the plugin_description.xml is registered as a resource in the resource_index via</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">pluginlib_export_plugin_description_file</span><span class="p">(</span><span class="s">rviz_common</span><span class="w"> </span><span class="s">plugins_description.xml</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When running <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>, this installs a file <code class="docutils literal notranslate"><span class="pre">my_rviz_displays</span></code> into a subfolder <code class="docutils literal notranslate"><span class="pre">rviz_common__pluginlib__plugin</span></code> into the resource_index.
+Pluginlib factories within rviz_common will know to gather information from all folders named <code class="docutils literal notranslate"><span class="pre">rviz_common__pluginlib__plugin</span></code> for packages that export plugins.
+The marker file for pluginlib factories contains an install-folder relative path to the <code class="docutils literal notranslate"><span class="pre">plugins_description.xml</span></code> file (and the name of the library as marker file name).
+With this information, the pluginlib can load the library and know which plugins to load from the <code class="docutils literal notranslate"><span class="pre">plugin_description.xml</span></code> file.</p>
+<p>As a second example, consider the possibility to let your own RViz plugins use your own custom meshes.
+Meshes get loaded at startup time so that the plugin owner does not have to deal with it, but this implies RViz has to know about the meshes.
+To achieve this, RViz provides a function:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">register_rviz_ogre_media_exports</span><span class="p">(</span><span class="s">DIRECTORIES</span><span class="w"> </span><span class="s">&lt;my_dirs&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This registers the directories as an ogre_media resource in the ament index.
+In short, it installs a file named after the project which calls the function into a subfolder called <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code>.
+The file contains the install folder relative paths to the directories listed in the macros.
+On startup time, RViz can now search for all folders called <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> and load resources in all folders provided.
+These searches are done using <code class="docutils literal notranslate"><span class="pre">ament_index_cpp</span></code> (or <code class="docutils literal notranslate"><span class="pre">ament_index_py</span></code> for Python packages).</p>
+<p>In the following sections we will explore how to add your own resources to the ament index and provide best practices for doing so.</p>
+</div>
+<div class="section" id="querying-the-ament-index">
+<h3><a class="toc-backref" href="#id17">Querying the ament index</a><a class="headerlink" href="#querying-the-ament-index" title="Permalink to this headline"></a></h3>
+<p>If necessary, it is possible to query the ament index for resources via CMake.
+To do so, there are three functions:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ament_index_has_resource</span></code>: obtain a prefix path to the resource if it exists with the following parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code>: the output parameter: fill this variable with FALSE if the resource does not exist or the prefix path to the resource otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource_type</span></code>: The type of the resource (e.g. <code class="docutils literal notranslate"><span class="pre">rviz_common__pluginlib__plugin</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource_name</span></code>: The name of the resource which usually amounts to the name of the package having added the resource of type resource_type (e.g. <code class="docutils literal notranslate"><span class="pre">rviz_default_plugins</span></code>)</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">ament_index_get_resource</span></code>: Obtain the content of a specific resource, i.e. the contents of the marker file in the ament index.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code>: the output parameter: filled with the content of the resource marker file if it exists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource_type</span></code>: The type of the resource (e.g. <code class="docutils literal notranslate"><span class="pre">rviz_common__pluginlib__plugin</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource_name</span></code>: The name of the resource which usually amounts to the name of the package having added the resource of type resource_type (e.g. <code class="docutils literal notranslate"><span class="pre">rviz_default_plugins</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_PATH</span></code>: The prefix path to search for (usually, the default <code class="docutils literal notranslate"><span class="pre">ament_index_get_prefix_path()</span></code> will be enough).</p></li>
+</ul>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">ament_index_get_resource</span></code> will throw an error if the resource does not exist, so it might be necessary to check using <code class="docutils literal notranslate"><span class="pre">ament_index_has_resource</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ament_index_get_resources</span></code>: Get all packages which registered resources of a specific type from the index</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code>: Output parameter: filled with a list of names of all packages which registered a resource of resource_type</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resource_type</span></code>: The type of the resource (e.g. <code class="docutils literal notranslate"><span class="pre">rviz_common__pluginlib__plugin</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX_PATH</span></code>: The prefix path to search for (usually, the default <code class="docutils literal notranslate"><span class="pre">ament_index_get_prefix_path()</span></code> will be enough).</p></li>
+</ul>
+</div>
+<div class="section" id="adding-to-the-ament-index">
+<h3><a class="toc-backref" href="#id18">Adding to the ament index</a><a class="headerlink" href="#adding-to-the-ament-index" title="Permalink to this headline"></a></h3>
+<p>Defining a resource requires two bits of information:</p>
+<ul class="simple">
+<li><p>a name for the resource which must be unique,</p></li>
+<li><p>a layout of the marker file, which can be anything and could also be empty (this is true for instance for the “package” resource marking a ROS 2 package)</p></li>
+</ul>
+<p>For the RViz mesh resource, the corresponding choices were:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> as name of the resource,</p></li>
+<li><p>install path relative paths to all folders containing resources. This will already enable you to write the logic for using the corresponding resource in your package.</p></li>
+</ul>
+<p>To allow users to easily register resources for your package, you should furthermore provide macros or functions such as the pluginlib function or <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> function.</p>
+<p>To register a resource, use the ament function <code class="docutils literal notranslate"><span class="pre">ament_index_register_resource</span></code>.
+This will create and install the marker files in the resource_index.
+As an example, the corresponding call for <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> is the following:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_index_register_resource</span><span class="p">(</span><span class="s">rviz_ogre_media_exports</span><span class="w"> </span><span class="s">CONTENT</span><span class="w"> </span><span class="o">${</span><span class="nv">OGRE_MEDIA_RESOURCE_FILE</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This installs a file named like <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}</span></code> into a folder <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> into the resource_index with content given by variable <code class="docutils literal notranslate"><span class="pre">${OGRE_MEDIA_RESOURCE_FILE}</span></code>.
+The macro has a number of parameters that can be useful:</p>
+<ul class="simple">
+<li><p>the first (unnamed) parameter is the name of the resource, which amounts to the name of the folder in the resource_index</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONTENT</span></code>: The content of the marker file as string. This could be a list of relative paths, etc. <code class="docutils literal notranslate"><span class="pre">CONTENT</span></code> cannot be used together with <code class="docutils literal notranslate"><span class="pre">CONTENT_FILE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONTENT_FILE</span></code>: The path to a file which will be use to create the marker file. The file can be a plain file or a template file expanded with <code class="docutils literal notranslate"><span class="pre">configure_file()</span></code>.
+<code class="docutils literal notranslate"><span class="pre">CONTENT_FILE</span></code> cannot be used together with <code class="docutils literal notranslate"><span class="pre">CONTENT</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PACKAGE_NAME</span></code>: The name of the package/library exporting the resource, which amounts to the name of the marker file. Defaults to <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AMENT_INDEX_BINARY_DIR</span></code>: The base path of the generated ament index. Unless really necessary, always use the default <code class="docutils literal notranslate"><span class="pre">${CMAKE_BINARY_DIR}/ament_cmake_index</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SKIP_INSTALL</span></code>: Skip installing the marker file.</p></li>
+</ul>
+<p>Since only one marker file exists per package, it is usually a problem if the CMake function/macro gets called twice by the same project.
+However, for large projects it might be best to split up calls registering resources.</p>
+<p>Therefore, it is best practice to let a macro registering a resource such as <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports.cmake</span></code> only fill some variables.
+The real call to <code class="docutils literal notranslate"><span class="pre">ament_index_register_resource</span></code> can then be added within an ament extension to <code class="docutils literal notranslate"><span class="pre">ament_package</span></code>.
+Since there must only ever be one call to <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> per project, there will always only be one place where the resource gets registered.
+In the case of <code class="docutils literal notranslate"><span class="pre">rviz_ogre_media_exports</span></code> this amounts to the following strategy:</p>
+<ul class="simple">
+<li><p>The macro <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports</span></code> takes a list of folders and appends them to a variable called <code class="docutils literal notranslate"><span class="pre">OGRE_MEDIA_RESOURCE_FILE</span></code>.</p></li>
+<li><p>Another macro called <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports_hook</span></code> calls <code class="docutils literal notranslate"><span class="pre">ament_index_register_resource</span></code> if <code class="docutils literal notranslate"><span class="pre">${OGRE_MEDIA_RESOURCE_FILE}</span></code> is non-empty.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports_hook.cmake</span></code> file is registered as an ament extension in a third file <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports_hook-extras.cmake</span></code> via calling</p></li>
+</ul>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">ament_register_extension</span><span class="p">(</span><span class="s2">&quot;ament_package&quot;</span><span class="w"> </span><span class="s2">&quot;rviz_rendering&quot;</span>
+<span class="w">  </span><span class="s2">&quot;register_rviz_ogre_media_exports_hook.cmake&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The files <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports.cmake</span></code> and <code class="docutils literal notranslate"><span class="pre">register_rviz_ogre_media_exports_hook-extra.cmake</span></code> are registered as <code class="docutils literal notranslate"><span class="pre">CONFIG_EXTRA</span></code> with <code class="docutils literal notranslate"><span class="pre">ament_package()</span></code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Developing-a-ROS-2-Package.html" class="btn btn-neutral float-left" title="Developing a ROS 2 package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ament-CMake-Python-Documentation.html" class="btn btn-neutral float-right" title="ament_cmake_python user documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Open Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

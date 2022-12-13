@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveIt Grasps &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/moveit_grasps/moveit_grasps_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MoveIt Deep Grasps" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html" />
+    <link rel="prev" title="Pick and Place" href="../pick_place/pick_place_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MoveIt Grasps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installing-moveit-grasps">Installing MoveIt Grasps</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#install-from-source">Install From Source</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#install-from-debian">Install From Debian</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#demo-scripts">Demo Scripts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#the-entire-moveit-grasps-pipeline">1) The Entire MoveIt Grasps Pipeline</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#visualize-gripper-parameters">2) Visualize Gripper Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#visualize-grasp-generation">3) Visualize Grasp Generation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#grasp-filter">4) Grasp Filter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#suction-grasp-pipeline">5) Suction Grasp Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#conceptual-overview">Conceptual Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#robot-agnostic-configuration">Robot-Agnostic Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#applying-robot-agnostic-configuration">Applying Robot-Agnostic Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#additional-configuration-notes">Additional Configuration Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#tested-robots">Tested Robots</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">MoveIt Grasps</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/moveit_grasps/moveit_grasps_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="moveit-grasps">
+<h1>MoveIt Grasps<a class="headerlink" href="#moveit-grasps" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/moveit_grasps.png"><img alt="../../../_images/moveit_grasps.png" src="../../../_images/moveit_grasps.png" style="width: 500pt;" /></a>
+<p>MoveIt Grasps is a grasp generator for objects such as blocks or cylinders and can be used as a replacement for the MoveIt pick and place pipeline. MoveIt Grasps provides functionality for filtering grasps based on reachability and Cartesian planning of approach, lift and retreat motions.</p>
+<p>The grasp generation algorithm is based on simple cuboid shapes and does not consider friction cones or other grasp dynamics.</p>
+<p>MoveIt Grasps can be used with both parallel finger grippers and suction grippers.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="installing-moveit-grasps">
+<h2>Installing MoveIt Grasps<a class="headerlink" href="#installing-moveit-grasps" title="Permalink to this headline"></a></h2>
+<div class="section" id="install-from-source">
+<h3>Install From Source<a class="headerlink" href="#install-from-source" title="Permalink to this headline"></a></h3>
+<p>Clone the <a class="reference external" href="https://github.com/ros-planning/moveit_grasps">moveit_grasps</a> repository into a <a class="reference external" href="https://ros-planning.github.io/moveit_tutorials/doc/getting_started/getting_started.html#create-a-catkin-workspace">catkin workspace</a>. For this tutorial we use Franka Emika’s Panda robot setup from <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">panda_moveit_config</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd ~/ws_moveit/src
+git clone -b $ROS_DISTRO-devel https://github.com/ros-planning/moveit_grasps.git
+</pre></div>
+</div>
+<p>Use the rosdep tool to automatically install its dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rosdep install --from-paths . --ignore-src --rosdistro $ROS_DISTRO
+</pre></div>
+</div>
+<p>Build the workspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catkin</span> <span class="n">build</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-from-debian">
+<h3>Install From Debian<a class="headerlink" href="#install-from-debian" title="Permalink to this headline"></a></h3>
+<p><strong>Note:</strong> this package has not been released as of 4/11/19:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-$ROS_DISTRO-moveit-grasps
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="demo-scripts">
+<h2>Demo Scripts<a class="headerlink" href="#demo-scripts" title="Permalink to this headline"></a></h2>
+<p>We have provided 4 demo scripts showcasing MoveIt Grasps, and for visualizing MoveIt Grasps configuration parameters.</p>
+<p>Before running any of the Demos, you must first start Rviz with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">rviz</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>The default setup uses a two finger gripper.
+For running Demos using a suction gripper, specify the gripper when launching Rviz:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">rviz</span><span class="o">.</span><span class="n">launch</span> <span class="n">gripper</span><span class="o">:=</span><span class="n">suction</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> The released versions of <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">panda_moveit_config</a> may lag behind the source versions. If you have issues with the demos, a good first step would be to download and build <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">panda_moveit_config</a> from source.</p>
+<div class="section" id="the-entire-moveit-grasps-pipeline">
+<h3>1) The Entire MoveIt Grasps Pipeline<a class="headerlink" href="#the-entire-moveit-grasps-pipeline" title="Permalink to this headline"></a></h3>
+<p>To see the entire MoveIt Grasps pipeline in action run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">grasp_pipeline_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../../_images/grasp_pipeline_demo.gif"><img alt="../../../_images/grasp_pipeline_demo.gif" src="../../../_images/grasp_pipeline_demo.gif" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="visualize-gripper-parameters">
+<h3>2) Visualize Gripper Parameters<a class="headerlink" href="#visualize-gripper-parameters" title="Permalink to this headline"></a></h3>
+<p>To visualize gripper specific parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">grasp_poses_visualizer_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>The result should look something like this:</p>
+<a class="reference internal image-reference" href="../../../_images/moveit_grasps_poses.jpg"><img alt="../../../_images/moveit_grasps_poses.jpg" src="../../../_images/moveit_grasps_poses.jpg" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="visualize-grasp-generation">
+<h3>3) Visualize Grasp Generation<a class="headerlink" href="#visualize-grasp-generation" title="Permalink to this headline"></a></h3>
+<p>This tool demonstrates several concepts around how scoring works during grasp generation.
+It bases the chosen grasp using the following approaches:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Ideal TCP Grasp Pose</em>: the generator will bias the chosen grasp based on an input of a preferred grasp. This allows you to say, for example, ‘I want the end-effector to be pointed down left when grasping the object’.</p></li>
+<li><p><em>Pose-Based Grasp Score Weighting</em>: Bias certain translation or rotation axes to score higher, by increasing the weight of that specific axis.</p></li>
+<li><p><em>Depth-Based Grasp Score Weighting</em>: Bias a deeper grasp depth (how enveloped the fingers are around the object) over other parameters</p></li>
+<li><p><em>Width-Based Grasp Score Weighting</em>: (For parallel finger grippers only) Bias a wider finger grasp (how much space is available between the object and the finger pads) over other parameters</p></li>
+<li><p><em>Overhang Grasp Score Weighting</em>: (For suction grippers only) Bias a suction grasp towards full overlap with the object. This scoring metric uses the square of the percent of the suction region that is in contact with the object. By using the square, suction grippers with multiple suction regions (voxels) bias towards solutions with 100% overlap with one voxel rather than 50% of one and 50% of another.</p></li>
+</ul>
+</div></blockquote>
+<p>To visualize:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">grasp_generator_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../../_images/grasp_generator_demo.png"><img alt="../../../_images/grasp_generator_demo.png" src="../../../_images/grasp_generator_demo.png" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="grasp-filter">
+<h3>4) Grasp Filter<a class="headerlink" href="#grasp-filter" title="Permalink to this headline"></a></h3>
+<p>To demo the grasp filtering:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">grasp_filter_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>When filtered, the colors represent the following:</p>
+<ul class="simple">
+<li><p>RED - grasp filtered by ik</p></li>
+<li><p>PINK - grasp filtered by collision</p></li>
+<li><p>MAGENTA - grasp filtered by cutting plane</p></li>
+<li><p>YELLOW - grasp filtered by orientation</p></li>
+<li><p>BLUE - pregrasp filtered by ik</p></li>
+<li><p>CYAN - pregrasp filtered by collision</p></li>
+<li><p>GREEN - valid</p></li>
+</ul>
+</div>
+<div class="section" id="suction-grasp-pipeline">
+<h3>5) Suction Grasp Pipeline<a class="headerlink" href="#suction-grasp-pipeline" title="Permalink to this headline"></a></h3>
+<p>To demo the pipeline when using a suction gripper, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_grasps</span> <span class="n">suction_grasp_pipeline_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conceptual-overview">
+<h2>Conceptual Overview<a class="headerlink" href="#conceptual-overview" title="Permalink to this headline"></a></h2>
+<p>MoveIt Grasps is based on the three main components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Grasp Generator</em> uses the end effector kinematic and the object shape for sampling grasp poses and optimizing them using geometric scoring functions.</p></li>
+<li><p><em>Grasp Filter</em> validates the feasibility of grasp candidates by searching for IK solutions to verify their reachability.</p></li>
+<li><p><em>Grasp Planner</em> computes Cartesian approach, lift, and retreat trajectories that compose a complete grasp motion.</p></li>
+</ul>
+</div></blockquote>
+<p>Note: ideally the <em>Grasp Planner</em> will be eventually phased out in favor of the new <em>MoveIt Task Constructor</em>.</p>
+<p>In order to run the full grasp pipeline the three components need to be applied in sequence.</p>
+<p>In addition, the <em>Grasp Generator</em> uses the following component:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Grasp Scorer</em> supports a number of heuristics for judging which grasps are favorable, given known information about the problem / application</p></li>
+</ul>
+</div></blockquote>
+<p>An example for generating, filtering and planning grasp motions can be found inside the file <a class="reference external" href="https://github.com/ros-planning/moveit_grasps/blob/melodic-devel/src/demo/grasp_pipeline_demo.cpp">src/grasp_pipeline_demo.cpp</a>. Instructions for running are below.</p>
+<div class="section" id="robot-agnostic-configuration">
+<h3>Robot-Agnostic Configuration<a class="headerlink" href="#robot-agnostic-configuration" title="Permalink to this headline"></a></h3>
+<p>MoveIt Grasps requires two configuration files to be specified at launch:</p>
+<ul class="simple">
+<li><p><em>ROBOT_grasp_data.yaml</em> describes the robot’s end effector geometry and is custom for each robot</p></li>
+<li><p><em>moveit_grasps_config.yaml</em> configures the behavior of <em>Grasp Generator</em>, <em>Grasp Filter</em> and <em>Grasp Planner</em>. Additionally, it contains many optional debugging and visualizations options to make usage of MoveIt Grasps far easier.</p></li>
+</ul>
+<p>In addition to this tutorial, see the comments in the following example files for further explanation of the parameters:</p>
+<p><strong>ROBOT_grasp_data.yaml</strong></p>
+<p>The canonical example end effector configuration uses Franka Emika’s Panda: <a class="reference external" href="https://github.com/ros-planning/moveit_grasps/blob/melodic-devel/config_robot/panda_grasp_data.yaml">config_robot/panda_grasp_data.yaml</a>.</p>
+<p>In that file you will find all of the gripper specific parameters necessary for customizing MoveIt Grasps with suction or finger grippers.</p>
+<p>Illustration diagrams for the parameters inside <em>ROBOT_grasp_data.yaml</em> file</p>
+<ol class="arabic simple">
+<li><p>Finger gripper parameters</p></li>
+</ol>
+<a class="reference internal image-reference" href="../../../_images/finger_gripper_explanation.jpg"><img alt="../../../_images/finger_gripper_explanation.jpg" src="../../../_images/finger_gripper_explanation.jpg" style="width: 500pt;" /></a>
+<ol class="arabic simple" start="2">
+<li><p>Suction gripper parameters</p></li>
+</ol>
+<a class="reference internal image-reference" href="../../../_images/suction_gripper_explanation.jpg"><img alt="../../../_images/suction_gripper_explanation.jpg" src="../../../_images/suction_gripper_explanation.jpg" style="width: 500pt;" /></a>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> These variables can be directly configured in the <em>ROBOT_grasp_data.yaml</em> file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">**</span></code> The name of your tool center point link can be configured by setting the <em>tcp_name</em> variable in the <em>ROBOT_grasp_data.yaml</em> file.</p>
+<p><strong>moveit_grasps_config.yaml</strong></p>
+<p>An example configuration file for the <em>Grasp Generator</em>, <em>Grasp Filter</em> and <em>Grasp Planner</em> can be found in <a class="reference external" href="https://github.com/ros-planning/moveit_grasps/blob/melodic-devel/config/moveit_grasps_config.yaml">config/moveit_grasps_config.yaml</a>.</p>
+</div>
+<div class="section" id="applying-robot-agnostic-configuration">
+<h3>Applying Robot-Agnostic Configuration<a class="headerlink" href="#applying-robot-agnostic-configuration" title="Permalink to this headline"></a></h3>
+<p>To apply your yaml configurations, load them as rosparams with your grasping application / ROS node.
+For an example, see the segment below from the file <a class="reference external" href="https://github.com/ros-planning/moveit_grasps/blob/melodic-devel/launch/grasp_pipeline_demo.launch">launch/grasp_pipeline_demo.launch</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">node</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;moveit_grasps_demo&quot;</span> <span class="n">pkg</span><span class="o">=</span><span class="s2">&quot;moveit_grasps&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;moveit_grasps_pipeline_demo&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ee_group_name&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;hand&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;planning_group_name&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;panda_arm&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;load&quot;</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;$(find moveit_grasps)/config_robot/panda_grasp_data.yaml&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;load&quot;</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;$(find moveit_grasps)/config/moveit_grasps_config.yaml&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">node</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that the robot’s planning group and end effector group must be specified external from the two yaml files, under the parameters <code class="docutils literal notranslate"><span class="pre">ee_group_name</span></code> and <code class="docutils literal notranslate"><span class="pre">planning_group_name</span></code>.</p>
+<p>Since the set of parameters is quite extensive, there are different demo launch files that you can use to visualize the effects. You can apply your configurations to the demo launch files described later in this tutorial.</p>
+</div>
+<div class="section" id="additional-configuration-notes">
+<h3>Additional Configuration Notes<a class="headerlink" href="#additional-configuration-notes" title="Permalink to this headline"></a></h3>
+<p><strong>tcp_to_eef_mount_transform</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">tcp_to_eef_mount_transform</span></code> represents the transform from the tool center point used for grasp poses to the mount link of the end effector.
+This parameter is provided to allow different URDF end effectors to all work together without recompiling code.</p>
+<p>In MoveIt the actuated end effector fingers should always has a parent link, typically the wrist link or palm link.
+This wrist_link should have its palm with a Z-axis pointing towards the object you want to grasp i.e. where your pointer finger is pointing.</p>
+<p>This is the convention laid out in “Robotics” by John Craig in 1955.
+However, a lot of URDFs do not follow this convention, so this transform allows you to fix it.</p>
+<p>Additionally, the x-axis should be pointing up along the grasped object, i.e. the circular axis of a (beer) bottle if you were holding it.</p>
+<p>The y-axis should be point towards one of the fingers.</p>
+<p><strong>Switch from Bin to Shelf Picking</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">setIdealGraspPoseRPY()</span></code> and <code class="docutils literal notranslate"><span class="pre">setIdealGraspPose()</span></code> methods in GraspGenerator can be used to select an ideal grasp orientation for picking.</p>
+<p>These methods is used to score grasp candidates favoring grasps that are closer to the desired orientation.</p>
+<p>This is useful in applications such as bin and shelf picking where you would want to pick the objects from a bin with a grasp that is vertically aligned and you would want to pick obejects from a shelf with a grasp that is horozontally aligned.</p>
+</div>
+</div>
+<div class="section" id="tested-robots">
+<h2>Tested Robots<a class="headerlink" href="#tested-robots" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>UR5</p></li>
+<li><p>Jaco2</p></li>
+<li><p>Baxter</p></li>
+<li><p><a class="reference external" href="http://wiki.ros.org/Robots/REEM">REEM</a></p></li>
+<li><p>Panda</p></li>
+</ul>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../pick_place/pick_place_tutorial.html" class="btn btn-neutral float-left" title="Pick and Place" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html" class="btn btn-neutral float-right" title="MoveIt Deep Grasps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

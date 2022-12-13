@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>test-result - Summarize Test Results — colcon  documentation</title>
+<link href="../../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/colcon.ico" rel="shortcut icon"/>
+<!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+<script src="../../_static/jquery.js"></script>
+<script src="../../_static/underscore.js"></script>
+<script src="../../_static/doctools.js"></script>
+<script src="../../_static/js/theme.js"></script>
+<link href="../../genindex.html" rel="index" title="Index"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="../global-arguments.html" rel="next" title="Global arguments"/>
+<link href="test.html" rel="prev" title="test - Test Packages"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../../index.html">
+<img alt="Logo" class="logo" src="../../_static/colcon.svg"/>
+</a>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-arguments">Command line arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../index.html">colcon</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../../index.html"></a></li>
+<li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</li>
+<li class="wy-breadcrumbs-aside">
+<a href="../../_sources/reference/verb/test-result.rst.txt" rel="nofollow"> View page source</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="test-result-summarize-test-results">
+<h1><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results<a class="headerlink" href="#test-result-summarize-test-results" title="Permalink to this headline"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">test-result</span></code> verb summarizes the results of previous run tests.
+It is provided by the <code class="docutils literal notranslate"><span class="pre">colcon-test-result</span></code> package.</p>
+<div class="section" id="command-line-arguments">
+<h2>Command line arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline"></a></h2>
+<p>These common arguments can be used:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../mixin-arguments.html"><span class="doc">mixin</span></a> arguments</p></li>
+</ul>
+<p>Additionally, the following specific command line arguments can be used:</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_test-result-base_arg"></a><dl class="simple" id="test-result-verb-test-result-base-arg">
+<dt>\–test-result-base TEST_RESULT_BASE</dt><dd><p>The base path for all test results.
+The default value is <code class="docutils literal notranslate"><span class="pre">./build</span></code>.
+Each package uses a subdirectory in that base path as its package specific
+test result directory.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_all_arg"></a><dl class="simple" id="test-result-verb-all-arg">
+<dt>\–all</dt><dd><p>Show all test result files including the ones without errors / failures.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_verbose_arg"></a><dl class="simple" id="test-result-verb-verbose-arg">
+<dt>\–verbose</dt><dd><p>Show additional information for each error / failure.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_result-files-only_arg"></a><dl class="simple" id="test-result-verb-result-files-only-arg">
+<dt>\–result-files-only</dt><dd><p>Print only the paths of the result files.
+Use with <code class="docutils literal notranslate"><span class="pre">--all</span></code> to include files without errors / failures.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_delete_arg"></a><dl class="simple" id="test-result-verb-delete-arg">
+<dt>\–delete</dt><dd><p>Delete all result files.
+This might include additional files beside what is listed by
+<code class="docutils literal notranslate"><span class="pre">--result-files-only</span></code>.
+An interactive prompt will ask for confirmation.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/test-result-verb_delete-yes_arg"></a><dl class="simple" id="test-result-verb-delete-yes-arg">
+<dt>\–delete-yes</dt><dd><p>Same as <code class="docutils literal notranslate"><span class="pre">--delete</span></code> without an interactive confirmation.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="test.html" rel="prev" title="test - Test Packages"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="../global-arguments.html" rel="next" title="Global arguments">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

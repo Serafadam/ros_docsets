@@ -1,0 +1,8 @@
+<map id="include/rclcpp/wait_set_policies/detail/synchronization_policy_common.hpp" name="include/rclcpp/wait_set_policies/detail/synchronization_policy_common.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="113,5,287,76"/>
+<area shape="rect" id="node2" href="$sequential__synchronization_8hpp.html" title=" " alt="" coords="5,124,184,180"/>
+<area shape="rect" id="node6" href="$thread__safe__synchronization_8hpp.html" title=" " alt="" coords="208,124,403,180"/>
+<area shape="rect" id="node3" href="$wait__set_8hpp.html" title=" " alt="" coords="128,228,272,269"/>
+<area shape="rect" id="node4" href="$rclcpp_8hpp.html" title=" " alt="" coords="15,325,198,351"/>
+<area shape="rect" id="node5" href="$wait__for__message_8hpp.html" title=" " alt="" coords="223,317,367,359"/>
+</map>

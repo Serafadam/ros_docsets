@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap from source &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Environment setup" href="environment.html" />
+    <link rel="prev" title="Design" href="design.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bootstrap from source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-environment">Virtual environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fetch-the-sources">Fetch the sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-the-sources-first-time">Build the sources - first time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-the-sources-second-time">Build the sources - second time</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Bootstrap from source</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/developer/bootstrap.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="bootstrap-from-source">
+<h1>Bootstrap from source<a class="headerlink" href="#bootstrap-from-source" title="Permalink to this headline"></a></h1>
+<p>When developing <code class="docutils literal notranslate"><span class="pre">colcon</span></code> you want to have a local checkout of all involved packages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following steps use the command line tool <a class="reference external" href="https://github.com/dirk-thomas/vcstool/">vcstool</a> to fetch a set of repositories.
+You can e.g. install it using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">vcstool</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the following instructions use a Linux shell the same can be done on other platforms like Windows with slightly adjusted commands.</p>
+</div>
+<div class="section" id="virtual-environment">
+<h2>Virtual environment<a class="headerlink" href="#virtual-environment" title="Permalink to this headline"></a></h2>
+<p>While not strictly necessary it is recommended to use a virtual environment for developing Python packages.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir colcon-venv
+$ python3 -m venv colcon-venv
+$ . colcon-venv/bin/activate
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows the Python 3 executable is likely named <code class="docutils literal notranslate"><span class="pre">python</span></code> and the activation script is invoked with <code class="docutils literal notranslate"><span class="pre">colcon-venv\Scripts\activate</span></code></p>
+</div>
+<p>You might want to make sure that the venv is using up-to-date versions of the some foundational packages.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -U pip setuptools
+</pre></div>
+</div>
+</div>
+<div class="section" id="fetch-the-sources">
+<h2>Fetch the sources<a class="headerlink" href="#fetch-the-sources" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir colcon-from-source <span class="o">&amp;&amp;</span> <span class="nb">cd</span> colcon-from-source
+$ curl --output colcon.repos https://raw.githubusercontent.com/colcon/colcon.readthedocs.org/main/colcon.repos
+$ mkdir src
+$ vcs import src &lt; colcon.repos
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Depending on your platform you might not want to use all cloned packages.
+On Windows you must ignore or remove <code class="docutils literal notranslate"><span class="pre">colcon-argcomplete</span></code>, and may want to do the same for <code class="docutils literal notranslate"><span class="pre">colcon-bash</span></code>.
+If you don’t use PowerShell you might want to ignore / remove the package <code class="docutils literal notranslate"><span class="pre">colcon-powershell</span></code>.
+To ignore a package add an empty file named COLCON_IGNORE to the folder.</p>
+</div>
+<p>Ignore <code class="docutils literal notranslate"><span class="pre">colcon-argcomplete</span></code> and <code class="docutils literal notranslate"><span class="pre">colcon-bash</span></code> on Windows.</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> type nul <span class="p">&gt;</span> src\colcon-argcomplete\COLCON_IGNORE
+<span class="p">&gt;</span> type nul <span class="p">&gt;</span> src\colcon-bash\COLCON_IGNORE
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline"></a></h2>
+<p>Make sure the dependencies are available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ curl --output requirements.txt https://raw.githubusercontent.com/colcon/colcon.readthedocs.org/main/requirements.txt
+$ pip install -r requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-the-sources-first-time">
+<h2>Build the sources - first time<a class="headerlink" href="#build-the-sources-first-time" title="Permalink to this headline"></a></h2>
+<p>In the first build we will use the minimal features provided by <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> to build the set of cloned packages.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./src/colcon-core/bin/colcon build --paths src/*
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows the command needs to be prefixed with <code class="docutils literal notranslate"><span class="pre">python</span></code>.</p>
+</div>
+<p>The build of the packages will run sequentially and for each package the output will be printed directly to the console.
+The install directory will contain a <code class="docutils literal notranslate"><span class="pre">local_setup.sh</span></code> (or <code class="docutils literal notranslate"><span class="pre">.bat</span></code> on Windows).</p>
+<p>In order to generate scripts for additional shells the set of packages have to be built a second time but this time using all extension provided by the various cloned packages.</p>
+</div>
+<div class="section" id="build-the-sources-second-time">
+<h2>Build the sources - second time<a class="headerlink" href="#build-the-sources-second-time" title="Permalink to this headline"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ . install/local_setup.sh
+$ colcon build
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows the setup file ends with <code class="docutils literal notranslate"><span class="pre">.bat</span></code> and is just being called.
+Also the <code class="docutils literal notranslate"><span class="pre">colcon</span></code> executable can’t be invoked directly here since while it is being used it can’t be overwritten by the build.
+Instead invoke the following command: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">install\colcon-core\Scripts\colcon-script.py</span> <span class="pre">build</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The second build will process packages in parallel as long as their dependencies are finished.
+Also the output of all packages is not shown on the console (until there are errors) but is being redirected to log files.
+Depending on the platform you might also notice a status line during the build, a continuously updated title of the shell windows, and a desktop notification at the end of the build.</p>
+</div>
+<p>To use the full functionality you can source the generated script for your shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ . install/local_setup.bash
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With bash you should now also have completion for all arguments if you have the Python package <a class="reference external" href="https://pypi.org/project/argcomplete/">argcomplete</a> installed.
+Try typing <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">&lt;tab&gt;</span></code> to see the completion of global options and verbs.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="design.html" class="btn btn-neutral float-left" title="Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="environment.html" class="btn btn-neutral float-right" title="Environment setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

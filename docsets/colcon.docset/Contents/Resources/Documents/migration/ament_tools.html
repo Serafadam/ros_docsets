@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ament_tools &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="catkin_make_isolated" href="catkin_make_isolated.html" />
+    <link rel="prev" title="Changelog" href="../developer/changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ament_tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ament-build-test">ament build | test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ament-build">ament build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ament-test">ament test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ament-test-results">ament test_results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behavioral-changes">Behavioral changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">ament_tools</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/migration/ament_tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="ament-tools">
+<h1>ament_tools<a class="headerlink" href="#ament-tools" title="Permalink to this headline"></a></h1>
+<p>The following describes the mapping of some <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> options and arguments to the <code class="docutils literal notranslate"><span class="pre">colcon</span></code> command line interface.</p>
+<div class="section" id="ament-build-test">
+<h2>ament build | test<a class="headerlink" href="#ament-build-test" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">[BASEPATH]</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--base-paths</span> <span class="pre">BASEPATH</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--build-space</span> <span class="pre">PATH</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--build-base</span> <span class="pre">PATH</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--install-space</span> <span class="pre">PATH</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--install-base</span> <span class="pre">PATH</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--build-tests</span></code></dt><dd><p>CMake configures tests by default.
+To skip configuring tests use <code class="docutils literal notranslate"><span class="pre">--cmake-args</span> <span class="pre">-DBUILD_TESTING=OFF</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--symlink-install</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--symlink-install</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--isolated</span></code></dt><dd><p>The colcon option <code class="docutils literal notranslate"><span class="pre">--merge-install</span></code> has the inverse logic.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--start-with</span> <span class="pre">PKGNAME</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--packages-start</span> <span class="pre">PKGNAME</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--end-with</span> <span class="pre">PKGNAME</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--packages-end</span> <span class="pre">PKGNAME</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--only-packages</span> <span class="pre">PKGNAME1</span> <span class="pre">...</span> <span class="pre">PKGNAMEn</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--packages-select</span> <span class="pre">PKGNAME1</span> <span class="pre">...</span> <span class="pre">PKGNAMEn</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--skip-packages</span> <span class="pre">PKGNAME1</span> <span class="pre">...</span> <span class="pre">PKGNAMEn</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--packages-skip</span> <span class="pre">PKGNAME1</span> <span class="pre">...</span> <span class="pre">PKGNAMEn</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--parallel</span></code></dt><dd><p>colcon uses the parallel execution by default.
+To build packages sequentially use <code class="docutils literal notranslate"><span class="pre">--executor</span> <span class="pre">sequential</span></code>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ament-build">
+<h2>ament build<a class="headerlink" href="#ament-build" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span> <span class="pre">...</span></code></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--cmake-args</span> <span class="pre">-D...</span> <span class="pre">--</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--cmake-args</span> <span class="pre">-D...</span></code>
+The closing double dash is not necessary anymore.
+Any CMake arguments which match colcon arguments need to be prefixed with a space.
+This can be done by quoting each argument with a leading space.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--force-cmake-configure</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--cmake-force-configure</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--make-flags</span></code></dt><dd><p>When using this option to pass a target name the substitution is: <code class="docutils literal notranslate"><span class="pre">--cmake-target</span> <span class="pre">TARGET</span></code>.
+When using this option to control the parallel execution with arguments like <code class="docutils literal notranslate"><span class="pre">-jN</span></code> the substitution is to use the environment variable <code class="docutils literal notranslate"><span class="pre">MAKEFLAGS</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--use-ninja</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--cmake-args</span> <span class="pre">-G</span> <span class="pre">Ninja</span></code></p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ament-test">
+<h2>ament test<a class="headerlink" href="#ament-test" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span> <span class="pre">...</span></code></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--ctest-args</span> <span class="pre">...</span> <span class="pre">--</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--ctest-args</span> <span class="pre">...</span></code>
+Any CTest arguments which start with a dash need to be prefixed with a space (see <code class="docutils literal notranslate"><span class="pre">--cmake-args</span></code>).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--retest-until-fail</span> <span class="pre">N</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--retest-until-fail</span> <span class="pre">N</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--retest-until-pass</span> <span class="pre">N</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--retest-until-pass</span> <span class="pre">N</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--abort-on-test-error</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--abort-on-error</span></code></p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ament-test-results">
+<h2>ament test_results<a class="headerlink" href="#ament-test-results" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test-result</span> <span class="pre">...</span></code></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">[BASEPATH]</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--build-base</span> <span class="pre">BASEPATH</span></code></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--verbose</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">--all</span></code></p>
+</dd>
+</dl>
+</div>
+<div class="section" id="behavioral-changes">
+<h2>Behavioral changes<a class="headerlink" href="#behavioral-changes" title="Permalink to this headline"></a></h2>
+<p>The colcon <code class="docutils literal notranslate"><span class="pre">test</span></code> verb performs only the action of running tests.
+It does not build any packages.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--retest-until-fail</span></code> with <code class="docutils literal notranslate"><span class="pre">colcon</span></code> uses <a class="reference external" href="https://github.com/pytest-dev/pytest-repeat">pytest-repeat</a> which runs individual tests of a package N+1 times each (the first test N+1 times, then the second test N+1 times, etc).
+With <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> the entire test suite of a package was run up to N+1 times.
+As a consequence <code class="docutils literal notranslate"><span class="pre">colcon</span></code> provides a more accurate result since each test that passed has actually run N times.
+Note that with <code class="docutils literal notranslate"><span class="pre">pytest-repeat</span></code>, <code class="docutils literal notranslate"><span class="pre">pytest</span></code> tests are repeated N times regardless of the result of the previous runs; if a test fails it will be repeated N times anyway.
+This is different from the behavior of a <a class="reference external" href="https://cmake.org/cmake/help/v3.5/manual/ctest.1.html">CTest</a> test that will stop being repeated as soon as it fails once.</p>
+<p>The location of JUnit test results file for <code class="docutils literal notranslate"><span class="pre">ament_python</span></code> packages tested with <code class="docutils literal notranslate"><span class="pre">colcon</span></code> is in <code class="docutils literal notranslate"><span class="pre">&lt;pkg-build&gt;/pytest.xml</span></code>, whereas with <code class="docutils literal notranslate"><span class="pre">ament_tools</span></code> it is in <code class="docutils literal notranslate"><span class="pre">&lt;pkg-build&gt;/test_results/&lt;pkgname&gt;/pytest.xunit.xml</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../developer/changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="catkin_make_isolated.html" class="btn btn-neutral float-right" title="catkin_make_isolated" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

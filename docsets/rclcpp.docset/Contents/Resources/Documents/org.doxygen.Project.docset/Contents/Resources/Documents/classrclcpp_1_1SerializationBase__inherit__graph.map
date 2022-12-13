@@ -1,0 +1,4 @@
+<map id="rclcpp::SerializationBase" name="rclcpp::SerializationBase">
+<area shape="rect" id="node1" title="Interface to (de)serialize a message." alt="" coords="5,5,188,32"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1Serialization.html" title="Default implementation to (de)serialize a message by using rmw_(de)serialize." alt="" coords="21,80,172,121"/>
+</map>

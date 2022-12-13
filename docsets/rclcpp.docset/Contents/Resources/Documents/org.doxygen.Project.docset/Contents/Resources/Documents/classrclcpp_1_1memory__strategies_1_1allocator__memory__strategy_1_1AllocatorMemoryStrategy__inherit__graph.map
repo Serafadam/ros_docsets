@@ -1,0 +1,4 @@
+<map id="rclcpp::memory_strategies::allocator_memory_strategy::AllocatorMemoryStrategy&lt; Alloc &gt;" name="rclcpp::memory_strategies::allocator_memory_strategy::AllocatorMemoryStrategy&lt; Alloc &gt;">
+<area shape="rect" id="node1" title="Delegate for handling memory allocations while the Executor is executing." alt="" coords="5,95,216,165"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1memory__strategy_1_1MemoryStrategy.html" title="Delegate for handling memory allocations while the Executor is executing." alt="" coords="18,5,203,47"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="rclcpp::exceptions::UnknownROSArgsError" name="rclcpp::exceptions::UnknownROSArgsError">
+<area shape="rect" id="node1" title="Thrown when unparsed ROS specific arguments are found." alt="" coords="5,80,184,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="25,5,164,32"/>
+</map>

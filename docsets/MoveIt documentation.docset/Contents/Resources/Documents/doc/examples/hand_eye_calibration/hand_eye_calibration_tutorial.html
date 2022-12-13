@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hand-Eye Calibration &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/hand_eye_calibration/hand_eye_calibration_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="IKFast Kinematics Solver" href="../ikfast/ikfast_tutorial.html" />
+    <link rel="prev" title="Perception Pipeline Tutorial" href="../perception_pipeline/perception_pipeline_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Hand-Eye Calibration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clone-and-build-the-moveit-calibration-repo">Clone and Build the MoveIt Calibration Repo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-rviz-and-load-calibration-plugin">Launch RViz and Load Calibration Plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-and-print-a-target">Create and Print a Target</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geometric-context">Geometric Context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#collect-dataset">Collect Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calculate-a-calibration">Calculate a Calibration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Hand-Eye Calibration</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/hand_eye_calibration/hand_eye_calibration_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="hand-eye-calibration">
+<h1>Hand-Eye Calibration<a class="headerlink" href="#hand-eye-calibration" title="Permalink to this headline"></a></h1>
+<p>The <a class="reference external" href="http://www.github.com/ros-planning/moveit_calibration">MoveIt Calibration</a> package provides plugins and a graphical
+interface for conducting a hand-eye camera calibration. Calibrations can be performed for cameras rigidly mounted in the
+robot base frame (eye-to-hand) and for cameras mounted to the end effector (eye-in-hand). This tutorial presents the
+eye-in-hand case.</p>
+<img alt="../../../_images/hand_eye_calibration_demo.jpg" src="../../../_images/hand_eye_calibration_demo.jpg" />
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>While it is possible to go through most of this tutorial using just a simulation, to actually complete a calibration you
+will need a robotic arm and a camera.</p>
+<p>If you haven’t already done so, be sure to complete the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.
+Also, set your arm up to work with MoveIt (as described in the <a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html"><span class="doc">Setup Assistant Tutorial</span></a>).</p>
+<p>This tutorial also requires a camera, publishing images and a <code class="docutils literal notranslate"><span class="pre">sensor_msgs/CameraInfo</span></code> topic with good intrinsic
+calibration parameters and an accurate coordinate frame. (Conduct an intrinsic camera calibration by using the
+<a class="reference external" href="http://wiki.ros.org/camera_calibration">camera_calibration</a> package, if necessary.)</p>
+</div>
+<div class="section" id="clone-and-build-the-moveit-calibration-repo">
+<h2>Clone and Build the MoveIt Calibration Repo<a class="headerlink" href="#clone-and-build-the-moveit-calibration-repo" title="Permalink to this headline"></a></h2>
+<p>In your workspace <code class="docutils literal notranslate"><span class="pre">src</span></code> directory, clone MoveIt Calibration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">ros</span><span class="o">-</span><span class="n">planning</span><span class="o">/</span><span class="n">moveit_calibration</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>Then, make sure you have the appropriate dependencies and build the package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosdep</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">from</span><span class="o">-</span><span class="n">paths</span> <span class="o">.</span> <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">src</span> <span class="o">--</span><span class="n">rosdistro</span> <span class="n">melodic</span>
+<span class="n">catkin</span> <span class="n">build</span>
+<span class="n">source</span> <span class="n">devel</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-rviz-and-load-calibration-plugin">
+<h2>Launch RViz and Load Calibration Plugin<a class="headerlink" href="#launch-rviz-and-load-calibration-plugin" title="Permalink to this headline"></a></h2>
+<p>Launch the appropriate MoveIt demo for your robot. For instance, <code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">panda_moveit_config</span> <span class="pre">demo.launch</span></code>.
+In the RViz “Panels” menu, choose “Add New Panel”:</p>
+<img alt="../../../_images/choose_new_panel.png" src="../../../_images/choose_new_panel.png" />
+<p>Then, select the “HandEyeCalibration” panel type:</p>
+<img alt="../../../_images/add_handeye_panel.png" src="../../../_images/add_handeye_panel.png" />
+<p>The panel will be added with the “Target” tab active.</p>
+</div>
+<div class="section" id="create-and-print-a-target">
+<h2>Create and Print a Target<a class="headerlink" href="#create-and-print-a-target" title="Permalink to this headline"></a></h2>
+<p>Now we will create a visual calibration target. This target has distinctive patterns that are easy to identify in the
+image data, and by providing a measurement of the target size, the pose of the target in the camera’s coordinate frame
+can be estimated. When conducting a hand-eye calibration, we do not need to know the target’s precise location–as long
+as the target is stationary in the robot’s base frame, the hand-eye calibration can be estimated from a sequence of 5 or
+more poses.</p>
+<p>In the “Target Params” section of the “Target” tab, we will use the default target parameters:</p>
+<ul class="simple">
+<li><p><strong>markers, X</strong>: 3</p></li>
+<li><p><strong>markers, Y</strong>: 4</p></li>
+<li><p><strong>marker size (px)</strong>: 200</p></li>
+<li><p><strong>marker separation (px)</strong>: 20</p></li>
+<li><p><strong>marker border (bits)</strong>: 1</p></li>
+<li><p><strong>ArUco dictionary</strong>: DICT_5X5_250</p></li>
+</ul>
+<p>Press the “Create Target” button to create the target image:</p>
+<img alt="../../../_images/aruco_target_handeye_panel.png" src="../../../_images/aruco_target_handeye_panel.png" />
+<p>Save the target image using the “Save Target” button, and print out the image. Feel free to experiment with the target
+parameters to see how they affect the target, but be sure to remember the parameters used for the target you print–you
+will need to input the same parameters for the target to be recognized.</p>
+<p>The target must be flat to be reliably localized by the camera. Laying it on a flat surface is sufficient, or it can be
+mounted to a board. Measure the marker width (the outside dimension of one of the black squares), as well as the
+separation distance between markers. Enter these values, in meters, in the appropriate boxes in the “Target Params”
+section. Also, select the appropriate topics in the “Image Topic” and “CameraInfo Topic” drop-down menus.</p>
+<p>Finally, place the target near the robot, where it can be easily seen by the camera.</p>
+</div>
+<div class="section" id="geometric-context">
+<h2>Geometric Context<a class="headerlink" href="#geometric-context" title="Permalink to this headline"></a></h2>
+<p>The second tab, labeled “Context”, contains the geometric information necessary to conduct the calibration.</p>
+<ol class="arabic simple">
+<li><p>Set the “Sensor configuration” to “Eye-in-hand”.</p></li>
+<li><p>The “Sensor frame” is the camera optical frame (using the right-down-forward standard, as specified in <a class="reference external" href="https://www.ros.org/reps/rep-0103.html">REP 103</a>).</p></li>
+<li><p>The “Object frame” is the frame defined by the calibration target, which is called “handeye_target” by default.</p></li>
+<li><p>The “End-effector frame” is the robot link rigidly attached to the camera.</p></li>
+<li><p>The “Robot base frame” is the frame in which the calibration target is stationary.</p></li>
+</ol>
+<img alt="../../../_images/context_tab.png" src="../../../_images/context_tab.png" />
+<p>The FOV section controls the rendering of the camera’s field of view in RViz. To see the FOV, add a “MarkerArray”
+display, and set it to listen to the “/rviz_visual_tools” topic. (It may not appear immediately.)</p>
+<p>Finally, it is not necessary to set an initial guess for the camera pose, but it is worth noting that once a calibration
+has been calculated, these fields will be updated with the new calibration.</p>
+</div>
+<div class="section" id="collect-dataset">
+<h2>Collect Dataset<a class="headerlink" href="#collect-dataset" title="Permalink to this headline"></a></h2>
+<p>Next, we will capture a calibration dataset. We need to capture several samples to ensure a good calibration. The robot
+kinematics provide the end-effector’s pose in the robot base frame, and the calibration target’s pose in the camera
+frame can be estimated, as mentioned above. If the target’s pose in the robot base frame were known accurately, only a
+single observation of the camera-target transform would be necessary to recover the camera’s pose in the end-effector
+frame. The direct camera-to-end-effector transform is equivalent to the composite
+camera-to-target-to-base-link-to-end-effector transform. A better option, however, is to combine the information from
+several poses to eliminate the target pose in the base frame from the equation, as described in <a class="reference external" href="https://scholar.google.com/scholar?cluster=11338617350721919587">this paper by Kostas
+Daniilidis</a>.</p>
+<p>Each sample in our calibration dataset, then, comprises a pair of poses: the end-effector’s pose in the robot base frame
+paired with the calibration target’s pose in the camera frame. Once five such samples have been collected, the
+calibration can be calculated.</p>
+<p>The “Calibrate” tab provides the tools to collect the dataset and calculate and export the calibration. At this point,
+it is also helpful to add an image panel to the RViz display to see the target detection in the camera view, which is
+published on <code class="docutils literal notranslate"><span class="pre">/handeye_calibration/target_detection</span></code>.</p>
+<img alt="../../../_images/calibrate_tab.png" src="../../../_images/calibrate_tab.png" />
+<p>On the “Calibrate” tab, you can select which calibration solver to use in the “AX=XB Solver” drop-down. The Daniilidis
+solver (from the paper referenced, above) is the default and is a good choice in most situations. The “Planning Group”
+is the joint group that will be recorded, so should be set to the appropriate group for the arm (in the
+<code class="docutils literal notranslate"><span class="pre">panda_moveit_config</span></code> package, the <code class="docutils literal notranslate"><span class="pre">panda_arm</span></code> group should be used).</p>
+<p>When the target is visible in the arm camera, and the axis is rendered on the target in the target detection image, you
+are ready to take your first calibration sample (pose pair). Click the “Take sample” button in the “Manual calibration”
+section, and a new sample will be added to the “Pose samples” list on the left side of the panel. If you expand a
+sample, you will see it contains two transforms, base-to-end-effector, and camera-to-target.</p>
+<p>Next, you can move the arm to a new pose using the “MotionPlanning” panel, or use your robot’s teaching pendant or free
+drive mode, if it has one, and click “Take sample” again. Be sure to include some rotation between each pair of poses,
+and don’t always rotate around the same axis–at least two rotation axes are needed to uniquely solve for the
+calibration (see the Daniilidis paper, linked above, for the explanation why).</p>
+<p>As you take manual samples, the robot joint states are recorded, so that the same poses can be used again to
+recalibrate in the future. The number of recorded states is shown to the right of the progress bar at the bottom of the
+panel, and the states can be saved to a file using the “Save joint states” button in the “Settings” section.</p>
+</div>
+<div class="section" id="calculate-a-calibration">
+<h2>Calculate a Calibration<a class="headerlink" href="#calculate-a-calibration" title="Permalink to this headline"></a></h2>
+<p>Once you have collected five samples, a calibration will be performed automatically, and updated each time a new sample
+is added. The calibration will improve significantly with a few more samples, and will typically plateau after about 12
+or 15 samples. The position and orientation will be displayed on the “Context” tab, as mentioned above, and the
+published TF will be updated as well. Click “Save camera pose” to export the calibration result. This will create a
+launch file with a static transform publisher containing the calibrated camera transform.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../perception_pipeline/perception_pipeline_tutorial.html" class="btn btn-neutral float-left" title="Perception Pipeline Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ikfast/ikfast_tutorial.html" class="btn btn-neutral float-right" title="IKFast Kinematics Solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

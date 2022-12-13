@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/State Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">lifecycle_msgs</a>/msg/State Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">lifecycle_msgs/msg/State.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text"># Primary state definitions as depicted in:</div><br>
+          <div class="comment-text"># http://design.ros2.org/articles/node_lifecycle.html</div><br>
+          <br>
+          <div class="comment-text"># These are the primary states. State changes can only be requested when the</div><br>
+          <div class="comment-text"># node is in one of these states.</div><br>
+          <br>
+          <div class="comment-text"># Indicates state has not yet been set.</div><br>
+          uint8 PRIMARY_STATE_UNKNOWN = 0<br>
+          <br>
+          <div class="comment-text"># This is the life cycle state the node is in immediately after being</div><br>
+          <div class="comment-text"># instantiated.</div><br>
+          uint8 PRIMARY_STATE_UNCONFIGURED = 1<br>
+          <br>
+          <div class="comment-text"># This state represents a node that is not currently performing any processing.</div><br>
+          uint8 PRIMARY_STATE_INACTIVE = 2<br>
+          <br>
+          <div class="comment-text"># This is the main state of the node&#x27;s life cycle. While in this state, the node</div><br>
+          <div class="comment-text"># performs any processing, responds to service requests, reads and processes</div><br>
+          <div class="comment-text"># data, produces output, etc.</div><br>
+          uint8 PRIMARY_STATE_ACTIVE = 3<br>
+          <br>
+          <div class="comment-text"># The finalized state is the state in which the node ends immediately before</div><br>
+          <div class="comment-text"># being destroyed.</div><br>
+          uint8 PRIMARY_STATE_FINALIZED = 4<br>
+          <br>
+          <div class="comment-text"># Temporary intermediate states. When a transition is requested, the node</div><br>
+          <div class="comment-text"># changes its state into one of these states.</div><br>
+          <br>
+          <div class="comment-text"># In this transition state the node&#x27;s onConfigure callback will be called to</div><br>
+          <div class="comment-text"># allow the node to load its configuration and conduct any required setup.</div><br>
+          uint8 TRANSITION_STATE_CONFIGURING = 10<br>
+          <br>
+          <div class="comment-text"># In this transition state the node&#x27;s callback onCleanup will be called to clear</div><br>
+          <div class="comment-text"># all state and return the node to a functionally equivalent state as when</div><br>
+          <div class="comment-text"># first created.</div><br>
+          uint8 TRANSITION_STATE_CLEANINGUP = 11<br>
+          <br>
+          <div class="comment-text"># In this transition state the callback onShutdown will be executed to do any</div><br>
+          <div class="comment-text"># cleanup necessary before destruction.</div><br>
+          uint8 TRANSITION_STATE_SHUTTINGDOWN = 12<br>
+          <br>
+          <div class="comment-text"># In this transition state the callback onActivate will be executed to do any</div><br>
+          <div class="comment-text"># final preparations to start executing.</div><br>
+          uint8 TRANSITION_STATE_ACTIVATING = 13<br>
+          <br>
+          <div class="comment-text"># In this transition state the callback onDeactivate will be executed to do any</div><br>
+          <div class="comment-text"># cleanup to start executing, and reverse the onActivate changes.</div><br>
+          uint8 TRANSITION_STATE_DEACTIVATING = 14<br>
+          <br>
+          <div class="comment-text"># This transition state is where any error may be cleaned up.</div><br>
+          uint8 TRANSITION_STATE_ERRORPROCESSING = 15<br>
+          <br>
+          <div class="comment-text"># The state id value from the above definitions.</div><br>
+          uint8 id<br>
+          <br>
+          <div class="comment-text"># A text label of the state.</div><br>
+          string label<br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          uint8 PRIMARY_STATE_UNKNOWN=0<br>
+          uint8 PRIMARY_STATE_UNCONFIGURED=1<br>
+          uint8 PRIMARY_STATE_INACTIVE=2<br>
+          uint8 PRIMARY_STATE_ACTIVE=3<br>
+          uint8 PRIMARY_STATE_FINALIZED=4<br>
+          uint8 TRANSITION_STATE_CONFIGURING=10<br>
+          uint8 TRANSITION_STATE_CLEANINGUP=11<br>
+          uint8 TRANSITION_STATE_SHUTTINGDOWN=12<br>
+          uint8 TRANSITION_STATE_ACTIVATING=13<br>
+          uint8 TRANSITION_STATE_DEACTIVATING=14<br>
+          uint8 TRANSITION_STATE_ERRORPROCESSING=15<br>
+          uint8 id<br>
+          string label<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Dec 13 2022 12:38:05</p>
+    </div>
+  </body>
+</html>

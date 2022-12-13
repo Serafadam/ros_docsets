@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URDF and SRDF &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/urdf_srdf/urdf_srdf_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Low Level Controllers" href="../controller_configuration/controller_configuration_tutorial.html" />
+    <link rel="prev" title="MoveIt Setup Assistant" href="../setup_assistant/setup_assistant_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">URDF and SRDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#urdf">URDF</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#urdf-resources">URDF Resources</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#important-tips">Important Tips</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#special-characters-in-joint-names">Special Characters in Joint Names</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#safety-limits">Safety Limits</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#collision-checking">Collision Checking</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#test-your-urdf">Test your URDF</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#urdf-examples">URDF Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#srdf">SRDF</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#virtual-joints">Virtual Joints</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#passive-joints">Passive Joints</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#groups">Groups</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#collection-of-joints">Collection of Joints</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#collection-of-links">Collection of Links</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#serial-chain">Serial Chain</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#collection-of-sub-groups">Collection of Sub-Groups</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#end-effectors">End-Effectors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#self-collisions">Self-Collisions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#robot-poses">Robot Poses</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#srdf-documentation">SRDF Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#loading-the-urdf-and-srdf">Loading the URDF and SRDF</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#launch-file-specification">Launch File Specification</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#string-topic-specification">String Topic Specification</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#under-the-hood-rdfloader">Under the Hood: RDFLoader</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">URDF and SRDF</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/urdf_srdf/urdf_srdf_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="urdf-and-srdf">
+<h1>URDF and SRDF<a class="headerlink" href="#urdf-and-srdf" title="Permalink to this headline"></a></h1>
+<div class="section" id="urdf">
+<h2>URDF<a class="headerlink" href="#urdf" title="Permalink to this headline"></a></h2>
+<p>MoveIt 2 starts with a URDF (Unified Robot Description Format), the native format for describing robots in ROS and ROS2. In this tutorial, you will find resources for the URDF, important tips and also a list of MoveIt 2 specific requirements.</p>
+<div class="section" id="urdf-resources">
+<h3>URDF Resources<a class="headerlink" href="#urdf-resources" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.ros.org/wiki/urdf">URDF ROS Wiki Page</a> - The URDF ROS Wiki page is the source of most information about the URDF.</p></li>
+<li><p><a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/URDF/URDF-Main.html">URDF Tutorials</a> - Tutorials for working with the URDF.</p></li>
+<li><p><a class="reference external" href="http://www.ros.org/wiki/sw_urdf_exporter">SOLIDWORKS URDF Plugin</a> - A plugin that lets you generate a URDF directly from a SOLIDWORKS model.</p></li>
+</ul>
+<p><strong>Note:</strong> Although the documents above are written for ROS, all the documentation is valid given you change the commands from ROS to ROS2 (ie: rosrun -&gt; ros2 run or roslaunch -&gt; ros2 launch)</p>
+</div>
+<div class="section" id="important-tips">
+<h3>Important Tips<a class="headerlink" href="#important-tips" title="Permalink to this headline"></a></h3>
+<p>This section contains a set of tips on making sure that the URDF that you generate can be used with MoveIt 2. Make sure you go through all these tips before starting to use MoveIt 2 with your robot.</p>
+<div class="section" id="special-characters-in-joint-names">
+<h4>Special Characters in Joint Names<a class="headerlink" href="#special-characters-in-joint-names" title="Permalink to this headline"></a></h4>
+<p>Joint names should not contain any of the following special characters: -,[,],(,),</p>
+<p>We hope to be able to get rid of these restrictions on the joint names soon.</p>
+</div>
+<div class="section" id="safety-limits">
+<h4>Safety Limits<a class="headerlink" href="#safety-limits" title="Permalink to this headline"></a></h4>
+<p>Some URDFs have safety limits set in addition to the joint limits of the robot. Here’s an example of the safety controller specified for the Panda head pan joint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">safety_controller</span> <span class="n">k_position</span><span class="o">=</span><span class="s2">&quot;100&quot;</span> <span class="n">k_velocity</span><span class="o">=</span><span class="s2">&quot;1.5&quot;</span> <span class="n">soft_lower_limit</span><span class="o">=</span><span class="s2">&quot;-2.857&quot;</span> <span class="n">soft_upper_limit</span><span class="o">=</span><span class="s2">&quot;2.857&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>The “soft_lower_limit” field and the “soft_upper_limit” field specify the joint position limits for this joint. MoveIt 2 will compare these limits to the hard limits for the joint specified in the URDF and choose the limits that are more conservative.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the “soft_lower_limit” and the “soft_upper_limit” in the safety_controller are set to 0.0, your joint will be unable to move. MoveIt 2 relies on you to specify the correct robot model.</p>
+</div>
+</div>
+<div class="section" id="collision-checking">
+<h4>Collision Checking<a class="headerlink" href="#collision-checking" title="Permalink to this headline"></a></h4>
+<p>MoveIt 2 uses the meshes specified in the URDF for collision checking. The URDF allows you to specify two sets of meshes separately for visualization and collision checking. In general, the visualization meshes can be detailed and pretty, but the collision meshes should be much less detailed. The number of triangles in a mesh affects the amount of time it takes to collision check a robot link. The number of triangles in the whole robot should be on the order of a few thousand.</p>
+</div>
+<div class="section" id="test-your-urdf">
+<h4>Test your URDF<a class="headerlink" href="#test-your-urdf" title="Permalink to this headline"></a></h4>
+<p>It is very important to test your URDF out and make sure things are ok. The ROS URDF packages provide a check_urdf tool. To verify your URDF using the check_urdf tool, follow the instructions <a class="reference external" href="http://wiki.ros.org/urdf#Verification">here</a>.</p>
+</div>
+</div>
+<div class="section" id="urdf-examples">
+<h3>URDF Examples<a class="headerlink" href="#urdf-examples" title="Permalink to this headline"></a></h3>
+<p>There are lots of URDFs available for robots using ROS.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.ros.org/wiki/urdf/Examples">URDF Examples</a> - A list of URDFs from the ROS community.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="srdf">
+<h2>SRDF<a class="headerlink" href="#srdf" title="Permalink to this headline"></a></h2>
+<p>The SRDF or Semantic Robot Description Format complement the URDF and specifies joint groups, default robot configurations, additional collision checking information, and additional transforms that may be needed to completely specify the robot’s pose. The recommended way to generate a SRDF is using the MoveIt Setup Assistant.</p>
+<div class="section" id="virtual-joints">
+<h3>Virtual Joints<a class="headerlink" href="#virtual-joints" title="Permalink to this headline"></a></h3>
+<p>The URDF contains information only about the physical joints on the robot. Often, additional joints need to be defined to specify the pose of the root link on the robot with respect to a world coordinate system. In such cases, a virtual joint is used to specify this connection. E.g., a mobile robot like the PR2 that moves around in the plane is specified using a planar virtual joint that attaches the world coordinate frame to the frame of the robot. A fixed robot (like an industrial manipulator) should be attached to the world using a fixed joint.</p>
+</div>
+<div class="section" id="passive-joints">
+<h3>Passive Joints<a class="headerlink" href="#passive-joints" title="Permalink to this headline"></a></h3>
+<p>Passive joints are unactuated joints on a robot, e.g. passive casters on a differential drive robots. They are specified separately in the SRDF to make sure that different components in the motion planning or control pipelines know that the joints cannot be directly controlled. If your robot has unactuated casters, they should be specified as passive casters.</p>
+</div>
+<div class="section" id="groups">
+<h3>Groups<a class="headerlink" href="#groups" title="Permalink to this headline"></a></h3>
+<p>A ‘Group’ (sometimes called ‘JointGroup’ or ‘Planning Group’) is a central concept in MoveIt 2. MoveIt 2 always acts on a particular group. MoveIt 2 will only consider moving the joints in the group that it is planning for – other joints are left stationary. (A motion plan where all joints in the robot may move can be achieved by creating a group containing all joints.) A group is simply a collection of joints and links. Each group can be specified in one of several different ways:</p>
+<div class="section" id="collection-of-joints">
+<h4>Collection of Joints<a class="headerlink" href="#collection-of-joints" title="Permalink to this headline"></a></h4>
+<p>A group can be specified as a collection of joints. All the child links of each joint are automatically included in the group.</p>
+</div>
+<div class="section" id="collection-of-links">
+<h4>Collection of Links<a class="headerlink" href="#collection-of-links" title="Permalink to this headline"></a></h4>
+<p>A group can also be specified as a collection of links. All the parent joints of the links are also included in the group.</p>
+</div>
+<div class="section" id="serial-chain">
+<h4>Serial Chain<a class="headerlink" href="#serial-chain" title="Permalink to this headline"></a></h4>
+<p>A serial chain is specified using the base link and the tip link. The tip link in a chain is the child link of the last joint in the chain. The base link in a chain is the parent link for the first joint in the chain.</p>
+</div>
+<div class="section" id="collection-of-sub-groups">
+<h4>Collection of Sub-Groups<a class="headerlink" href="#collection-of-sub-groups" title="Permalink to this headline"></a></h4>
+<p>A group can also be a collection of groups. E.g., you can define left_arm and right_arm as two groups and then define a new group called both_arms that includes these two groups.</p>
+</div>
+</div>
+<div class="section" id="end-effectors">
+<h3>End-Effectors<a class="headerlink" href="#end-effectors" title="Permalink to this headline"></a></h3>
+<p>Certain groups in a robot can be given a special designation as an end-effector. An end-effector is typically connected to another group (like an arm) through a fixed joint. Note that when specifying groups that are end-effectors, it’s important to make sure that there are no common links between the end-effector and the parent group it is connected to.</p>
+</div>
+<div class="section" id="self-collisions">
+<h3>Self-Collisions<a class="headerlink" href="#self-collisions" title="Permalink to this headline"></a></h3>
+<p>The Default Self-Collision Matrix Generator (part of Setup Assistant) searches for pairs of links on the robot that can safely be disabled from collision checking, decreasing motion planning processing time. These pairs of links are disabled when they are always in collision, never in collision, in collision in the robot’s default position or when the links are adjacent to each other on the kinematic chain. The sampling density specifies how many random robot positions to check for self collision. Higher densities require more computation time while lower densities have a higher possibility of disabling pairs that should not be disabled. The default value is 10,000 collision checks. Collision checking is done in parallel to decrease processing time.</p>
+</div>
+<div class="section" id="robot-poses">
+<h3>Robot Poses<a class="headerlink" href="#robot-poses" title="Permalink to this headline"></a></h3>
+<p>The SRDF can also store fixed configurations of the robot. A typical example of the SRDF in this case is in defining a HOME position for a manipulator. The configuration is stored with a string id, which can be used to recover the configuration later.</p>
+</div>
+<div class="section" id="srdf-documentation">
+<h3>SRDF Documentation<a class="headerlink" href="#srdf-documentation" title="Permalink to this headline"></a></h3>
+<p>For information about the syntax for the SRDF, read more details on the <a class="reference external" href="http://www.ros.org/wiki/srdf">ROS SRDF Wiki page</a>.</p>
+</div>
+</div>
+<div class="section" id="loading-the-urdf-and-srdf">
+<h2>Loading the URDF and SRDF<a class="headerlink" href="#loading-the-urdf-and-srdf" title="Permalink to this headline"></a></h2>
+<p>All the components of MoveIt that use the <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_core/html/cpp/classmoveit_1_1core_1_1RobotModel.html">RobotModel</a> need to have access to the URDF and SRDF to function properly. In ROS 1, this was accomplished by loading the XML of each into a string parameter (<code class="docutils literal notranslate"><span class="pre">/robot_description</span></code> and <code class="docutils literal notranslate"><span class="pre">/robot_description_semantic</span></code> respectively) into the global parameter server. ROS 2 does not have a global parameter server, so making sure all the appropriate nodes have access requires a little more work.</p>
+<div class="section" id="launch-file-specification">
+<h3>Launch File Specification<a class="headerlink" href="#launch-file-specification" title="Permalink to this headline"></a></h3>
+<p>One option is to set the parameters for each node that requires them, which is typically done using a launch file.</p>
+<p>Loading the URDF often uses xacro, and so loading it looks like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch_ros.parameter_descriptions</span> <span class="kn">import</span> <span class="n">ParameterValue</span>
+<span class="kn">from</span> <span class="nn">launch.substitutions</span> <span class="kn">import</span> <span class="n">Command</span>
+
+<span class="n">robot_description</span> <span class="o">=</span> <span class="n">ParameterValue</span><span class="p">(</span><span class="n">Command</span><span class="p">([</span><span class="s1">&#39;xacro &#39;</span><span class="p">,</span> <span class="n">PATH_TO_URDF</span><span class="p">]),</span>
+                                   <span class="n">value_type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Meanwhile, the SRDF must be read in explicitly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PATH_TO_SRDF</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">semantic_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then the values must be loaded into EACH node.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">move_group_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;moveit_ros_move_group&#39;</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;move_group&#39;</span><span class="p">,</span>
+                       <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+                       <span class="n">parameters</span><span class="o">=</span><span class="p">[{</span>
+                            <span class="s1">&#39;robot_description&#39;</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">,</span>
+                            <span class="s1">&#39;robot_description_semantic&#39;</span><span class="p">:</span> <span class="n">semantic_content</span><span class="p">,</span>
+                            <span class="c1"># More params</span>
+                       <span class="p">}],</span>
+                       <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="string-topic-specification">
+<h3>String Topic Specification<a class="headerlink" href="#string-topic-specification" title="Permalink to this headline"></a></h3>
+<p>The other approach is to use publish the two strings as topics. This pattern is already done with the <a class="reference external" href="https://github.com/ros/robot_state_publisher/blob/37aff2034b58794b78f1682c8fab4d609f5d2e29/src/robot_state_publisher.cpp#L136">Robot State Publisher</a> which publishes a <code class="docutils literal notranslate"><span class="pre">std_msgs/msg/String</span></code> message on the <code class="docutils literal notranslate"><span class="pre">/robot_description</span></code> topic. This can be done in the launch file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rsp_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;robot_state_publisher&#39;</span><span class="p">,</span>
+                <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;robot_state_publisher&#39;</span><span class="p">,</span>
+                <span class="n">respawn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+                <span class="n">parameters</span><span class="o">=</span><span class="p">[{</span>
+                    <span class="s1">&#39;robot_description&#39;</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">,</span>
+                    <span class="s1">&#39;publish_frequency&#39;</span><span class="p">:</span> <span class="mf">15.0</span>
+                <span class="p">}]</span>
+                <span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also tell MoveIt nodes to publish the topic as well.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">move_group_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;moveit_ros_move_group&#39;</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;move_group&#39;</span><span class="p">,</span>
+                       <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+                       <span class="n">parameters</span><span class="o">=</span><span class="p">[{</span>
+                            <span class="s1">&#39;robot_description&#39;</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">,</span>
+                            <span class="s1">&#39;publish_robot_description&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                            <span class="c1"># More params</span>
+                       <span class="p">}],</span>
+                       <span class="p">)</span>
+</pre></div>
+</div>
+<p>Publishing the robot description as a topic only needs to be done once, not in each node that requires the description.</p>
+<p>Similarly, we can also publish the SRDF as a <code class="docutils literal notranslate"><span class="pre">std_msgs/msg/String</span></code> message. This requires that one node have the parameter set in the launch file, with the additional parameter <code class="docutils literal notranslate"><span class="pre">publish_robot_description_semantic</span></code> set to True.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">move_group_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;moveit_ros_move_group&#39;</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;move_group&#39;</span><span class="p">,</span>
+                       <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+                       <span class="n">parameters</span><span class="o">=</span><span class="p">[{</span>
+                            <span class="s1">&#39;robot_description_semantic&#39;</span><span class="p">:</span> <span class="n">semantic_content</span><span class="p">,</span>
+                            <span class="s1">&#39;publish_robot_description_semantic&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                            <span class="c1"># More params</span>
+                       <span class="p">}],</span>
+                       <span class="p">)</span>
+</pre></div>
+</div>
+<p>Then all of the other nodes may subscribe to the string message that gets published.</p>
+</div>
+<div class="section" id="under-the-hood-rdfloader">
+<h3>Under the Hood: RDFLoader<a class="headerlink" href="#under-the-hood-rdfloader" title="Permalink to this headline"></a></h3>
+<p>In many places in the MoveIt code, the robot description and semantics are loaded using the <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/rdf_loader/include/moveit/rdf_loader/rdf_loader.h">RDFLoader</a>
+class, which will attempt to read the parameters from the node, and if that fails, will attempt to subscribe to the String topic for a short period of time. If both methods fail to get the parameter, then a warning will be printed to the console.</p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../setup_assistant/setup_assistant_tutorial.html" class="btn btn-neutral float-left" title="MoveIt Setup Assistant" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../controller_configuration/controller_configuration_tutorial.html" class="btn btn-neutral float-right" title="Low Level Controllers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

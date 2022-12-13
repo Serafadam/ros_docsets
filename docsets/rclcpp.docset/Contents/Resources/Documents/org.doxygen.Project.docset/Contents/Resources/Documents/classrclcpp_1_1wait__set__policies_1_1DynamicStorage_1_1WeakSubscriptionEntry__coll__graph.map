@@ -1,0 +1,4 @@
+<map id="rclcpp::wait_set_policies::DynamicStorage::WeakSubscriptionEntry" name="rclcpp::wait_set_policies::DynamicStorage::WeakSubscriptionEntry">
+<area shape="rect" id="node1" title=" " alt="" coords="5,109,301,151"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1SubscriptionWaitSetMask.html" title="Options used to determine what parts of a subscription get added to or removed from a wait set." alt="" coords="64,5,243,47"/>
+</map>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilz Industrial Motion Planner &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/pilz_industrial_motion_planner/pilz_industrial_motion_planner.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Planning Adapter Tutorials" href="../planning_adapters/planning_adapters_tutorial.html" />
+    <link rel="prev" title="TrajOpt Planner" href="../trajopt_planner/trajopt_planner_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../kinematics_configuration/kinematics_configuration_tutorial.html">Kinematics Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_constraint_samplers/custom_constraint_samplers_tutorial.html">Custom Constraint Samplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ompl_interface/ompl_interface_tutorial.html">OMPL Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chomp_planner/chomp_planner_tutorial.html">CHOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stomp_planner/stomp_planner_tutorial.html">STOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trajopt_planner/trajopt_planner_tutorial.html">TrajOpt Planner</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pilz Industrial Motion Planner</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#joint-limits">Joint Limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cartesian-limits">Cartesian Limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#planning-interface">Planning Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-ptp-motion-command">The PTP motion command</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#input-parameters-in-moveit-msgs-motionplanrequest">Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#planning-results-in-moveit-msg-motionplanresponse">Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-lin-motion-command">The LIN motion command</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-circ-motion-command">The CIRC motion command</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id3">Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-planner">Using the planner</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-of-multiple-segments">Sequence of multiple segments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user-interface-sequence-capability">User interface sequence capability</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#restrictions-for-motionsequencerequest">Restrictions for <code class="docutils literal notranslate"><span class="pre">MotionSequenceRequest</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#action-interface">Action interface</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#service-interface">Service interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_adapters/planning_adapters_tutorial.html">Planning Adapter Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../persistent_scenes_and_states/persistent_scenes_and_states.html">Warehouse - Persistent Scenes and States</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Pilz Industrial Motion Planner</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/pilz_industrial_motion_planner/pilz_industrial_motion_planner.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="pilz-industrial-motion-planner">
+<h1>Pilz Industrial Motion Planner<a class="headerlink" href="#pilz-industrial-motion-planner" title="Permalink to this headline"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">pilz_industrial_motion_planner</span></code> provides a trajectory generator to plan standard robot
+motions like point-to-point, linear, and circular with MoveIt.</p>
+<p>By loading the corresponding planning pipeline
+(<code class="docutils literal notranslate"><span class="pre">pilz_industrial_motion_planner_planning_planner.yaml</span></code> in your
+<code class="docutils literal notranslate"><span class="pre">*_moveit_config</span></code> package), the trajectory generation
+functionalities can be accessed through the user interface (C++, Python
+or RViz) provided by the <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node, e.g.
+<code class="docutils literal notranslate"><span class="pre">/plan_kinematic_path</span></code> service and <code class="docutils literal notranslate"><span class="pre">/move_action</span></code> action.
+For detailed usage tutorials, please refer to
+<a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html"><span class="doc">MoveItCpp Tutorial</span></a> and
+<a class="reference internal" href="../move_group_interface/move_group_interface_tutorial.html"><span class="doc">Move Group C++ Interface</span></a>.</p>
+<div class="section" id="joint-limits">
+<h2>Joint Limits<a class="headerlink" href="#joint-limits" title="Permalink to this headline"></a></h2>
+<p>The planner uses maximum velocities and accelerations from the
+parameters of the ROS node that is operating the Pilz planning pipeline.
+Using the MoveIt Setup Assistant the file <code class="docutils literal notranslate"><span class="pre">joint_limits.yaml</span></code>
+is auto-generated with proper defaults and loaded during startup.</p>
+<p>The specified limits override the limits from the URDF robot description.
+Note that while setting position limits and velocity limits is possible
+in both the URDF and a parameter file, setting acceleration limits is
+only possible using a parameter file. In addition to the common
+<code class="docutils literal notranslate"><span class="pre">has_acceleration</span></code> and <code class="docutils literal notranslate"><span class="pre">max_acceleration</span></code> parameters, we added the
+ability to also set <code class="docutils literal notranslate"><span class="pre">has_deceleration</span></code> and <code class="docutils literal notranslate"><span class="pre">max_deceleration</span></code>(&lt;0.0).</p>
+<p>The limits are merged under the premise that the limits from the
+node parameters must be stricter or at least equal to the parameters
+set in the URDF.</p>
+<p>Currently, the calculated trajectory will respect the limits by using the
+strictest combination of all limits as a common limit for all joints.</p>
+</div>
+<div class="section" id="cartesian-limits">
+<h2>Cartesian Limits<a class="headerlink" href="#cartesian-limits" title="Permalink to this headline"></a></h2>
+<p>For Cartesian trajectory generation (LIN/CIRC), the planner needs
+information about the maximum speed in 3D Cartesian space. Namely,
+translational/rotational velocity/acceleration/deceleration need to be
+set in the node parameters like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cartesian_limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_trans_vel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_trans_acc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.25</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_trans_dec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-5</span><span class="w"></span>
+<span class="w">  </span><span class="nt">max_rot_vel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.57</span><span class="w"></span>
+</pre></div>
+</div>
+<p>You can specify Cartesian velocity and acceleration limits in a file named
+<code class="docutils literal notranslate"><span class="pre">pilz_cartesian_limits.yaml</span></code> in your <code class="docutils literal notranslate"><span class="pre">*_moveit_config</span></code> package.</p>
+<p>The planners assume the same acceleration ratio for translational and
+rotational trapezoidal shapes. The rotational acceleration is
+calculated as <code class="docutils literal notranslate"><span class="pre">max_trans_acc</span> <span class="pre">/</span> <span class="pre">max_trans_vel</span> <span class="pre">*</span> <span class="pre">max_rot_vel</span></code>
+(and for deceleration accordingly).</p>
+</div>
+<div class="section" id="planning-interface">
+<h2>Planning Interface<a class="headerlink" href="#planning-interface" title="Permalink to this headline"></a></h2>
+<p>This package uses <code class="docutils literal notranslate"><span class="pre">moveit_msgs::msgs::MotionPlanRequest</span></code> and <code class="docutils literal notranslate"><span class="pre">moveit_msgs::msg::MotionPlanResponse</span></code>
+as input and output for motion planning. The parameters needed for each planning algorithm
+are explained below.</p>
+<p>For a general introduction on how to fill a <code class="docutils literal notranslate"><span class="pre">MotionPlanRequest</span></code>, see
+<a class="reference internal" href="../move_group_interface/move_group_interface_tutorial.html#move-group-interface-planning-to-pose-goal"><span class="std std-ref">Planning to a Pose goal</span></a>.</p>
+<p>You can specify <code class="docutils literal notranslate"><span class="pre">&quot;PTP&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;LIN&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;CIRC&quot;</span></code> as the <code class="docutils literal notranslate"><span class="pre">planner_id</span></code> of the <code class="docutils literal notranslate"><span class="pre">MotionPlanRequest</span></code>.</p>
+</div>
+<div class="section" id="the-ptp-motion-command">
+<h2>The PTP motion command<a class="headerlink" href="#the-ptp-motion-command" title="Permalink to this headline"></a></h2>
+<p>This planner generates fully synchronized point-to-point trajectories
+with trapezoidal joint velocity profiles. All joints are assumed to have
+the same maximal joint velocity/acceleration/deceleration limits. If
+not, the strictest limits are adopted. The axis with the longest time to
+reach the goal is selected as the lead axis. Other axes are decelerated
+so that they share the same acceleration/constant velocity/deceleration
+phases as the lead axis.</p>
+<img alt="PTP velocity profile with trapezoidal ramps - the axis with the longest duration determines the maximum velocity" src="../../../_images/ptp.png" />
+<div class="section" id="input-parameters-in-moveit-msgs-motionplanrequest">
+<h3>Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code><a class="headerlink" href="#input-parameters-in-moveit-msgs-motionplanrequest" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">planner_id</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;PTP&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_velocity_scaling_factor</span></code>: scaling factor of maximal joint velocity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_acceleration_scaling_factor</span></code>: scaling factor of maximal joint acceleration/deceleration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_state/joint_state/(name,</span> <span class="pre">position</span> <span class="pre">and</span> <span class="pre">velocity)</span></code>: joint name/position/velocity (optional) of the start state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints</span></code>: (goal can be given in joint space or Cartesian space)</p></li>
+<li><dl class="simple">
+<dt>for a goal in joint space</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/joint_name</span></code>: goal joint name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/position</span></code>: goal joint position</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>for a goal in Cartesian space</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/header/frame_id</span></code>: frame this data is associated with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/link_name</span></code>: target link name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/constraint_region</span></code>: bounding volume of the target point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/target_point_offset</span></code>: offset (in the link frame) for the target point on
+the target link (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="planning-results-in-moveit-msg-motionplanresponse">
+<h3>Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code><a class="headerlink" href="#planning-results-in-moveit-msg-motionplanresponse" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory_start</span></code>: first robot state of the planned trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/joint_names</span></code>: a list of the joint
+names of the generated joint trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/points/(positions,velocities,accelerations,time_from_start)</span></code>:
+a list of generated way points. Each point has
+positions/velocities/accelerations of all joints (same order as the
+joint names) and time from start. The last point will have zero
+velocity and acceleration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code/val</span></code>: error code of the motion planning</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-lin-motion-command">
+<h2>The LIN motion command<a class="headerlink" href="#the-lin-motion-command" title="Permalink to this headline"></a></h2>
+<p>This planner generates a linear Cartesian trajectory between goal and
+start poses. The planner uses the Cartesian limits to generate a
+trapezoidal velocity profile in Cartesian space. The translational
+motion is a linear interpolation between start and goal position vector.
+The rotational motion is quaternion slerp between start and goal
+orientation. The translational and rotational motion is synchronized in
+time. This planner only accepts start state with zero velocity. Planning
+result is a joint trajectory. The user needs to adapt the Cartesian
+velocity/acceleration scaling factor if the motion plan fails due to
+violation of joint space limits.</p>
+<div class="section" id="id1">
+<h3>Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">planner_id</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;LIN&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_velocity_scaling_factor</span></code>: scaling factor of maximal Cartesian
+translational/rotational velocity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_acceleration_scaling_factor</span></code>: scaling factor of maximal
+Cartesian translational/rotational acceleration/deceleration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_state/joint_state/(name,</span> <span class="pre">position</span> <span class="pre">and</span> <span class="pre">velocity</span></code>: joint
+name/position of the start state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints</span></code> (goal can be given in joint space or Cartesian
+space)</p>
+<ul>
+<li><p>for a goal in joint space</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/joint_name</span></code>: goal joint
+name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/position</span></code>: goal joint
+position</p></li>
+</ul>
+</li>
+<li><p>for a goal in Cartesian space</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/header/frame_id</span></code>:
+frame this data is associated with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/link_name</span></code>: target
+link name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/constraint_region</span></code>:
+bounding volume of the target point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/target_point_offset</span></code>:
+offset (in the link frame) for the target point on the target
+link (optional)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory_start</span></code>: first robot state of the planned trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/joint_names</span></code>: a list of the joint
+names of the generated joint trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/points/(positions,velocities,accelerations,time_from_start)</span></code>:
+a list of generated way points. Each point has
+positions/velocities/accelerations of all joints (same order as the
+joint names) and time from start. The last point will have zero
+velocity and acceleration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code/val</span></code>: error code of the motion planning</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-circ-motion-command">
+<h2>The CIRC motion command<a class="headerlink" href="#the-circ-motion-command" title="Permalink to this headline"></a></h2>
+<p>This planner generates a circular arc trajectory in Cartesian space
+between goal and start poses. There are two options for giving a path
+constraint:</p>
+<ul class="simple">
+<li><p>the <em>center</em> point of the circle: The planner always
+generates the shorter arc between start and goal and cannot generate a
+half circle,</p></li>
+<li><p>an <em>interim</em> point on the arc: The generated trajectory
+always goes through the interim point. The planner cannot generate a
+full circle.</p></li>
+</ul>
+<p>The Cartesian limits, namely translational/rotational
+velocity/acceleration/deceleration need to be set and the planner uses
+these limits to generate a trapezoidal velocity profile in Cartesian
+space. The rotational motion is quaternion slerp between start and goal
+orientation. The translational and rotational motion is synchronized in
+time. This planner only accepts start state with zero velocity. The planning
+result is a joint trajectory. The user needs to adapt the Cartesian
+velocity/acceleration scaling factor if motion plan fails due to
+violation of joint limits.</p>
+<div class="section" id="id3">
+<h3>Input parameters in <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionPlanRequest</span></code><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">planner_id</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;CIRC&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_velocity_scaling_factor</span></code>: scaling factor of maximal Cartesian
+translational/rotational velocity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_acceleration_scaling_factor</span></code>: scaling factor of maximal
+Cartesian translational/rotational acceleration/deceleration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_state/joint_state/(name,</span> <span class="pre">position</span> <span class="pre">and</span> <span class="pre">velocity</span></code>: joint
+name/position of the start state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints</span></code> (goal can be given in joint space or Cartesian
+space)</p>
+<ul>
+<li><p>for a goal in joint space</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/joint_name</span></code>: goal joint
+name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/joint_constraints/position</span></code>: goal joint
+position</p></li>
+</ul>
+</li>
+<li><p>for a goal in Cartesian space</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/header/frame_id</span></code>:
+frame this data is associated with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/link_name</span></code>: target
+link name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/constraint_region</span></code>:
+bounding volume of the target point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">goal_constraints/position_constraints/target_point_offset</span></code>:
+offset (in the link frame) for the target point on the target
+link (optional)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path_constraints</span></code> (position of the interim/center point)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">path_constraints/name</span></code>: interim or center</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path_constraints/position_constraints/constraint_region/primitive_poses/point</span></code>:
+position of the point</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Planning results in <code class="docutils literal notranslate"><span class="pre">moveit_msg::MotionPlanResponse</span></code><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory_start</span></code>: first robot state of the planned trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/joint_names</span></code>: a list of the joint
+names of the generated joint trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory/joint_trajectory/points/(positions,velocities,accelerations,time_from_start)</span></code>:
+a list of generated way points. Each point has
+positions/velocities/accelerations of all joints (same order as the
+joint names) and time from start. The last point will have zero
+velocity and acceleration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_name</span></code>: the name of the planning group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code/val</span></code>: error code of the motion planning</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+<p>By running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span> <span class="n">rviz_config</span><span class="o">:=</span><span class="n">panda_hello_moveit</span><span class="o">.</span><span class="n">rviz</span>
+</pre></div>
+</div>
+<p>you can interact with the planner through the RViz MotionPlanning panel.</p>
+<div class="figure align-default">
+<img alt="rviz figure" src="../../../_images/rviz_planner.png" />
+</div>
+<p>To use the planner through the MoveGroup Interface, refer to
+<a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/pilz_industrial_motion_planner/src/pilz_move_group.cpp">the MoveGroup Interface C++ example</a>.
+To run this, execute the following commands in separate Terminals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span> <span class="n">rviz_config</span><span class="o">:=</span><span class="n">panda_hello_moveit</span><span class="o">.</span><span class="n">rviz</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">moveit2_tutorials</span> <span class="n">pilz_move_group</span>
+</pre></div>
+</div>
+<p>To use the planner using MoveIt Task Constructor, refer to
+<a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/pilz_industrial_motion_planner/src/pilz_mtc.cpp">the MoveIt Task Constructor C++ example</a>.
+To run this, execute the following commands in separate Terminals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">mtc_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+<span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">pilz_mtc</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-planner">
+<h2>Using the planner<a class="headerlink" href="#using-the-planner" title="Permalink to this headline"></a></h2>
+<p>The <em>pilz_industrial_motion_planner::CommandPlanner</em> is provided as a MoveIt Motion Planning
+Pipeline and, therefore, can be used with all other manipulators using
+MoveIt. Loading the plugin requires the param
+<code class="docutils literal notranslate"><span class="pre">/move_group/&lt;pipeline_name&gt;/planning_plugin</span></code> to be set to <code class="docutils literal notranslate"><span class="pre">pilz_industrial_motion_planner/CommandPlanner</span></code>
+before the <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node is started.
+For example, the <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/ros2/panda_moveit_config">panda_moveit_config package</a>
+has a <code class="docutils literal notranslate"><span class="pre">pilz_industrial_motion_planner</span></code> pipeline set up as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">param</span> <span class="n">get</span> <span class="o">/</span><span class="n">move_group</span> <span class="n">pilz_industrial_motion_planner</span><span class="o">.</span><span class="n">planning_plugin</span>
+
+<span class="n">String</span> <span class="n">value</span> <span class="ow">is</span><span class="p">:</span> <span class="n">pilz_industrial_motion_planner</span><span class="o">/</span><span class="n">CommandPlanner</span>
+</pre></div>
+</div>
+<p>To use the command planner, Cartesian limits have to be defined. The
+limits are expected to be under the namespace
+<code class="docutils literal notranslate"><span class="pre">&lt;robot_description&gt;_planning</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;robot_description&gt;</span></code> refers
+to the parameter name under which the URDF is loaded.
+For example, if the URDF was loaded into <code class="docutils literal notranslate"><span class="pre">/robot_description</span></code> the
+Cartesian limits have to be defined at <code class="docutils literal notranslate"><span class="pre">/robot_description_planning</span></code>.</p>
+<p>You can set these using a <code class="docutils literal notranslate"><span class="pre">pilz_cartesian_limits.yaml</span></code> file in your
+<code class="docutils literal notranslate"><span class="pre">*_moveit_config</span></code> package.
+An example showing this file can be found in <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/ros2/panda_moveit_config/config/pilz_cartesian_limits.yaml">panda_moveit_config</a>.</p>
+<p>To verify the limits were set correctly, you can check the parameters for your
+<code class="docutils literal notranslate"><span class="pre">move_group</span></code> node. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">param</span> <span class="nb">list</span> <span class="o">/</span><span class="n">move_group</span> <span class="o">--</span><span class="nb">filter</span> <span class="o">.*</span><span class="n">cartesian_limits</span>
+
+<span class="o">/</span><span class="n">move_group</span><span class="p">:</span>
+    <span class="n">robot_description_planning</span><span class="o">.</span><span class="n">cartesian_limits</span><span class="o">.</span><span class="n">max_rot_vel</span>
+    <span class="n">robot_description_planning</span><span class="o">.</span><span class="n">cartesian_limits</span><span class="o">.</span><span class="n">max_trans_acc</span>
+    <span class="n">robot_description_planning</span><span class="o">.</span><span class="n">cartesian_limits</span><span class="o">.</span><span class="n">max_trans_dec</span>
+    <span class="n">robot_description_planning</span><span class="o">.</span><span class="n">cartesian_limits</span><span class="o">.</span><span class="n">max_trans_vel</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sequence-of-multiple-segments">
+<h1>Sequence of multiple segments<a class="headerlink" href="#sequence-of-multiple-segments" title="Permalink to this headline"></a></h1>
+<p>To concatenate multiple trajectories and plan the trajectory at once,
+you can use the sequence capability. This reduces the planning overhead
+and allows to follow a pre-desribed path without stopping at
+intermediate points.</p>
+<p><strong>Please note:</strong> In case the planning of a command in a sequence fails,
+non of the commands in the sequence are executed.</p>
+<p><strong>Please note:</strong> Sequences commands are allowed to contain commands for
+multiple groups (e.g. “Manipulator”, “Gripper”)</p>
+<div class="section" id="user-interface-sequence-capability">
+<h2>User interface sequence capability<a class="headerlink" href="#user-interface-sequence-capability" title="Permalink to this headline"></a></h2>
+<p>A specialized MoveIt functionality known as the
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_planners/pilz_industrial_motion_planner/include/pilz_industrial_motion_planner/command_list_manager.h">command list manager</a>
+takes a <code class="docutils literal notranslate"><span class="pre">moveit_msgs::msg::MotionSequenceRequest</span></code> as input.
+The request contains a list of subsequent goals as described above and an additional
+<code class="docutils literal notranslate"><span class="pre">blend_radius</span></code> parameter. If the given <code class="docutils literal notranslate"><span class="pre">blend_radius</span></code> in meter is
+greater than zero, the corresponding trajectory is merged together with
+the following goal such that the robot does not stop at the current
+goal. When the TCP comes closer to the goal than the given
+<code class="docutils literal notranslate"><span class="pre">blend_radius</span></code>, it is allowed to travel towards the next goal already.
+When leaving a sphere around the current goal, the robot returns onto
+the trajectory it would have taken without blending.</p>
+<div class="figure align-default">
+<img alt="blend figure" src="../../../_images/blend_radius.png" />
+</div>
+<p>Implementation details are available
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">as PDF</a>.</p>
+<div class="section" id="restrictions-for-motionsequencerequest">
+<h3>Restrictions for <code class="docutils literal notranslate"><span class="pre">MotionSequenceRequest</span></code><a class="headerlink" href="#restrictions-for-motionsequencerequest" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Only the first goal may have a start state. Following trajectories
+start at the previous goal.</p></li>
+<li><p>Two subsequent <code class="docutils literal notranslate"><span class="pre">blend_radius</span></code> spheres must not overlap.
+<code class="docutils literal notranslate"><span class="pre">blend_radius</span></code>(i) + <code class="docutils literal notranslate"><span class="pre">blend_radius</span></code>(i+1) has to be smaller
+than the distance between the goals.</p></li>
+</ul>
+</div>
+<div class="section" id="action-interface">
+<h3>Action interface<a class="headerlink" href="#action-interface" title="Permalink to this headline"></a></h3>
+<p>In analogy to the <code class="docutils literal notranslate"><span class="pre">MoveGroup</span></code> action interface, the user can plan and
+execute a <code class="docutils literal notranslate"><span class="pre">moveit_msgs::MotionSequenceRequest</span></code> through the action server
+at <code class="docutils literal notranslate"><span class="pre">/sequence_move_group</span></code>.</p>
+<p>In one point the <code class="docutils literal notranslate"><span class="pre">MoveGroupSequenceAction</span></code> differs from the standard
+MoveGroup capability: If the robot is already at the goal position, the
+path is still executed. The underlying PlannerManager can check, if the
+constraints of an individual <code class="docutils literal notranslate"><span class="pre">moveit_msgs::msg::MotionPlanRequest</span></code> are
+already satisfied but the <code class="docutils literal notranslate"><span class="pre">MoveGroupSequenceAction</span></code> capability doesn’t
+implement such a check to allow moving on a circular or comparable path.</p>
+<p>See the <code class="docutils literal notranslate"><span class="pre">pilz_robot_programming</span></code> package for an <a class="reference external" href="https://github.com/PilzDE/pilz_industrial_motion/blob/melodic-devel/pilz_robot_programming/examples/demo_program.py">ROS1 python script</a>
+that shows how to use the capability.</p>
+</div>
+<div class="section" id="service-interface">
+<h3>Service interface<a class="headerlink" href="#service-interface" title="Permalink to this headline"></a></h3>
+<p>The service <code class="docutils literal notranslate"><span class="pre">plan_sequence_path</span></code> allows the user to generate a joint
+trajectory for a <code class="docutils literal notranslate"><span class="pre">moveit_msgs::msg::MotionSequenceRequest</span></code>.
+The trajectory is returned and not executed.</p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../trajopt_planner/trajopt_planner_tutorial.html" class="btn btn-neutral float-left" title="TrajOpt Planner" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../planning_adapters/planning_adapters_tutorial.html" class="btn btn-neutral float-right" title="Planning Adapter Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

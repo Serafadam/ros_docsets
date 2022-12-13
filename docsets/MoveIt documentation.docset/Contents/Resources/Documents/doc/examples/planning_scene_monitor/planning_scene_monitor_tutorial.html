@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Scene Monitor &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/planning_scene_monitor/planning_scene_monitor_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Planning Scene ROS API" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html" />
+    <link rel="prev" title="Planning Scene" href="../planning_scene/planning_scene_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Planning Scene Monitor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#robotstate">RobotState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#currentstatemonitor">CurrentStateMonitor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#planningscene">PlanningScene</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#planningscenemonitor">PlanningSceneMonitor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#planningsceneinterface">PlanningSceneInterface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Planning Scene Monitor</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene_monitor/planning_scene_monitor_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="planning-scene-monitor">
+<h1>Planning Scene Monitor<a class="headerlink" href="#planning-scene-monitor" title="Permalink to this headline"></a></h1>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">PlanningSceneMonitor</a> is the recommended interface for maintaining an up-to-date planning scene. The relationship between <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_state/include/moveit/robot_state/robot_state.h">RobotState</a>, <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/current_state_monitor.h">CurrentStateMonitor</a>, <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/planning_scene/include/moveit/planning_scene/planning_scene.h">PlanningScene</a>, <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">PlanningSceneMonitor</a>, and <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning_interface/planning_scene_interface/include/moveit/planning_scene_interface/planning_scene_interface.h">PlanningSceneInterface</a> can be really confusing at first. This tutorial aims to make clear these key concepts.</p>
+<div class="section" id="robotstate">
+<h2>RobotState<a class="headerlink" href="#robotstate" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_state/include/moveit/robot_state/robot_state.h">RobotState</a> is a snapshot of a robot. It contains the <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_model/include/moveit/robot_model/robot_model.h">RobotModel</a> and a set of joint values.</p>
+</div>
+<div class="section" id="currentstatemonitor">
+<h2>CurrentStateMonitor<a class="headerlink" href="#currentstatemonitor" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/current_state_monitor.h">CurrentStateMonitor</a> (CSM) can be thought of as a ROS wrapper for the RobotState. It subscribes to a provided topic for <a class="reference external" href="https://github.com/ros2/common_interfaces/blob/master/sensor_msgs/msg/JointState.msg">JointState</a> messages that provide up-to-date sensor values for single degree of freedom actuators, such as revolute or prismatic joints, and updates its internal RobotState with those joint values. In addition to the single degree of freedom joints, a robot can have joints with multiple degrees of freedom such as floating and planar joints. To maintain up-to-date transform information for links and other frames attached with multiple-degree-of-freedom joints, the CSM stores a TF2 <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Writing-A-Simple-Cpp-Service-And-Client.html#cppsrvcli">Buffer</a> that uses a TF2 <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Tf2/Writing-A-Tf2-Listener-Cpp.html#writingatf2listenercpp">TransformListener</a> to set their transforms in its internal data.</p>
+</div>
+<div class="section" id="planningscene">
+<h2>PlanningScene<a class="headerlink" href="#planningscene" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/planning_scene/include/moveit/planning_scene/planning_scene.h">PlanningScene</a> is a snapshot of the world that includes both the RobotState and any number of collision objects. The Planning Scene can be used for collision checking as well as getting information about the environment.</p>
+</div>
+<div class="section" id="planningscenemonitor">
+<h2>PlanningSceneMonitor<a class="headerlink" href="#planningscenemonitor" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">PlanningSceneMonitor</a> wraps a PlanningScene with ROS interfaces for keeping the PlanningScene up to date. To access the PlanningSceneMonitor’s underlying PlanningScene, use the provided <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">LockedPlanningSceneRW</a> and <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">LockedPlanningSceneRO</a> classes.</p>
+<p>The PlanningSceneMonitor has the following objects, which have their own ROS interfaces for keeping sub-components of the planning scene up to date:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/current_state_monitor.h">CurrentStateMonitor</a> for tracking updates to the RobotState via a <code class="docutils literal notranslate"><span class="pre">robot_state_subscriber_</span></code> and a <code class="docutils literal notranslate"><span class="pre">tf_buffer_</span></code>, as well as a planning scene subscriber for listening to planning scene diffs from other publishers.</p></li>
+<li><p>An OccupancyMapMonitor for tracking updates to an OccupancyMap via ROS topics and services.</p></li>
+</ul>
+</div></blockquote>
+<p>The PlanningSceneMonitor has the following subscribers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">collision_object_subscriber_</span></code> - Listens to a provided topic for <a class="reference external" href="https://github.com/ros-planning/moveit_msgs/blob/ros2/msg/CollisionObject.msg">CollisionObject</a> messages that might add, remove, or modify collision objects in the planning scene and passes them into its monitored planning scene</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">planning_scene_world_subscriber_</span></code> - Listens to a provided topic for <a class="reference external" href="https://github.com/ros-planning/moveit_msgs/blob/ros2/msg/PlanningSceneWorld.msg">PlanningSceneWorld</a> messages that may contain collision object information and/or octomap information. This is useful for keeping planning scene monitors in sync</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attached_collision_object_subscriber_</span></code> - Listens on a provided topic for <a class="reference external" href="https://github.com/ros-planning/moveit_msgs/blob/ros2/msg/AttachedCollisionObject.msg">AttachedCollisionObject</a> messages that determine the attaching/detaching of objects to links in the robot state.</p></li>
+</ul>
+</div></blockquote>
+<p>The PlanningSceneMonitor has the following services:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_scene_service_</span></code> - Which is an optional service to get the full planning scene state.</p></li>
+</ul>
+</div></blockquote>
+<p>The PlanningSceneMonitor is initialized with:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">startSceneMonitor</span></code> - Which starts the <code class="docutils literal notranslate"><span class="pre">planning_scene_subscriber_</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startWorldGeometryMonitor</span></code> - Which starts the <code class="docutils literal notranslate"><span class="pre">collision_object_subscriber_</span></code>, the <code class="docutils literal notranslate"><span class="pre">planning_scene_world_subscriber_</span></code>, and the OccupancyMapMonitor,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startStateMonitor</span></code> - Which starts the CurrentStateMonitor and the <code class="docutils literal notranslate"><span class="pre">attached_collision_object_subscriber_</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startPublishingPlanningScene</span></code> - Which starts another thread for publishing the entire planning scene on a provided topic for other PlanningSceneMonitors to subscribe to, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">providePlanningSceneService</span></code> - Which starts the <code class="docutils literal notranslate"><span class="pre">get_scene_service_</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="planningsceneinterface">
+<h2>PlanningSceneInterface<a class="headerlink" href="#planningsceneinterface" title="Permalink to this headline"></a></h2>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning_interface/planning_scene_interface/include/moveit/planning_scene_interface/planning_scene_interface.h">PlanningSceneInterface</a> is a useful class for publishing updates to a MoveGroup’s <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">PlanningSceneMonitor</a> through a C++ API without creating your own subscribers and service clients. It may not work without MoveGroup or MoveItCpp.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../planning_scene/planning_scene_tutorial.html" class="btn btn-neutral float-left" title="Planning Scene" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html" class="btn btn-neutral float-right" title="Planning Scene ROS API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

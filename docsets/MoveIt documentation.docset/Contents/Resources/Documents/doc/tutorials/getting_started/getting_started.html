@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/tutorials/getting_started/getting_started.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MoveIt Quickstart in RViz" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html" />
+    <link rel="prev" title="Tutorials" href="../tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-ros-2-and-colcon">Install ROS 2 and Colcon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-colcon-workspace-and-download-tutorials">Create A Colcon Workspace and Download Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-source-code-of-moveit-and-the-tutorials">Download Source Code of MoveIt and the Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-your-colcon-workspace">Build your Colcon Workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-your-colcon-workspace">Setup Your Colcon Workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#next-step">Next Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html">MoveIt Quickstart in RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../your_first_project/your_first_project.html">Your First C++ MoveIt Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html">Visualizing In RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../planning_around_objects/planning_around_objects.html">Planning Around Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html">Pick and Place with MoveIt Task Constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/getting_started/getting_started.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<p>Here we will setup your environment for best running the tutorials. This will create a Colcon workspace, download all of the latest MoveIt source code, and build everything from source to ensure you have the latest fixes and improvements.</p>
+<p>Building all the source code of MoveIt can take 20-30 minutes, depending on the CPU speed and available RAM of your computer. If you are on a less performant system, or generally just want to get started quicker, checkout our <a class="reference internal" href="../../how_to_guides/how_to_setup_docker_containers_in_ubuntu.html"><span class="doc">Docker Guide</span></a>.</p>
+<div class="section" id="install-ros-2-and-colcon">
+<h2>Install ROS 2 and Colcon<a class="headerlink" href="#install-ros-2-and-colcon" title="Permalink to this headline"></a></h2>
+<p><a class="reference external" href="https://docs.ros.org/en/rolling/Installation.html">Install ROS 2 Rolling</a>.
+It is easy to miss steps when going through the ROS 2 installation tutorial. If you run into errors in the next few steps, a good place to start is to go back and make sure you have installed ROS 2 correctly.  One that users commonly forget is to source the ROS 2 install itself.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">ros</span><span class="o">/</span><span class="n">rolling</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike ROS 1 setup scripts, in ROS 2 the setup scripts do not attempt to switch what version of ROS you are using.  This means that if you have previously sourced a different version of ROS, including from within your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file, you will run into errors during the building step.  To fix this change what is sourced in your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> and start a new terminal.</p>
+</div>
+<p>Install <a class="reference external" href="http://wiki.ros.org/rosdep">rosdep</a> to install system dependencies :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">rosdep</span>
+</pre></div>
+</div>
+<p>Once you have ROS 2 installed, make sure you have the most up to date packages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">rosdep</span> <span class="n">init</span>
+<span class="n">rosdep</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">dist</span><span class="o">-</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+<p>Install <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Colcon-Tutorial.html#install-colcon">Colcon</a> the ROS 2 build system with <a class="reference external" href="https://github.com/colcon/colcon-mixin-repository">mixin</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">colcon</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="n">extensions</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">colcon</span><span class="o">-</span><span class="n">mixin</span>
+<span class="n">colcon</span> <span class="n">mixin</span> <span class="n">add</span> <span class="n">default</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">colcon</span><span class="o">/</span><span class="n">colcon</span><span class="o">-</span><span class="n">mixin</span><span class="o">-</span><span class="n">repository</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">colcon</span> <span class="n">mixin</span> <span class="n">update</span> <span class="n">default</span>
+</pre></div>
+</div>
+<p>Install <a class="reference external" href="https://index.ros.org/d/python3-vcstool/">vcstool</a> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">vcstool</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-colcon-workspace-and-download-tutorials">
+<h2>Create A Colcon Workspace and Download Tutorials<a class="headerlink" href="#create-a-colcon-workspace-and-download-tutorials" title="Permalink to this headline"></a></h2>
+<p>For tutorials you will need to have a <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Colcon-Tutorial.html#install-colcon">colcon</a> workspace setup.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">src</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="download-source-code-of-moveit-and-the-tutorials">
+<h2>Download Source Code of MoveIt and the Tutorials<a class="headerlink" href="#download-source-code-of-moveit-and-the-tutorials" title="Permalink to this headline"></a></h2>
+<p>Move into your Colcon workspace and pull the MoveIt tutorials source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">src</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ros</span><span class="o">-</span><span class="n">planning</span><span class="o">/</span><span class="n">moveit2_tutorials</span> <span class="o">-</span><span class="n">b</span> <span class="n">main</span> <span class="o">--</span><span class="n">depth</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Next we will download the source code for the rest of MoveIt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vcs</span> <span class="kn">import</span> <span class="o">&lt;</span> <span class="n">moveit2_tutorials</span><span class="o">/</span><span class="n">moveit2_tutorials</span><span class="o">.</span><span class="n">repos</span>
+</pre></div>
+</div>
+<p>The import command may ask for your GitHub credentials. You can just press Enter until it moves on (ignore the “Authentication failed” error).</p>
+</div>
+<div class="section" id="build-your-colcon-workspace">
+<h2>Build your Colcon Workspace<a class="headerlink" href="#build-your-colcon-workspace" title="Permalink to this headline"></a></h2>
+<p>The following will install from Debian any package dependencies not already in your workspace. This is the step that will install MoveIt and all of its dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt update &amp;&amp; rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+</pre></div>
+</div>
+<p>The next command will configure your Colcon workspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span>
+<span class="n">colcon</span> <span class="n">build</span> <span class="o">--</span><span class="n">mixin</span> <span class="n">release</span>
+</pre></div>
+</div>
+<p>This build command will likely take a long time (20+ minutes) depending on your computer speed and amount of RAM available (we recommend 32 GB). If you are short on computer memory or generally your build is struggling to complete on your computer, you can append the argument <code class="docutils literal notranslate"><span class="pre">--parallel-workers</span> <span class="pre">1</span></code> to the Colcon command above.</p>
+<p>If everything goes well, you should see the message “Summary: X packages finished” where X might be 50. If you have problems, try re-checking your <a class="reference external" href="https://docs.ros.org/en/rolling/Installation.html">ROS Installation</a>.</p>
+</div>
+<div class="section" id="setup-your-colcon-workspace">
+<h2>Setup Your Colcon Workspace<a class="headerlink" href="#setup-your-colcon-workspace" title="Permalink to this headline"></a></h2>
+<p>Source the Colcon workspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>Optional: add the previous command to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;source ~/ws_moveit/install/setup.bash&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sourcing the <code class="docutils literal notranslate"><span class="pre">setup.bash</span></code> automatically in your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> is
+not required and often skipped by advanced users who use more than one
+Colcon workspace at a time, but we recommend it for simplicity.</p>
+</div>
+</div>
+<div class="section" id="next-step">
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline"></a></h2>
+<p>Nice job! Next we will <a class="reference internal" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">Visualize a robot with the interactive motion planning plugin for RViz</span></a></p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html" class="btn btn-neutral float-right" title="MoveIt Quickstart in RViz" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The move_group node &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/concepts/move_group.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Planning Scene Monitor" href="planning_scene_monitor.html" />
+    <link rel="prev" title="Hybrid Planning" href="hybrid_planning/hybrid_planning.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kinematics.html">Kinematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_planning.html">Motion Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hybrid_planning/hybrid_planning.html">Hybrid Planning</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-interface">User Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-interface">Robot Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joint-state-information">Joint State Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transform-information">Transform Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#controller-interface">Controller Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-scene">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensible-capabilities">Extensible Capabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="planning_scene_monitor.html">Planning Scene Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory_processing.html">Trajectory Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="concepts.html">Concepts</a></li>
+      <li class="breadcrumb-item active">The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/concepts/move_group.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="the-move-group-node">
+<h1>The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node<a class="headerlink" href="#the-move-group-node" title="Permalink to this headline"></a></h1>
+<p>The figure below shows the high-level system architecture for a key node provided by MoveIt called <a class="reference external" href="https://docs.ros.org/noetic/api/moveit_ros_move_group/html/move__group_8cpp.html">move_group</a>.
+This node serves as an integrator: pulling all the individual components together to provide a set of ROS actions and services for users to use.
+Note that moveit_commander is <a class="reference external" href="https://github.com/ros-planning/moveit2/issues/314">not currently available in MoveIt 2</a>.</p>
+<img alt="../../_images/move_group.png" src="../../_images/move_group.png" />
+<div class="section" id="user-interface">
+<h2>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline"></a></h2>
+<p>The users can access the actions and services provided by <code class="docutils literal notranslate"><span class="pre">move_group</span></code> in two ways:</p>
+<ul class="simple">
+<li><p><strong>In C++</strong> - using the <a class="reference external" href="https://docs.ros.org/noetic/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroupInterface.html">move_group_interface</a> package that provides an easy to setup C++ interface to move_group</p></li>
+<li><p><strong>Through a GUI</strong> - using the <a class="reference internal" href="../tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">Motion Planning plugin to Rviz</span></a> (the ROS visualizer)</p></li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> is a ROS node.
+It uses the ROS param server to get three kinds of information:</p>
+<ol class="arabic simple">
+<li><p>URDF</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> looks for the <code class="docutils literal notranslate"><span class="pre">robot_description</span></code> parameter to get the URDF for the robot.</p></li>
+</ul>
+</li>
+<li><p>SRDF</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> looks for the <code class="docutils literal notranslate"><span class="pre">robot_description_semantic</span></code> parameter to get the SRDF for the robot. The SRDF is typically created (once) by a user using the MoveIt Setup Assistant.</p></li>
+</ul>
+</li>
+<li><p>MoveIt configuration</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> will look for other configuration specific to MoveIt including joint limits, kinematics, motion planning, perception and other information. Config files for these components are automatically generated by the MoveIt Setup Assistant and stored in the <code class="docutils literal notranslate"><span class="pre">config</span></code> directory of the corresponding MoveIt config package for the robot.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="robot-interface">
+<h2>Robot Interface<a class="headerlink" href="#robot-interface" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> talks to the robot through ROS topics and actions.
+It communicates with the robot to get current state information (positions of the joints, etc.), to get point clouds and other sensor data from the robot sensors and to talk to the controllers on the robot.</p>
+</div>
+<div class="section" id="joint-state-information">
+<h2>Joint State Information<a class="headerlink" href="#joint-state-information" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> listens on the <code class="docutils literal notranslate"><span class="pre">/joint_states</span></code> topic for determining the current state information - i.e. determining where each joint of the robot is.
+<code class="docutils literal notranslate"><span class="pre">move_group</span></code> is capable of listening to multiple publishers on this topic even if they are publishing only partial information about the robot state (e.g. separate publishers may be used for the arm and mobile base of a robot).
+Note that <code class="docutils literal notranslate"><span class="pre">move_group</span></code> will not set up its own joint state publisher - this is something that has to be implemented on each robot.</p>
+</div>
+<div class="section" id="transform-information">
+<h2>Transform Information<a class="headerlink" href="#transform-information" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> monitors transform information using the ROS TF library.
+This allows the node to get global information about the pose of the robot (among other things).
+For instance, the ROS navigation stack will publish the transform between the map frame and base frame of the robot to TF.
+<code class="docutils literal notranslate"><span class="pre">move_group</span></code> can use TF to figure out this transform for internal use. Note that <code class="docutils literal notranslate"><span class="pre">move_group</span></code> only listens to TF.
+To publish TF information from your robot, you will need to have a <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code> node running on your robot.</p>
+</div>
+<div class="section" id="controller-interface">
+<h2>Controller Interface<a class="headerlink" href="#controller-interface" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> talks to the controllers on the robot using the FollowJointTrajectoryAction interface.
+This is a ROS action interface.
+A server on the robot needs to service this action - this server is not provided by <code class="docutils literal notranslate"><span class="pre">move_group</span></code> itself.
+<code class="docutils literal notranslate"><span class="pre">move_group</span></code> will only instantiate a client to talk to this controller action server on your robot.</p>
+</div>
+<div class="section" id="planning-scene">
+<h2>Planning Scene<a class="headerlink" href="#planning-scene" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> uses the Planning Scene Monitor to maintain a <strong>planning scene</strong>, which is a representation of the world and the current state of the robot.
+The robot state can include any objects attached to (carried by) the robot which are considered to be rigidly attached to the robot.
+More details on the architecture for maintaining and updating the <strong>planning scene</strong> are outlined in the Planning Scene section below.</p>
+</div>
+<div class="section" id="extensible-capabilities">
+<h2>Extensible Capabilities<a class="headerlink" href="#extensible-capabilities" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">move_group</span></code> is structured to be easily extensible.
+Individual capabilities like pick and place, kinematics, motion planning are actually implemented as separate plugins with a common base class.
+The plugins are configurable using ROS through a set of ROS yaml parameters and through the use of the ROS pluginlib library.
+Most users will not have to configure move_group plugins since they come automatically configured in the launch files generated by the MoveIt Setup Assistant.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hybrid_planning/hybrid_planning.html" class="btn btn-neutral float-left" title="Hybrid Planning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="planning_scene_monitor.html" class="btn btn-neutral float-right" title="Planning Scene Monitor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

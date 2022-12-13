@@ -1,0 +1,4 @@
+<map id="rclcpp::wait_set_policies::DynamicStorage" name="rclcpp::wait_set_policies::DynamicStorage">
+<area shape="rect" id="node1" title="WaitSet policy that provides dynamically sized storage." alt="" coords="26,109,207,151"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1StoragePolicyCommon.html" title=" " alt="" coords="5,5,228,61"/>
+</map>

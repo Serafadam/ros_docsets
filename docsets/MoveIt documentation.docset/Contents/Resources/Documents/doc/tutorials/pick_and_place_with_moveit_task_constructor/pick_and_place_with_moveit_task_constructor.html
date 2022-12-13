@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick and Place with MoveIt Task Constructor &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Examples" href="../../examples/examples.html" />
+    <link rel="prev" title="Planning Around Objects" href="../planning_around_objects/planning_around_objects.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html">MoveIt Quickstart in RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../your_first_project/your_first_project.html">Your First C++ MoveIt Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html">Visualizing In RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../planning_around_objects/planning_around_objects.html">Planning Around Objects</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pick and Place with MoveIt Task Constructor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-concepts">1 Basic Concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">2 Getting Started</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#download-moveit-task-constructor">2.1 Download MoveIt Task Constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trying-it-out">3 Trying It Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-a-project-with-moveit-task-constructor">4 Setting up a Project with MoveIt Task Constructor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-new-package">4.1 Create a New Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-code">4.2 The Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-breakdown">4.3 Code Breakdown</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-demo">5 Running the Demo</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#launch-files">5.1 Launch Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rviz-configuration">5.2 RViz Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launching-the-demo">5.3 Launching the Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-stages">6 Adding Stages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pick-stages">6.1 Pick Stages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#place-stages">6.2 Place Stages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#further-discussion">7 Further Discussion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#debugging-information-printed-to-the-terminal">7.1 Debugging Information Printed to the Terminal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stages">7.2 Stages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">Pick and Place with MoveIt Task Constructor</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="pick-and-place-with-moveit-task-constructor">
+<h1>Pick and Place with MoveIt Task Constructor<a class="headerlink" href="#pick-and-place-with-moveit-task-constructor" title="Permalink to this headline"></a></h1>
+<video width="700px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/mtc-demo.webm" type="video/webm">
+    MoveIt Task Constructor Pick and Place example
+</video><p>This tutorial will walk you through creating a package that plans a pick and place operation using <a class="reference external" href="https://github.com/ros-planning/moveit_task_constructor/tree/ros2/">MoveIt Task Constructor</a>. MoveIt Task Constructor provides a way to plan for tasks that consist of multiple different subtasks (known as stages). If you just want to run the tutorial, you can follow the <a class="reference internal" href="../../how_to_guides/how_to_setup_docker_containers_in_ubuntu.html"><span class="doc">Docker Guide</span></a> to start a container with the completed tutorial.</p>
+<div class="section" id="basic-concepts">
+<h2>1 Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline"></a></h2>
+<p>The fundamental idea of MTC is that complex motion planning problems can be composed into a set of simpler subproblems.
+The top-level planning problem is specified as a <strong>Task</strong> while all subproblems are specified by <strong>Stages</strong>.
+Stages can be arranged in any arbitrary order and hierarchy only limited by the individual stages types.
+The order in which stages can be arranged is restricted by the direction in which results are passed.
+There are three possible stages relating to the result flow: generator, propagator, and connector stages:</p>
+<p><strong>Generators</strong> compute their results independently of their neighbor stages and pass them in both directions, backwards and forwards.
+An example is an IK sampler for geometric poses where approaching and departing motions (neighbor stages) depend on the solution.</p>
+<p><strong>Propagators</strong> receive the result of one neighbor stage, solve a subproblem and then propagate their result to the neighbor on the opposite site.
+Depending on the implementation, propagating stages can pass solutions forward, backward or in both directions separately.
+An example is a stage that computes a Cartesian path based on either a start or a goal state.</p>
+<p><strong>Connectors</strong> do not propagate any results, but rather attempt to bridge the gap between the resulting states of both neighbors.
+An example is the computation of a free-motion plan from one given state to another.</p>
+<p>Additional to the order types, there are different hierarchy types allowing to encapsulate subordinate stages.
+Stages without subordinate stages are called <strong>primitive stages</strong>, higher-level stages are called <strong>container stages</strong>.
+There are three container types:</p>
+<p><strong>Wrappers</strong> encapsulate a single subordinate stage and modify or filter the results.
+For example, a filter stage that only accepts solutions of its child stage that satisfy a certain constraint can be realized as a wrapper.
+Another standard use of this type includes the IK wrapper stage, which generates inverse kinematics solutions based on planning scenes annotated with a pose target property.</p>
+<p><strong>Serial Containers</strong> hold a sequence of subordinate stages and only consider end-to-end solutions as results.
+An example is a picking motion that consists of a sequence of coherent steps.</p>
+<p><strong>Parallel Containers</strong> combine set of subordinate stages and can be used for passing the best of alternative results, running fallback solvers or for merging multiple independent solutions.
+Examples are running alternative planners for a free-motion plan, picking objects with the right hand or with the left hand as a fallback, or moving the arm and opening the gripper at the same time.</p>
+<a class="reference internal image-reference" href="../../../_images/mtc_stage_types.png"><img alt="../../../_images/mtc_stage_types.png" src="../../../_images/mtc_stage_types.png" style="width: 700px;" /></a>
+<p>Stages not only support solving motion planning problems.
+They can also be used for all kinds of state transitions, as for instance modifying the planning scene.
+Combined with the possibility of using class inheritance it is possible to construct very complex behavior while only relying on a well-structured set of primitive stages.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>2 Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+<div class="section" id="download-moveit-task-constructor">
+<h3>2.1 Download MoveIt Task Constructor<a class="headerlink" href="#download-moveit-task-constructor" title="Permalink to this headline"></a></h3>
+<p>Move into your colcon workspace and pull the MoveIt Task Constructor source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">src</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">ros</span><span class="o">-</span><span class="n">planning</span><span class="o">/</span><span class="n">moveit_task_constructor</span><span class="o">.</span><span class="n">git</span> <span class="o">-</span><span class="n">b</span> <span class="n">ros2</span>
+<span class="n">vcs</span> <span class="kn">import</span> <span class="o">&lt;</span> <span class="n">moveit_task_constructor</span><span class="o">/.</span><span class="n">repos</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trying-it-out">
+<h2>3 Trying It Out<a class="headerlink" href="#trying-it-out" title="Permalink to this headline"></a></h2>
+<p>The MoveIt Task Constructor package contains several basic examples and a pick-and-place demo.
+For all demos you should launch the basic environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit_task_constructor_demo</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Subsequently, you can run the individual demos:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">moveit_task_constructor_demo</span> <span class="n">cartesian</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">moveit_task_constructor_demo</span> <span class="n">modular</span>
+<span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit_task_constructor_demo</span> <span class="n">pickplace</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>On the right side you should see the <strong>Motion Planning Tasks</strong> panel outlining the hierarchical stage structure of the tasks.
+When you select a particular stage, the list of successful and failed solutions will be
+shown in the right-most window. Selecting one of those solutions will start its visualization.</p>
+<a class="reference internal image-reference" href="../../../_images/mtc_show_stages.gif"><img alt="../../../_images/mtc_show_stages.gif" src="../../../_images/mtc_show_stages.gif" style="width: 700px;" /></a>
+</div>
+<div class="section" id="setting-up-a-project-with-moveit-task-constructor">
+<h2>4 Setting up a Project with MoveIt Task Constructor<a class="headerlink" href="#setting-up-a-project-with-moveit-task-constructor" title="Permalink to this headline"></a></h2>
+<p>This section walks through the steps required to build a simple task with MoveIt Task Constructor.</p>
+<div class="section" id="create-a-new-package">
+<h3>4.1 Create a New Package<a class="headerlink" href="#create-a-new-package" title="Permalink to this headline"></a></h3>
+<p>Create a new package with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">pkg</span> <span class="n">create</span> \
+<span class="o">--</span><span class="n">build</span><span class="o">-</span><span class="nb">type</span> <span class="n">ament_cmake</span> \
+<span class="o">--</span><span class="n">dependencies</span> <span class="n">moveit_task_constructor_core</span> <span class="n">rclcpp</span> \
+<span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">name</span> <span class="n">mtc_node</span> <span class="n">mtc_tutorial</span>
+</pre></div>
+</div>
+<p>This will create a new package and folder called <code class="docutils literal notranslate"><span class="pre">mtc_tutorial</span></code> with a dependency on <code class="docutils literal notranslate"><span class="pre">moveit_task_constructor_core</span></code> as well as a hello world example in <code class="docutils literal notranslate"><span class="pre">src/mtc_node</span></code>.</p>
+</div>
+<div class="section" id="the-code">
+<h3>4.2 The Code<a class="headerlink" href="#the-code" title="Permalink to this headline"></a></h3>
+<p>Open <code class="docutils literal notranslate"><span class="pre">mtc_node.cpp</span></code> in your editor of choice, and paste in the following code.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rclcpp/rclcpp.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/planning_scene/planning_scene.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/planning_scene_interface/planning_scene_interface.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/task.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/solvers.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/stages.h&gt;</span><span class="cp"></span>
+<span class="cp">#if __has_include(&lt;tf2_geometry_msgs/tf2_geometry_msgs.hpp&gt;)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_geometry_msgs/tf2_geometry_msgs.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#else</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_geometry_msgs/tf2_geometry_msgs.h&gt;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+<span class="cp">#if __has_include(&lt;tf2_eigen/tf2_eigen.hpp&gt;)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_eigen/tf2_eigen.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#else</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_eigen/tf2_eigen.h&gt;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Logger</span><span class="w"> </span><span class="n">LOGGER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;mtc_tutorial&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">mtc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">moveit</span><span class="o">::</span><span class="nn">task_constructor</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MTCTaskNode</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">MTCTaskNode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">node_interfaces</span><span class="o">::</span><span class="n">NodeBaseInterface</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="nf">getNodeBaseInterface</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">doTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">setupPlanningScene</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Compose an MTC task from a series of stages.</span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">createTask</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">task_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">node_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">MTCTaskNode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">node_</span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mtc_node&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">node_interfaces</span><span class="o">::</span><span class="n">NodeBaseInterface</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">getNodeBaseInterface</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">get_node_base_interface</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">setupPlanningScene</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">object</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="o">::</span><span class="n">CYLINDER</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.02</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.25</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlanningSceneInterface</span><span class="w"> </span><span class="n">psi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">psi</span><span class="p">.</span><span class="n">applyCollisionObject</span><span class="p">(</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">doTask</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">task_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">try</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">task_</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">InitStageException</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">task_</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Task planning failed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">task_</span><span class="p">.</span><span class="n">introspection</span><span class="p">().</span><span class="n">publishSolution</span><span class="p">(</span><span class="o">*</span><span class="n">task_</span><span class="p">.</span><span class="n">solutions</span><span class="p">().</span><span class="n">front</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">task_</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="o">*</span><span class="n">task_</span><span class="p">.</span><span class="n">solutions</span><span class="p">().</span><span class="n">front</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Task execution failed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">createTask</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">task</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">stages</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setName</span><span class="p">(</span><span class="s">&quot;demo task&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">loadRobotModel</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">arm_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hand_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hand_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Set task properties</span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arm_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;ik_frame&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Disable warnings for this line, as it&#39;s a variable that&#39;s set but not used in this example</span>
+<span class="cp">#pragma GCC diagnostic push</span>
+<span class="cp">#pragma GCC diagnostic ignored &quot;-Wunused-but-set-variable&quot;</span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">*</span><span class="w"> </span><span class="n">current_state_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w">  </span><span class="c1">// Forward current_state on to grasp pose generator</span>
+<span class="cp">#pragma GCC diagnostic pop</span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage_state_current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">CurrentState</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;current&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">current_state_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stage_state_current</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_state_current</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">sampling_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">PipelinePlanner</span><span class="o">&gt;</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">JointInterpolationPlanner</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">CartesianPath</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setMaxVelocityScaling</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setMaxAccelerationScaling</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setStepSize</span><span class="p">(</span><span class="mf">.01</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage_open_hand</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;open hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_open_hand</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">task</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="w"> </span><span class="n">options</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">options</span><span class="p">.</span><span class="n">automatically_declare_parameters_from_overrides</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mtc_task_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">MTCTaskNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">executors</span><span class="o">::</span><span class="n">MultiThreadedExecutor</span><span class="w"> </span><span class="n">executor</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">spin_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span><span class="p">([</span><span class="o">&amp;</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mtc_task_node</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">getNodeBaseInterface</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">spin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">getNodeBaseInterface</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">setupPlanningScene</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">doTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">spin_thread</span><span class="o">-&gt;</span><span class="n">join</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-breakdown">
+<h3>4.3 Code Breakdown<a class="headerlink" href="#code-breakdown" title="Permalink to this headline"></a></h3>
+<p>The top of the code includes the ROS and MoveIt Libraries that this package uses.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rclcpp/rclcpp.hpp</span></code> includes core ROS2 functionality</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moveit/planning_scene/planning_scene.h</span></code> and <code class="docutils literal notranslate"><span class="pre">moveit/planning_scene_interface/planning_scene_interface.h</span></code> include functionality to interface with the robot model and collision objects</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moveit/task_constructor/task.h</span></code>, <code class="docutils literal notranslate"><span class="pre">moveit/task_constructor/solvers.h</span></code>, and <code class="docutils literal notranslate"><span class="pre">moveit/task_constructor/stages.h</span></code> include different components of MoveIt Task Constructor that are used in the example</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf2_geometry_msgs/tf2_geometry_msgs.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">tf2_eigen/tf2_eigen.hpp</span></code> won’t be used in this initial example, but they will be used for pose generation when we add more stages to the MoveIt Task Constructor task.</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rclcpp/rclcpp.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/planning_scene/planning_scene.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/planning_scene_interface/planning_scene_interface.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/task.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/solvers.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/task_constructor/stages.h&gt;</span><span class="cp"></span>
+<span class="cp">#if __has_include(&lt;tf2_geometry_msgs/tf2_geometry_msgs.hpp&gt;)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_geometry_msgs/tf2_geometry_msgs.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#else</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_geometry_msgs/tf2_geometry_msgs.h&gt;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+<span class="cp">#if __has_include(&lt;tf2_eigen/tf2_eigen.hpp&gt;)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_eigen/tf2_eigen.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#else</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tf2_eigen/tf2_eigen.h&gt;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>The next line gets a logger for our new node. We also create a namespace alias for <code class="docutils literal notranslate"><span class="pre">moveit::task_constructor</span></code> for convenience.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Logger</span><span class="w"> </span><span class="n">LOGGER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;mtc_tutorial&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">mtc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">moveit</span><span class="o">::</span><span class="nn">task_constructor</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We start by defining a class that will contain the main MoveIt Task Constructor functionality.  We also declare the MoveIt Task Constructor task object as a member variable for our class: this isn’t strictly necessary for a given application, but it helps save the task for later visualization purposes. We will explore each function individually below.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MTCTaskNode</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">MTCTaskNode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">node_interfaces</span><span class="o">::</span><span class="n">NodeBaseInterface</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="nf">getNodeBaseInterface</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">doTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">setupPlanningScene</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Compose an MTC task from a series of stages.</span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">createTask</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">task_</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">node_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>These lines initialize the node with specified options (it is the constructor of our <code class="docutils literal notranslate"><span class="pre">MTCTaskNode</span></code> class).</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">MTCTaskNode</span><span class="o">::</span><span class="n">MTCTaskNode</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="o">&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">node_</span><span class="p">{</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mtc_node&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>These next lines define a getter function to get the node base interface, which will be used for the executor later.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">node_interfaces</span><span class="o">::</span><span class="n">NodeBaseInterface</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="nf">MTCTaskNode::getNodeBaseInterface</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">get_node_base_interface</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This class method is used to set up the planning scene that is used in the example. It creates a cylinder with dimensions specified by <code class="docutils literal notranslate"><span class="pre">object.primitives[0].dimensions</span></code> and position specified by <code class="docutils literal notranslate"><span class="pre">pose.position.x</span></code> and <code class="docutils literal notranslate"><span class="pre">pose.position.y</span></code>.
+You can try changing these numbers to resize and move the cylinder around. If we move the cylinder out of the robot’s reach, planning will fail.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">MTCTaskNode::setupPlanningScene</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">object</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="o">::</span><span class="n">CYLINDER</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.02</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.25</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">object</span><span class="p">.</span><span class="n">pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlanningSceneInterface</span><span class="w"> </span><span class="n">psi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">psi</span><span class="p">.</span><span class="n">applyCollisionObject</span><span class="p">(</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This function interfaces with the MoveIt Task Constructor task object. It first creates a task, which includes setting some properties and adding stages. This will be discussed further in the <code class="docutils literal notranslate"><span class="pre">createTask</span></code> function definition. Next, <code class="docutils literal notranslate"><span class="pre">task.init()</span></code> initializes the task and <code class="docutils literal notranslate"><span class="pre">task.plan(5)</span></code> generates a plan, stopping after 5 successful plans are found. The next line publishes the solution to be visualized in RViz - this line can be removed if you don’t care for visualization. Finally, <code class="docutils literal notranslate"><span class="pre">task.execute()</span></code> executes the plan. Execution occurs via an action server interface with the RViz plugin.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">MTCTaskNode::doTask</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">task_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">try</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">task_</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">InitStageException</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">task_</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Task planning failed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">task_</span><span class="p">.</span><span class="n">introspection</span><span class="p">().</span><span class="n">publishSolution</span><span class="p">(</span><span class="o">*</span><span class="n">task_</span><span class="p">.</span><span class="n">solutions</span><span class="p">().</span><span class="n">front</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">task_</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="o">*</span><span class="n">task_</span><span class="p">.</span><span class="n">solutions</span><span class="p">().</span><span class="n">front</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Task execution failed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>As mentioned above, this function creates a MoveIt Task Constructor object and sets some initial properties. In this case, we set the task name to “demo_task”, load the robot model, define the names of some useful frames, and set those frame names as properties of the task with <code class="docutils literal notranslate"><span class="pre">task.setProperty(property_name,</span> <span class="pre">value)</span></code>. The next few code blocks will fill out this function body.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">mtc</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="nf">MTCTaskNode::createTask</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">task_constructor</span><span class="o">::</span><span class="n">Task</span><span class="w"> </span><span class="n">task</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">stages</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setName</span><span class="p">(</span><span class="s">&quot;demo task&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">loadRobotModel</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">arm_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hand_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hand_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Set task properties</span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arm_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;ik_frame&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we add an example stage to the node. The first line sets <code class="docutils literal notranslate"><span class="pre">current_state_ptr</span></code> to <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>; this creates a pointer to a stage such that we can re-use stage information in specific scenarios. This line is not used at this moment, but will be used later when more stages are added to the task. Next, we make a <code class="docutils literal notranslate"><span class="pre">current_state</span></code> stage (a generator stage) and add it to our task - this starts the robot off in its current state. Now that we’ve created the <code class="docutils literal notranslate"><span class="pre">CurrentState</span></code> stage, we save a pointer to it in the <code class="docutils literal notranslate"><span class="pre">current_state_ptr</span></code> for later use.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">*</span><span class="w"> </span><span class="n">current_state_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w">  </span><span class="c1">// Forward current_state on to grasp pose generator</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">stage_state_current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">CurrentState</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;current&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">current_state_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stage_state_current</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_state_current</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Solvers are used to define the type of robot motion. MoveIt Task Constructor has three options for solvers:</p>
+<blockquote>
+<div><p><strong>PipelinePlanner</strong> uses MoveIt’s planning pipeline, which typically defaults to <a class="reference external" href="https://github.com/ompl/ompl">OMPL</a>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">sampling_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">PipelinePlanner</span><span class="o">&gt;</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>JointInterpolation</strong> is a simple planner that interpolates between the start and goal joint states. It is typically used for simple motions as it computes quickly but doesn’t support complex motions.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">JointInterpolationPlanner</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>CartesianPath</strong> is used to move the end effector in a straight line in Cartesian space.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">CartesianPath</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Feel free to try out the different solvers and see how the robot motion changes. For the first stage we will use the Cartesian planner, which requires the following properties to be set:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">solvers</span><span class="o">::</span><span class="n">CartesianPath</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setMaxVelocityScaling</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setMaxAccelerationScaling</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">cartesian_planner</span><span class="o">-&gt;</span><span class="n">setStepSize</span><span class="p">(</span><span class="mf">.01</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now that we added in the planners, we can add a stage that will move the robot.
+The following lines use a <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> stage (a propagator stage). Since opening the hand is a relatively simple movement, we can use the joint interpolation planner.
+This stage plans a move to the “open hand” pose, which is a named pose defined in the <a class="reference external" href="https://github.com/ros-planning/moveit_resources/tree/ros2/panda_moveit_config/config/panda.srdf">SRDF</a> for the Panda robot.
+We return the task and finish with the <code class="docutils literal notranslate"><span class="pre">createTask()</span></code> function.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage_open_hand</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;open hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_open_hand</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">task</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, we have <code class="docutils literal notranslate"><span class="pre">main</span></code>: the following lines create a node using the class defined above, and calls the class methods to set up and execute a basic MTC task. In this example, we do not cancel the executor once the task has finished executing to keep the node alive to inspect the solutions in RViz.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="w"> </span><span class="n">options</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">options</span><span class="p">.</span><span class="n">automatically_declare_parameters_from_overrides</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">mtc_task_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">MTCTaskNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">executors</span><span class="o">::</span><span class="n">MultiThreadedExecutor</span><span class="w"> </span><span class="n">executor</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">spin_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span><span class="p">([</span><span class="o">&amp;</span><span class="n">executor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mtc_task_node</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">getNodeBaseInterface</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">spin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">executor</span><span class="p">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">getNodeBaseInterface</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">});</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">setupPlanningScene</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtc_task_node</span><span class="o">-&gt;</span><span class="n">doTask</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">spin_thread</span><span class="o">-&gt;</span><span class="n">join</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-the-demo">
+<h2>5 Running the Demo<a class="headerlink" href="#running-the-demo" title="Permalink to this headline"></a></h2>
+<div class="section" id="launch-files">
+<h3>5.1 Launch Files<a class="headerlink" href="#launch-files" title="Permalink to this headline"></a></h3>
+<p>We will need a launch file to launch the <code class="docutils literal notranslate"><span class="pre">move_group</span></code>, <code class="docutils literal notranslate"><span class="pre">ros2_control</span></code>, <code class="docutils literal notranslate"><span class="pre">static_tf</span></code>, <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code>, and <code class="docutils literal notranslate"><span class="pre">rviz</span></code> nodes that provide us the environment to run the demo. The one we will use for this example can be found <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/pick_and_place_with_moveit_task_constructor/launch/mtc_demo.launch.py">here</a>.</p>
+<p>To run the MoveIt Task Constructor node, we will use a second launch file to start the <code class="docutils literal notranslate"><span class="pre">mtc_tutorial</span></code> executable with the proper parameters. Here we can load URDF, SRDF, and OMPL parameters, or use MoveIt Configs Utils to do so. Your launch file should look something like the one found in this tutorial package <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/pick_and_place_with_moveit_task_constructor/launch/pick_place_demo.launch.py">here</a> (pay close attention to the <code class="docutils literal notranslate"><span class="pre">package</span></code> and <code class="docutils literal notranslate"><span class="pre">executable</span></code> arguments below as they are different from the launch file linked) :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">moveit_configs_utils</span> <span class="kn">import</span> <span class="n">MoveItConfigsBuilder</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="n">moveit_config</span> <span class="o">=</span> <span class="n">MoveItConfigsBuilder</span><span class="p">(</span><span class="s2">&quot;moveit_resources_panda&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+    <span class="c1"># MTC Demo node</span>
+    <span class="n">pick_place_demo</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;mtc_tutorial&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;mtc_node&quot;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">moveit_config</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span><span class="n">pick_place_demo</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Save a launch file as <code class="docutils literal notranslate"><span class="pre">pick_place_demo.launch.py</span></code> or download one to the package’s launch directory. Make sure to edit the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> so it includes the launch folder by adding the following lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+  )
+</pre></div>
+</div>
+<p>Now we can build and source the colcon workspace.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span>
+<span class="n">colcon</span> <span class="n">build</span> <span class="o">--</span><span class="n">mixin</span> <span class="n">release</span>
+<span class="n">source</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>Start by launching the first launch file. If you want to use the one provided by the tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">mtc_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>RViz will now load. If you’re using your own launch file and haven’t included an rviz config <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/pick_and_place_with_moveit_task_constructor/launch/mtc.rviz">such as this</a>, you will need to configure RViz before you see anything displayed. If you’re using the launch file from the tutorials package, RViz will already be configured for you and you can jump to the end of the next section.</p>
+</div>
+<div class="section" id="rviz-configuration">
+<h3>5.2 RViz Configuration<a class="headerlink" href="#rviz-configuration" title="Permalink to this headline"></a></h3>
+<p>If you are not using the RViz configuration provided, we’ll have to make some changes to the RViz configuration to see your robot and the MoveIt Task Constructor solutions. First, start RViz. The following steps will cover how to set up RViz for MoveIt Task Constructor solution visualization.</p>
+<ol class="arabic simple">
+<li><p>If the <strong>MotionPlanning</strong> display is active, uncheck it to hide it for now.</p></li>
+<li><p>Under <strong>Global Options</strong>, change the <strong>Fixed Frame</strong> from <code class="docutils literal notranslate"><span class="pre">map</span></code> to <code class="docutils literal notranslate"><span class="pre">panda_link0</span></code> if not already done.</p></li>
+<li><p>On the bottom left of the window, click the <strong>Add</strong> button.</p></li>
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">moveit_task_constructor_visualization</span></code> select <strong>Motion Planning Tasks</strong> and click OK. The <strong>Motion Planning Tasks</strong> display should appear on the bottom left.</p></li>
+<li><p>In the <strong>Displays</strong>, under <strong>Motion Planning Tasks</strong>,  change <strong>Task Solution Topic</strong> to <code class="docutils literal notranslate"><span class="pre">/solution</span></code></p></li>
+</ol>
+<p>You should see the panda arm in the main view with Motion Planning Tasks display open in the bottom left and nothing in it. Your MTC task will show up in this panel once you launch the <code class="docutils literal notranslate"><span class="pre">mtc_tutorial</span></code> node. If you’re using <code class="docutils literal notranslate"><span class="pre">mtc_demo.launch.py</span></code> from the tutorials, jump back in here.</p>
+</div>
+<div class="section" id="launching-the-demo">
+<h3>5.3 Launching the Demo<a class="headerlink" href="#launching-the-demo" title="Permalink to this headline"></a></h3>
+<p>Launch the <code class="docutils literal notranslate"><span class="pre">mtc_tutorial</span></code> node with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">mtc_tutorial</span> <span class="n">pick_place_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You should see the arm execute the task with the single stage to open the hand, with the cylinder in green in front of it. It should look something like this:</p>
+<a class="reference internal image-reference" href="../../../_images/first_stages.png"><img alt="../../../_images/first_stages.png" src="../../../_images/first_stages.png" style="width: 700px;" /></a>
+<p>If you haven’t made your own package, but still want to see what this looks like, you can launch this file from the tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">mtc_demo_minimal</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="adding-stages">
+<h2>6 Adding Stages<a class="headerlink" href="#adding-stages" title="Permalink to this headline"></a></h2>
+<p>So far, we’ve walked through creating and executing a simple task, which runs but does not do much. Now, we will start adding the pick-and-place stages to the task. The image below shows an outline of the stages we will use in our task.</p>
+<a class="reference internal image-reference" href="../../../_images/stages.png"><img alt="../../../_images/stages.png" src="../../../_images/stages.png" style="width: 700px;" /></a>
+<p>We will start adding stages after our existing open hand stage. Open <code class="docutils literal notranslate"><span class="pre">mtc_node.cpp</span></code> and locate the following lines:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">stage_open_hand</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;open hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="n">stage_open_hand</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_open_hand</span><span class="p">));</span><span class="w"></span>
+<span class="c1">// Add the next lines of codes to define more stages here</span>
+</pre></div>
+</div>
+<div class="section" id="pick-stages">
+<h3>6.1 Pick Stages<a class="headerlink" href="#pick-stages" title="Permalink to this headline"></a></h3>
+<p>We need to move the arm to a position where we can pick up our object. This is done with a <code class="docutils literal notranslate"><span class="pre">Connect</span></code> stage, which as its name implies, is a Connector stage. This means that it tries to bridge between the results of the stage before and after it. This stage is initialized with a name, <code class="docutils literal notranslate"><span class="pre">move_to_pick</span></code>, and a <code class="docutils literal notranslate"><span class="pre">GroupPlannerVector</span></code> that specifies the planning group and the planner. We then set a timeout for the stage, set the properties for the stage, and add it to our task.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">stage_move_to_pick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">Connect</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;move to pick&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">Connect</span><span class="o">::</span><span class="n">GroupPlannerVector</span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">arm_group_name</span><span class="p">,</span><span class="w"> </span><span class="n">sampling_planner</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="n">stage_move_to_pick</span><span class="o">-&gt;</span><span class="n">setTimeout</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">stage_move_to_pick</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">);</span><span class="w"></span>
+<span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_move_to_pick</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we create a pointer to a MoveIt Task Constructor stage object, and set it to <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> for now. Later, we will use this to save a stage.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">*</span><span class="w"> </span><span class="n">attach_object_stage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">nullptr</span><span class="p">;</span><span class="w">  </span><span class="c1">// Forward attach_object_stage to place pose generator</span>
+</pre></div>
+</div>
+<p>This next block of code creates a <code class="docutils literal notranslate"><span class="pre">SerialContainer</span></code>.
+This is a container that can be added to our task and can hold several substages.
+In this case, we create a serial container that will contain the stages relevant to the picking action.
+Instead of adding the stages to the task, we will add the relevant stages to the serial container. We use <code class="docutils literal notranslate"><span class="pre">exposeTo()</span></code> to declare the task properties from the parent task in the new serial container, and use <code class="docutils literal notranslate"><span class="pre">configureInitFrom()</span></code> to initialize them.
+This allows the contained stages to access these properties.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">grasp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">SerialContainer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;pick object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">properties</span><span class="p">().</span><span class="n">exposeTo</span><span class="p">(</span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">(),</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ik_frame&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ik_frame&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We then create a stage to approach the object. This stage is a <code class="docutils literal notranslate"><span class="pre">MoveRelative</span></code> stage, which allows us to specify a relative movement from our current position. <code class="docutils literal notranslate"><span class="pre">MoveRelative</span></code> is a propagator stage: it receives the solution from its neighbouring stages and propagates it to the next or previous stage. Using <code class="docutils literal notranslate"><span class="pre">cartesian_planner</span></code> finds a solution that involves moving the end effector in a straight line. We set the properties, and set the minimum and maximum distance to move. Now we create a <code class="docutils literal notranslate"><span class="pre">Vector3Stamped</span></code> message to indicate the direction we want to move - in this case, in the Z direction from the hand frame. Finally, we add this stage to our serial container</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveRelative</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;approach object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;marker_ns&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;approach_object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;link&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setMinMaxDistance</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.15</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Set hand forward direction</span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Vector3Stamped</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setDirection</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, create a stage to generate the grasp pose.
+This is a generator stage, so it computes its results without regard to the stages before and after it.
+The first stage, <code class="docutils literal notranslate"><span class="pre">CurrentState</span></code> is a generator stage as well - to connect the first stage and this stage, a connecting stage must be used, which we already created above.
+This code sets the stage properties, sets the pose before grasping, the angle delta, and the monitored stage.
+Angle delta is a property of the <code class="docutils literal notranslate"><span class="pre">GenerateGraspPose</span></code> stage that is used to determine the number of poses to generate; when generating solutions, MoveIt Task Constructor will try to grasp the object from many different orientations, with the difference between the orientations specified by the angle delta. The smaller the delta, the closer together the grasp orientations will be. When defining the current stage, we set <code class="docutils literal notranslate"><span class="pre">current_state_ptr</span></code>, which is now used to forward information about the object pose and shape to the inverse kinematics solver.
+This stage won’t be directly added to the serial container like previously, as we still need to do inverse kinematics on the poses it generates.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Sample grasp pose</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">GenerateGraspPose</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;generate grasp pose&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;marker_ns&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;grasp_pose&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setPreGraspPose</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setObject</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setAngleDelta</span><span class="p">(</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">12</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setMonitoredStage</span><span class="p">(</span><span class="n">current_state_ptr</span><span class="p">);</span><span class="w">  </span><span class="c1">// Hook into current state</span>
+</pre></div>
+</div>
+<p>Before we compute inverse kinematics for the poses generated above, we first need to define the frame. This can be done with a <code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> message from <code class="docutils literal notranslate"><span class="pre">geometry_msgs</span></code> or in this case, we define the transform using Eigen transformation matrix and the name of the relevant link. Here, we define the transformation matrix.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="w"> </span><span class="n">grasp_frame_transform</span><span class="p">;</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Quaterniond</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitX</span><span class="p">())</span><span class="w"> </span><span class="o">*</span><span class="w"></span>
+<span class="w">                      </span><span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitY</span><span class="p">())</span><span class="w"> </span><span class="o">*</span><span class="w"></span>
+<span class="w">                      </span><span class="n">Eigen</span><span class="o">::</span><span class="n">AngleAxisd</span><span class="p">(</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">UnitZ</span><span class="p">());</span><span class="w"></span>
+<span class="n">grasp_frame_transform</span><span class="p">.</span><span class="n">linear</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">matrix</span><span class="p">();</span><span class="w"></span>
+<span class="n">grasp_frame_transform</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we create the <code class="docutils literal notranslate"><span class="pre">ComputeIK</span></code> stage, and give it the name <code class="docutils literal notranslate"><span class="pre">generate</span> <span class="pre">pose</span> <span class="pre">IK</span></code> as well as the <code class="docutils literal notranslate"><span class="pre">generate</span> <span class="pre">grasp</span> <span class="pre">pose</span></code> stage defined above. Some robots have multiple inverse kinematics solutions for a given pose - we set the limit on the amount of solutions to solve for up to 8. We also set the minimum solution distance, which is a threshold on how different solutions must be: if the joint positions in a solution are too similar to a previous solution, it will be marked as invalid. Next, we configure some additional properties, and add the <code class="docutils literal notranslate"><span class="pre">ComputeIK</span></code> stage to the serial container.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Compute IK</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ComputeIK</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;grasp pose IK&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setMaxIKSolutions</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setMinSolutionDistance</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setIKFrame</span><span class="p">(</span><span class="n">grasp_frame_transform</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">INTERFACE</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;target_pose&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">wrapper</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To pick up the object, we must allow collision between the hand and the object. This can be done with a <code class="docutils literal notranslate"><span class="pre">ModifyPlanningScene</span></code> stage. The <code class="docutils literal notranslate"><span class="pre">allowCollisions</span></code> function lets us specify which collisions to disable.
+<code class="docutils literal notranslate"><span class="pre">allowCollisions</span></code> can be used with a container of names, so we can use <code class="docutils literal notranslate"><span class="pre">getLinkModelNamesWithCollisionGeometry</span></code> to get all the names of links with collision geometry in the hand group.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ModifyPlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;allow collision (hand,object)&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">allowCollisions</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">task</span><span class="p">.</span><span class="n">getRobotModel</span><span class="p">()</span><span class="w"></span>
+<span class="w">                            </span><span class="o">-&gt;</span><span class="n">getJointModelGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="o">-&gt;</span><span class="n">getLinkModelNamesWithCollisionGeometry</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                        </span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>With collisions allowed, we now can close the hand. This is done with a <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> stage, similarly to the <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">hand</span></code> stage from above, except moving to the <code class="docutils literal notranslate"><span class="pre">close</span></code> position as defined in the SRDF.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;close hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;close&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We now use a <code class="docutils literal notranslate"><span class="pre">ModifyPlanningScene</span></code> stage again, this time to attach the object to the hand using <code class="docutils literal notranslate"><span class="pre">attachObject</span></code>. Similarly to what we did with the <code class="docutils literal notranslate"><span class="pre">current_state_ptr</span></code>, we get a pointer to this stage for later use when generating the place pose for the object.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ModifyPlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;attach object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">attachObject</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">attach_object_stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stage</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we lift the object with a <code class="docutils literal notranslate"><span class="pre">MoveRelative</span></code> stage, similarly to the <code class="docutils literal notranslate"><span class="pre">approach_object</span></code> stage.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveRelative</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;lift object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setMinMaxDistance</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setIKFrame</span><span class="p">(</span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;marker_ns&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lift_object&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Set upward direction</span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Vector3Stamped</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setDirection</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">grasp</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>With this, we have all the stages needed to pick the object. Now, we add the serial container (with all its substages) to the task. If you build the package as-is, you can see the robot plan to pick up the object.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">grasp</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To test out the newly created stage, build the code and execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">mtc_tutorial</span> <span class="n">pick_place_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="place-stages">
+<h3>6.2 Place Stages<a class="headerlink" href="#place-stages" title="Permalink to this headline"></a></h3>
+<p>Now that the stages that define the pick are complete, we move on to defining the stages for placing the object. Picking up where we left off, we add a <code class="docutils literal notranslate"><span class="pre">Connect</span></code> stage to connect the two, as we will soon be using a generator stage to generate the pose for placing the object.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage_move_to_place</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">Connect</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;move to place&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">Connect</span><span class="o">::</span><span class="n">GroupPlannerVector</span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">arm_group_name</span><span class="p">,</span><span class="w"> </span><span class="n">sampling_planner</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                                                </span><span class="p">{</span><span class="w"> </span><span class="n">hand_group_name</span><span class="p">,</span><span class="w"> </span><span class="n">sampling_planner</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_move_to_place</span><span class="o">-&gt;</span><span class="n">setTimeout</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage_move_to_place</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage_move_to_place</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We also create a serial container for the place stages. This is done similarly to the pick serial container.
+The next stages will be added to the serial container rather than the task.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">SerialContainer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;place object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">properties</span><span class="p">().</span><span class="n">exposeTo</span><span class="p">(</span><span class="n">place</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">(),</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ik_frame&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ik_frame&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This next stage generates the poses used to place the object and compute the inverse kinematics for those poses - it is somewhat similar to the <code class="docutils literal notranslate"><span class="pre">generate</span> <span class="pre">grasp</span> <span class="pre">pose</span></code> stage from the pick serial container. We start by creating a stage to generate the poses and inheriting the task properties. We specify the pose where we want to place the object with a <code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> message from <code class="docutils literal notranslate"><span class="pre">geometry_msgs</span></code> - in this case, we choose <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">0.5</span></code>. We then pass the target pose to the stage with <code class="docutils literal notranslate"><span class="pre">setPose</span></code>.
+Next, we use <code class="docutils literal notranslate"><span class="pre">setMonitoredStage</span></code> and pass it the pointer to the <code class="docutils literal notranslate"><span class="pre">attach_object</span></code> stage from earlier.
+This allows the stage to know how the object is attached.
+We then create a <code class="docutils literal notranslate"><span class="pre">ComputeIK</span></code> stage and pass it our <code class="docutils literal notranslate"><span class="pre">GeneratePlacePose</span></code> stage - the rest follows the same logic as above with the pick stages.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Sample place pose</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">GeneratePlacePose</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;generate place pose&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;marker_ns&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;place_pose&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setObject</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PoseStamped</span><span class="w"> </span><span class="n">target_pose_msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">target_pose_msg</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">target_pose_msg</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setPose</span><span class="p">(</span><span class="n">target_pose_msg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setMonitoredStage</span><span class="p">(</span><span class="n">attach_object_stage</span><span class="p">);</span><span class="w">  </span><span class="c1">// Hook into attach_object_stage</span>
+
+<span class="w">  </span><span class="c1">// Compute IK</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">wrapper</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ComputeIK</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;place pose IK&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setMaxIKSolutions</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setMinSolutionDistance</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">setIKFrame</span><span class="p">(</span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;eef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">wrapper</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">INTERFACE</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;target_pose&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">wrapper</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now that we’re ready to place the object, we open the hand with <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> stage and the joint interpolation planner.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;open hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;open&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We also can re-enable collisions with the object now that we no longer need to hold it.
+This is done using <code class="docutils literal notranslate"><span class="pre">allowCollisions</span></code> almost exactly the same way as disabling collisions, except setting the last argument to <code class="docutils literal notranslate"><span class="pre">false</span></code> rather than <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ModifyPlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;forbid collision (hand,object)&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">allowCollisions</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">task</span><span class="p">.</span><span class="n">getRobotModel</span><span class="p">()</span><span class="w"></span>
+<span class="w">                            </span><span class="o">-&gt;</span><span class="n">getJointModelGroup</span><span class="p">(</span><span class="n">hand_group_name</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="o">-&gt;</span><span class="n">getLinkModelNamesWithCollisionGeometry</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                        </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we can detach the object using <code class="docutils literal notranslate"><span class="pre">detachObject</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">ModifyPlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;detach object&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">detachObject</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We retreat from the object using a <code class="docutils literal notranslate"><span class="pre">MoveRelative</span></code> stage, which is done similarly to the <code class="docutils literal notranslate"><span class="pre">approach</span> <span class="pre">object</span></code> and <code class="docutils literal notranslate"><span class="pre">lift</span> <span class="pre">object</span></code> stages.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveRelative</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;retreat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cartesian_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setMinMaxDistance</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setIKFrame</span><span class="p">(</span><span class="n">hand_frame</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;marker_ns&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;retreat&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Set retreat direction</span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Vector3Stamped</span><span class="w"> </span><span class="n">vec</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">vec</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setDirection</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">place</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We finish our place serial container and add it to the task.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">place</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The final step is to return home: we use a <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> stage and pass it the goal pose of <code class="docutils literal notranslate"><span class="pre">ready</span></code>, which is a pose defined in the Panda SRDF.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mtc</span><span class="o">::</span><span class="n">stages</span><span class="o">::</span><span class="n">MoveTo</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;return home&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">interpolation_planner</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">properties</span><span class="p">().</span><span class="n">configureInitFrom</span><span class="p">(</span><span class="n">mtc</span><span class="o">::</span><span class="n">Stage</span><span class="o">::</span><span class="n">PARENT</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">setGoal</span><span class="p">(</span><span class="s">&quot;ready&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">task</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">stage</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>All these stages should be added above these lines.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Stages all added to the task above this line</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">task</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Congratulations! You’ve now defined a pick and place task using MoveIt Task Constructor! To try it out, build the code and execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">mtc_tutorial</span> <span class="n">pick_place_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="further-discussion">
+<h2>7 Further Discussion<a class="headerlink" href="#further-discussion" title="Permalink to this headline"></a></h2>
+<p>The task with each comprising stage is shown in the Motion Planning Tasks pane. Click on a stage and additional information about the stage will show up to the right. The right pane shows different solutions as well as their associated costs. Depending on the stage type and the robot configuration, there may only be one solution shown.</p>
+<p>Click one of the solution costs to see an animation of the robot following the plan for that stage. Click the “Exec” button in the upper-right portion of the pane to execute the motion.</p>
+<p>To run the complete MoveIt Task Constructor example included with the MoveIt tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">mtc_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>And in a second terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">pick_place_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="section" id="debugging-information-printed-to-the-terminal">
+<h3>7.1 Debugging Information Printed to the Terminal<a class="headerlink" href="#debugging-information-printed-to-the-terminal" title="Permalink to this headline"></a></h3>
+<p>When running MTC, it prints a diagram like this to terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>demo_node-1<span class="o">]</span>     <span class="m">1</span>  - ←   <span class="m">1</span> →   -  <span class="m">0</span> / initial_state
+<span class="o">[</span>demo_node-1<span class="o">]</span>     -  <span class="m">0</span> →   <span class="m">0</span> →   -  <span class="m">0</span> / move_to_home
+</pre></div>
+</div>
+<p>This example^ shows two stages. The first stage (“initial_state”) is a <code class="docutils literal notranslate"><span class="pre">CurrentState</span></code> type of stage, which initializes a <code class="docutils literal notranslate"><span class="pre">PlanningScene</span></code> and captures any collision objects that are present at that moment.
+A pointer to this stage can be used to retrieve the state of the robot.
+Since <code class="docutils literal notranslate"><span class="pre">CurrentState</span></code> inherits from  <code class="docutils literal notranslate"><span class="pre">Generator</span></code>, it propagates solutions both forward and backward.
+This is denoted by the arrows in both directions.</p>
+<ul class="simple">
+<li><p>The first <code class="docutils literal notranslate"><span class="pre">1</span></code> indicates that one solution was successfully propagated backwards to the previous stage.</p></li>
+<li><p>The second <code class="docutils literal notranslate"><span class="pre">1</span></code>, between the arrows, indicates that one solution was generated.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">0</span></code> indicates that a solution was not propagated forward successfully to the next stage, because the next stage failed.</p></li>
+</ul>
+<p>The second stage (“move_to_home”) is a <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code> type of stage. It inherits its propagation direction from the previous stage, so both arrows point forward. The <code class="docutils literal notranslate"><span class="pre">0</span></code>’s indicate that this stage failed completely. From left to right, the <code class="docutils literal notranslate"><span class="pre">0</span></code>’s mean:</p>
+<ul class="simple">
+<li><p>The stage did not receive a solution from the previous stage</p></li>
+<li><p>The stage did not generate a solution</p></li>
+<li><p>The stage did not propagate a solution forward to the next stage</p></li>
+</ul>
+<p>In this case, we could tell that “move_to_home” was the root cause of the failure. The problem was a home state that was in collision. Defining a new, collision-free home position fixed the issue.</p>
+</div>
+<div class="section" id="stages">
+<h3>7.2 Stages<a class="headerlink" href="#stages" title="Permalink to this headline"></a></h3>
+<p>Information about individual stages can be retrieved from the task. For example, here we retrieve the unique ID for a stage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uint32_t</span> <span class="n">const</span> <span class="n">unique_stage_id</span> <span class="o">=</span> <span class="n">task_</span><span class="o">.</span><span class="n">stages</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">findChild</span><span class="p">(</span><span class="n">stage_name</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">introspectionId</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">CurrentState</span></code> type stage does not just retrieve the current state of the robot.
+It also initializes a <code class="docutils literal notranslate"><span class="pre">PlanningScene</span></code> object, capturing any collision objects that are present at that moment.</p>
+<p>MTC stages can be propagated in forward and backward order.
+You can easily check which direction a stage propagates by the arrow in the RViz GUI.
+When propagating backwards, the logic of many operations is reversed.
+For example, to allow collisions with an object in a <code class="docutils literal notranslate"><span class="pre">ModifyPlanningScene</span></code> stage, you would call <code class="docutils literal notranslate"><span class="pre">allowCollisions(false)</span></code> rather than <code class="docutils literal notranslate"><span class="pre">allowCollisions(true)</span></code>. There is a discussion to be read <a class="reference external" href="https://github.com/ros-planning/moveit_task_constructor/issues/349">here.</a></p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../planning_around_objects/planning_around_objects.html" class="btn btn-neutral float-left" title="Planning Around Objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../examples/examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

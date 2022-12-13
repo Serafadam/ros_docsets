@@ -1,0 +1,5 @@
+<map id="rclcpp::GenericSubscription" name="rclcpp::GenericSubscription">
+<area shape="rect" id="node1" title="Subscription for serialized messages whose type is not known at compile time." alt="" coords="23,169,221,196"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1SubscriptionBase.html" title=" " alt="" coords="31,95,213,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,239,47"/>
+</map>

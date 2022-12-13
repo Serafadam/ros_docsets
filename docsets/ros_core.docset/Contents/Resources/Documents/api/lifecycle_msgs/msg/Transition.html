@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/Transition Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">lifecycle_msgs</a>/msg/Transition Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">lifecycle_msgs/msg/Transition.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text"># Default values for transitions as described in:</div><br>
+          <div class="comment-text"># http://design.ros2.org/articles/node_lifecycle.html</div><br>
+          <br>
+          <div class="comment-text"># Reserved [0-9], publicly available transitions.</div><br>
+          <div class="comment-text"># When a node is in one of these primary states, these transitions can be</div><br>
+          <div class="comment-text"># invoked.</div><br>
+          <br>
+          <div class="comment-text"># This transition will instantiate the node, but will not run any code beyond</div><br>
+          <div class="comment-text"># the constructor.</div><br>
+          uint8 TRANSITION_CREATE = 0<br>
+          <br>
+          <div class="comment-text"># The node&#x27;s onConfigure callback will be called to allow the node to load its</div><br>
+          <div class="comment-text"># configuration and conduct any required setup.</div><br>
+          uint8 TRANSITION_CONFIGURE = 1<br>
+          <br>
+          <div class="comment-text"># The node&#x27;s callback onCleanup will be called in this transition to allow the</div><br>
+          <div class="comment-text"># node to load its configuration and conduct any required setup.</div><br>
+          uint8 TRANSITION_CLEANUP = 2<br>
+          <br>
+          <div class="comment-text"># The node&#x27;s callback onActivate will be executed to do any final preparations</div><br>
+          <div class="comment-text"># to start executing.</div><br>
+          uint8 TRANSITION_ACTIVATE = 3<br>
+          <br>
+          <div class="comment-text"># The node&#x27;s callback onDeactivate will be executed to do any cleanup to start</div><br>
+          <div class="comment-text"># executing, and reverse the onActivate changes.</div><br>
+          uint8 TRANSITION_DEACTIVATE = 4<br>
+          <br>
+          <div class="comment-text"># This signals shutdown during an unconfigured state, the node&#x27;s callback</div><br>
+          <div class="comment-text"># onShutdown will be executed to do any cleanup necessary before destruction.</div><br>
+          uint8 TRANSITION_UNCONFIGURED_SHUTDOWN  = 5<br>
+          <br>
+          <div class="comment-text"># This signals shutdown during an inactive state, the node&#x27;s callback onShutdown</div><br>
+          <div class="comment-text"># will be executed to do any cleanup necessary before destruction.</div><br>
+          uint8 TRANSITION_INACTIVE_SHUTDOWN = 6<br>
+          <br>
+          <div class="comment-text"># This signals shutdown during an active state, the node&#x27;s callback onShutdown</div><br>
+          <div class="comment-text"># will be executed to do any cleanup necessary before destruction.</div><br>
+          uint8 TRANSITION_ACTIVE_SHUTDOWN = 7<br>
+          <br>
+          <div class="comment-text"># This transition will simply cause the deallocation of the node.</div><br>
+          uint8 TRANSITION_DESTROY = 8<br>
+          <br>
+          <div class="comment-text"># Reserved [10-69], private transitions</div><br>
+          <div class="comment-text"># These transitions are not publicly available and cannot be invoked by a user.</div><br>
+          <div class="comment-text"># The following transitions are implicitly invoked based on the callback</div><br>
+          <div class="comment-text"># feedback of the intermediate transition states.</div><br>
+          uint8 TRANSITION_ON_CONFIGURE_SUCCESS = 10<br>
+          uint8 TRANSITION_ON_CONFIGURE_FAILURE = 11<br>
+          uint8 TRANSITION_ON_CONFIGURE_ERROR = 12<br>
+          <br>
+          uint8 TRANSITION_ON_CLEANUP_SUCCESS = 20<br>
+          uint8 TRANSITION_ON_CLEANUP_FAILURE = 21<br>
+          uint8 TRANSITION_ON_CLEANUP_ERROR = 22<br>
+          <br>
+          uint8 TRANSITION_ON_ACTIVATE_SUCCESS = 30<br>
+          uint8 TRANSITION_ON_ACTIVATE_FAILURE = 31<br>
+          uint8 TRANSITION_ON_ACTIVATE_ERROR = 32<br>
+          <br>
+          uint8 TRANSITION_ON_DEACTIVATE_SUCCESS = 40<br>
+          uint8 TRANSITION_ON_DEACTIVATE_FAILURE = 41<br>
+          uint8 TRANSITION_ON_DEACTIVATE_ERROR = 42<br>
+          <br>
+          uint8 TRANSITION_ON_SHUTDOWN_SUCCESS = 50<br>
+          uint8 TRANSITION_ON_SHUTDOWN_FAILURE = 51<br>
+          uint8 TRANSITION_ON_SHUTDOWN_ERROR = 52<br>
+          <br>
+          uint8 TRANSITION_ON_ERROR_SUCCESS = 60<br>
+          uint8 TRANSITION_ON_ERROR_FAILURE = 61<br>
+          uint8 TRANSITION_ON_ERROR_ERROR = 62<br>
+          <br>
+          <div class="comment-text"># Reserved [90-99]. Transition callback success values.</div><br>
+          <div class="comment-text"># These return values ought to be set as a return value for each callback.</div><br>
+          <div class="comment-text"># Depending on which return value, the transition will be executed correctly or</div><br>
+          <div class="comment-text"># fallback/error callbacks will be triggered.</div><br>
+          <br>
+          <div class="comment-text"># The transition callback successfully performed its required functionality.</div><br>
+          uint8 TRANSITION_CALLBACK_SUCCESS = 97<br>
+          <br>
+          <div class="comment-text"># The transition callback failed to perform its required functionality.</div><br>
+          uint8 TRANSITION_CALLBACK_FAILURE = 98<br>
+          <br>
+          <div class="comment-text"># The transition callback encountered an error that requires special cleanup, if</div><br>
+          <div class="comment-text"># possible.</div><br>
+          uint8 TRANSITION_CALLBACK_ERROR = 99<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Fields</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># The transition id from above definitions.</div><br>
+          uint8 id<br>
+          <br>
+          <div class="comment-text"># A text label of the transition.</div><br>
+          string label<br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          uint8 TRANSITION_CREATE=0<br>
+          uint8 TRANSITION_CONFIGURE=1<br>
+          uint8 TRANSITION_CLEANUP=2<br>
+          uint8 TRANSITION_ACTIVATE=3<br>
+          uint8 TRANSITION_DEACTIVATE=4<br>
+          uint8 TRANSITION_UNCONFIGURED_SHUTDOWN=5<br>
+          uint8 TRANSITION_INACTIVE_SHUTDOWN=6<br>
+          uint8 TRANSITION_ACTIVE_SHUTDOWN=7<br>
+          uint8 TRANSITION_DESTROY=8<br>
+          uint8 TRANSITION_ON_CONFIGURE_SUCCESS=10<br>
+          uint8 TRANSITION_ON_CONFIGURE_FAILURE=11<br>
+          uint8 TRANSITION_ON_CONFIGURE_ERROR=12<br>
+          uint8 TRANSITION_ON_CLEANUP_SUCCESS=20<br>
+          uint8 TRANSITION_ON_CLEANUP_FAILURE=21<br>
+          uint8 TRANSITION_ON_CLEANUP_ERROR=22<br>
+          uint8 TRANSITION_ON_ACTIVATE_SUCCESS=30<br>
+          uint8 TRANSITION_ON_ACTIVATE_FAILURE=31<br>
+          uint8 TRANSITION_ON_ACTIVATE_ERROR=32<br>
+          uint8 TRANSITION_ON_DEACTIVATE_SUCCESS=40<br>
+          uint8 TRANSITION_ON_DEACTIVATE_FAILURE=41<br>
+          uint8 TRANSITION_ON_DEACTIVATE_ERROR=42<br>
+          uint8 TRANSITION_ON_SHUTDOWN_SUCCESS=50<br>
+          uint8 TRANSITION_ON_SHUTDOWN_FAILURE=51<br>
+          uint8 TRANSITION_ON_SHUTDOWN_ERROR=52<br>
+          uint8 TRANSITION_ON_ERROR_SUCCESS=60<br>
+          uint8 TRANSITION_ON_ERROR_FAILURE=61<br>
+          uint8 TRANSITION_ON_ERROR_ERROR=62<br>
+          uint8 TRANSITION_CALLBACK_SUCCESS=97<br>
+          uint8 TRANSITION_CALLBACK_FAILURE=98<br>
+          uint8 TRANSITION_CALLBACK_ERROR=99<br>
+          uint8 id<br>
+          string label<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Dec 13 2022 12:38:05</p>
+    </div>
+  </body>
+</html>

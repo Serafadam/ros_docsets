@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning For Differential-Drive Mobile Base and an Arm &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/mobile_base_arm/mobile_base_arm_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MoveIt Setup Assistant" href="../setup_assistant/setup_assistant_tutorial.html" />
+    <link rel="prev" title="Using Bullet for Collision Checking" href="../bullet_collision_checker/bullet_collision_checker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Planning For Differential-Drive Mobile Base and an Arm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-ik-solver-for-mobile-base-and-arm">Setting up IK solver for mobile-base and arm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-kinematics-model-for-the-base">Setting up the kinematics model for the base</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#motion-model">motion_model</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#min-translational-distance">min_translational_distance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#angular-distance-weight">angular_distance_weight</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code">Running the Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-launch-file">The Launch File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Planning For Differential-Drive Mobile Base and an Arm</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/mobile_base_arm/mobile_base_arm_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="planning-for-differential-drive-mobile-base-and-an-arm">
+<h1>Planning For Differential-Drive Mobile Base and an Arm<a class="headerlink" href="#planning-for-differential-drive-mobile-base-and-an-arm" title="Permalink to this headline"></a></h1>
+<p>This tutorial will show how you can configure a mobile manipulator with a differential drive base so that you can plan coordinated motions for the base and the other degrees of freedom using MoveIt. While you could use MoveIt to plan for just the base, this is not recommended. Use Nav2 for pure navigation. Note that the tutorial uses Hello Robot’s Stretch platform for demonstration purposes, the same approach can be used for any mobile manipulator with a diff-drive base.</p>
+<a class="reference internal image-reference" href="../../../_images/intro.png"><img alt="../../../_images/intro.png" src="../../../_images/intro.png" style="width: 700px;" /></a>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>Install the dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">src</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">PickNikRobotics</span><span class="o">/</span><span class="n">stretch_ros</span><span class="o">/</span><span class="n">ros2</span><span class="o">/</span><span class="n">stretch_ros</span><span class="o">.</span><span class="n">repos</span>
+<span class="n">vcs</span> <span class="kn">import</span> <span class="o">&lt;</span> <span class="n">stretch_ros</span><span class="o">.</span><span class="n">repos</span>
+<span class="n">rosdep</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="o">--</span><span class="n">from</span><span class="o">-</span><span class="n">paths</span> <span class="o">.</span> <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">src</span> <span class="o">--</span><span class="n">rosdistro</span> <span class="n">rolling</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>Build the colcon workspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ws_moveit</span>
+<span class="n">colcon</span> <span class="n">build</span> <span class="o">--</span><span class="n">event</span><span class="o">-</span><span class="n">handlers</span> <span class="n">desktop_notification</span><span class="o">-</span> <span class="n">status</span><span class="o">-</span> <span class="o">--</span><span class="n">cmake</span><span class="o">-</span><span class="n">args</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Release</span>
+</pre></div>
+</div>
+<p>Source the colcon workspace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ws_moveit</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-ik-solver-for-mobile-base-and-arm">
+<h2>Setting up IK solver for mobile-base and arm<a class="headerlink" href="#setting-up-ik-solver-for-mobile-base-and-arm" title="Permalink to this headline"></a></h2>
+<p>To setup the kinematics plugin we need a joint model group that consist of two joint model groups: one for the manipulator and the other one for the mobile base which has only one joint with planar type so the <code class="docutils literal notranslate"><span class="pre">*.srdf</span></code> file should have:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;manipulator&quot;</span><span class="nt">&gt;</span>
+  ...
+<span class="nt">&lt;/group&gt;</span>
+<span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;mobile_base&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;planar_joint&quot;</span> <span class="nt">/&gt;</span> <span class="cm">&lt;!-- planar_joint must have planar type --&gt;</span>
+<span class="nt">&lt;/group&gt;</span>
+<span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;mobile_base_manipulator&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;manipulator&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;mobile_base&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/group&gt;</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> file the <code class="docutils literal notranslate"><span class="pre">mobile_base_manipulator</span></code> group need to have <code class="docutils literal notranslate"><span class="pre">stretch_kinematics_plugin/StretchKinematicsPlugin</span></code> as a kinematics solver</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mobile_base_manipulator</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kinematics_solver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stretch_kinematics_plugin/StretchKinematicsPlugin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kinematics_solver_search_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kinematics_solver_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w"></span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/PickNikRobotics/stretch_ros/blob/ros2/stretch_moveit_config/config/stretch_description.srdf#L29-L35">stretch_description.srdf</a> and <a class="reference external" href="https://github.com/PickNikRobotics/stretch_ros/blob/ros2/stretch_moveit_config/config/kinematics.yaml#L5-L8">kinematics.yaml</a> for how it’s been set-up for stretch robot.</p>
+<p>For the source-code take a look at <a class="reference external" href="https://github.com/PickNikRobotics/stretch_moveit_plugins/tree/main/stretch_kinematics_plugin">stretch_kinematics_plugin</a></p>
+</div>
+<div class="section" id="setting-up-the-kinematics-model-for-the-base">
+<h2>Setting up the kinematics model for the base<a class="headerlink" href="#setting-up-the-kinematics-model-for-the-base" title="Permalink to this headline"></a></h2>
+<p>To be able to generate plan for a differential-drive base we need to set-up two joint properties</p>
+<div class="section" id="motion-model">
+<h3>motion_model<a class="headerlink" href="#motion-model" title="Permalink to this headline"></a></h3>
+<p>This’s used to config the planar joint model, it can have two values:</p>
+<ul class="simple">
+<li><p>holonomic: The joint can move in any direction, this is the default value if no motion_model joint property is specified</p></li>
+<li><p>diff_drive: The joint will have differential drive constraint (can’t move side-ways)</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;joint_property</span> <span class="na">joint_name=</span><span class="s">&quot;planar_joint_name&quot;</span> <span class="na">property_name=</span><span class="s">&quot;motion_model&quot;</span> <span class="na">value=</span><span class="s">&quot;diff_drive&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="min-translational-distance">
+<h3>min_translational_distance<a class="headerlink" href="#min-translational-distance" title="Permalink to this headline"></a></h3>
+<p>If the distance between two states is less than <code class="docutils literal notranslate"><span class="pre">min_translational_distance</span></code> the motion will be pure rotation, the default value is <code class="docutils literal notranslate"><span class="pre">1e-5</span></code>, for more info see <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_model/src/planar_joint_model.cpp#L149">computeTurnDriveTurnGeometry</a> for why this’s needed</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;joint_property</span> <span class="na">joint_name=</span><span class="s">&quot;planar_joint_name&quot;</span> <span class="na">property_name=</span><span class="s">&quot;min_translational_distance&quot;</span> <span class="na">value=</span><span class="s">&quot;0.01&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="angular-distance-weight">
+<h3>angular_distance_weight<a class="headerlink" href="#angular-distance-weight" title="Permalink to this headline"></a></h3>
+<p>Could be set for both planar joints (diff_drive/holonomic) and floating joints, the default value is <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p>
+<p>This is used when calculating the distance between two base poses <code class="docutils literal notranslate"><span class="pre">(x0,</span> <span class="pre">y0,</span> <span class="pre">theta0)</span></code> and <code class="docutils literal notranslate"><span class="pre">(x1,</span> <span class="pre">y1,</span> <span class="pre">theta1)</span></code> which is defined as the weighted sum of the distance between position and orientation: <code class="docutils literal notranslate"><span class="pre">||(x0,</span> <span class="pre">y0)</span> <span class="pre">-</span> <span class="pre">(x1,</span> <span class="pre">y1)||</span> <span class="pre">+</span> <span class="pre">angular_distance_weight</span> <span class="pre">*</span> <span class="pre">|theta0</span> <span class="pre">-</span> <span class="pre">theta1|</span></code>.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;joint_property</span> <span class="na">joint_name=</span><span class="s">&quot;planar_joint_name&quot;</span> <span class="na">property_name=</span><span class="s">&quot;angular_distance_weight&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h2>
+<p>Open a shell and start RViz and wait for everything to finish loading:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">stretch_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span> <span class="n">use_fake_controller</span><span class="o">:=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<video width="700px" nocontrols="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/mobile_base_arm1.mp4" type="video/mp4">
+    Planning for differential-drive base and arm
+</video><video width="700px" nocontrols="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/mobile_base_arm2.mp4" type="video/mp4">
+    Planning after adding a collision object to planning scene
+</video></div>
+<div class="section" id="the-launch-file">
+<h2>The Launch File<a class="headerlink" href="#the-launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is <a class="reference external" href="https://github.com/PickNikRobotics/stretch_ros/blob/ros2/stretch_moveit_config/launch/demo.launch.py">here</a> on GitHub.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../bullet_collision_checker/bullet_collision_checker.html" class="btn btn-neutral float-left" title="Using Bullet for Collision Checking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../setup_assistant/setup_assistant_tutorial.html" class="btn btn-neutral float-right" title="MoveIt Setup Assistant" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

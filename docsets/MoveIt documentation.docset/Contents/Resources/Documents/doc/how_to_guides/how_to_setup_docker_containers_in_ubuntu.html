@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Set Up MoveIt 2 Docker Containers in Ubuntu &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to Contribute Doxygen Comments" href="how_to_write_doxygen.html" />
+    <link rel="prev" title="How To Generate API Doxygen Reference Locally" href="how_to_generate_api_doxygen_locally.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_to_guide.html">How-To Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_generate_api_doxygen_locally.html">How To Generate API Doxygen Reference Locally</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Set Up MoveIt 2 Docker Containers in Ubuntu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_write_doxygen.html">How to Contribute Doxygen Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_ompl_constrained_planning/ompl_constrained_planning.html">Using OMPL Constrained Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel_planning/parallel_planning_tutorial.html">Running Multiple Planning Pipelines in Parallel with MoveItCpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controller_teleoperation/controller_teleoperation.html">How to Teleoperate a Robotic Arm with a Gamepad</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">How to Set Up MoveIt 2 Docker Containers in Ubuntu</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="how-to-set-up-moveit-2-docker-containers-in-ubuntu">
+<h1>How to Set Up MoveIt 2 Docker Containers in Ubuntu<a class="headerlink" href="#how-to-set-up-moveit-2-docker-containers-in-ubuntu" title="Permalink to this headline"></a></h1>
+<p>This guide will provide a walkthrough on how to get a Docker container with MoveIt 2 dependencies set up quickly.
+It includes a docker-compose config file that will get you up and running in MoveIt quickly!
+This guide is intended for people who would like to have a separate environment for working with MoveIt up and running quickly without having to do much configuring. In this guide, we will be setting up a ROS2 Rolling environment.</p>
+<div class="section" id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>How to use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code> to run MoveIt 2 Docker containers and tutorials</p></li>
+</ul>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 20.04 or 22.04</p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">Docker Installation for Ubuntu</a></p></li>
+<li><p><a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#setting-up-nvidia-container-toolkit">Nvidia drivers for Docker</a></p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/compose/install/">docker compose (if not already installed via Docker Desktop)</a></p></li>
+</ul>
+</div>
+<div class="section" id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Install Docker and docker compose (links are available in the Requirements section) and be sure to follow the <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">Linux Post Install</a> instructions. If you do not complete these additional steps you will need to preface all <code class="docutils literal notranslate"><span class="pre">docker</span></code> commands with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+<li><p>Open a terminal session and download docker-compose.yml</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://raw.githubusercontent.com/ros-planning/moveit2_tutorials/main/.docker/docker-compose.yml
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p>Launch the container (you may need to hyphenate <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> if using compose V1)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DOCKER_IMAGE</span><span class="o">=</span>rolling-tutorial docker compose run --rm --name moveit2_container gpu
+</pre></div>
+</div>
+<p>You can replace <code class="docutils literal notranslate"><span class="pre">rolling-tutorial</span></code> with other tagged images, e.g. <code class="docutils literal notranslate"><span class="pre">humble-tutorial</span></code>. Similarly, you can replace <code class="docutils literal notranslate"><span class="pre">gpu</span></code> with <code class="docutils literal notranslate"><span class="pre">cpu</span></code> if you do not wish to run using Nvidia GPU drivers and you can change the name of the container by replacing <code class="docutils literal notranslate"><span class="pre">moveit2_container</span></code>. The <code class="docutils literal notranslate"><span class="pre">--rm</span></code> argument will remove the container when you stop (or exit) it, otherwise you can keep your modified container on disk and start it using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span> <span class="pre">moveit2_container</span></code></p>
+</li>
+<li><p>You should now be inside of your Docker container, in the workspace directory, with the completed <a class="reference internal" href="../tutorials/planning_around_objects/planning_around_objects.html"><span class="doc">Planning Around Objects</span></a> and <a class="reference internal" href="../tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html"><span class="doc">Pick and Place with MoveIt Task Constructor</span></a> tutorials. Go ahead and try one of the launch commands like <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">launch</span> <span class="pre">moveit2_tutorials</span> <span class="pre">demo.launch.py</span></code></p></li>
+</ol>
+<blockquote>
+<div><p>If you wish to enter the container through another terminal, use:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it moveit2_container /bin/bash
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>For more information about Docker best practices with respect to MoveIt,
+refer to <a class="reference external" href="https://picknik.ai/ros/robotics/docker/2021/07/20/Vatan-Aksoy-Tezer-Docker.html">this blog post</a>
+from PickNik’s Vatan Aksoy Tezer and Brennard Pierce.</p></li>
+<li><p>You can find a list of tagged tutorial images <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/pkgs/container/moveit2_tutorials">here</a>. There are tagged images for both <code class="docutils literal notranslate"><span class="pre">rolling</span></code> and <code class="docutils literal notranslate"><span class="pre">humble</span></code> which are built on top of the <code class="docutils literal notranslate"><span class="pre">rolling-source</span></code> and <code class="docutils literal notranslate"><span class="pre">humble-source</span></code> MoveIt 2 Docker images <a class="reference external" href="https://hub.docker.com/r/moveit/moveit2/tags">here</a>.</p></li>
+<li><p>You can find more tagged images for MoveIt 2 Docker containers <a class="reference external" href="https://hub.docker.com/r/moveit/moveit2/tags">here</a>.
+The tagged images coincide with ROS2 version releases. The <code class="docutils literal notranslate"><span class="pre">release</span></code> version of the container provides an environment in which MoveIt 2 is installed via the binaries.
+The <code class="docutils literal notranslate"><span class="pre">source</span></code> version of the Docker image will build MoveIt 2 from source.
+You can use any of these images by substituting the DOCKER_IMAGE environment variable with a tag name from the above link (like <code class="docutils literal notranslate"><span class="pre">rolling-source</span></code>), but you must use <a class="reference external" href="https://raw.githubusercontent.com/ros-planning/moveit2_tutorials/main/_scripts/docker-compose.yml">this docker-compose.yml</a> instead (simply copy it to a different location and run your <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code> command there).</p></li>
+</ul>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how_to_generate_api_doxygen_locally.html" class="btn btn-neutral float-left" title="How To Generate API Doxygen Reference Locally" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="how_to_write_doxygen.html" class="btn btn-neutral float-right" title="How to Contribute Doxygen Comments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

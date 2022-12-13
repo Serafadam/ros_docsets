@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motion Planning API &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/motion_planning_api/motion_planning_api_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Motion Planning Pipeline" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html" />
+    <link rel="prev" title="Planning Scene ROS API" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Motion Planning API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-demo">Running the Demo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expected-output">Expected Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-entire-code">The Entire Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#start">Start</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#visualization">Visualization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pose-goal">Pose Goal</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#visualize-the-result">Visualize the result</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#joint-space-goals">Joint Space Goals</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#adding-path-constraints">Adding Path Constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-launch-file">The Launch File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Motion Planning API</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/motion_planning_api/motion_planning_api_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="motion-planning-api">
+<h1>Motion Planning API<a class="headerlink" href="#motion-planning-api" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/motion_planning_api_tutorial_robot_move_arm_1st.png"><img alt="../../../_images/motion_planning_api_tutorial_robot_move_arm_1st.png" src="../../../_images/motion_planning_api_tutorial_robot_move_arm_1st.png" style="width: 700px;" /></a>
+<p>In MoveIt, the motion planners are loaded using a plugin infrastructure. This
+allows MoveIt to load motion planners at runtime. In this example, we will
+run through the C++ code required to do this.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="running-the-demo">
+<h2>Running the Demo<a class="headerlink" href="#running-the-demo" title="Permalink to this headline"></a></h2>
+<p>Open two shells. In the first shell start RViz and wait for everything to finish loading:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">move_group</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>In the second shell, run the launch file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">motion_planning_api_tutorial</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> This tutorial uses the <strong>RvizVisualToolsGui</strong> panel to step through the demo. To add this panel to RViz, follow the instructions in the <a class="reference external" href="/doc/tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html#rviz-visual-tools">Visualization Tutorial</a>.</p>
+<p>After a short moment, the RViz window should appear and look similar to the one at the top of this page. To progress through each demo step either press the <strong>Next</strong> button in the <strong>RvizVisualToolsGui</strong> panel at the bottom of the screen or select <strong>Key Tool</strong> in the <strong>Tools</strong> panel at the top of the screen and then press <strong>N</strong> on your keyboard while RViz is focused.</p>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Permalink to this headline"></a></h2>
+<p>In RViz, we should be able to see four trajectories being replayed eventually:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>The robot moves its arm to the first pose goal,</p>
+<p><a class="reference internal" href="../../../_images/motion_planning_api_tutorial_robot_move_arm_1st.png"><img alt="A" src="../../../_images/motion_planning_api_tutorial_robot_move_arm_1st.png" style="width: 200px;" /></a></p>
+</li>
+<li><p>The robot moves its arm to the joint goal,</p>
+<p><a class="reference internal" href="../../../_images/motion_planning_api_tutorial_robot_move_arm_2nd.png"><img alt="B" src="../../../_images/motion_planning_api_tutorial_robot_move_arm_2nd.png" style="width: 200px;" /></a></p>
+</li>
+<li><p>The robot moves its arm back to the original pose goal,</p></li>
+<li><p>The robot moves its arm to a new pose goal while maintaining the end-effector level.</p>
+<p><a class="reference internal" href="../../../_images/motion_planning_api_tutorial_robot_move_arm_3rd.png"><img alt="C" src="../../../_images/motion_planning_api_tutorial_robot_move_arm_3rd.png" style="width: 200px;" /></a></p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="the-entire-code">
+<h2>The Entire Code<a class="headerlink" href="#the-entire-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/motion_planning_api">here in the moveit_tutorials GitHub project</a>.</p>
+<div class="section" id="start">
+<h3>Start<a class="headerlink" href="#start" title="Permalink to this headline"></a></h3>
+<p>Setting up to start using a planner is pretty easy. Planners are
+setup as plugins in MoveIt and you can use the ROS pluginlib
+interface to load any planner that you want to use. Before we can
+load the planner, we need two objects, a RobotModel and a
+PlanningScene. We will start by instantiating a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/robot_model_loader/include/moveit/robot_model_loader/robot_model_loader.h">RobotModelLoader</a>
+object, which will look up the robot description on the ROS
+parameter server and construct a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_model/include/moveit/robot_model/robot_model.h">RobotModel</a>
+for us to use.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">PLANNING_GROUP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">robot_model_loader</span><span class="o">::</span><span class="n">RobotModelLoader</span><span class="w"> </span><span class="n">robot_model_loader</span><span class="p">(</span><span class="n">motion_planning_api_tutorial_node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;robot_description&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotModelPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot_model_loader</span><span class="p">.</span><span class="n">getModel</span><span class="p">();</span><span class="w"></span>
+<span class="cm">/* Create a RobotState and JointModelGroup to keep track of the current robot pose and planning group*/</span><span class="w"></span>
+<span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotStatePtr</span><span class="w"> </span><span class="nf">robot_state</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="p">(</span><span class="n">robot_model</span><span class="p">));</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">JointModelGroup</span><span class="o">*</span><span class="w"> </span><span class="n">joint_model_group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot_state</span><span class="o">-&gt;</span><span class="n">getJointModelGroup</span><span class="p">(</span><span class="n">PLANNING_GROUP</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Using the
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_model/include/moveit/robot_model/robot_model.h">RobotModel</a>,
+we can construct a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/planning_scene/include/moveit/planning_scene/planning_scene.h">PlanningScene</a>
+that maintains the state of the world (including the robot).</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScenePtr</span><span class="w"> </span><span class="nf">planning_scene</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScene</span><span class="p">(</span><span class="n">robot_model</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Configure a valid robot state</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">getCurrentStateNonConst</span><span class="p">().</span><span class="n">setToDefaultValues</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ready&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We will now construct a loader to load a planner, by name.
+Note that we are using the ROS pluginlib library here.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">pluginlib</span><span class="o">::</span><span class="n">ClassLoader</span><span class="o">&lt;</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlannerManager</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">planner_plugin_loader</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_interface</span><span class="o">::</span><span class="n">PlannerManagerPtr</span><span class="w"> </span><span class="n">planner_instance</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">planner_plugin_name</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We will get the name of planning plugin we want to load
+from the ROS parameter server, and then load the planner
+making sure to catch all exceptions.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">motion_planning_api_tutorial_node</span><span class="o">-&gt;</span><span class="n">get_parameter</span><span class="p">(</span><span class="s">&quot;planning_plugin&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">planner_plugin_name</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_FATAL</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Could not find planner plugin name&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">try</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">planner_plugin_loader</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pluginlib</span><span class="o">::</span><span class="n">ClassLoader</span><span class="o">&lt;</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlannerManager</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;moveit_core&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;planning_interface::PlannerManager&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">pluginlib</span><span class="o">::</span><span class="n">PluginlibException</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_FATAL</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Exception while creating planning plugin loader %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">try</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">planner_instance</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">planner_plugin_loader</span><span class="o">-&gt;</span><span class="n">createUnmanagedInstance</span><span class="p">(</span><span class="n">planner_plugin_name</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">(</span><span class="n">robot_model</span><span class="p">,</span><span class="w"> </span><span class="n">motion_planning_api_tutorial_node</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">motion_planning_api_tutorial_node</span><span class="o">-&gt;</span><span class="n">get_namespace</span><span class="p">()))</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_FATAL</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Could not initialize planner instance&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Using planning interface &#39;%s&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">getDescription</span><span class="p">().</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">pluginlib</span><span class="o">::</span><span class="n">PluginlibException</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planner_plugin_loader</span><span class="o">-&gt;</span><span class="n">getDeclaredClasses</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">ss</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cls</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">ss</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">cls</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Exception while loading planner &#39;%s&#39;: %s</span><span class="se">\n</span><span class="s">Available plugins: %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">planner_plugin_name</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"></span>
+<span class="w">               </span><span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">(),</span><span class="w"> </span><span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="w"> </span><span class="n">move_group</span><span class="p">(</span><span class="n">motion_planning_api_tutorial_node</span><span class="p">,</span><span class="w"> </span><span class="n">PLANNING_GROUP</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline"></a></h3>
+<p>The package MoveItVisualTools provides many capabilities for visualizing objects, robots,
+and trajectories in RViz as well as debugging tools such as step-by-step introspection of a script.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">rvt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rviz_visual_tools</span><span class="p">;</span><span class="w"></span>
+<span class="n">moveit_visual_tools</span><span class="o">::</span><span class="n">MoveItVisualTools</span><span class="w"> </span><span class="n">visual_tools</span><span class="p">(</span><span class="n">motion_planning_api_tutorial_node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                    </span><span class="s">&quot;move_group_tutorial&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">move_group</span><span class="p">.</span><span class="n">getRobotModel</span><span class="p">());</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">enableBatchPublishing</span><span class="p">();</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">deleteAllMarkers</span><span class="p">();</span><span class="w">  </span><span class="c1">// clear all old markers</span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* Remote control is an introspection tool that allows users to step through a high level script</span>
+<span class="cm">   via buttons and keyboard shortcuts in RViz */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">loadRemoteControl</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* RViz provides many types of markers, in this demo we will use text, cylinders, and spheres*/</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="w"> </span><span class="n">text_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span><span class="w"></span>
+<span class="n">text_pose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.75</span><span class="p">;</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishText</span><span class="p">(</span><span class="n">text_pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Motion Planning API Demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">WHITE</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">XLARGE</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Batch publishing is used to reduce the number of messages being sent to RViz for large visualizations */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* We can also use visual_tools to wait for user input */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to start the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pose-goal">
+<h3>Pose Goal<a class="headerlink" href="#pose-goal" title="Permalink to this headline"></a></h3>
+<p>We will now create a motion plan request for the arm of the Panda
+specifying the desired pose of the end-effector as input.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_interface</span><span class="o">::</span><span class="n">MotionPlanRequest</span><span class="w"> </span><span class="n">req</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_interface</span><span class="o">::</span><span class="n">MotionPlanResponse</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PoseStamped</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.75</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>A tolerance of 0.01 m is specified in position
+and 0.01 radians in orientation</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tolerance_pose</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tolerance_angle</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We will create the request as a constraint using a helper function available
+from the
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/kinematic_constraints/include/moveit/kinematic_constraints/kinematic_constraint.h">kinematic_constraints</a>
+package.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">pose_goal</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">constructGoalConstraints</span><span class="p">(</span><span class="s">&quot;panda_link8&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="n">tolerance_pose</span><span class="p">,</span><span class="w"> </span><span class="n">tolerance_angle</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">req</span><span class="p">.</span><span class="n">group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PLANNING_GROUP</span><span class="p">;</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pose_goal</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We now construct a planning context that encapsulate the scene,
+the request and the response. We call the planner using this
+planning context</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlanningContextPtr</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">getPlanningContext</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">);</span><span class="w"></span>
+<span class="n">context</span><span class="o">-&gt;</span><span class="n">solve</span><span class="p">(</span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">.</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Could not compute plan successfully&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="visualize-the-result">
+<h3>Visualize the result<a class="headerlink" href="#visualize-the-result" title="Permalink to this headline"></a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">DisplayTrajectory</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">display_publisher</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">motion_planning_api_tutorial_node</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">DisplayTrajectory</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;/display_planned_path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                                                             </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">DisplayTrajectory</span><span class="w"> </span><span class="n">display_trajectory</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Visualize the trajectory */</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">MotionPlanResponse</span><span class="w"> </span><span class="n">response</span><span class="p">;</span><span class="w"></span>
+<span class="n">res</span><span class="p">.</span><span class="n">getMessage</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">trajectory_start</span><span class="p">;</span><span class="w"></span>
+<span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishTrajectoryLine</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span><span class="w"> </span><span class="n">joint_model_group</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="n">display_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Set the state in the planning scene to the final state of the last plan */</span><span class="w"></span>
+<span class="n">robot_state</span><span class="o">-&gt;</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">positions</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">setCurrentState</span><span class="p">(</span><span class="o">*</span><span class="n">robot_state</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Display the goal state</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">visual_tools</span><span class="p">.</span><span class="n">publishAxisLabeled</span><span class="p">(</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goal_1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishText</span><span class="p">(</span><span class="n">text_pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Pose Goal (1)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">WHITE</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">XLARGE</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* We can also use visual_tools to wait for user input */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="joint-space-goals">
+<h3>Joint Space Goals<a class="headerlink" href="#joint-space-goals" title="Permalink to this headline"></a></h3>
+<p>Now, setup a joint space goal</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="w"> </span><span class="nf">goal_state</span><span class="p">(</span><span class="n">robot_model</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">joint_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">goal_state</span><span class="p">.</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">joint_values</span><span class="p">);</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">joint_goal</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">constructGoalConstraints</span><span class="p">(</span><span class="n">goal_state</span><span class="p">,</span><span class="w"> </span><span class="n">joint_model_group</span><span class="p">);</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">joint_goal</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Call the planner and visualize the trajectory</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Re-construct the planning context */</span><span class="w"></span>
+<span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">getPlanningContext</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Call the Planner */</span><span class="w"></span>
+<span class="n">context</span><span class="o">-&gt;</span><span class="n">solve</span><span class="p">(</span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Check that the planning was successful */</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">.</span><span class="n">SUCCESS</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Could not compute plan successfully&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="cm">/* Visualize the trajectory */</span><span class="w"></span>
+<span class="n">res</span><span class="p">.</span><span class="n">getMessage</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+<span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Now you should see two planned trajectories in series*/</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishTrajectoryLine</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span><span class="w"> </span><span class="n">joint_model_group</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="n">display_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* We will add more goals. But first, set the state in the planning</span>
+<span class="cm">   scene to the final state of the last plan */</span><span class="w"></span>
+<span class="n">robot_state</span><span class="o">-&gt;</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">positions</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">setCurrentState</span><span class="p">(</span><span class="o">*</span><span class="n">robot_state</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Display the goal state</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">visual_tools</span><span class="p">.</span><span class="n">publishAxisLabeled</span><span class="p">(</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goal_2&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishText</span><span class="p">(</span><span class="n">text_pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Joint Space Goal (2)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">WHITE</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">XLARGE</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* Wait for user input */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Now, we go back to the first goal to prepare for orientation constrained planning */</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pose_goal</span><span class="p">);</span><span class="w"></span>
+<span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">getPlanningContext</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">);</span><span class="w"></span>
+<span class="n">context</span><span class="o">-&gt;</span><span class="n">solve</span><span class="p">(</span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+<span class="n">res</span><span class="p">.</span><span class="n">getMessage</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishTrajectoryLine</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span><span class="w"> </span><span class="n">joint_model_group</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="n">display_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Set the state in the planning scene to the final state of the last plan */</span><span class="w"></span>
+<span class="n">robot_state</span><span class="o">-&gt;</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">positions</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">setCurrentState</span><span class="p">(</span><span class="o">*</span><span class="n">robot_state</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Display the goal state</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/* Wait for user input */</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-path-constraints">
+<h3>Adding Path Constraints<a class="headerlink" href="#adding-path-constraints" title="Permalink to this headline"></a></h3>
+<p>Let’s add a new pose goal again. This time we will also add a path constraint to the motion.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Let&#39;s create a new pose goal */</span><span class="w"></span>
+
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.32</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.25</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.65</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">pose_goal_2</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">constructGoalConstraints</span><span class="p">(</span><span class="s">&quot;panda_link8&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="n">tolerance_pose</span><span class="p">,</span><span class="w"> </span><span class="n">tolerance_angle</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Now, let&#39;s try to move to this new pose goal*/</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">goal_constraints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pose_goal_2</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* But, let&#39;s impose a path constraint on the motion.</span>
+<span class="cm">   Here, we are asking for the end-effector to stay level*/</span><span class="w"></span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">QuaternionStamped</span><span class="w"> </span><span class="n">quaternion</span><span class="p">;</span><span class="w"></span>
+<span class="n">quaternion</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">path_constraints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">constructGoalConstraints</span><span class="p">(</span><span class="s">&quot;panda_link8&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quaternion</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Imposing path constraints requires the planner to reason in the space of possible positions of the end-effector
+(the workspace of the robot)
+because of this, we need to specify a bound for the allowed planning volume as well;
+Note: a default bound is automatically filled by the WorkspaceBounds request adapter (part of the OMPL pipeline,
+but that is not being used in this example).
+We use a bound that definitely includes the reachable space for the arm. This is fine because sampling is not done
+in this volume
+when planning for the arm; the bounds are only used to determine if the sampled configurations are valid.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">min_corner</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">min_corner</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">min_corner</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">max_corner</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">max_corner</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">req</span><span class="p">.</span><span class="n">workspace_parameters</span><span class="p">.</span><span class="n">max_corner</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Call the planner and visualize all the plans created so far.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planner_instance</span><span class="o">-&gt;</span><span class="n">getPlanningContext</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">error_code_</span><span class="p">);</span><span class="w"></span>
+<span class="n">context</span><span class="o">-&gt;</span><span class="n">solve</span><span class="p">(</span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+<span class="n">res</span><span class="p">.</span><span class="n">getMessage</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+<span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishTrajectoryLine</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span><span class="w"> </span><span class="n">joint_model_group</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="n">display_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* Set the state in the planning scene to the final state of the last plan */</span><span class="w"></span>
+<span class="n">robot_state</span><span class="o">-&gt;</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">trajectory</span><span class="p">.</span><span class="n">joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">positions</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">setCurrentState</span><span class="p">(</span><span class="o">*</span><span class="n">robot_state</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Display the goal state</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">visual_tools</span><span class="p">.</span><span class="n">publishAxisLabeled</span><span class="p">(</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goal_3&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">publishText</span><span class="p">(</span><span class="n">text_pose</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Orientation Constrained Motion Plan (3)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">WHITE</span><span class="p">,</span><span class="w"> </span><span class="n">rvt</span><span class="o">::</span><span class="n">XLARGE</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-launch-file">
+<h2>The Launch File<a class="headerlink" href="#the-launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/motion_planning_api/launch/motion_planning_api_tutorial.launch.py">here</a> on GitHub. All the code in this tutorial can be compiled and run from the moveit_tutorials package.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html" class="btn btn-neutral float-left" title="Planning Scene ROS API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html" class="btn btn-neutral float-right" title="Motion Planning Pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

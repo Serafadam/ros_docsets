@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isolated vs Merged Workspaces &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Multiple Workspaces" href="using-multiple-workspaces.html" />
+    <link rel="prev" title="Log Files" href="log-files.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Isolated vs Merged Workspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#isolated-workspace">Isolated Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#merged-workspace">Merged Workspace</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Isolated vs Merged Workspaces</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/isolated-vs-merged-workspaces.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="isolated-vs-merged-workspaces">
+<h1>Isolated vs Merged Workspaces<a class="headerlink" href="#isolated-vs-merged-workspaces" title="Permalink to this headline"></a></h1>
+<p>Assuming you know <a class="reference internal" href="what-is-a-workspace.html"><span class="doc">what a workspace is</span></a>, you know that by default colcon builds an <strong>isolated workspace</strong>.
+It can also build a <strong>merged workspace</strong>.
+These terms describe the layout of the <strong>install space</strong>, which is the directory software gets installed into.</p>
+<p>This page describes the differences between the two.</p>
+<div class="section" id="isolated-workspace">
+<h2>Isolated Workspace<a class="headerlink" href="#isolated-workspace" title="Permalink to this headline"></a></h2>
+<p>Colcon by default builds an isolated workspace.</p>
+<p>Build the workspace from <a class="reference internal" href="what-is-a-workspace.html"><span class="doc">What is a Workspace?</span></a> without any extra arguments.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon build
+</pre></div>
+</div>
+<p>Now let’s look in the <code class="docutils literal notranslate"><span class="pre">install</span></code> folder.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>install
+├── COLCON_IGNORE
+├── foo
+│    ├── lib/...
+│    └── share/...
+├── local_setup.[bash|bat|ps1|sh|zsh|...]
+├── _local_setup_util_[sh|ps1|...].py
+└── setup.[bash|bat|ps1|sh|zsh|...]
+</pre></div>
+</div>
+<p>Colcon created a directory <code class="docutils literal notranslate"><span class="pre">install/foo</span></code> and installed the package <code class="docutils literal notranslate"><span class="pre">foo</span></code> inside of it.
+Building an isolated workspace just means every software package is installed into its own directory.</p>
+<p>An isolated workspace has some advantages.
+When colcon tests a package in an isolated workspace it will only give the tests access to the install artifacts of the dependencies it declares.
+This allows users to catch undeclared dependencies.
+An isolated workspace also allows removing a single package’s install artifacts by deleting its directory.</p>
+</div>
+<div class="section" id="merged-workspace">
+<h2>Merged Workspace<a class="headerlink" href="#merged-workspace" title="Permalink to this headline"></a></h2>
+<p>Delete the <code class="docutils literal notranslate"><span class="pre">install</span></code> directory and build the workspace again with the <code class="docutils literal notranslate"><span class="pre">--merge-install</span></code> option.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon build --merge-install
+</pre></div>
+</div>
+<p>Let’s look in the <code class="docutils literal notranslate"><span class="pre">install</span></code> folder again.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>install
+    ├── COLCON_IGNORE
+    ├── lib/..
+    ├── share/..
+    ├── local_setup.[bash|bat|ps1|sh|zsh|...]
+    ├── _local_setup_util_[sh|ps1|...].py
+    └── setup.[bash|bat|ps1|sh|zsh|...]
+</pre></div>
+</div>
+<p>Notice how there’s no longer a <code class="docutils literal notranslate"><span class="pre">foo</span></code> folder.
+The <code class="docutils literal notranslate"><span class="pre">lib</span></code> and <code class="docutils literal notranslate"><span class="pre">share</span></code> directories are now directly in <code class="docutils literal notranslate"><span class="pre">install</span></code>.</p>
+<p>Building a merged workspace just means every software package is installed into the same directory.</p>
+<p>A merged workspace is advantageous on platforms where environment variables length is more tightly constrained, such as Windows 10.
+Environment variables set by the shell scripts, such as <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>, will be shorter because there only needs to be one entry for all of the installed packages.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="log-files.html" class="btn btn-neutral float-left" title="Log Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using-multiple-workspaces.html" class="btn btn-neutral float-right" title="Using Multiple Workspaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

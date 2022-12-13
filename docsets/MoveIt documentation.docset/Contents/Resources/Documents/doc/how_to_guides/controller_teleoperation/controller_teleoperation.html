@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Teleoperate a Robotic Arm with a Gamepad &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/how_to_guides/controller_teleoperation/controller_teleoperation.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="API Documentation" href="../../api/api.html" />
+    <link rel="prev" title="Running Multiple Planning Pipelines in Parallel with MoveItCpp" href="../parallel_planning/parallel_planning_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guide.html">How-To Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_generate_api_doxygen_locally.html">How To Generate API Doxygen Reference Locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_setup_docker_containers_in_ubuntu.html">How to Set Up MoveIt 2 Docker Containers in Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_write_doxygen.html">How to Contribute Doxygen Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using_ompl_constrained_planning/ompl_constrained_planning.html">Using OMPL Constrained Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../parallel_planning/parallel_planning_tutorial.html">Running Multiple Planning Pipelines in Parallel with MoveItCpp</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Teleoperate a Robotic Arm with a Gamepad</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#explanation">Explanation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#launch-file">Launch File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#joytoservopub">JoyToServoPub</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">How to Teleoperate a Robotic Arm with a Gamepad</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/controller_teleoperation/controller_teleoperation.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="how-to-teleoperate-a-robotic-arm-with-a-gamepad">
+<h1>How to Teleoperate a Robotic Arm with a Gamepad<a class="headerlink" href="#how-to-teleoperate-a-robotic-arm-with-a-gamepad" title="Permalink to this headline"></a></h1>
+<p>This guide will introduce you to using a gamepad to move the panda arm.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>Make sure your workspace has the required packages installed and that you
+have a gamepad supported by ROS2 joy. This can be tested by launching a
+<code class="docutils literal notranslate"><span class="pre">joy</span></code> node and then running <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">echo</span> <span class="pre">/joy</span></code> to ensure your
+gamepad is detected by <code class="docutils literal notranslate"><span class="pre">joy</span></code>.</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 22.04</p></li>
+<li><p>ROS 2 Humble</p></li>
+<li><p>MoveIt 2</p></li>
+<li><p>MoveIt 2 Tutorials</p></li>
+<li><p><a class="reference external" href="https://index.ros.org/p/joy/">ROS2 joy</a></p></li>
+</ul>
+</div>
+<div class="section" id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Build the MoveIt2 workspace</p></li>
+</ol>
+<blockquote>
+<div><p>First, <code class="docutils literal notranslate"><span class="pre">cd</span></code> to the root directory of the moveit2 workspace. (if you followed the <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a> tutorial, this will be <code class="docutils literal notranslate"><span class="pre">~/ws_moveit/</span></code>).</p>
+<p>Then, run <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Plug in your gamepad.</p></li>
+<li><p>Source the install script and run the <code class="docutils literal notranslate"><span class="pre">moveit_servo</span></code> example file.</p></li>
+</ol>
+<blockquote>
+<div><p>Run <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">install/setup.bash</span></code>, then <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">launch</span> <span class="pre">moveit_servo</span> <span class="pre">servo_example.launch.py</span></code></p>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Move the arm around, using the below image as a guide.</p></li>
+</ol>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../../_images/xboxcontroller.png"><img alt="../../../_images/xboxcontroller.png" src="../../../_images/xboxcontroller.png" style="width: 600px;" /></a>
+</div></blockquote>
+<p>The drawio document can be seen <a class="reference external" href="https://drive.google.com/file/d/1Hr3ZLvkYo0y0fA3Qb1Nk_y7wag4UO8Al/view?usp=sharing">here</a>.</p>
+</div>
+<div class="section" id="explanation">
+<h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this headline"></a></h2>
+<p>This section explains the launch file and the node that translates gamepad inputs to motion commands.</p>
+<div class="section" id="launch-file">
+<h3>Launch File<a class="headerlink" href="#launch-file" title="Permalink to this headline"></a></h3>
+<p>The file that launches this example is
+<code class="docutils literal notranslate"><span class="pre">ws_moveit2/src/moveit2/moveit_ros/moveit_servo/launch/servo_example.launch.py</span></code></p>
+<p>This launch file launches everything needed for the panda arm planning, and also launches the <code class="docutils literal notranslate"><span class="pre">joy</span></code> node and the <code class="docutils literal notranslate"><span class="pre">JoyToServoPub</span></code> node (which is explained below).</p>
+<p>Of primary interest is the section of code that launches the joy and <code class="docutils literal notranslate"><span class="pre">JoyToServoPub</span></code> nodes.
+They are both created as <code class="docutils literal notranslate"><span class="pre">ComposableNode</span></code>s. More information about <code class="docutils literal notranslate"><span class="pre">ComposableNode</span></code>s can be found <a class="reference external" href="https://roscon.ros.org/2019/talks/roscon2019_composablenodes.pdf">here</a> and <a class="reference external" href="https://medium.com/&#64;waleedmansoor/understanding-ros-nodelets-c43a11c8169e">here</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ComposableNode</span><span class="p">(</span>
+    <span class="n">package</span><span class="o">=</span><span class="s2">&quot;moveit_servo&quot;</span><span class="p">,</span>
+    <span class="n">plugin</span><span class="o">=</span><span class="s2">&quot;moveit_servo::JoyToServoPub&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;controller_to_servo_node&quot;</span><span class="p">,</span>
+<span class="p">),</span>
+<span class="n">ComposableNode</span><span class="p">(</span>
+    <span class="n">package</span><span class="o">=</span><span class="s2">&quot;joy&quot;</span><span class="p">,</span>
+    <span class="n">plugin</span><span class="o">=</span><span class="s2">&quot;joy::Joy&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;joy_node&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="joytoservopub">
+<h3>JoyToServoPub<a class="headerlink" href="#joytoservopub" title="Permalink to this headline"></a></h3>
+<p>The node that translates gamepad inputs to motion commands is
+<code class="docutils literal notranslate"><span class="pre">ws_moveit2/src/moveit2/moveit_ros/moveit_servo/src/teleop_demo/joystick_servo_example.cpp</span></code></p>
+<p>This node subscribes to the joy node (which publishes messages giving the state of the gamepad). It publishes <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> messages, <code class="docutils literal notranslate"><span class="pre">JointJog</span></code> messages, and <code class="docutils literal notranslate"><span class="pre">PlanningScene</span></code> messages.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">PlanningScene</span></code> message is only published once, when the JoyToServoPub is first constructed. It simply adds some obstacles into the planning scene.</p>
+<p>The difference between the <code class="docutils literal notranslate"><span class="pre">JointJog</span></code> and <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> messages is
+that the inverse kinematic solver moves the joints to achieve the end
+effector motions defined by the <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> messages, while the
+<code class="docutils literal notranslate"><span class="pre">JointJog</span></code> messages directly move individual joints.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">joyCB</span></code> function is called when a message is published to the <code class="docutils literal notranslate"><span class="pre">joy</span></code>
+topic, and translates the button presses from the gamepad into commands
+for the arm. If both <code class="docutils literal notranslate"><span class="pre">JointJog</span></code> and <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> messages would be
+published by the inputs, only <code class="docutils literal notranslate"><span class="pre">JointJog</span></code> messages are published.</p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../parallel_planning/parallel_planning_tutorial.html" class="btn btn-neutral float-left" title="Running Multiple Planning Pipelines in Parallel with MoveItCpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../api/api.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

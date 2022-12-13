@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinematics &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/concepts/kinematics.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Motion Planning" href="motion_planning.html" />
+    <link rel="prev" title="Concepts" href="concepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kinematics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-kinematics-plugin">The Kinematics Plugin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#collision-checking">Collision Checking</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#collision-objects">Collision Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#allowed-collision-matrix-acm">Allowed Collision Matrix (ACM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="motion_planning.html">Motion Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hybrid_planning/hybrid_planning.html">Hybrid Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="move_group.html">The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planning_scene_monitor.html">Planning Scene Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory_processing.html">Trajectory Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="concepts.html">Concepts</a></li>
+      <li class="breadcrumb-item active">Kinematics</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/concepts/kinematics.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="kinematics">
+<h1>Kinematics<a class="headerlink" href="#kinematics" title="Permalink to this headline"></a></h1>
+<div class="section" id="the-kinematics-plugin">
+<h2>The Kinematics Plugin<a class="headerlink" href="#the-kinematics-plugin" title="Permalink to this headline"></a></h2>
+<p>MoveIt uses a plugin infrastructure, especially targeted towards allowing users to write their own inverse kinematics algorithms.
+Forward kinematics and finding jacobians is integrated within the RobotState class itself.
+The default inverse kinematics plugin for MoveIt is configured using the <a class="reference external" href="https://github.com/orocos/orocos_kinematics_dynamics">KDL</a> numerical jacobian-based solver.
+This plugin is automatically configured by the MoveIt Setup Assistant.</p>
+<div class="section" id="collision-checking">
+<h3>Collision Checking<a class="headerlink" href="#collision-checking" title="Permalink to this headline"></a></h3>
+<p>Collision checking in MoveIt is configured inside a Planning Scene using the <code class="docutils literal notranslate"><span class="pre">CollisionWorld</span></code> object.
+Fortunately, MoveIt is set up so that users never really have to worry about how collision checking is happening.
+Collision checking in MoveIt is mainly carried out using the <a class="reference external" href="https://flexible-collision-library.github.io/">FCL</a> package - the primary collision checking library of MoveIt.</p>
+</div>
+</div>
+<div class="section" id="collision-objects">
+<h2>Collision Objects<a class="headerlink" href="#collision-objects" title="Permalink to this headline"></a></h2>
+<p>MoveIt supports collision checking for different types of objects including:</p>
+<ul class="simple">
+<li><p><strong>Meshes</strong> - you can use either <code class="docutils literal notranslate"><span class="pre">.stl</span></code> (standard triangle language) or <code class="docutils literal notranslate"><span class="pre">.dae</span></code> (digital asset exchange) formats to describe objects such as robot links.</p></li>
+<li><p><strong>Primitive Shapes</strong> - e.g. boxes, cylinders, cones, spheres and planes</p></li>
+<li><p><strong>Octomap</strong> - the <code class="docutils literal notranslate"><span class="pre">Octomap</span></code> object can be directly used for collision checking</p></li>
+</ul>
+</div>
+<div class="section" id="allowed-collision-matrix-acm">
+<h2>Allowed Collision Matrix (ACM)<a class="headerlink" href="#allowed-collision-matrix-acm" title="Permalink to this headline"></a></h2>
+<p>Collision checking is a very expensive operation often accounting for close to 90% of the computational expense during motion planning.
+The <code class="docutils literal notranslate"><span class="pre">Allowed</span> <span class="pre">Collision</span> <span class="pre">Matrix</span></code> or <code class="docutils literal notranslate"><span class="pre">ACM</span></code> encodes a binary value corresponding to the need to check for collision between pairs of bodies (which could be on the robot or in the world).
+If the value corresponding to two bodies is set to <code class="docutils literal notranslate"><span class="pre">true</span></code> in the ACM, it specifies that a collision check between the two bodies is either not required or wanted.
+The collision checking would not be required if, e.g., the two bodies are always so far away that they can never collide with each other.
+Alternatively, the two bodies could be in contact with each other by default, in which case the collision detection should be disabled for the pair in the ACM.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="concepts.html" class="btn btn-neutral float-left" title="Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="motion_planning.html" class="btn btn-neutral float-right" title="Motion Planning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Around Objects &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/tutorials/planning_around_objects/planning_around_objects.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Pick and Place with MoveIt Task Constructor" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html" />
+    <link rel="prev" title="Visualizing In RViz" href="../visualizing_in_rviz/visualizing_in_rviz.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html">MoveIt Quickstart in RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../your_first_project/your_first_project.html">Your First C++ MoveIt Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html">Visualizing In RViz</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Planning Around Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#add-include-for-planning-scene-interface">1 Add include for Planning Scene Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#change-the-target-pose">2 Change the Target Pose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-collision-object">3 Create a Collision Object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-the-object-to-the-planning-scene">4 Add the Object to the Planning Scene</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-the-program-and-observe-the-change">5 Run the Program and Observe the Change</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#next-step">Next Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html">Pick and Place with MoveIt Task Constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">Planning Around Objects</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/planning_around_objects/planning_around_objects.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="planning-around-objects">
+<h1>Planning Around Objects<a class="headerlink" href="#planning-around-objects" title="Permalink to this headline"></a></h1>
+<p>This tutorial will introduce you to inserting objects into the planning scene and planning around them.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html"><span class="doc">Visualizing in RViz</span></a>.
+This project assumes you are starting with the <code class="docutils literal notranslate"><span class="pre">hello_moveit</span></code> project, where the previous tutorial left off. If you just want to run the tutorial, you can follow the <a class="reference internal" href="../../how_to_guides/how_to_setup_docker_containers_in_ubuntu.html"><span class="doc">Docker Guide</span></a> to start a container with the completed tutorial.</p>
+</div>
+<div class="section" id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline"></a></h2>
+<div class="section" id="add-include-for-planning-scene-interface">
+<h3>1 Add include for Planning Scene Interface<a class="headerlink" href="#add-include-for-planning-scene-interface" title="Permalink to this headline"></a></h3>
+<p>At the top of your source file, add this to the list of includes:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/planning_scene_interface/planning_scene_interface.h&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="change-the-target-pose">
+<h3>2 Change the Target Pose<a class="headerlink" href="#change-the-target-pose" title="Permalink to this headline"></a></h3>
+<p>First, update the target pose with the following change to make the robot plan to a different location:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set a target Pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.28</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w">  </span><span class="c1">// &lt;---- This value was changed</span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-collision-object">
+<h3>3 Create a Collision Object<a class="headerlink" href="#create-a-collision-object" title="Permalink to this headline"></a></h3>
+<p>In the next block of code, we create a collision object.
+The first thing to notice is that it is being placed in the coordinate frame of the robot.
+If we had a perception system that reported the location of obstacles in our scene, then this is the sort of message it would build.
+Because this is just an example, we are creating it manually.
+One thing to notice at the end of this block of code is that we set the operation on this message to <code class="docutils literal notranslate"><span class="pre">ADD</span></code>.
+This results in the object getting added to the collision scene.
+Place this code block between setting the target pose from the previous step and creating a plan.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create collision object for the robot to avoid</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">collision_object</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                                 </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getPlanningFrame</span><span class="p">()]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">collision_object</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">collision_object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame_id</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">collision_object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;box1&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">primitive</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Define the size of the box in meters</span>
+<span class="w">  </span><span class="n">primitive</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">primitive</span><span class="p">.</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">primitive</span><span class="p">.</span><span class="n">BOX_X</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">primitive</span><span class="p">.</span><span class="n">BOX_Y</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">primitive</span><span class="p">.</span><span class="n">BOX_Z</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Define the pose of the box (relative to the frame_id)</span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">box_pose</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">box_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// We can leave out the x, y, and z components of the quaternion since they are initialized to 0</span>
+<span class="w">  </span><span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">collision_object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">primitive</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">collision_object</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">box_pose</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">collision_object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_object</span><span class="p">.</span><span class="n">ADD</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">collision_object</span><span class="p">;</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-the-object-to-the-planning-scene">
+<h3>4 Add the Object to the Planning Scene<a class="headerlink" href="#add-the-object-to-the-planning-scene" title="Permalink to this headline"></a></h3>
+<p>Finally, we need to add this object to the collision scene.
+To do this, we use an object called the <code class="docutils literal notranslate"><span class="pre">PlanningSceneInterface</span></code> that uses ROS interfaces to communicate changes to the planning scene to <code class="docutils literal notranslate"><span class="pre">MoveGroup</span></code>.
+This code block should directly follow the code block that creates the collision object.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Add the collision object to the scene</span>
+<span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">PlanningSceneInterface</span><span class="w"> </span><span class="n">planning_scene_interface</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene_interface</span><span class="p">.</span><span class="n">applyCollisionObject</span><span class="p">(</span><span class="n">collision_object</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-the-program-and-observe-the-change">
+<h3>5 Run the Program and Observe the Change<a class="headerlink" href="#run-the-program-and-observe-the-change" title="Permalink to this headline"></a></h3>
+<p>Just as we did in the last tutorial, start RViz using the <code class="docutils literal notranslate"><span class="pre">demo.launch.py</span></code> script and run our program. If you’re using one of the Docker tutorial containers, you can specify a different RViz configuration that already has the RvizVisualToolsGui panel added using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span> <span class="n">rviz_config</span><span class="o">:=</span><span class="n">panda_hello_moveit</span><span class="o">.</span><span class="n">rviz</span>
+</pre></div>
+</div>
+<img alt="../../../_images/planning_around_object.png" src="../../../_images/planning_around_object.png" />
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>You extended the program you wrote with MoveIt to plan around an object in the scene.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/planning_around_objects/hello_moveit.cpp">Here is a copy of the full hello_moveit.cpp source</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../examples/planning_scene/planning_scene_tutorial.html"><span class="doc">Examples of using the Planning Scene for collision and constraint checking</span></a>.</p></li>
+<li><p><a class="reference internal" href="../../examples/planning_scene_ros_api/planning_scene_ros_api_tutorial.html"><span class="doc">Examples of using the Planning Scene ROS API</span></a>.</p></li>
+<li><p><a class="reference internal" href="../../examples/visualizing_collisions/visualizing_collisions_tutorial.html"><span class="doc">Example of visualizing collision objects</span></a>.</p></li>
+<li><p><a class="reference internal" href="../../examples/subframes/subframes_tutorial.html"><span class="doc">Example of subframes used for planning with objects</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="next-step">
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline"></a></h2>
+<p>In the next tutorial <a class="reference internal" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html"><span class="doc">Pick and Place with MoveIt Task Constructor</span></a>, you will be introduced to a higher layer tool designed to solve harder motion plans.
+In this next tutorial, you will create a program to pick and place an object.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../visualizing_in_rviz/visualizing_in_rviz.html" class="btn btn-neutral float-left" title="Visualizing In RViz" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html" class="btn btn-neutral float-right" title="Pick and Place with MoveIt Task Constructor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

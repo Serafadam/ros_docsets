@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybrid Planning &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/concepts/hybrid_planning/hybrid_planning.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="The move_group node" href="../move_group.html" />
+    <link rel="prev" title="Motion Planning" href="../motion_planning.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../kinematics.html">Kinematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../motion_planning.html">Motion Planning</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hybrid Planning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-hybrid-planning">What is Hybrid Planning?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-hybrid-planning-architecture">The Hybrid Planning Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hybrid-planning-manager">Hybrid Planning Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#global-planner">Global Planner</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-planner">Local Planner</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-does-it-work">How does it work?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../move_group.html">The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../planning_scene_monitor.html">Planning Scene Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trajectory_processing.html">Trajectory Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../concepts.html">Concepts</a></li>
+      <li class="breadcrumb-item active">Hybrid Planning</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/concepts/hybrid_planning/hybrid_planning.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="hybrid-planning">
+<h1>Hybrid Planning<a class="headerlink" href="#hybrid-planning" title="Permalink to this headline"></a></h1>
+<p>MoveIt’s motion planning architecture follows the “Sense-Plan-Act” approach. In order for motions to get planned and executed, the environment and the robot state are first perceived (“Sense”), then the robot trajectory is computed by the planner (“Plan”) and finally executed in a single run using a trajectory controller (“Act”).</p>
+<p>While this solution works well for global motion planning in well-known static environments, the approach is not applicable in many real-world applications, in particular in unstable or dynamic environments. Tasks like serving a glass of water to a person on a table or writing on an uneven chalkboard require more sophisticated methods that allow reacting to unpredictable changes. For instance, the environment of the robot could change dynamically, or there could be certain uncertainties in the task itself, e.g. writing with chalk requires adapting the pressure on the board while the chalk also gets shorter by being used up.</p>
+<p>Solving these challenges requires a method that is able to adapt the executed motion to the immediate conditions or even to react by replanning in case of unforeseen changes in the environment. The Hybrid Planning architecture attempts to solve this problem by combining a pair of recurrent global and local planners.</p>
+<div class="section" id="what-is-hybrid-planning">
+<h2>What is Hybrid Planning?<a class="headerlink" href="#what-is-hybrid-planning" title="Permalink to this headline"></a></h2>
+<p>Hybrid Planning is a term for a motion planning method that combines heterogeneous motion planners to produce more robust or reactive solutions. The general approach is already very established in the Navigation community and successfully implemented in popular projects like navigation2.</p>
+<p>MoveIt’s Hybrid Planning architecture combines a pair of global and local planners that run in parallel and recurrently with different planning speeds and problem scopes.</p>
+<p>The global planner has the task to solve a global motion planning problem very akin to the planners used in a “Sense-Plan-Act” application. The used planner algorithm should be complete and is therefore assumed to be relatively slow in terms of computation time. Furthermore, the global planner is not required to be real-time safe, meaning that there are no guarantees that the planner finds a solution within a specific deadline. Depending on the planner implementation, the global planner may generate one initial solution or iteratively optimized solutions during the execution.</p>
+<p>The local planner is running continuously during execution and produces iterative robot commands for following the global trajectory. In a way, the local planner resembles a controller, only that the architecture allows for solving more complicated problems and constraints. The idea is that the planner is able to reason about the world and to have an internal state. That property makes it very versatile and as it can be used for solving combinations of arbitrary local planning problems, as for example:</p>
+<ul class="simple">
+<li><p>Unwinding, blending, or splicing of subsequent global reference trajectories</p></li>
+<li><p>Dynamically avoiding close-by collisions while following the global path</p></li>
+<li><p>Adapting the global trajectory to local constraints (e.g. desired force pressure on uneven surface, readjusting a tool based on visual feedback)</p></li>
+<li><p>Local trajectory optimization and time parameterization (it is computationally cheaper and quicker to optimize a trajectory in a local environment)</p></li>
+</ul>
+<p>In order to enable solving these local problems the local planner must be fast, able to react to sensor feedback and in many cases real-time safe. Also, it should be deterministic in order to avoid jerky or unpredictable motions.</p>
+<p>In general, the local planner relies on the reference trajectory produced by the global planner so that it doesn’t get stuck in a local minima. Since local minima sometimes still can’t be ruled out, it can be required that the global planner is triggered for a replan in order to still reach the desired goal. This behavior requires a certain way to communicate planner events and to process them accordingly. For that purpose the Hybrid Planning architecture allows implementing an event-based logic that can be customized for the specific use case and planner types.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Global Planner</p></th>
+<th class="head"><p>Local Planner</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ul class="simple">
+<li><p>Solve global solution trajectory</p></li>
+<li><p>Optimize trajectory path (continuously)</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Follow global reference trajectory</p></li>
+<li><p>Solve local problem constraints</p></li>
+<li><p>May process sensor input</p></li>
+<li><p>Optimize solution locally</p></li>
+<li><p>Compute controller commands</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>Complete</p></li>
+<li><p>No restricted  computation time</p></li>
+<li><p>Not real-time safe</p></li>
+<li><p>Not necessarily deterministic</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Can get stuck in local minima</p></li>
+<li><p>Low computation time</p></li>
+<li><p>Realtime-safe (depends on solver)</p></li>
+<li><p>Deterministic</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p>OMPL planner</p></li>
+<li><p>STOMP</p></li>
+<li><p>TrajOpt</p></li>
+<li><p>Cartesian motion planner</p></li>
+<li><p>Pilz Industrial Motion Planner</p></li>
+<li><p>MTC</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>IK solver, Jacobian</p></li>
+<li><p>Potential field planner</p></li>
+<li><p>Trajectory optimization algorithm</p></li>
+<li><p>Model Predictive Control (MPC)</p></li>
+<li><p>Sensor-based Optimal Control</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Hybrid Planning can be useful in a broad range of use cases. Most of the applications can be grouped into the following three scenarios.</p>
+<ul class="simple">
+<li><p><em>Online motion planning</em>: The global planner creates an initial global solution and continuously optimizes it. Simultaneously, the local planner executes the reference trajectory and blends updated trajectory segments into it.</p></li>
+<li><p><em>Reactive Motion</em>: The global planner is used to fix invalidated solutions (replanning) while the local planner slows down or halts before collisions</p></li>
+<li><p><em>Adaptive Motion</em>: The local planner is used to adapt a global solution to dynamic conditions like keeping steady tool contact with an uneven surface</p></li>
+</ul>
+</div>
+<div class="section" id="the-hybrid-planning-architecture">
+<h2>The Hybrid Planning Architecture<a class="headerlink" href="#the-hybrid-planning-architecture" title="Permalink to this headline"></a></h2>
+<p>The diagram below depicts the fundamental plugin types and ROS interfaces that make up the Hybrid Planning architecture.</p>
+<a class="reference internal image-reference" href="../../../_images/hybrid_planning_architecture.png"><img alt="../../../_images/hybrid_planning_architecture.png" class="align-center" src="../../../_images/hybrid_planning_architecture.png" style="width: 700px;" /></a>
+<p>The architecture is structured in three ROS component nodes:</p>
+<ul class="simple">
+<li><p><strong>Hybrid Planning Manager</strong>
+* Provides a ROS action for Hybrid Planning requests
+* Runs the planning logic and coordinates the planners</p></li>
+<li><p><strong>Global Planner</strong>
+* Solves the global planning problem and publishes the solution trajectory</p></li>
+<li><p><strong>Local Planner</strong>
+* Processes incoming global trajectory updates
+* Solves the local planning problem based on robot state, world and reference trajectory
+* Sends position/velocity commands to the robot driver</p></li>
+</ul>
+<p>The architecture components are designed to be generic and highly customizable. Since the components only interact via ROS 2 message interfaces, it’s very easy to replace implementations of each of the architecture’s components or plugins. The plugin interfaces are designed to be minimal and to abstract from the actual algorithm implementation as much as possible. That allows the developer to fully focus on the isolated logic or solvers without having to implement any parts of the infrastructure. This also allows reusing the same components for different setups or planning problems.</p>
+<div class="section" id="hybrid-planning-manager">
+<h3>Hybrid Planning Manager<a class="headerlink" href="#hybrid-planning-manager" title="Permalink to this headline"></a></h3>
+<a class="reference internal image-reference" href="../../../_images/hybrid_planner_manager_small.png"><img alt="../../../_images/hybrid_planner_manager_small.png" class="align-center" src="../../../_images/hybrid_planner_manager_small.png" style="width: 400px;" /></a>
+<p>This component is “The Brain” of the architecture. Its main purpose is to process HybridPlanner action  requests and to coordinate the motion planning and execution process based on the planning logic plugin. The planning logic is implemented in the PlanningLogic plugin and is event-driven by design. Events are defined by string identifiers and may trigger action calls or cancellations targeting the global or local planners. An example event log for a simple planning logic is shown in the diagram below:</p>
+<a class="reference internal image-reference" href="../../../_images/hybrid_planning_event_logic.png"><img alt="../../../_images/hybrid_planning_event_logic.png" class="align-center" src="../../../_images/hybrid_planning_event_logic.png" style="width: 400px;" /></a>
+<p>Events are triggered by the Hybrid Planning action request and by both of the global and local planners action feedback messages. In this example, the Hybrid Planning Manager starts the global planner after the hybrid planning request is received. Upon arrival of the global trajectory the local planner is started and when the local planner is finished the Hybrid Planning Manager returns a Hybrid Planning response.</p>
+<p>A custom implementation of the Planning Logic plugin supports mapping generic events to available actions provided by the architecture like “Start global planning”, “Stop trajectory execution”, or “Switch to local planner constraint x”. With this, the motion planning behavior becomes highly customizable and adaptable.</p>
+</div>
+<div class="section" id="global-planner">
+<h3>Global Planner<a class="headerlink" href="#global-planner" title="Permalink to this headline"></a></h3>
+<a class="reference internal image-reference" href="../../../_images/global_planner_small.png"><img alt="../../../_images/global_planner_small.png" class="align-center" src="../../../_images/global_planner_small.png" style="width: 500px;" /></a>
+<p>The Global Planner is the simplest component of the architecture. It provides an action server which processes GlobalPlanner requests which include the common MotionPlanRequests which are processed by the Global Planner plugin. By default, this is simply MoveIt’s planning pipeline, but any kind of planner or even MTC could technically be used here. The planning result is reported using the action feedback and the solution trajectory is published to the Local Planner for further processing.</p>
+</div>
+<div class="section" id="local-planner">
+<h3>Local Planner<a class="headerlink" href="#local-planner" title="Permalink to this headline"></a></h3>
+<p>The Local Planner also runs an action server that handles requests from the Hybrid Planning Manager. The action is used for starting and stopping execution and may also configure runtime parameters like constraints or solver types.</p>
+<a class="reference internal image-reference" href="../../../_images/local_planner_small.png"><img alt="../../../_images/local_planner_small.png" class="align-center" src="../../../_images/local_planner_small.png" style="width: 500px;" /></a>
+<p>The local planner implementation is based on two plugins:</p>
+<ul class="simple">
+<li><p><strong>Trajectory Operator</strong>: This plugin maintains the global reference trajectory, handles trajectory updates from the global planner, and monitors the process of the current robot state.</p></li>
+<li><p><strong>Local Constraint Solver</strong>: This plugin implements the iterative solver algorithm that produces the robot commands based on the reference trajectory and the local constraints. It may include additional interfaces for dynamically processing sensor input or event updates.</p></li>
+</ul>
+<p>The diagram below shows an example loop cycle of the Local Planner upon action request by the Hybrid Planning Manager:</p>
+<a class="reference internal image-reference" href="../../../_images/local_planner_loop.png"><img alt="../../../_images/local_planner_loop.png" class="align-center" src="../../../_images/local_planner_loop.png" style="width: 700px;" /></a>
+<p>Each iteration the local planner requests the current planning scene and matches the current robot state within the reference trajectory. If the goal is reached, the local planning action successfully finishes. Otherwise, the current local planning problem is identified based on the current robot state and solved afterwards. Finally, the resulting control commands are published to the robot controller.</p>
+</div>
+<div class="section" id="how-does-it-work">
+<h3>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline"></a></h3>
+<p>The runtime behavior of a Hybrid Planner can best be understood by drawing a workflow diagram that visualizes the communication channels and events of the different components.</p>
+<p>Below is a diagram that shows the runtime logic of a successful trajectory execution.</p>
+<a class="reference internal image-reference" href="../../../_images/hybrid_planner_logic.png"><img alt="../../../_images/hybrid_planner_logic.png" class="align-center" src="../../../_images/hybrid_planner_logic.png" style="width: 700px;" /></a>
+<p>The planner is invoked by a hybrid planning request which is also the first event the Hybrid Planning Manager reacts to.
+In this example, the planner logic simply runs both planners in sequence. After the initial hybrid planning request, the Hybrid Planning Manager invokes the global planner.
+The global planner computes and publishes a trajectory which is received by the Hybrid Planning Manager and the Local Planner Component.
+Important to notice is, that the Local Planner Component just processes the new trajectory and does not start executing until it is invoked by the Hybrid Planning Manager. Once requested by the Hybrid Planning Manager, the Local Planner Component starts unwinding the reference trajectory and returns the action response successfully when it reaches the final state. After that, the Hybrid Planning Manager returns a successful HybridPlanningResponse.</p>
+<p>Now let’s consider a more difficult scenario where the hybrid planner is designed to avoid an obstacle during execution by replanning.
+The animation below shows a simple motion that is being fixed at runtime because of changing collision objects.</p>
+<a class="reference internal image-reference" href="../../../_images/replanning_example.gif"><img alt="../../../_images/replanning_example.gif" class="align-center" src="../../../_images/replanning_example.gif" style="width: 500px;" /></a>
+<p>Here, the collision object present during the global planning process disappears after the global trajectory is computed. Instead two new collision objects appear that invalidate the initial global trajectory. The local planner detects the imminent collision and pauses the execution until the global planner has provided an updated collision free trajectory.</p>
+<p>Below you can see the workflow of the described behavior.</p>
+<a class="reference internal image-reference" href="../../../_images/hybrid_planner_logic_2.png"><img alt="../../../_images/hybrid_planner_logic_2.png" class="align-center" src="../../../_images/hybrid_planner_logic_2.png" style="width: 700px;" /></a>
+<p>The startup is the same as in the first example, but during unwinding the reference trajectory the local planner detects a collision. Here, the planner logic reacts by re-invoking the global planner. During the calculation of the new global solution, the local planner must prevent the robot from colliding with the collision object i.e. by keeping its current position. After the global planner finishes its calculation, the new global solution is published to the local planner and the local planner’s Trajectory Operator Plugin blends the update into the reference trajectory. Afterwards, the Local Planner Component continues to follow the reference trajectory as the updated solution enables it to steer around the collision object.</p>
+<p>If you want to use Hybrid Planning in your application or just want to experiment with it, check out the <a class="reference internal" href="../../examples/hybrid_planning/hybrid_planning_tutorial.html"><span class="doc">Hybrid Planning Example Tutorial</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../motion_planning.html" class="btn btn-neutral float-left" title="Motion Planning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../move_group.html" class="btn btn-neutral float-right" title="The move_group node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

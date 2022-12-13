@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Installation troubleshooting — ROS 2 documentation  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://docs.ros.org/en/How-To-Guides/Installation-Troubleshooting.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/clipboard.min.js"></script>
+<script src="../_static/copybutton.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="Developing-a-ROS-2-Package.html" rel="next" title="Developing a ROS 2 package"/>
+<link href="../How-To-Guides.html" rel="prev" title="How-to Guides"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../index.html"> ROS 2 documentation
+          </a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Releases.html">Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Humble-Hawksbill.html">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/End-of-Life.html">End-of-Life Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Releases/Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Dashing-Diademata.html">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Releases/Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Releases/Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Advanced.html">Advanced</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Simulation-Main.html">Simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Webots.html">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../How-To-Guides.html">How-to Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ament-CMake-Documentation.html">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The-ROS2-Project.html">The ROS 2 Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Governance.html">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Citations.html">Citations</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">ROS 2 documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../How-To-Guides.html">How-to Guides</a></li>
+<li class="breadcrumb-item active">Installation troubleshooting</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros2_documentation/blob/rolling/source/How-To-Guides/Installation-Troubleshooting.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="installation-troubleshooting">
+<h1>Installation troubleshooting<a class="headerlink" href="#installation-troubleshooting" title="Permalink to this headline"></a></h1>
+<p>Troubleshooting techniques for installation are sorted by the platforms they apply to.</p>
+<div class="contents local topic" id="platforms">
+<p class="topic-title">Platforms</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#general" id="id1">General</a></p></li>
+<li><p><a class="reference internal" href="#linux" id="id2">Linux</a></p></li>
+<li><p><a class="reference internal" href="#macos" id="id3">macOS</a></p></li>
+<li><p><a class="reference internal" href="#windows" id="id4">Windows</a></p></li>
+</ul>
+</div>
+<div class="section" id="general">
+<h2><a class="toc-backref" href="#id1">General</a><a class="headerlink" href="#general" title="Permalink to this headline"></a></h2>
+<p>General troubleshooting techniques apply to all platforms.</p>
+<div class="section" id="enable-multicast">
+<h3>Enable multicast<a class="headerlink" href="#enable-multicast" title="Permalink to this headline"></a></h3>
+<p>In order to communicate successfully via DDS, the used network interface has to be multicast enabled.
+We’ve seen in past experiences that this might not necessarily be enabled by default (on Ubuntu or OSX) when using the loopback adapter.
+See the <a class="reference external" href="https://github.com/ros2/ros2/issues/552">original issue</a> or a <a class="reference external" href="https://answers.ros.org/question/300370/ros2-talker-cannot-communicate-with-listener/">conversation on ros-answers</a>.
+You can verify that your current setup allows multicast with the ROS 2 tool:</p>
+<p>In Terminal 1:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 multicast receive
+</pre></div>
+</div>
+<p>In Terminal 2:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 multicast send
+</pre></div>
+</div>
+<p>If the first command did not return a response similar to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Received from xx.xxx.xxx.xx:43751: <span class="s1">'Hello World!'</span>
+</pre></div>
+</div>
+<p>then you will need to update your firewall configuration to allow multicast using <a class="reference external" href="https://help.ubuntu.com/community/UFW">ufw</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ufw allow <span class="k">in</span> proto udp to <span class="m">224</span>.0.0.0/4
+sudo ufw allow <span class="k">in</span> proto udp from <span class="m">224</span>.0.0.0/4
+</pre></div>
+</div>
+<p>You can check if the multicast flag is enabled for your network interface using the <code class="code docutils literal notranslate"><span class="pre">ifconfig</span></code> tool and looking for <code class="code docutils literal notranslate"><span class="pre">MULITCAST</span></code> in the flags section:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>eno1: <span class="nv">flags</span><span class="o">=</span><span class="m">4163</span>&lt;...,MULTICAST&gt;
+   ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="import-failing-without-library-present-on-the-system">
+<h3>Import failing without library present on the system<a class="headerlink" href="#import-failing-without-library-present-on-the-system" title="Permalink to this headline"></a></h3>
+<p>Sometimes <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> fails to be imported because the expected C extension libraries are not found.
+If so, compare the libraries present in the directory with the one mentioned in the error message.
+Assuming a file with a similar name exists (same prefix like <code class="docutils literal notranslate"><span class="pre">_rclpy.</span></code> and same suffix like <code class="docutils literal notranslate"><span class="pre">.so</span></code> but a different Python version / architecture) you are using a different Python interpreter than which was used to build the C extension.
+Be sure to use the same Python interpreter as the one used to build the binary.</p>
+<p>For example, such a mismatch can crop up after an update of the OS. Then, rebuilding the workspace may fix the issue.</p>
+</div>
+</div>
+<div class="section" id="linux">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Linux"></a><span id="linux-troubleshooting"></span><h2><a class="toc-backref" href="#id2">Linux</a><a class="headerlink" href="#linux" title="Permalink to this headline"></a></h2>
+<div class="section" id="internal-compiler-error">
+<h3>Internal compiler error<a class="headerlink" href="#internal-compiler-error" title="Permalink to this headline"></a></h3>
+<p>If you experience an ICE when trying to compile on a memory constrained platform like a Raspberry PI you might want to build single threaded (prefix the build invocation with <code class="docutils literal notranslate"><span class="pre">MAKEFLAGS=-j1</span></code>).</p>
+</div>
+<div class="section" id="out-of-memory">
+<h3>Out of memory<a class="headerlink" href="#out-of-memory" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> in its current form requires 4Gb of free RAM to compile.
+If you don’t have that amount of RAM available it’s suggested to use <code class="docutils literal notranslate"><span class="pre">COLCON_IGNORE</span></code> in that folder and skip its compilation.</p>
+</div>
+<div class="section" id="multiple-host-interference">
+<h3>Multiple host interference<a class="headerlink" href="#multiple-host-interference" title="Permalink to this headline"></a></h3>
+<p>If you’re running multiple instances on the same network you may get interference.
+To avoid this you can set the environment variable <code class="docutils literal notranslate"><span class="pre">ROS_DOMAIN_ID</span></code> to a different integer, the default is zero.
+This will define the DDS domain id for your system.</p>
+</div>
+<div class="section" id="exception-sourcing-setup-bash">
+<h3>Exception sourcing setup.bash<a class="headerlink" href="#exception-sourcing-setup-bash" title="Permalink to this headline"></a></h3>
+<p>If you encounter exceptions when trying to source the environment after building from source, try to upgrade <code class="docutils literal notranslate"><span class="pre">colcon</span></code> related packages using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon version-check  <span class="c1"># check if newer versions available</span>
+sudo apt install python3-colcon* --only-upgrade  <span class="c1"># upgrade installed colcon packages to latest version</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="macos">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/macOS"></a><span id="macos-troubleshooting"></span><h2><a class="toc-backref" href="#id3">macOS</a><a class="headerlink" href="#macos" title="Permalink to this headline"></a></h2>
+<div class="section" id="segmentation-fault-when-using-pyenv">
+<h3>Segmentation fault when using <code class="docutils literal notranslate"><span class="pre">pyenv</span></code><a class="headerlink" href="#segmentation-fault-when-using-pyenv" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pyenv</span></code> seems to default to building Python with <code class="docutils literal notranslate"><span class="pre">.a</span></code> files, but that causes issues with <code class="docutils literal notranslate"><span class="pre">rclpy</span></code>, so it’s recommended to build Python with Frameworks enabled on macOS when using <code class="docutils literal notranslate"><span class="pre">pyenv</span></code>:</p>
+<p><a class="reference external" href="https://github.com/pyenv/pyenv/wiki#how-to-build-cpython-with-framework-support-on-os-x">https://github.com/pyenv/pyenv/wiki#how-to-build-cpython-with-framework-support-on-os-x</a></p>
+</div>
+<div class="section" id="library-not-loaded-image-not-found">
+<h3>Library not loaded; image not found<a class="headerlink" href="#library-not-loaded-image-not-found" title="Permalink to this headline"></a></h3>
+<p>If you are seeing library loading issues at runtime (either running tests or running nodes), such as the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ImportError: dlopen<span class="o">(</span>.../ros2_&lt;distro&gt;/ros2-osx/lib/python3.7/site-packages/rclpy/_rclpy.cpython-37m-darwin.so, <span class="m">2</span><span class="o">)</span>: Library not loaded: @rpath/librcl_interfaces__rosidl_typesupport_c.dylib
+  Referenced from: .../ros2_&lt;distro&gt;/ros2-osx/lib/python3.7/site-packages/rclpy/_rclpy.cpython-37m-darwin.so
+  Reason: image not found
+</pre></div>
+</div>
+<p>Then you probably have System Integrity Protection enabled.
+Follow <a class="reference external" href="https://developer.apple.com/library/content/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html">these instructions</a> to disable System Integrity Protection (SIP).</p>
+</div>
+<div class="section" id="qt-build-error-unknown-type-name-q-enum">
+<h3>Qt build error: <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">type</span> <span class="pre">name</span> <span class="pre">'Q_ENUM'</span></code><a class="headerlink" href="#qt-build-error-unknown-type-name-q-enum" title="Permalink to this headline"></a></h3>
+<p>If you see build errors related to Qt, e.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>In file included from /usr/local/opt/qt/lib/QtGui.framework/Headers/qguiapplication.h:46:
+/usr/local/opt/qt/lib/QtGui.framework/Headers/qinputmethod.h:87:5: error:
+      unknown <span class="nb">type</span> name <span class="s1">'Q_ENUM'</span>
+    Q_ENUM<span class="o">(</span>Action<span class="o">)</span>
+    ^
+</pre></div>
+</div>
+<p>you may be using qt4 instead of qt5: see <a class="reference external" href="https://github.com/ros2/ros2/issues/441">https://github.com/ros2/ros2/issues/441</a></p>
+</div>
+<div class="section" id="missing-symbol-when-opencv-and-therefore-libjpeg-libtiff-and-libpng-are-installed-with-homebrew">
+<h3>Missing symbol when opencv (and therefore libjpeg, libtiff, and libpng) are installed with Homebrew<a class="headerlink" href="#missing-symbol-when-opencv-and-therefore-libjpeg-libtiff-and-libpng-are-installed-with-homebrew" title="Permalink to this headline"></a></h3>
+<p>If you have opencv installed you might get this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dyld: Symbol not found: __cg_jpeg_resync_to_restart
+  Referenced from: /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+  Expected <span class="k">in</span>: /usr/local/lib/libJPEG.dylib
+ <span class="k">in</span> /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+/bin/sh: line <span class="m">1</span>: <span class="m">25274</span> Trace/BPT trap: <span class="m">5</span>       /usr/local/bin/cmake
+</pre></div>
+</div>
+<p>If so, to build you’ll have to do this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ brew unlink libpng libtiff libjpeg
+</pre></div>
+</div>
+<p>But this will break opencv, so you’ll also need to update it to continue working:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo install_name_tool -change /usr/local/lib/libjpeg.8.dylib /usr/local/opt/jpeg/lib/libjpeg.8.dylib /usr/local/lib/libopencv_highgui.2.4.dylib
+$ sudo install_name_tool -change /usr/local/lib/libpng16.16.dylib /usr/local/opt/libpng/lib/libpng16.16.dylib /usr/local/lib/libopencv_highgui.2.4.dylib
+$ sudo install_name_tool -change /usr/local/lib/libtiff.5.dylib /usr/local/opt/libtiff/lib/libtiff.5.dylib /usr/local/lib/libopencv_highgui.2.4.dylib
+$ sudo install_name_tool -change /usr/local/lib/libjpeg.8.dylib /usr/local/opt/jpeg/lib/libjpeg.8.dylib /usr/local/Cellar/libtiff/4.0.4/lib/libtiff.5.dylib
+</pre></div>
+</div>
+<p>The first command is necessary to avoid things built against the system libjpeg (etc.) from getting the version in /usr/local/lib.
+The others are updating things built by Homebrew so that they can find the version of libjpeg (etc.) without having them in /usr/local/lib.</p>
+</div>
+<div class="section" id="xcode-select-error-tool-xcodebuild-requires-xcode-but-active-developer-directory-is-a-command-line-instance">
+<h3>Xcode-select error: tool <code class="docutils literal notranslate"><span class="pre">xcodebuild</span></code> requires Xcode, but active developer directory is a command line instance<a class="headerlink" href="#xcode-select-error-tool-xcodebuild-requires-xcode-but-active-developer-directory-is-a-command-line-instance" title="Permalink to this headline"></a></h3>
+<p>If you recently installed Xcode, you may encounter this error:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Xcode: xcode-select: error: tool <span class="s1">'xcodebuild'</span> requires Xcode,
+but active developer directory <span class="s1">'/Library/Developer/CommandLineTools'</span> is a <span class="nb">command</span> line tools instance
+</pre></div>
+</div>
+<p>To resolve this error, you will need to:</p>
+<ol class="arabic simple">
+<li><p>Double check that you have the command line tool installed:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ xcode-select --install
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Accept the terms and conditions of Xcode by typing in terminal:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo xcodebuild -license accept
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Ensure Xcode app is in the <code class="docutils literal notranslate"><span class="pre">/Applications</span></code> directory (NOT <code class="docutils literal notranslate"><span class="pre">/Users/{user}/Applications</span></code>)</p></li>
+<li><p>Point <code class="docutils literal notranslate"><span class="pre">xcode-select</span></code> to the Xcode app Developer directory using the following command:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+</pre></div>
+</div>
+</div>
+<div class="section" id="qt-gui-cpp-error-sip-binding-generator-not-available">
+<h3>qt_gui_cpp error: SIP binding generator NOT available<a class="headerlink" href="#qt-gui-cpp-error-sip-binding-generator-not-available" title="Permalink to this headline"></a></h3>
+<p>When building qt_gui_cpp there may be errors look like the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--- stderr: qt_gui_cpp
+
+CMake Error at src/CMakeLists.txt:10 <span class="o">(</span>message<span class="o">)</span>:
+  No Python binding generator found.
+
+---
+Failed   <span class="o">&lt;&lt;&lt;</span> qt_gui_cpp <span class="o">[</span> Exited with code <span class="m">1</span> <span class="o">]</span>
+</pre></div>
+</div>
+<p>To fix this issue, follow <a class="reference internal" href="RQt-Source-Install-MacOS.html"><span class="doc">these steps</span></a> to install dependencies for RQt.</p>
+</div>
+<div class="section" id="rosdep-install-error-homebrew-failed-to-detect-successful-installation-of-qt5">
+<h3>rosdep install error <code class="docutils literal notranslate"><span class="pre">homebrew:</span> <span class="pre">Failed</span> <span class="pre">to</span> <span class="pre">detect</span> <span class="pre">successful</span> <span class="pre">installation</span> <span class="pre">of</span> <span class="pre">[qt5]</span></code><a class="headerlink" href="#rosdep-install-error-homebrew-failed-to-detect-successful-installation-of-qt5" title="Permalink to this headline"></a></h3>
+<p>While following the <a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html"><span class="doc">Creating a workspace</span></a> tutorial, you might encounter the following error stating that <code class="docutils literal notranslate"><span class="pre">rosdep</span></code> failes to install Qt5.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rosdep install -i --from-path src --rosdistro rolling -y
+executing <span class="nb">command</span> <span class="o">[</span>brew install qt5<span class="o">]</span>
+Warning: qt <span class="m">5</span>.15.0 is already installed and up-to-date
+To reinstall <span class="m">5</span>.15.0, run <span class="sb">`</span>brew reinstall qt<span class="sb">`</span>
+ERROR: the following rosdeps failed to install
+  homebrew: Failed to detect successful installation of <span class="o">[</span>qt5<span class="o">]</span>
+</pre></div>
+</div>
+<p>This error seems to stem from a <a class="reference external" href="https://github.com/ros-infrastructure/rosdep/issues/490#issuecomment-334959426">linking issue</a> and can be resolved by running the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /usr/local/Cellar
+$ sudo ln -s qt qt5
+</pre></div>
+</div>
+<p>Running the <code class="docutils literal notranslate"><span class="pre">rosdep</span></code> command should now execute normally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rosdep install -i --from-path src --rosdistro rolling -y
+<span class="c1">#All required rosdeps installed successfully</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="windows">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Windows"></a><span id="windows-troubleshooting"></span><h2><a class="toc-backref" href="#id4">Windows</a><a class="headerlink" href="#windows" title="Permalink to this headline"></a></h2>
+<div class="section" id="import-failing-even-with-library-present-on-the-system">
+<h3>Import failing even with library present on the system<a class="headerlink" href="#import-failing-even-with-library-present-on-the-system" title="Permalink to this headline"></a></h3>
+<p>Sometimes <code class="docutils literal notranslate"><span class="pre">rclpy</span></code> fails to be imported because of some missing DLLs on your system.
+If so, make sure to install all the dependencies listed in the “Installing prerequisites” sections of the <a class="reference internal" href="../Installation/Windows-Install-Binary.html#windows-install-binary-installing-prerequisites"><span class="std std-ref">installation instructions</span></a>).</p>
+<p>If you are installing from binaries, you may need to update your dependencies: they must be the same version as those used to build the binaries.</p>
+<p>If you are still having issues, you can use the <a class="reference external" href="https://github.com/lucasg/Dependencies">Dependencies</a> tool to determine which dependencies are missing on your system.
+Use the tool to load the corresponding <code class="docutils literal notranslate"><span class="pre">.pyd</span></code> file, and it should report unavailable <code class="docutils literal notranslate"><span class="pre">DLL</span></code> modules.
+Be sure that the current workspace is sourced before you execute the tool, otherwise there will be unresolved ROS DLL files.
+Use this information to install additional dependencies or adjust your path as necessary.</p>
+</div>
+<div class="section" id="cmake-error-setting-modification-time">
+<h3>CMake error setting modification time<a class="headerlink" href="#cmake-error-setting-modification-time" title="Permalink to this headline"></a></h3>
+<p>If you run into the CMake error <code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">INSTALL</span> <span class="pre">cannot</span> <span class="pre">set</span> <span class="pre">modification</span> <span class="pre">time</span> <span class="pre">on</span> <span class="pre">...</span></code> when installing files it is likely that an anti virus software or Windows Defender are interfering with the build. E.g. for Windows Defender you can list the workspace location to be excluded to prevent it from scanning those files.</p>
+</div>
+<div class="section" id="character-path-limit">
+<h3>260 character path limit<a class="headerlink" href="#character-path-limit" title="Permalink to this headline"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>The input line is too long.
+The syntax of the <span class="nb">command</span> is incorrect.
+</pre></div>
+</div>
+<p>Depending on your directory hierarchy, you may see path length limit errors when building ROS 2 from source or your own libraries.</p>
+<p>To allow deeper path lengths:</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">regedit.exe</span></code>, navigate to <code class="docutils literal notranslate"><span class="pre">Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem</span></code>, and set <code class="docutils literal notranslate"><span class="pre">LongPathsEnabled</span></code> to 0x00000001 (1).</p>
+<p>Hit the windows key and type <code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">Group</span> <span class="pre">Policy</span></code>.
+Navigate to Local Computer Policy &gt; Computer Configuration &gt; Administrative Templates &gt; System &gt; Filesystem.
+Right click <code class="docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Win32</span> <span class="pre">long</span> <span class="pre">paths</span></code>, click Edit.
+In the dialog, select Enabled and click OK.</p>
+<p>Close and open your terminal to reset the environment and try building again.</p>
+</div>
+<div class="section" id="cmake-packages-unable-to-find-asio-tinyxml2-tinyxml-or-eigen">
+<h3>CMake packages unable to find asio, tinyxml2, tinyxml, or eigen<a class="headerlink" href="#cmake-packages-unable-to-find-asio-tinyxml2-tinyxml-or-eigen" title="Permalink to this headline"></a></h3>
+<p>We’ve seen that sometimes the chocolatey packages for <code class="docutils literal notranslate"><span class="pre">asio</span></code>, <code class="docutils literal notranslate"><span class="pre">tinyxml2</span></code>, etc. do not add important registry entries and CMake will be unable to find them when building ROS 2.
+We’ve not yet been able to identify the root cause, but uninstalling the chocolatey packages (with <code class="docutils literal notranslate"><span class="pre">-n</span></code> if the uninstall fails the first time), and then reinstalling them will fix the issue.</p>
+</div>
+<div class="section" id="patch-exe-opens-a-new-command-window-and-asks-for-administrator">
+<h3>patch.exe opens a new command window and asks for administrator<a class="headerlink" href="#patch-exe-opens-a-new-command-window-and-asks-for-administrator" title="Permalink to this headline"></a></h3>
+<p>This will also cause the build of packages which need to use patch to fail, even you allow it to use administrator rights.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">choco</span> <span class="pre">uninstall</span> <span class="pre">patch;</span> <span class="pre">colcon</span> <span class="pre">build</span> <span class="pre">--cmake-clean-cache</span></code> - This is a bug in the <a class="reference external" href="https://chocolatey.org/packages/patch">GNU Patch For Windows package</a>. If this package is not installed, the build process will instead use the version of Patch distributed with git.</p></li>
+</ul>
+</div>
+<div class="section" id="failed-to-load-fast-rtps-shared-library">
+<h3>Failed to load Fast RTPS shared library<a class="headerlink" href="#failed-to-load-fast-rtps-shared-library" title="Permalink to this headline"></a></h3>
+<p>Fast RTPS requires <code class="docutils literal notranslate"><span class="pre">msvcr20.dll</span></code>, which is part of the <code class="docutils literal notranslate"><span class="pre">Visual</span> <span class="pre">C++</span> <span class="pre">Redistributable</span> <span class="pre">Packages</span> <span class="pre">for</span> <span class="pre">Visual</span> <span class="pre">Studio</span> <span class="pre">2013</span></code>.
+Although it is usually installed by default in Windows 10, we know that some Windows 10-like versions don’t have it installed by default (e.g.: Windows Server 2019).
+In case you don’t have it installed, you can download it from <a class="reference external" href="https://www.microsoft.com/en-us/download/details.aspx?id=40784">here</a>.</p>
+</div>
+<div class="section" id="binary-installation-specific">
+<h3>Binary installation specific<a class="headerlink" href="#binary-installation-specific" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>If your example does not start because of missing DLLs, please verify that all libraries from external dependencies such as OpenCV are located inside your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable.</p></li>
+<li><p>If you forget to call the <code class="docutils literal notranslate"><span class="pre">local_setup.bat</span></code> file from your terminal, the demo programs will most likely crash immediately.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="../How-To-Guides.html" rel="prev" title="How-to Guides"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="Developing-a-ROS-2-Package.html" rel="next" title="Developing a ROS 2 package">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, Open Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<map id="rclcpp::wait_set_policies::ThreadSafeSynchronization" name="rclcpp::wait_set_policies::ThreadSafeSynchronization">
+<area shape="rect" id="node1" title="WaitSet policy that provides thread&#45;safe synchronization for the wait set." alt="" coords="11,109,219,151"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1SynchronizationPolicyCommon.html" title="Common structure for synchronization policies." alt="" coords="5,5,224,61"/>
+</map>

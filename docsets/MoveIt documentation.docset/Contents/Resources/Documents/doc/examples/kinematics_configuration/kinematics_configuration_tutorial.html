@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinematics Configuration &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/kinematics_configuration/kinematics_configuration_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Custom Constraint Samplers" href="../custom_constraint_samplers/custom_constraint_samplers_tutorial.html" />
+    <link rel="prev" title="TRAC-IK Kinematics Solver" href="../trac_ik/trac_ik_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Kinematics Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-kinematics-yaml-file">The kinematics.yaml file</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#the-kdl-kinematics-plugin">The KDL Kinematics Plugin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#the-lma-kinematics-plugin">The LMA Kinematics Plugin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#the-cached-ik-plugin">The Cached IK Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#position-only-ik">Position Only IK</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_constraint_samplers/custom_constraint_samplers_tutorial.html">Custom Constraint Samplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ompl_interface/ompl_interface_tutorial.html">OMPL Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chomp_planner/chomp_planner_tutorial.html">CHOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stomp_planner/stomp_planner_tutorial.html">STOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trajopt_planner/trajopt_planner_tutorial.html">TrajOpt Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html">Pilz Industrial Motion Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html#sequence-of-multiple-segments">Sequence of multiple segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_adapters/planning_adapters_tutorial.html">Planning Adapter Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../persistent_scenes_and_states/persistent_scenes_and_states.html">Warehouse - Persistent Scenes and States</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Kinematics Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/kinematics_configuration/kinematics_configuration_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="kinematics-configuration">
+<h1>Kinematics Configuration<a class="headerlink" href="#kinematics-configuration" title="Permalink to this headline"></a></h1>
+<p>In this section, we will examine some of the parameters for configuring kinematics for your robot.</p>
+<div class="section" id="the-kinematics-yaml-file">
+<h2>The kinematics.yaml file<a class="headerlink" href="#the-kinematics-yaml-file" title="Permalink to this headline"></a></h2>
+<p>The kinematics.yaml file generated by the MoveIt Setup Assistant is the primary configuration file for kinematics for MoveIt. You can see an entire example file for the Panda robot in the <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config/blob/melodic-devel/config/kinematics.yaml">panda_moveit_config GitHub project</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">panda_arm</span><span class="p">:</span>
+  <span class="n">kinematics_solver</span><span class="p">:</span> <span class="n">kdl_kinematics_plugin</span><span class="o">/</span><span class="n">KDLKinematicsPlugin</span>
+  <span class="n">kinematics_solver_search_resolution</span><span class="p">:</span> <span class="mf">0.005</span>
+  <span class="n">kinematics_solver_timeout</span><span class="p">:</span> <span class="mf">0.05</span>
+  <span class="n">kinematics_solver_attempts</span><span class="p">:</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt>The set of available parameters include:</dt><dd><ul class="simple">
+<li><p><em>kinematics_solver</em>: The name of your kinematics solver plugin. Note that this must match the name that you specified in the plugin description file, e.g. <code class="docutils literal notranslate"><span class="pre">example_kinematics/ExampleKinematicsPlugin</span></code></p></li>
+<li><p><em>kinematics_solver_search_resolution</em>: This specifies the resolution that a solver might use to search over the redundant space for inverse kinematics, e.g. using one of the joints for a 7 DOF arm specified as the redundant joint.</p></li>
+<li><p><em>kinematics_solver_timeout</em>: This is a default timeout specified (in seconds) for each internal iteration that the inverse kinematics solver may perform. A typical iteration (e.g. for a numerical solver) will consist of a random restart from a seed state followed by a solution cycle (for which this timeout is applicable). The solver may attempt multiple restarts - the default number of restarts is defined by the kinematics_solver_attempts parameter below.</p></li>
+<li><p><em>kinematics_solver_attempts</em>: The number of random restarts that will be performed on the solver. Each solution cycle after the restart will have a timeout defined by the kinematics_solver_timeout parameter above. In general, it is better to set this timeout low and fail quickly in an individual solution cycle.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-kdl-kinematics-plugin">
+<h3>The KDL Kinematics Plugin<a class="headerlink" href="#the-kdl-kinematics-plugin" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt>The KDL kinematics plugin wraps around the numerical inverse kinematics solver provided by the Orocos KDL package.</dt><dd><ul class="simple">
+<li><p>This is the default kinematics plugin currently used by MoveIt</p></li>
+<li><p>It obeys joint limits specified in the URDF (and will use the safety limits if they are specified in the URDF).</p></li>
+<li><p>The KDL kinematics plugin currently only works with serial chains.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-lma-kinematics-plugin">
+<h3>The LMA Kinematics Plugin<a class="headerlink" href="#the-lma-kinematics-plugin" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt>The LMA (Levenberg-Marquardt) kinematics plugin also wraps around a numerical inverse kinematics solver provided by the Orocos KDL package.</dt><dd><ul class="simple">
+<li><p>It obeys joint limits specified in the URDF (and will use the safety limits if they are specified in the URDF).</p></li>
+<li><p>The LMA kinematics plugin currently only works with serial chains.</p></li>
+<li><p>Usage: <code class="docutils literal notranslate"><span class="pre">kinematics_solver:</span> <span class="pre">lma_kinematics_plugin/LMAKinematicsPlugin</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-cached-ik-plugin">
+<h3>The Cached IK Plugin<a class="headerlink" href="#the-cached-ik-plugin" title="Permalink to this headline"></a></h3>
+<p>The Cached IK Kinematics Plugin creates a persistent cache of IK solutions. This cache is then used to speed up any other IK solver. A call to an IK solver will use a similar state in the cache as a seed for the IK solver. If that fails to return a solution, the IK solver is called again with the user-specified seed state. New IK solutions that are sufficiently different from states in the cache are added to the cache. Periodically, the cache is saved to disk.</p>
+<p>To use the Cached IK Kinematics Plugin, you need to modify the file <code class="docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> for your robot. Change lines like these:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manipulator</span><span class="p">:</span>
+  <span class="n">kinematics_solver</span><span class="p">:</span> <span class="n">kdl_kinematics_plugin</span><span class="o">/</span><span class="n">KDLKinematicsPlugin</span>
+</pre></div>
+</div>
+<p>to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manipulator</span><span class="p">:</span>
+  <span class="n">kinematics_solver</span><span class="p">:</span> <span class="n">cached_ik_kinematics_plugin</span><span class="o">/</span><span class="n">CachedKDLKinematicsPlugin</span>
+  <span class="c1"># optional parameters for caching:</span>
+  <span class="n">max_cache_size</span><span class="p">:</span> <span class="mi">10000</span>
+  <span class="n">min_pose_distance</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">min_joint_config_distance</span><span class="p">:</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>The cache size can be controlled with an absolute cap (<code class="docutils literal notranslate"><span class="pre">max_cache_size</span></code>) or with a distance threshold on the end effector pose (<code class="docutils literal notranslate"><span class="pre">min_pose_distance</span></code>) or robot joint state (<code class="docutils literal notranslate"><span class="pre">min_joint_config_distance</span></code>). Normally, the cache files are saved to the current working directory (which is usually <code class="docutils literal notranslate"><span class="pre">${HOME}/.ros</span></code>, not the directory where you ran <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code>), in a subdirectory for each robot. Possible values for <code class="docutils literal notranslate"><span class="pre">kinematics_solver</span></code> are:</p>
+<ul class="simple">
+<li><p><em>cached_ik_kinematics_plugin/CachedKDLKinematicsPlugin</em>: a wrapper for the default KDL IK solver.</p></li>
+<li><p><em>cached_ik_kinematics_plugin/CachedSrvKinematicsPlugin</em>: a wrapper for the solver that uses ROS service calls to communicate with external IK solvers.</p></li>
+<li><p><em>cached_ik_kinematics_plugin/CachedTRACKinematicsPlugin</em>: a wrapper for the <a class="reference external" href="https://bitbucket.org/traclabs/trac_ik">TRAC IK solver</a>. This solver is only available if the TRAC IK kinematics plugin is detected at compile time.</p></li>
+<li><p><em>cached_ik_kinematics_plugin/CachedUR5KinematicsPlugin</em>: a wrapper for the analytic IK solver for the UR5 arm (similar solvers exist for the UR3 and UR10). This is only for illustrative purposes; the caching just adds extra overhead to the solver.</p></li>
+</ul>
+<p>See the <a class="reference external" href="https://github.com/ros-planning/moveit/blob/master/moveit_kinematics/cached_ik_kinematics_plugin/README.md">Cached IK README</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="position-only-ik">
+<h2>Position Only IK<a class="headerlink" href="#position-only-ik" title="Permalink to this headline"></a></h2>
+<p>Position only IK can easily be enabled (only if you are using the KDL Kinematics Plugin) by adding the following line to your kinematics.yaml file (for the particular group that you want to solve IK for):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">position_only_ik</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../trac_ik/trac_ik_tutorial.html" class="btn btn-neutral float-left" title="TRAC-IK Kinematics Solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../custom_constraint_samplers/custom_constraint_samplers_tutorial.html" class="btn btn-neutral float-right" title="Custom Constraint Samplers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

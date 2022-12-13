@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/examples.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Move Group C++ Interface" href="move_group_interface/move_group_interface_tutorial.html" />
+    <link rel="prev" title="Pick and Place with MoveIt Task Constructor" href="../tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="move_group_interface/move_group_interface_tutorial.html">Move Group C++ Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_group_python_interface/move_group_python_interface_tutorial.html">Move Group Python Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="moveit_commander_scripting/moveit_commander_scripting_tutorial.html">MoveIt Commander Scripting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-with-a-new-robot">Integration with a New Robot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kinematics_configuration/kinematics_configuration_tutorial.html">Kinematics Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_constraint_samplers/custom_constraint_samplers_tutorial.html">Custom Constraint Samplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ompl_interface/ompl_interface_tutorial.html">OMPL Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chomp_planner/chomp_planner_tutorial.html">CHOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stomp_planner/stomp_planner_tutorial.html">STOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trajopt_planner/trajopt_planner_tutorial.html">TrajOpt Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pilz_industrial_motion_planner/pilz_industrial_motion_planner.html">Pilz Industrial Motion Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pilz_industrial_motion_planner/pilz_industrial_motion_planner.html#sequence-of-multiple-segments">Sequence of multiple segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planning_adapters/planning_adapters_tutorial.html">Planning Adapter Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="persistent_scenes_and_states/persistent_scenes_and_states.html">Warehouse - Persistent Scenes and States</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="benchmarking/benchmarking_tutorial.html">Benchmarking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dual_arms/dual_arms_tutorial.html">Dual Arms with MoveIt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hybrid_planning/hybrid_planning_tutorial.html">Hybrid Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="realtime_servo/realtime_servo_tutorial.html">Realtime Arm Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests/tests_tutorial.html">Integration/Unit Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/examples.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h1>
+<p>This is a catch-all place for pages that have not yet been updated for the new structure or are still not yet ported from ROS 1.</p>
+<p>To migrate these pages into the new structure please see the appropriate pages under <a class="reference internal" href="../how_to_contribute/how_to_contribute.html"><span class="doc">Contributing</span></a>.</p>
+<div class="section" id="movegroup-ros-wrappers-in-c">
+<h2>MoveGroup - ROS Wrappers in C++<a class="headerlink" href="#movegroup-ros-wrappers-in-c" title="Permalink to this headline"></a></h2>
+<p>The simplest way to use MoveIt through scripting is using the <code class="docutils literal notranslate"><span class="pre">move_group_interface</span></code>. This interface is ideal for beginners and provides unified access to many of the features of MoveIt.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface/move_group_interface_tutorial.html">Move Group C++ Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_python_interface/move_group_python_interface_tutorial.html">Move Group Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander_scripting/moveit_commander_scripting_tutorial.html">MoveIt Commander Scripting</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-moveit-directly-through-the-c-api">
+<h2>Using MoveIt Directly Through the C++ API<a class="headerlink" href="#using-moveit-directly-through-the-c-api" title="Permalink to this headline"></a></h2>
+<p>Building more complex applications with MoveIt often requires developers to dig into MoveIt’s C++ API. As an added plus, using the C++ API directly skips many of the ROS Service/Action layers resulting in significantly faster performance.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="integration-with-a-new-robot">
+<h2>Integration with a New Robot<a class="headerlink" href="#integration-with-a-new-robot" title="Permalink to this headline"></a></h2>
+<p>Before attempting to integrate a new robot with MoveIt 2, check whether your robot has already been set up (see the <a class="reference external" href="http://moveit.ros.org/robots/">list of robots running MoveIt</a>). Otherwise, follow the tutorials in this section to integrate your robot with MoveIt.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_configuration/kinematics_configuration_tutorial.html">Kinematics Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_constraint_samplers/custom_constraint_samplers_tutorial.html">Custom Constraint Samplers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ompl_interface/ompl_interface_tutorial.html">OMPL Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chomp_planner/chomp_planner_tutorial.html">CHOMP Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stomp_planner/stomp_planner_tutorial.html">STOMP Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trajopt_planner/trajopt_planner_tutorial.html">TrajOpt Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pilz_industrial_motion_planner/pilz_industrial_motion_planner.html">Pilz Industrial Motion Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pilz_industrial_motion_planner/pilz_industrial_motion_planner.html#sequence-of-multiple-segments">Sequence of multiple segments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_adapters/planning_adapters_tutorial.html">Planning Adapter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_scenes_and_states/persistent_scenes_and_states.html">Warehouse - Persistent Scenes and States</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking/benchmarking_tutorial.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dual_arms/dual_arms_tutorial.html">Dual Arms with MoveIt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_planning/hybrid_planning_tutorial.html">Hybrid Planning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="realtime_servo/realtime_servo_tutorial.html">Realtime Arm Servoing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/tests_tutorial.html">Integration/Unit Tests</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html" class="btn btn-neutral float-left" title="Pick and Place with MoveIt Task Constructor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="move_group_interface/move_group_interface_tutorial.html" class="btn btn-neutral float-right" title="Move Group C++ Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

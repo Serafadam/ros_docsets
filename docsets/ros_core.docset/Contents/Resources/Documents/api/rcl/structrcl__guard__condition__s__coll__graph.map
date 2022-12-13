@@ -1,0 +1,5 @@
+<map id="rcl_guard_condition_s" name="rcl_guard_condition_s">
+<area shape="rect" id="node1" title="Handle for a rcl guard condition." alt="" coords="5,184,168,211"/>
+<area shape="rect" id="node2" href="$structrcl__context__s.html" title="Encapsulates the non&#45;global state of an init/shutdown cycle." alt="" coords="33,95,141,121"/>
+<area shape="rect" id="node3" href="$structrcl__arguments__s.html" title="Hold output of parsing command line arguments." alt="" coords="22,5,151,32"/>
+</map>

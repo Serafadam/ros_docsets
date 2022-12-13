@@ -1,0 +1,8 @@
+<map id="rclcpp::PublisherBase" name="rclcpp::PublisherBase">
+<area shape="rect" id="node1" title=" " alt="" coords="267,133,428,160"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1Publisher.html" title=" " alt="" coords="491,5,642,61"/>
+<area shape="rect" id="node4" href="$classrclcpp_1_1Publisher.html" title=" " alt="" coords="485,85,648,141"/>
+<area shape="rect" id="node5" href="$classrclcpp_1_1GenericPublisher.html" title="Publisher for serialized messages whose type is not known at compile time." alt="" coords="477,165,656,192"/>
+<area shape="rect" id="node6" href="$classrclcpp_1_1Publisher.html" title="A publisher publishes messages of any type to a topic." alt="" coords="476,217,657,258"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,126,219,167"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="rclcpp::TimerBase" name="rclcpp::TimerBase">
+<area shape="rect" id="node1" title=" " alt="" coords="15,5,153,32"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1GenericTimer.html" title="Generic timer. Periodically executes a user&#45;specified callback." alt="" coords="5,80,163,121"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1WallTimer.html" title=" " alt="" coords="11,169,157,211"/>
+</map>

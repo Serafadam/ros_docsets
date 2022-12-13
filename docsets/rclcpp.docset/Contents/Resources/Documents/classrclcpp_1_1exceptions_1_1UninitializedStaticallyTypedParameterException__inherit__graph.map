@@ -1,0 +1,4 @@
+<map id="rclcpp::exceptions::UninitializedStaticallyTypedParameterException" name="rclcpp::exceptions::UninitializedStaticallyTypedParameterException">
+<area shape="rect" id="node1" title="Thrown if user attempts to create an uninitialized statically typed parameter." alt="" coords="5,80,216,136"/>
+<area shape="rect" id="node2" title=" " alt="" coords="41,5,180,32"/>
+</map>

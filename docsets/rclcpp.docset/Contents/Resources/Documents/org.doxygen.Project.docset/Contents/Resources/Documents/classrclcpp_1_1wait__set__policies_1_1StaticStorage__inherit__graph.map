@@ -1,0 +1,4 @@
+<map id="rclcpp::wait_set_policies::StaticStorage&lt; NumberOfSubscriptions, NumberOfGuardCondtions, NumberOfTimers, NumberOfClients, NumberOfServices, NumberOfWaitables &gt;" name="rclcpp::wait_set_policies::StaticStorage&lt; NumberOfSubscriptions, NumberOfGuardCondtions, NumberOfTimers, NumberOfClients, NumberOfServices, NumberOfWaitables &gt;">
+<area shape="rect" id="node1" title="WaitSet policy that explicitly provides fixed sized storage only." alt="" coords="5,109,428,180"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1StoragePolicyCommon.html" title=" " alt="" coords="105,5,328,61"/>
+</map>

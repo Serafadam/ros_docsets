@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Scene &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/planning_scene/planning_scene_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Planning Scene Monitor" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html" />
+    <link rel="prev" title="Robot Model and Robot State" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Planning Scene</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-entire-code">The entire code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#collision-checking">Collision Checking</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#self-collision-checking">Self-collision checking</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#change-the-state">Change the state</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#checking-for-a-group">Checking for a group</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#getting-contact-information">Getting Contact Information</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#modifying-the-allowed-collision-matrix">Modifying the Allowed Collision Matrix</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#full-collision-checking">Full Collision Checking</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#constraint-checking">Constraint Checking</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#checking-kinematic-constraints">Checking Kinematic Constraints</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#user-defined-constraints">User-defined constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-launch-file">The launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code">Running the code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expected-output">Expected Output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Planning Scene</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene/planning_scene_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="planning-scene">
+<h1>Planning Scene<a class="headerlink" href="#planning-scene" title="Permalink to this headline"></a></h1>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/planning_scene/include/moveit/planning_scene/planning_scene.h">PlanningScene</a> class provides the main interface that you will use
+for collision checking and constraint checking. In this tutorial, we
+will explore the C++ interface to this class.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="the-entire-code">
+<h2>The entire code<a class="headerlink" href="#the-entire-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene">here in the MoveIt GitHub project</a>.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/planning_scene/include/moveit/planning_scene/planning_scene.h">PlanningScene</a>
+class can be easily setup and configured using a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/robot_model/include/moveit/robot_model/robot_model.h">RobotModel</a>
+or a URDF and SRDF. This is, however, not the recommended way to instantiate a
+PlanningScene. The
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/planning/planning_scene_monitor/include/moveit/planning_scene_monitor/planning_scene_monitor.h">PlanningSceneMonitor</a>
+is the recommended method to create and maintain the current
+planning scene (and is discussed in detail in the next tutorial)
+using data from the robot’s joints and the sensors on the robot. In
+this tutorial, we will instantiate a PlanningScene class directly,
+but this method of instantiation is only intended for illustration.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">robot_model_loader</span><span class="o">::</span><span class="n">RobotModelLoader</span><span class="w"> </span><span class="n">robot_model_loader</span><span class="p">(</span><span class="n">planning_scene_tutorial_node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;robot_description&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotModelPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">kinematic_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot_model_loader</span><span class="p">.</span><span class="n">getModel</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScene</span><span class="w"> </span><span class="nf">planning_scene</span><span class="p">(</span><span class="n">kinematic_model</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="collision-checking">
+<h3>Collision Checking<a class="headerlink" href="#collision-checking" title="Permalink to this headline"></a></h3>
+<div class="section" id="self-collision-checking">
+<h4>Self-collision checking<a class="headerlink" href="#self-collision-checking" title="Permalink to this headline"></a></h4>
+<p>The first thing we will do is check whether the robot in its
+current state is in <em>self-collision</em>, i.e. whether the current
+configuration of the robot would result in the robot’s parts
+hitting each other. To do this, we will construct a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/collision_detection/include/moveit/collision_detection/collision_common.h">CollisionRequest</a>
+object and a
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/collision_detection/include/moveit/collision_detection/collision_common.h">CollisionResult</a>
+object and pass them
+into the collision checking function. Note that the result of
+whether the robot is in self-collision or not is contained within
+the result. Self collision checking uses an <em>unpadded</em> version of
+the robot, i.e. it directly uses the collision meshes provided in
+the URDF with no extra padding added on.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionRequest</span><span class="w"> </span><span class="n">collision_request</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionResult</span><span class="w"> </span><span class="n">collision_result</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkSelfCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 1: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="change-the-state">
+<h4>Change the state<a class="headerlink" href="#change-the-state" title="Permalink to this headline"></a></h4>
+<p>Now, let’s change the current state of the robot. The planning
+scene maintains the current state internally. We can get a
+reference to it and change it and then check for collisions for the
+new robot configuration. Note in particular that we need to clear
+the collision_result before making a new collision checking
+request.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">current_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">getCurrentStateNonConst</span><span class="p">();</span><span class="w"></span>
+<span class="n">current_state</span><span class="p">.</span><span class="n">setToRandomPositions</span><span class="p">();</span><span class="w"></span>
+<span class="n">collision_result</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkSelfCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 2: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-for-a-group">
+<h4>Checking for a group<a class="headerlink" href="#checking-for-a-group" title="Permalink to this headline"></a></h4>
+<p>Now, we will do collision checking only for the hand of the
+Panda, i.e. we will check whether there are any collisions between
+the hand and other parts of the body of the robot. We can ask
+for this specifically by adding the group name “hand” to the
+collision request.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_request</span><span class="p">.</span><span class="n">group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">current_state</span><span class="p">.</span><span class="n">setToRandomPositions</span><span class="p">();</span><span class="w"></span>
+<span class="n">collision_result</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkSelfCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 3: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-contact-information">
+<h4>Getting Contact Information<a class="headerlink" href="#getting-contact-information" title="Permalink to this headline"></a></h4>
+<p>First, manually set the Panda arm to a position where we know
+internal (self) collisions do happen. Note that this state is now
+actually outside the joint limits of the Panda, which we can also
+check for directly.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">joint_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.9</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">JointModelGroup</span><span class="o">*</span><span class="w"> </span><span class="n">joint_model_group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_state</span><span class="p">.</span><span class="n">getJointModelGroup</span><span class="p">(</span><span class="s">&quot;panda_arm&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">current_state</span><span class="p">.</span><span class="n">setJointGroupPositions</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">,</span><span class="w"> </span><span class="n">joint_values</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 4: Current state is &quot;</span><span class="w"></span>
+<span class="w">                               </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">current_state</span><span class="p">.</span><span class="n">satisfiesBounds</span><span class="p">(</span><span class="n">joint_model_group</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;valid&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not valid&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we can get contact information for any collisions that might
+have happened at a given configuration of the Panda arm. We can ask
+for contact information by filling in the appropriate field in the
+collision request and specifying the maximum number of contacts to
+be returned as a large number.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_request</span><span class="p">.</span><span class="n">contacts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_request</span><span class="p">.</span><span class="n">max_contacts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_result</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkSelfCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 5: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionResult</span><span class="o">::</span><span class="n">ContactMap</span><span class="o">::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">it</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_result</span><span class="p">.</span><span class="n">contacts</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">collision_result</span><span class="p">.</span><span class="n">contacts</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Contact between: %s and %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">.</span><span class="n">first</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modifying-the-allowed-collision-matrix">
+<h4>Modifying the Allowed Collision Matrix<a class="headerlink" href="#modifying-the-allowed-collision-matrix" title="Permalink to this headline"></a></h4>
+<p>The
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/collision_detection/include/moveit/collision_detection/collision_matrix.h">AllowedCollisionMatrix</a>
+(ACM)
+provides a mechanism to tell the collision world to ignore
+collisions between certain object: both parts of the robot and
+objects in the world. We can tell the collision checker to ignore
+all collisions between the links reported above, i.e. even though
+the links are actually in collision, the collision checker will
+ignore those collisions and return not in collision for this
+particular state of the robot.</p>
+<p>Note also in this example how we are making copies of both the
+allowed collision matrix and the current state and passing them in
+to the collision checking function.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_detection</span><span class="o">::</span><span class="n">AllowedCollisionMatrix</span><span class="w"> </span><span class="n">acm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">getAllowedCollisionMatrix</span><span class="p">();</span><span class="w"></span>
+<span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="w"> </span><span class="n">copied_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">getCurrentState</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionResult</span><span class="o">::</span><span class="n">ContactMap</span><span class="o">::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">it2</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">it2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_result</span><span class="p">.</span><span class="n">contacts</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">collision_result</span><span class="p">.</span><span class="n">contacts</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it2</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">acm</span><span class="p">.</span><span class="n">setEntry</span><span class="p">(</span><span class="n">it2</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">.</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">it2</span><span class="o">-&gt;</span><span class="n">first</span><span class="p">.</span><span class="n">second</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">collision_result</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkSelfCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">,</span><span class="w"> </span><span class="n">copied_state</span><span class="p">,</span><span class="w"> </span><span class="n">acm</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 6: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="full-collision-checking">
+<h4>Full Collision Checking<a class="headerlink" href="#full-collision-checking" title="Permalink to this headline"></a></h4>
+<p>While we have been checking for self-collisions, we can use the
+checkCollision functions instead which will check for both
+self-collisions and for collisions with the environment (which is
+currently empty).  This is the set of collision checking
+functions that you will use most often in a planner. Note that
+collision checks with the environment will use the padded version
+of the robot. Padding helps in keeping the robot further away
+from obstacles in the environment.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_result</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">checkCollision</span><span class="p">(</span><span class="n">collision_request</span><span class="p">,</span><span class="w"> </span><span class="n">collision_result</span><span class="p">,</span><span class="w"> </span><span class="n">copied_state</span><span class="p">,</span><span class="w"> </span><span class="n">acm</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 7: Current state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">collision_result</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not in&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; self collision&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="constraint-checking">
+<h3>Constraint Checking<a class="headerlink" href="#constraint-checking" title="Permalink to this headline"></a></h3>
+<p>The PlanningScene class also includes easy to use function calls
+for checking constraints. The constraints can be of two types:
+(a) constraints chosen from the
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/kinematic_constraints/include/moveit/kinematic_constraints/kinematic_constraint.h">KinematicConstraint</a>
+set: i.e. JointConstraint, PositionConstraint, OrientationConstraint and
+VisibilityConstraint and (b) user
+defined constraints specified through a callback. We will first
+look at an example with a simple KinematicConstraint.</p>
+<div class="section" id="checking-kinematic-constraints">
+<h4>Checking Kinematic Constraints<a class="headerlink" href="#checking-kinematic-constraints" title="Permalink to this headline"></a></h4>
+<p>We will first define a simple position and orientation constraint
+on the end-effector of the panda_arm group of the Panda robot. Note the
+use of convenience functions for filling up the constraints
+(these functions are found in the
+<a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/kinematic_constraints/include/moveit/kinematic_constraints/utils.h">utils.h</a>
+file from the
+kinematic_constraints directory in moveit_core).</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">end_effector_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">joint_model_group</span><span class="o">-&gt;</span><span class="n">getLinkModelNames</span><span class="p">().</span><span class="n">back</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PoseStamped</span><span class="w"> </span><span class="n">desired_pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">desired_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">desired_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span><span class="w"></span>
+<span class="n">desired_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.185</span><span class="p">;</span><span class="w"></span>
+<span class="n">desired_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">desired_pose</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">goal_constraint</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">constructGoalConstraints</span><span class="p">(</span><span class="n">end_effector_name</span><span class="p">,</span><span class="w"> </span><span class="n">desired_pose</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we can check a state against this constraint using the
+isStateConstrained functions in the PlanningScene class.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">copied_state</span><span class="p">.</span><span class="n">setToRandomPositions</span><span class="p">();</span><span class="w"></span>
+<span class="n">copied_state</span><span class="p">.</span><span class="n">update</span><span class="p">();</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">constrained</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">isStateConstrained</span><span class="p">(</span><span class="n">copied_state</span><span class="p">,</span><span class="w"> </span><span class="n">goal_constraint</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 8: Random state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">constrained</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;constrained&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not constrained&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>There’s a more efficient way of checking constraints (when you want
+to check the same constraint over and over again, e.g. inside a
+planner). We first construct a KinematicConstraintSet which
+pre-processes the ROS Constraints messages and sets it up for quick
+processing.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">KinematicConstraintSet</span><span class="w"> </span><span class="nf">kinematic_constraint_set</span><span class="p">(</span><span class="n">kinematic_model</span><span class="p">);</span><span class="w"></span>
+<span class="n">kinematic_constraint_set</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">goal_constraint</span><span class="p">,</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">getTransforms</span><span class="p">());</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">constrained_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">isStateConstrained</span><span class="p">(</span><span class="n">copied_state</span><span class="p">,</span><span class="w"> </span><span class="n">kinematic_constraint_set</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 9: Random state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">constrained_2</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;constrained&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not constrained&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>There’s a direct way to do this using the KinematicConstraintSet
+class.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">kinematic_constraints</span><span class="o">::</span><span class="n">ConstraintEvaluationResult</span><span class="w"> </span><span class="n">constraint_eval_result</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">kinematic_constraint_set</span><span class="p">.</span><span class="n">decide</span><span class="p">(</span><span class="n">copied_state</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 10: Random state is &quot;</span><span class="w"></span>
+<span class="w">                               </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">constraint_eval_result</span><span class="p">.</span><span class="n">satisfied</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;constrained&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not constrained&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-defined-constraints">
+<h4>User-defined constraints<a class="headerlink" href="#user-defined-constraints" title="Permalink to this headline"></a></h4>
+<p>User defined constraints can also be specified to the PlanningScene
+class. This is done by specifying a callback using the
+setStateFeasibilityPredicate function. Here’s a simple example of a
+user-defined callback that checks whether the “panda_joint1” of
+the Panda robot is at a positive or negative angle:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">stateFeasibilityTestExample</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">kinematic_state</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="cm">/*verbose*/</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="o">*</span><span class="w"> </span><span class="n">joint_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kinematic_state</span><span class="p">.</span><span class="n">getJointPositions</span><span class="p">(</span><span class="s">&quot;panda_joint1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">joint_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, whenever isStateFeasible is called, this user-defined callback
+will be called.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">planning_scene</span><span class="p">.</span><span class="n">setStateFeasibilityPredicate</span><span class="p">(</span><span class="n">stateFeasibilityTestExample</span><span class="p">);</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">state_feasible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">isStateFeasible</span><span class="p">(</span><span class="n">copied_state</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 11: Random state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">state_feasible</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;feasible&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not feasible&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Whenever isStateValid is called, three checks are conducted: (a)
+collision checking (b) constraint checking and (c) feasibility
+checking using the user-defined callback.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">state_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">.</span><span class="n">isStateValid</span><span class="p">(</span><span class="n">copied_state</span><span class="p">,</span><span class="w"> </span><span class="n">kinematic_constraint_set</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">RCLCPP_INFO_STREAM</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Test 12: Random state is &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">state_valid</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;valid&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;not valid&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that all the planners available through MoveIt and OMPL will
+currently perform collision checking, constraint checking and
+feasibility checking using user-defined callbacks.</p>
+</div>
+</div>
+</div>
+<div class="section" id="the-launch-file">
+<h2>The launch file<a class="headerlink" href="#the-launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene/launch/planning_scene_tutorial.launch.py">here</a> on GitHub. All the code in this tutorial can be compiled and run from the moveit_tutorials package.</p>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h2>
+<p>Roslaunch the launch file to run the code directly from moveit_tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">planning_scene_tutorial</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Permalink to this headline"></a></h2>
+<p>The output should look something like this, though we are using random
+joint values so some things may be different.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">2</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">3</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">4</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="n">valid</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">5</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Contact</span> <span class="n">between</span><span class="p">:</span> <span class="n">panda_leftfinger</span> <span class="ow">and</span> <span class="n">panda_link1</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Contact</span> <span class="n">between</span><span class="p">:</span> <span class="n">panda_link1</span> <span class="ow">and</span> <span class="n">panda_rightfinger</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">6</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">7</span><span class="p">:</span> <span class="n">Current</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span> <span class="n">collision</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">8</span><span class="p">:</span> <span class="n">Random</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">constrained</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">9</span><span class="p">:</span> <span class="n">Random</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">constrained</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">10</span><span class="p">:</span> <span class="n">Random</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">constrained</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">11</span><span class="p">:</span> <span class="n">Random</span> <span class="n">state</span> <span class="ow">is</span> <span class="n">feasible</span>
+<span class="n">moveit2_tutorials</span><span class="p">:</span> <span class="n">Test</span> <span class="mi">12</span><span class="p">:</span> <span class="n">Random</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">valid</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> Don’t worry if your output has different ROS console format. You can customize your ROS console logger by following <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Logging-and-logger-configuration.html#console-output-formatting">this tutorial</a>.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html" class="btn btn-neutral float-left" title="Robot Model and Robot State" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../planning_scene_monitor/planning_scene_monitor_tutorial.html" class="btn btn-neutral float-right" title="Planning Scene Monitor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

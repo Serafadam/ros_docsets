@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your First C++ MoveIt Project &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/tutorials/your_first_project/your_first_project.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Visualizing In RViz" href="../visualizing_in_rviz/visualizing_in_rviz.html" />
+    <link rel="prev" title="MoveIt Quickstart in RViz" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html">MoveIt Quickstart in RViz</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Your First C++ MoveIt Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-package">1 Create a package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-ros-node-and-executor">2 Create a ROS Node and Executor</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#build-and-run">2.1 Build and Run</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#examine-the-code">2.2 Examine the code</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#plan-and-execute-using-movegroupinterface">3 Plan and Execute using MoveGroupInterface</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">3.1 Build and Run</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">3.2 Examine the code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#next-step">Next Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html">Visualizing In RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../planning_around_objects/planning_around_objects.html">Planning Around Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html">Pick and Place with MoveIt Task Constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">Your First C++ MoveIt Project</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/your_first_project/your_first_project.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="your-first-c-moveit-project">
+<h1>Your First C++ MoveIt Project<a class="headerlink" href="#your-first-c-moveit-project" title="Permalink to this headline"></a></h1>
+<p>This tutorial will step you through writing your first C++ application with MoveIt.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+<p>This tutorial assumes you understand the basics of ROS 2.
+To prepare yourself for this please complete the <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials.html">Official ROS 2 Tutorials</a> up until “Writing a simple publisher and Subscriber (C++)”.</p>
+</div>
+<div class="section" id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline"></a></h2>
+<div class="section" id="create-a-package">
+<h3>1 Create a package<a class="headerlink" href="#create-a-package" title="Permalink to this headline"></a></h3>
+<p>Open a terminal and <a class="reference external" href="https://docs.ros.org/en/rolling/Tutorials/Configuring-ROS2-Environment.html">source your ROS 2 installation</a> so that <code class="docutils literal notranslate"><span class="pre">ros2</span></code> commands will work.</p>
+<p>Navigate to your <code class="docutils literal notranslate"><span class="pre">ws_moveit</span></code> directory you created in the <a class="reference internal" href="../getting_started/getting_started.html"><span class="doc">Getting Started Tutorial</span></a>.</p>
+<p>Change directory into the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory, as that is where we put our source code.</p>
+<p>Create a new package with the ROS 2 command line tools:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 pkg create <span class="se">\</span>
+ --build-type ament_cmake <span class="se">\</span>
+ --dependencies moveit_ros_planning_interface rclcpp <span class="se">\</span>
+ --node-name hello_moveit hello_moveit
+</pre></div>
+</div>
+<p>The output of this will show that it created some files in a new directory.</p>
+<p>Note that we added <code class="docutils literal notranslate"><span class="pre">moveit_ros_planning_interface</span></code> and <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> as dependencies.
+This will create the necessary changes in the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files so that we can depend on these two packages.</p>
+<p>Open the new source file created for you at <code class="docutils literal notranslate"><span class="pre">ws_moveit/src/hello_moveit/src/hello_moveit.cpp</span></code> in your favorite editor.</p>
+</div>
+<div class="section" id="create-a-ros-node-and-executor">
+<h3>2 Create a ROS Node and Executor<a class="headerlink" href="#create-a-ros-node-and-executor" title="Permalink to this headline"></a></h3>
+<p>This first block of code is a bit of boilerplate but you should be used to seeing this from the ROS 2 tutorials.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rclcpp/rclcpp.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;moveit/move_group_interface/move_group_interface.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Initialize ROS and create the Node</span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;hello_moveit&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="p">().</span><span class="n">automatically_declare_parameters_from_overrides</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Create a ROS logger</span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;hello_moveit&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Next step goes here</span>
+
+<span class="w">  </span><span class="c1">// Shutdown ROS</span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="build-and-run">
+<h4>2.1 Build and Run<a class="headerlink" href="#build-and-run" title="Permalink to this headline"></a></h4>
+<p>We will build and run the program to see that everything is right before we move on.</p>
+<p>Change directory back to the workspace directory <code class="docutils literal notranslate"><span class="pre">ws_moveit</span></code> and run this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon build --mixin debug
+</pre></div>
+</div>
+<p>After this succeeds, <strong>open a new terminal</strong>, then source the workspace environment script in that new terminal so that we can run our program.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/ws_moveit
+<span class="nb">source</span> install/setup.bash
+</pre></div>
+</div>
+<p>Run your program and see the output.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 run hello_moveit hello_moveit
+</pre></div>
+</div>
+<p>The program should run and exit without error.</p>
+</div>
+<div class="section" id="examine-the-code">
+<h4>2.2 Examine the code<a class="headerlink" href="#examine-the-code" title="Permalink to this headline"></a></h4>
+<p>The headers included at the top are just some standard C++ headers and the headers for ROS and MoveIt that we will use later.</p>
+<p>After that, we have the normal call to initialize rclcpp, and then we create our Node.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;hello_moveit&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="p">().</span><span class="n">automatically_declare_parameters_from_overrides</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The first argument is a string that ROS will use to name a unique node.
+The second is needed for MoveIt because of how we use ROS Parameters.</p>
+<p>Next, we <a class="reference external" href="https://docs.ros.org/en/humble/Tutorials/Demos/Logging-and-logger-configuration.html">create a logger</a> named “hello_moveit” to keep our log outputs organized and configurable.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create a ROS logger</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;hello_moveit&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Lastly, we have the code to shutdown ROS.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Shutdown ROS</span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span><span class="w"></span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plan-and-execute-using-movegroupinterface">
+<h3>3 Plan and Execute using MoveGroupInterface<a class="headerlink" href="#plan-and-execute-using-movegroupinterface" title="Permalink to this headline"></a></h3>
+<p>In place of the comment that says “Next step goes here”, add this code:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create the MoveIt MoveGroup Interface</span>
+<span class="k">using</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="p">;</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">move_group_interface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MoveGroupInterface</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Set a target Pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]{</span><span class="w"></span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.28</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Create a plan to that target pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">[</span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">plan</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="n">move_group_interface</span><span class="p">]{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="o">::</span><span class="n">Plan</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">);</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+
+<span class="c1">// Execute the plan</span>
+<span class="k">if</span><span class="p">(</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Planning failed!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h4>3.1 Build and Run<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<p>Just like before, we need to build the code before we can run it.</p>
+<p>In the workspace directory, <code class="docutils literal notranslate"><span class="pre">ws_moveit</span></code>, run this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>colcon build --mixin debug
+</pre></div>
+</div>
+<p>After this succeeds, we need to re-use the demo launch file from the previous tutorial to start RViz and the MoveGroup node.
+In a separate terminal, source the workspace and then execute this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 launch moveit2_tutorials demo.launch.py
+</pre></div>
+</div>
+<p>Then in the <code class="docutils literal notranslate"><span class="pre">Displays</span></code> window under <code class="docutils literal notranslate"><span class="pre">MotionPlanning/Planning</span> <span class="pre">Request</span></code>, uncheck the box <code class="docutils literal notranslate"><span class="pre">Query</span> <span class="pre">Goal</span> <span class="pre">State</span></code>.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_1.png"><img alt="../../../_images/rviz_1.png" src="../../../_images/rviz_1.png" style="width: 300px;" /></a>
+<p>In a third terminal, source the workspace and run your program.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 run hello_moveit hello_moveit
+</pre></div>
+</div>
+<p>This should cause the robot in RViz to move and end up in this pose:</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_2.png"><img alt="../../../_images/rviz_2.png" src="../../../_images/rviz_2.png" style="width: 300px;" /></a>
+<p>Note that if you ran the node <code class="docutils literal notranslate"><span class="pre">hello_moveit</span></code> without launching the demo launch file first, it will wait for 10 seconds and then print this error and exit.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>ERROR<span class="o">]</span> <span class="o">[</span><span class="m">1644181704</span>.350825487<span class="o">]</span> <span class="o">[</span>hello_moveit<span class="o">]</span>: Could not find parameter robot_description and did not receive robot_description via std_msgs::msg::String subscription within <span class="m">10</span>.000000 seconds.
+</pre></div>
+</div>
+<p>This is because the <code class="docutils literal notranslate"><span class="pre">demo.launch.py</span></code> launch is starting the <code class="docutils literal notranslate"><span class="pre">MoveGroup</span></code> node that provides the robot description.
+When <code class="docutils literal notranslate"><span class="pre">MoveGroupInterface</span></code> is constructed, it looks for a node publishing a topic with the robot description.
+If it fails to find that within 10 seconds, it prints this error and terminates the program.</p>
+</div>
+<div class="section" id="id2">
+<h4>3.2 Examine the code<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<p>The first thing we do is create the <code class="docutils literal notranslate"><span class="pre">MoveGroupInterface</span></code>.
+This object will be used to interact with <code class="docutils literal notranslate"><span class="pre">move_group</span></code>, which allows us to plan and execute trajectories.
+Note that this is the only mutable object that we create in this program.
+Another thing to take note of is the second argument to the <code class="docutils literal notranslate"><span class="pre">MoveGroupInterface</span></code> object we are creating here: <code class="docutils literal notranslate"><span class="pre">&quot;panda_arm&quot;</span></code>.
+That is the group of joints as defined in the robot description that we are going to operate on with this <code class="docutils literal notranslate"><span class="pre">MoveGroupInterface</span></code>.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="p">;</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">move_group_interface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MoveGroupInterface</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Then, we set our target pose and plan. Note that only the target pose is set (via <code class="docutils literal notranslate"><span class="pre">setPoseTarget</span></code>).
+The starting pose is implicitly the position published by the joint state publisher, which could be changed using the
+<code class="docutils literal notranslate"><span class="pre">MoveGroupInterface::setStartState*</span></code> family of functions (but is not in this tutorial).</p>
+<p>One more thing to note about this next section is the use of lambdas for constructing the message type <code class="docutils literal notranslate"><span class="pre">target_pose</span></code> and planning.
+This is a pattern you’ll find in modern C++ codebases that enables writing in a more declarative style.
+For more information about this pattern there are a couple of links at the end of this tutorial.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Set a target Pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]{</span><span class="w"></span>
+<span class="w">  </span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.28</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Create a plan to that target pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">[</span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">plan</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="n">move_group_interface</span><span class="p">]{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="o">::</span><span class="n">Plan</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">ok</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">);</span><span class="w"></span>
+<span class="p">}();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, we execute our plan if planning was successful, otherwise we log an error:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Execute the plan</span>
+<span class="k">if</span><span class="p">(</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Planning failed!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>You created a ROS 2 package and wrote your first program using MoveIt.</p></li>
+<li><p>You learned about using the MoveGroupInterface to plan and execute moves.</p></li>
+<li><p><a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/your_first_project/hello_moveit.cpp">Here is a copy of the full hello_moveit.cpp source at the end of this tutorial</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>We used lambdas to be able to initialize objects as constants. This is known as a technique called IIFE.  <a class="reference external" href="https://www.cppstories.com/2016/11/iife-for-complex-initialization/">Read more about this pattern from C++ Stories</a>.</p></li>
+<li><p>We also declared everything we could as const.  <a class="reference external" href="https://www.cppstories.com/2016/12/please-declare-your-variables-as-const/">Read more about the usefulness of const here</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="next-step">
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline"></a></h2>
+<p>In the next tutorial <a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html"><span class="doc">Visualizing in RViz</span></a>, you will expand on the program you built here to create visual markers that make it easier to understand what MoveIt is doing.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../quickstart_in_rviz/quickstart_in_rviz_tutorial.html" class="btn btn-neutral float-left" title="MoveIt Quickstart in RViz" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../visualizing_in_rviz/visualizing_in_rviz.html" class="btn btn-neutral float-right" title="Visualizing In RViz" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Scene ROS API &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/planning_scene_ros_api/planning_scene_ros_api_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Motion Planning API" href="../motion_planning_api/motion_planning_api_tutorial.html" />
+    <link rel="prev" title="Planning Scene Monitor" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Planning Scene ROS API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code">Running the code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expected-output">Expected Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-entire-code">The entire code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#visualization">Visualization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#ros-api">ROS API</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#advertise-the-required-topic">Advertise the required topic</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#define-the-attached-object-message">Define the attached object message</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#add-an-object-into-the-environment">Add an object into the environment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#interlude-synchronous-vs-asynchronous-updates">Interlude: Synchronous vs Asynchronous updates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#attach-an-object-to-the-robot">Attach an object to the robot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#detach-an-object-from-the-robot">Detach an object from the robot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#remove-the-object-from-the-collision-world">Remove the object from the collision world</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Planning Scene ROS API</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene_ros_api/planning_scene_ros_api_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="planning-scene-ros-api">
+<h1>Planning Scene ROS API<a class="headerlink" href="#planning-scene-ros-api" title="Permalink to this headline"></a></h1>
+<p>In this tutorial, we will examine the use of planning scene diffs to perform
+two operations:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Adding and removing objects into the world</p></li>
+<li><p>Attaching and detaching objects to the robot</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h2>
+<p>Open two shells. In the first shell start RViz and wait for everything to finish loading:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">move_group</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>In the second shell, run the launch file for this demo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">planning_scene_ros_api_tutorial</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>After a short moment, the RViz window should appear and look similar to <a class="reference external" href="/doc/tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html#rviz-visual-tools">Visualization Tutorial</a>. To progress through each demo step either press the <strong>Next</strong> button in the <strong>RvizVisualToolsGui</strong> panel at the bottom of the screen or select <strong>Key Tool</strong> in the <strong>Tools</strong> panel at the top of the screen and then press <strong>0</strong> on your keyboard while RViz is focused.</p>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt>In RViz, you should be able to see the following:</dt><dd><ul class="simple">
+<li><p>Object appears in the planning scene.</p></li>
+<li><p>Object gets attached to the robot.</p></li>
+<li><p>Object gets detached from the robot.</p></li>
+<li><p>Object is removed from the planning scene.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-entire-code">
+<h2>The entire code<a class="headerlink" href="#the-entire-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/planning_scene_ros_api">here in the MoveIt GitHub project</a>.</p>
+<div class="section" id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline"></a></h3>
+<p>The package MoveItVisualTools provides many capabilities for visualizing objects, robots,
+and trajectories in RViz as well as debugging tools such as step-by-step introspection of a script.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rviz_visual_tools</span><span class="o">::</span><span class="n">RvizVisualTools</span><span class="w"> </span><span class="n">visual_tools</span><span class="p">(</span><span class="s">&quot;panda_link0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;planning_scene_ros_api_tutorial&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">loadRemoteControl</span><span class="p">();</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">deleteAllMarkers</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ros-api">
+<h3>ROS API<a class="headerlink" href="#ros-api" title="Permalink to this headline"></a></h3>
+<p>The ROS API to the planning scene publisher is through a topic interface
+using “diffs”. A planning scene diff is the difference between the current
+planning scene (maintained by the move_group node) and the new planning
+scene desired by the user.</p>
+</div>
+<div class="section" id="advertise-the-required-topic">
+<h3>Advertise the required topic<a class="headerlink" href="#advertise-the-required-topic" title="Permalink to this headline"></a></h3>
+<p>We create a publisher and wait for subscribers.
+Note that this topic may need to be remapped in the launch file.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningScene</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">planning_scene_diff_publisher</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;planning_scene&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">planning_scene_diff_publisher</span><span class="o">-&gt;</span><span class="n">get_subscription_count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-the-attached-object-message">
+<h3>Define the attached object message<a class="headerlink" href="#define-the-attached-object-message" title="Permalink to this headline"></a></h3>
+<p>We will use this message to add or
+subtract the object from the world
+and to attach the object to the robot.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">AttachedCollisionObject</span><span class="w"> </span><span class="n">attached_object</span><span class="p">;</span><span class="w"></span>
+<span class="n">attached_object</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* The header must contain a valid TF frame*/</span><span class="w"></span>
+<span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* The id of the object */</span><span class="w"></span>
+<span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;box&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* A default pose */</span><span class="w"></span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.11</span><span class="p">;</span><span class="w"></span>
+<span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define a box to be attached */</span><span class="w"></span>
+<span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">primitive</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">primitive</span><span class="p">.</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.075</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.075</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.075</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">primitive</span><span class="p">);</span><span class="w"></span>
+<span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pose</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that attaching an object to the robot requires
+the corresponding operation to be specified as an ADD operation.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">ADD</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Since we are attaching the object to the robot hand to simulate picking up the object,
+we want the collision checker to ignore collisions between the object and the robot hand.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">attached_object</span><span class="p">.</span><span class="n">touch_links</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">{</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_leftfinger&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_rightfinger&quot;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-an-object-into-the-environment">
+<h3>Add an object into the environment<a class="headerlink" href="#add-an-object-into-the-environment" title="Permalink to this headline"></a></h3>
+<p>Add the object into the environment by adding it to
+the set of collision objects in the “world” part of the
+planning scene. Note that we are using only the “object”
+field of the attached_object message here.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Adding the object into the world at the location of the hand.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningScene</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">is_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene_diff_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interlude-synchronous-vs-asynchronous-updates">
+<h3>Interlude: Synchronous vs Asynchronous updates<a class="headerlink" href="#interlude-synchronous-vs-asynchronous-updates" title="Permalink to this headline"></a></h3>
+<p>There are two separate mechanisms available to interact
+with the move_group node using diffs:</p>
+<ul class="simple">
+<li><p>Send a diff via a rosservice call and block until
+the diff is applied (synchronous update)</p></li>
+<li><p>Send a diff via a topic, continue even though the diff
+might not be applied yet (asynchronous update)</p></li>
+</ul>
+<p>While most of this tutorial uses the latter mechanism (given the long sleeps
+inserted for visualization purposes asynchronous updates do not pose a problem),
+it would be perfectly justified to replace the planning_scene_diff_publisher
+by the following service client:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Client</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">ApplyPlanningScene</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">planning_scene_diff_client</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">create_client</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">ApplyPlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;apply_planning_scene&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene_diff_client</span><span class="o">-&gt;</span><span class="n">wait_for_service</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>and send the diffs to the planning scene via a service call:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">ApplyPlanningScene</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_future</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">ApplyPlanningScene_Response</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">response_future</span><span class="p">;</span><span class="w"></span>
+<span class="n">response_future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene_diff_client</span><span class="o">-&gt;</span><span class="n">async_send_request</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="n">future</span><span class="p">.</span><span class="n">share</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>wait for the service to respond</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="w"> </span><span class="nf">wait_time</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="w"> </span><span class="n">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response_future</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">wait_time</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">timeout</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Service timed out.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">ApplyPlanningScene_Response</span><span class="o">&gt;</span><span class="w"> </span><span class="n">planning_response</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response_future</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">planning_response</span><span class="o">-&gt;</span><span class="n">success</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Service successfully added object.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Service failed to add object.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that this does not continue until we are sure the diff has been applied.</p>
+</div>
+<div class="section" id="attach-an-object-to-the-robot">
+<h3>Attach an object to the robot<a class="headerlink" href="#attach-an-object-to-the-robot" title="Permalink to this headline"></a></h3>
+<p>When the robot picks up an object from the environment, we need to
+“attach” the object to the robot so that any component dealing with
+the robot model knows to account for the attached object, e.g. for
+collision checking.</p>
+<dl class="simple">
+<dt>Attaching an object requires two operations</dt><dd><ul class="simple">
+<li><p>Removing the original object from the environment</p></li>
+<li><p>Attaching the object to the robot</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* First, define the REMOVE object message*/</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">remove_object</span><span class="p">;</span><span class="w"></span>
+<span class="n">remove_object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;box&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">remove_object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">remove_object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remove_object</span><span class="p">.</span><span class="n">REMOVE</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note how we make sure that the diff message contains no other
+attached objects or collisions objects by clearing those fields
+first.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Carry out the REMOVE + ATTACH operation */</span><span class="w"></span>
+<span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Attaching the object to the hand and removing it from the world.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">remove_object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">attached_collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">attached_object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">is_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene_diff_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detach-an-object-from-the-robot">
+<h3>Detach an object from the robot<a class="headerlink" href="#detach-an-object-from-the-robot" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt>Detaching an object from the robot requires two operations</dt><dd><ul class="simple">
+<li><p>Detaching the object from the robot</p></li>
+<li><p>Re-introducing the object into the environment</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* First, define the DETACH object message*/</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">AttachedCollisionObject</span><span class="w"> </span><span class="n">detach_object</span><span class="p">;</span><span class="w"></span>
+<span class="n">detach_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;box&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">detach_object</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_hand&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">detach_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">.</span><span class="n">REMOVE</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note how we make sure that the diff message contains no other
+attached objects or collisions objects by clearing those fields
+first.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Carry out the DETACH + ADD operation */</span><span class="w"></span>
+<span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Detaching the object from the robot and returning it to the world.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">attached_collision_objects</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">attached_collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">detach_object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">is_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">attached_object</span><span class="p">.</span><span class="n">object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">is_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene_diff_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">);</span><span class="w"></span>
+<span class="n">visual_tools</span><span class="p">.</span><span class="n">prompt</span><span class="p">(</span><span class="s">&quot;Press &#39;next&#39; in the RvizVisualToolsGui window to continue the demo&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-the-object-from-the-collision-world">
+<h3>Remove the object from the collision world<a class="headerlink" href="#remove-the-object-from-the-collision-world" title="Permalink to this headline"></a></h3>
+<p>Removing the object from the collision world just requires
+using the remove object message defined earlier.
+Note, also how we make sure that the diff message contains no other
+attached objects or collisions objects by clearing those fields
+first.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">RCLCPP_INFO</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Removing the object from the world.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">robot_state</span><span class="p">.</span><span class="n">attached_collision_objects</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">remove_object</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene_diff_publisher</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">planning_scene</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../planning_scene_monitor/planning_scene_monitor_tutorial.html" class="btn btn-neutral float-left" title="Planning Scene Monitor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../motion_planning_api/motion_planning_api_tutorial.html" class="btn btn-neutral float-right" title="Motion Planning API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

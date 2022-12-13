@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizing Collisions &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/visualizing_collisions/visualizing_collisions_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Time Parameterization" href="../time_parameterization/time_parameterization_tutorial.html" />
+    <link rel="prev" title="Creating MoveIt Plugins" href="../creating_moveit_plugins/plugin_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Visualizing Collisions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code">Running the Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interacting">Interacting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#relevant-code">Relevant Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#initializing-the-planning-scene-and-markers">Initializing the Planning Scene and Markers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#collision-requests">Collision Requests</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#checking-for-collisions">Checking for Collisions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#displaying-collision-contact-points">Displaying Collision Contact Points</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-file">Launch file</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Visualizing Collisions</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/visualizing_collisions/visualizing_collisions_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="visualizing-collisions">
+<h1>Visualizing Collisions<a class="headerlink" href="#visualizing-collisions" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/collisions.png"><img alt="../../../_images/collisions.png" src="../../../_images/collisions.png" style="width: 700px;" /></a>
+<p>This section walks you through C++ example code that allows you to visualize collision contact points between the robot, itself, and the world as you move and interact with the robot’s arm in RViz.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h2>
+<p>Roslaunch the launch file to run the code directly from moveit_tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_tutorials</span> <span class="n">visualizing_collisions_tutorial</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>You should now see the Panda robot with 2 interactive markers which you can drag around.</p>
+<a class="reference internal image-reference" href="../../../_images/visualizing_collisions_tutorial_screen.png"><img alt="../../../_images/visualizing_collisions_tutorial_screen.png" src="../../../_images/visualizing_collisions_tutorial_screen.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline"></a></h2>
+<p>The code for this tutorial is mainly in the <code class="code docutils literal notranslate"><span class="pre">InteractiveRobot</span></code> class which we will walk through below. The <code class="code docutils literal notranslate"><span class="pre">InteractiveRobot</span></code> class maintains a <code class="code docutils literal notranslate"><span class="pre">RobotModel</span></code>, a <code class="code docutils literal notranslate"><span class="pre">RobotState</span></code>, and information about ‘the world’ (in this case “the world” is a single yellow cube).</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">InteractiveRobot</span></code> class uses the <code class="code docutils literal notranslate"><span class="pre">IMarker</span></code> class which maintains an interactive marker. This tutorial does not cover the implementation of the IMarker class (<a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/interactivity/src/imarker.cpp">imarker.cpp</a>), but most of the code is copied from the <a class="reference external" href="http://wiki.ros.org/rviz/Tutorials/Interactive%20Markers:%20Getting%20Started#basic_controls">basic_controls</a> tutorial and you can read more there about interactive markers if you are interested.</p>
+</div>
+<div class="section" id="interacting">
+<h2>Interacting<a class="headerlink" href="#interacting" title="Permalink to this headline"></a></h2>
+<p>In RViz you will see two sets of Red/Green/Blue interactive marker arrows. Drag these around with the mouse.
+Move the right arm so it is in contact with the left arm. You will see magenta spheres marking the contact points.
+If you do not see the magenta spheres be sure that you added the MarkerArray display with interactive_robot_marray topic as described above. Also be sure to set RobotAlpha to 0.3 (or some other value less than 1) so the robot is transparent and the spheres can be seen.
+Move the right arm so it is in contact with the yellow cube (you may also move the yellow cube). You will see magenta spheres marking the contact points.</p>
+</div>
+<div class="section" id="relevant-code">
+<h2>Relevant Code<a class="headerlink" href="#relevant-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/visualizing_collisions">here</a> in the moveit_tutorials GitHub project. Libraries used can be found <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/interactivity">here</a>. A lot of information necessary for understanding how this demo works is left out to keep this tutorial focused on collision contacts. To understand this demo fully, it is highly recommended that you read through the source code.</p>
+<div class="section" id="initializing-the-planning-scene-and-markers">
+<h3>Initializing the Planning Scene and Markers<a class="headerlink" href="#initializing-the-planning-scene-and-markers" title="Permalink to this headline"></a></h3>
+<p>For this tutorial we use an <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/interactivity/src/interactive_robot.cpp">InteractiveRobot</a>
+object as a wrapper that combines a robot_model with the cube and an interactive marker. We also
+create a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_core/html/cpp/classplanning__scene_1_1PlanningScene.html">PlanningScene</a> for collision checking. If you haven’t already gone through the
+<a class="reference internal" href="../planning_scene/planning_scene_tutorial.html"><span class="doc">planning scene tutorial</span></a>, you go through that first.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">InteractiveRobot</span><span class="w"> </span><span class="n">robot</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Create a PlanningScene */</span><span class="w"></span>
+<span class="n">g_planning_scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScene</span><span class="p">(</span><span class="n">robot</span><span class="p">.</span><span class="n">robotModel</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Adding geometry to the PlanningScene</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="w"> </span><span class="n">world_cube_pose</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">world_cube_size</span><span class="p">;</span><span class="w"></span>
+<span class="n">robot</span><span class="p">.</span><span class="n">getWorldGeometry</span><span class="p">(</span><span class="n">world_cube_pose</span><span class="p">,</span><span class="w"> </span><span class="n">world_cube_size</span><span class="p">);</span><span class="w"></span>
+<span class="n">g_world_cube_shape</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">shapes</span><span class="o">::</span><span class="n">Box</span><span class="p">(</span><span class="n">world_cube_size</span><span class="p">,</span><span class="w"> </span><span class="n">world_cube_size</span><span class="p">,</span><span class="w"> </span><span class="n">world_cube_size</span><span class="p">));</span><span class="w"></span>
+<span class="n">g_planning_scene</span><span class="o">-&gt;</span><span class="n">getWorldNonConst</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addToObject</span><span class="p">(</span><span class="s">&quot;world_cube&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">g_world_cube_shape</span><span class="p">,</span><span class="w"> </span><span class="n">world_cube_pose</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="collision-requests">
+<h3>Collision Requests<a class="headerlink" href="#collision-requests" title="Permalink to this headline"></a></h3>
+<p>We will create a collision request for the Panda robot</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionRequest</span><span class="w"> </span><span class="n">c_req</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionResult</span><span class="w"> </span><span class="n">c_res</span><span class="p">;</span><span class="w"></span>
+<span class="n">c_req</span><span class="p">.</span><span class="n">group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot</span><span class="p">.</span><span class="n">getGroupName</span><span class="p">();</span><span class="w"></span>
+<span class="n">c_req</span><span class="p">.</span><span class="n">contacts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">c_req</span><span class="p">.</span><span class="n">max_contacts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="n">c_req</span><span class="p">.</span><span class="n">max_contacts_per_pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="n">c_req</span><span class="p">.</span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-for-collisions">
+<h3>Checking for Collisions<a class="headerlink" href="#checking-for-collisions" title="Permalink to this headline"></a></h3>
+<p>We check for collisions between robot and itself or the world.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">g_planning_scene</span><span class="o">-&gt;</span><span class="n">checkCollision</span><span class="p">(</span><span class="n">c_req</span><span class="p">,</span><span class="w"> </span><span class="n">c_res</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">robot</span><span class="p">.</span><span class="n">robotState</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="displaying-collision-contact-points">
+<h3>Displaying Collision Contact Points<a class="headerlink" href="#displaying-collision-contact-points" title="Permalink to this headline"></a></h3>
+<p>If there are collisions, we get the contact points and display them as markers.
+<strong>getCollisionMarkersFromContacts()</strong> is a helper function that adds the
+collision contact points into a MarkerArray message. If you want to use
+the contact points for something other than displaying them you can
+iterate through <strong>c_res.contacts</strong> which is a std::map of contact points.
+Look at the implementation of getCollisionMarkersFromContacts() in
+<a class="reference external" href="https://github.com/ros-planning/moveit/blob/noetic-devel/moveit_core/collision_detection/src/collision_tools.cpp">collision_tools.cpp</a>
+for how.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c_res</span><span class="p">.</span><span class="n">collision</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;COLLIDING contact_point_count=%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">c_res</span><span class="p">.</span><span class="n">contact_count</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c_res</span><span class="p">.</span><span class="n">contact_count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">ColorRGBA</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">color</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">color</span><span class="p">.</span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">color</span><span class="p">.</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">color</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">visualization_msgs</span><span class="o">::</span><span class="n">MarkerArray</span><span class="w"> </span><span class="n">markers</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Get the contact points and display them as markers */</span><span class="w"></span>
+<span class="w">    </span><span class="n">collision_detection</span><span class="o">::</span><span class="n">getCollisionMarkersFromContacts</span><span class="p">(</span><span class="n">markers</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c_res</span><span class="p">.</span><span class="n">contacts</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                         </span><span class="n">ros</span><span class="o">::</span><span class="n">Duration</span><span class="p">(),</span><span class="w">  </span><span class="c1">// remain until deleted</span>
+<span class="w">                                                         </span><span class="mf">0.01</span><span class="p">);</span><span class="w">            </span><span class="c1">// radius</span>
+<span class="w">    </span><span class="n">publishMarkers</span><span class="p">(</span><span class="n">markers</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="launch-file">
+<h2>Launch file<a class="headerlink" href="#launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is  <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/visualizing_collisions">here</a> on GitHub. All the code in this tutorial can be compiled and run from the moveit_tutorials package.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../creating_moveit_plugins/plugin_tutorial.html" class="btn btn-neutral float-left" title="Creating MoveIt Plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../time_parameterization/time_parameterization_tutorial.html" class="btn btn-neutral float-right" title="Time Parameterization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

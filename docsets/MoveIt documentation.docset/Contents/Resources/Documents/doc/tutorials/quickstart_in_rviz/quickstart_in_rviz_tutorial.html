@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveIt Quickstart in RViz &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Your First C++ MoveIt Project" href="../your_first_project/your_first_project.html" />
+    <link rel="prev" title="Getting Started" href="../getting_started/getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MoveIt Quickstart in RViz</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-launch-the-demo-and-configure-the-plugin">Step 1: Launch the Demo and Configure the Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-play-with-the-visualized-robots">Step 2: Play with the Visualized Robots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-interact-with-the-panda">Step 3: Interact with the Panda</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#moving-into-collision">Moving into collision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moving-out-of-reachable-workspace">Moving out of Reachable Workspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moving-joints-or-in-null-space">Moving Joints or in Null Space</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-use-motion-planning-with-the-panda">Step 4: Use Motion Planning with the Panda</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introspecting-trajectory-waypoints">Introspecting Trajectory Waypoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plan-cartesian-motions">Plan Cartesian motions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#executing-trajectories-adjusting-speed">Executing Trajectories, Adjusting Speed</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps">Next Steps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rviz-visual-tools">RViz Visual Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#saving-your-configuration">Saving Your Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#next-tutorial">Next Tutorial</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../your_first_project/your_first_project.html">Your First C++ MoveIt Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../visualizing_in_rviz/visualizing_in_rviz.html">Visualizing In RViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../planning_around_objects/planning_around_objects.html">Planning Around Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html">Pick and Place with MoveIt Task Constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorials.html">Tutorials</a></li>
+      <li class="breadcrumb-item active">MoveIt Quickstart in RViz</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="moveit-quickstart-in-rviz">
+<h1>MoveIt Quickstart in RViz<a class="headerlink" href="#moveit-quickstart-in-rviz" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_head.png"><img alt="../../../_images/rviz_plugin_head.png" src="../../../_images/rviz_plugin_head.png" style="width: 700px;" /></a>
+<p>This tutorial will teach you how to create motion plans in MoveIt using RViz and the MoveIt Display plugin. Rviz is the primary visualizer in ROS and a very useful tool for debugging robotics. The MoveIt Display plugin allows you to setup virtual environments (planning scenes), create start and goal states for the robot interactively, test various motion planners, and visualize the output. Let’s get started!</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../getting_started/getting_started.html"><span class="doc">Getting Started</span></a> or our <a class="reference internal" href="../../how_to_guides/how_to_setup_docker_containers_in_ubuntu.html"><span class="doc">Docker Guide</span></a>.</p>
+</div>
+<div class="section" id="step-1-launch-the-demo-and-configure-the-plugin">
+<h2>Step 1: Launch the Demo and Configure the Plugin<a class="headerlink" href="#step-1-launch-the-demo-and-configure-the-plugin" title="Permalink to this headline"></a></h2>
+<ul>
+<li><p>Launch the demo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you are doing this for the first time, you should see an empty world in RViz and will have to add the Motion Planning Plugin:</p>
+<ul class="simple">
+<li><p>You should see an empty world in RViz:</p></li>
+</ul>
+<p><a class="reference internal" href="../../../_images/rviz_empty.png"><img alt="A" src="../../../_images/rviz_empty.png" style="width: 700px;" /></a></p>
+<ul class="simple">
+<li><p>In the RViz Displays Tab, press <em>Add</em>:</p></li>
+</ul>
+<p><a class="reference internal" href="../../../_images/rviz_click_add.png"><img alt="B" src="../../../_images/rviz_click_add.png" style="width: 405px;" /></a></p>
+<ul class="simple">
+<li><p>From the moveit_ros_visualization folder, choose “MotionPlanning” as the DisplayType. Press “Ok”.</p></li>
+</ul>
+<p><a class="reference internal" href="../../../_images/rviz_plugin_motion_planning_add.png"><img alt="C" src="../../../_images/rviz_plugin_motion_planning_add.png" style="width: 400px;" /></a></p>
+<ul class="simple">
+<li><p>You should now see the Panda robot in RViz:</p></li>
+</ul>
+<p><a class="reference internal" href="../../../_images/rviz_start.png"><img alt="D" src="../../../_images/rviz_start.png" style="width: 700px;" /></a></p>
+</li>
+</ul>
+<ul class="simple">
+<li><p>Once you have the Motion Planning Plugin loaded, we can configure it. In the “Global Options” tab of the “Displays” subwindow, set the <strong>Fixed Frame</strong> field to <code class="docutils literal notranslate"><span class="pre">/panda_link0</span></code></p></li>
+<li><p>Now, you can start configuring the Plugin for your robot (the Panda in this case). Click on “MotionPlanning” within “Displays”.</p>
+<ul>
+<li><p>Make sure the <strong>Robot Description</strong> field is set to <code class="docutils literal notranslate"><span class="pre">robot_description</span></code>.</p></li>
+<li><p>Make sure the <strong>Planning Scene Topic</strong> field is set to <code class="docutils literal notranslate"><span class="pre">/monitored_planning_scene</span></code>.
+Click on topic name to expose topic-name drop-down.</p></li>
+<li><p>Make sure the <strong>Trajectory Topic</strong> under <strong>Planned Path</strong> is set to <code class="docutils literal notranslate"><span class="pre">/display_planned_path</span></code>.</p></li>
+<li><p>In <strong>Planning Request</strong>, change the <strong>Planning Group</strong> to <code class="docutils literal notranslate"><span class="pre">panda_arm</span></code>. You can also see this in the MotionPlanning panel in the bottom left.</p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_start.png"><img alt="../../../_images/rviz_plugin_start.png" src="../../../_images/rviz_plugin_start.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-2-play-with-the-visualized-robots">
+<h2>Step 2: Play with the Visualized Robots<a class="headerlink" href="#step-2-play-with-the-visualized-robots" title="Permalink to this headline"></a></h2>
+<p>There are four different overlapping visualizations:</p>
+<ol class="arabic simple">
+<li><p>The robot’s configuration in the <code class="docutils literal notranslate"><span class="pre">/monitored_planning_scene</span></code> planning environment (active by default).</p></li>
+<li><p>The planned path for the robot (active by default).</p></li>
+<li><p>Green: The start state for motion planning (disabled by default).</p></li>
+<li><p>Orange: The goal state for motion planning (active by default).</p></li>
+</ol>
+<p>The display states for each of these visualizations can be toggled on and off using checkboxes:</p>
+<ol class="arabic simple">
+<li><p>The planning scene robot using the <strong>Show Robot Visual</strong> checkbox in the <strong>Scene Robot</strong> tree menu.</p></li>
+<li><p>The planned path using the <strong>Show Robot Visual</strong> checkbox in the <strong>Planned Path</strong> tree menu.</p></li>
+<li><p>The start state using the <strong>Query Start State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+<li><p>The goal state using the <strong>Query Goal State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Play with all these checkboxes to switch on and off different visualizations.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_visualize_robots.png"><img alt="../../../_images/rviz_plugin_visualize_robots.png" src="../../../_images/rviz_plugin_visualize_robots.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="step-3-interact-with-the-panda">
+<h2>Step 3: Interact with the Panda<a class="headerlink" href="#step-3-interact-with-the-panda" title="Permalink to this headline"></a></h2>
+<p>For the next steps we will want only the scene robot, start state and goal state:</p>
+<ol class="arabic simple">
+<li><p>Check the <strong>Show Robot Visual</strong> checkbox in the <strong>Planned Path</strong> tree menu</p></li>
+<li><p>Un-check the <strong>Show Robot Visual</strong> checkbox in the <strong>Scene Robot</strong> tree menu</p></li>
+<li><p>Check the <strong>Query Goal State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+<li><p>Check the <strong>Query Start State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+</ol>
+<p>There should now be two interactive markers. One marker corresponding to the orange colored arm will be used to set the “Goal State” for motion planning and the other marker corresponding to a green colored arm are used to set the “Start State” for motion planning. If you don’t see the interactive markers press <strong>Interact</strong> in the top menu of RViz (Note: some tools may be hidden, press <strong>“+”</strong> in the top menu to add the <strong>Interact</strong> tool as shown below).</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_interact.png"><img alt="../../../_images/rviz_plugin_interact.png" src="../../../_images/rviz_plugin_interact.png" style="width: 700px;" /></a>
+<p>You should now be able to use these markers to drag the arm around and change its orientation. Try it!</p>
+<div class="section" id="moving-into-collision">
+<h3>Moving into collision<a class="headerlink" href="#moving-into-collision" title="Permalink to this headline"></a></h3>
+<p>For this section, hide the planned path and the goal state:</p>
+<ol class="arabic simple">
+<li><p>Un-check the <strong>Show Robot Visual</strong> checkbox in the <strong>Planned Path</strong> tree menu</p></li>
+<li><p>Un-check the <strong>Query Goal State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+</ol>
+<p>Now, only the Start State (the green colored arm) should be visible.  Try to move the arm into a configuration where two of its links are in collision with each other.  (If you find this difficult, make sure the “Use Collision-Aware IK” checkbox under the Planning tab of the MotionPlanning plugin is un-checked.)  Once you do this, the links that are in collision will turn red.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_collision.png"><img alt="../../../_images/rviz_plugin_collision.png" src="../../../_images/rviz_plugin_collision.png" style="width: 700px;" /></a>
+<p>Now, check the “Use Collision-Aware IK” checkbox, and try again to move two of the links into collision with each other.  When the checkbox is ticked, the IK solver will keep attempting to find a collision-free solution for the desired end-effector pose. When it is not checked, the solver will allow collisions to happen in the solution. The links in collision will always still be visualized in red, regardless of the state of the checkbox.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png"><img alt="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png" src="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="moving-out-of-reachable-workspace">
+<h3>Moving out of Reachable Workspace<a class="headerlink" href="#moving-out-of-reachable-workspace" title="Permalink to this headline"></a></h3>
+<p>Note what happens when you try to move an end-effector out of its reachable workspace.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_invalid.png"><img alt="../../../_images/rviz_plugin_invalid.png" src="../../../_images/rviz_plugin_invalid.png" style="width: 700px;" /></a>
+<p>Before moving onto the next section, re-enable the planned path and the goal state:</p>
+<ol class="arabic simple">
+<li><p>Check the <strong>Show Robot Visual</strong> checkbox in the <strong>Planned Path</strong> tree menu</p></li>
+<li><p>Check the <strong>Query Goal State</strong> checkbox in the <strong>Planning Request</strong> tree menu.</p></li>
+</ol>
+</div>
+<div class="section" id="moving-joints-or-in-null-space">
+<h3>Moving Joints or in Null Space<a class="headerlink" href="#moving-joints-or-in-null-space" title="Permalink to this headline"></a></h3>
+<p>You can use the <strong>Joints</strong> tab to move single joints and the redundant joints of 7-DOF robots. Try moving the “null space exploration” slider as shown in the animation below.</p>
+<video width="700px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/rviz_joints_nullspace.webm" type="video/webm">
+    The joints moving while the end effector stays still
+</video></div>
+</div>
+<div class="section" id="step-4-use-motion-planning-with-the-panda">
+<h2>Step 4: Use Motion Planning with the Panda<a class="headerlink" href="#step-4-use-motion-planning-with-the-panda" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Now, you can start motion planning with the Panda in the MoveIt RViz Plugin.</p>
+<ul>
+<li><p>Move the Start State to a desired location.</p></li>
+<li><p>Move the Goal State to another desired location.</p></li>
+<li><p>Make sure both states are not in collision with the robot itself.</p></li>
+<li><p>Un-check the <strong>Show Trail</strong> checkbox in the <strong>Planned Path</strong> tree menu.</p></li>
+</ul>
+</li>
+<li><p>In the <strong>MotionPlanning</strong> window under the <strong>Planning</strong> tab, press the <strong>Plan</strong> button.</p></li>
+<li><p>Check the <strong>Show Trail</strong> checkbox in the <strong>Planned Path</strong> tree menu. You should see the arm’s path represented by a series of manipulator poses.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_planned_path.png"><img alt="../../../_images/rviz_plugin_planned_path.png" src="../../../_images/rviz_plugin_planned_path.png" style="width: 700px;" /></a>
+<div class="section" id="introspecting-trajectory-waypoints">
+<h3>Introspecting Trajectory Waypoints<a class="headerlink" href="#introspecting-trajectory-waypoints" title="Permalink to this headline"></a></h3>
+<p>You can visually introspect trajectories point by point in RViz.</p>
+<ul class="simple">
+<li><p>From “<em>Panels</em>” menu, select “<em>Trajectory - Trajectory Slider</em>”. You’ll see a new Slider panel on RViz.</p></li>
+<li><p>Set your goal pose, then run <em>Plan</em>.</p></li>
+<li><p>Play with the “<em>Slider</em>” panel, e.g. move the slider, push “<em>Play</em>” button.</p></li>
+</ul>
+<p>Note: Once you placed your end-effector to a new goal, be sure to run <em>Plan</em> before running <em>Play</em> – otherwise you’ll see the waypoints for the previous goal if available.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_slider.png"><img alt="../../../_images/rviz_plugin_slider.png" src="../../../_images/rviz_plugin_slider.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="plan-cartesian-motions">
+<h3>Plan Cartesian motions<a class="headerlink" href="#plan-cartesian-motions" title="Permalink to this headline"></a></h3>
+<p>If the “Use Cartesian Path” checkbox is activated, the robot will attempt to move the end effector linearly in cartesian space.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plan_free.png"><img alt="../../../_images/rviz_plan_free.png" src="../../../_images/rviz_plan_free.png" style="width: 700px;" /></a>
+<a class="reference internal image-reference" href="../../../_images/rviz_plan_cartesian.png"><img alt="../../../_images/rviz_plan_cartesian.png" src="../../../_images/rviz_plan_cartesian.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="executing-trajectories-adjusting-speed">
+<h3>Executing Trajectories, Adjusting Speed<a class="headerlink" href="#executing-trajectories-adjusting-speed" title="Permalink to this headline"></a></h3>
+<p>Clicking “Plan &amp; Execute” or “Execute” after a successful plan will send the trajectory to the robot - in this tutorial, since you used <code class="docutils literal notranslate"><span class="pre">demo.launch</span></code>, the robot is only simulated.</p>
+<p>Initially, the default velocity and acceleration are scaled to 10% (<code class="docutils literal notranslate"><span class="pre">0.1</span></code>) of the robot’s maximum. You can change these scaling factors in the Planning tab shown below, or change these default values in the <code class="docutils literal notranslate"><span class="pre">moveit_config</span></code> of your robot (in <code class="docutils literal notranslate"><span class="pre">joint_limits.yaml</span></code>).</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png"><img alt="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png" src="../../../_images/rviz_plugin_collision_aware_ik_checkbox.png" style="width: 700px;" /></a>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline"></a></h2>
+<div class="section" id="rviz-visual-tools">
+<h3>RViz Visual Tools<a class="headerlink" href="#rviz-visual-tools" title="Permalink to this headline"></a></h3>
+<p>Many of the tutorials use <code class="docutils literal notranslate"><span class="pre">moveit_visual_tools</span></code> to step through a demo. Before continuing on to the next tutorials it is a good idea to enable the <strong>RvizVisualToolsGui</strong>.</p>
+<p>From “<em>Panels</em>” menu, select “<em>Add New Panels</em>”. From the menu, select “<em>RvizVisualToolsGui</em>” and click OK. You’ll see the new panel added to RViz.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_add_rviz_visual_tools.png"><img alt="../../../_images/rviz_add_rviz_visual_tools.png" src="../../../_images/rviz_add_rviz_visual_tools.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="../../../_images/rviz_panels.png"><img alt="../../../_images/rviz_panels.png" src="../../../_images/rviz_panels.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="saving-your-configuration">
+<h3>Saving Your Configuration<a class="headerlink" href="#saving-your-configuration" title="Permalink to this headline"></a></h3>
+<p>RViz enables you to save your configuration under <code class="docutils literal notranslate"><span class="pre">File-&gt;Save</span> <span class="pre">Config</span></code>. You should do this before continuing on to the next tutorials. If you choose to save your configuration under a new name, you can use <code class="docutils literal notranslate"><span class="pre">File-&gt;Save</span> <span class="pre">Config</span> <span class="pre">As</span></code> and refer to your configuration file using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span> <span class="n">rviz_config</span><span class="o">:=</span><span class="n">your_rviz_config</span><span class="o">.</span><span class="n">rviz</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">your_rviz_config.rviz</span></code> with the name of the file you saved to <code class="docutils literal notranslate"><span class="pre">moveit2_tutorials/doc/tutorials/quickstart_in_rviz/launch/</span></code> and build the workspace so it can be found.</p>
+</div>
+<div class="section" id="next-tutorial">
+<h3>Next Tutorial<a class="headerlink" href="#next-tutorial" title="Permalink to this headline"></a></h3>
+<p>In <a class="reference internal" href="../your_first_project/your_first_project.html"><span class="doc">Your First MoveIt Project</span></a>, you will create a C++ program using MoveIt to plan and execute moves.</p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../getting_started/getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../your_first_project/your_first_project.html" class="btn btn-neutral float-right" title="Your First C++ MoveIt Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

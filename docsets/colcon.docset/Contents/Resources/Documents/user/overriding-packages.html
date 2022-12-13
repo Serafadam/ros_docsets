@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overriding Packages &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="build - Build Packages" href="../reference/verb/build.html" />
+    <link rel="prev" title="Using Multiple Workspaces" href="using-multiple-workspaces.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overriding Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-avoid-common-issues">How to avoid common issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#use-isolated-workspaces">Use isolated workspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#override-every-package-that-depends-on-the-one-you-want-to-override">Override every package that depends on the one you want to override</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make-sure-overridden-python-packages-do-not-change-entry-point-specifications">Make sure overridden Python packages do not change entry point specifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-make-it-easier-for-your-users-to-override">How to make it easier for your users to override</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-headers-to-a-unique-include-directory">Install headers to a unique include directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dynamically-link-to-libraries-outside-your-package">Dynamically link to libraries outside your package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#handling-python-entry-point-specifications">Handling Python entry point specifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#all-known-issues">All Known issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#include-directory-search-order-problem">Include Directory Search Order Problem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#when-it-can-happen">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-avoid-it">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#unpredictable-behavior-when-overridden-package-breaks-api">Unpredictable behavior when overridden package breaks API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#undefined-behavior-when-overridden-package-breaks-abi">Undefined behavior when overridden package breaks ABI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#renamed-or-deleted-python-modules-still-importable">Renamed or deleted Python modules still importable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#one-definition-rule-violations-caused-by-static-linking">One-definition rule violations caused by static linking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-entry-points-are-duplicated">Python entry_points are duplicated</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">How to avoid it</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deleted-python-entry-points-may-still-be-loaded">Deleted Python entry_points may still be loaded</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">When it can happen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">How to avoid it</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Overriding Packages</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/overriding-packages.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="overriding-packages">
+<h1><a class="toc-backref" href="#id16">Overriding Packages</a><a class="headerlink" href="#overriding-packages" title="Permalink to this headline"></a></h1>
+<p>Assuming you know <a class="reference internal" href="what-is-a-workspace.html"><span class="doc">what a workspace is</span></a> and <a class="reference internal" href="using-multiple-workspaces.html"><span class="doc">how to use multiple workspaces</span></a>, you may decide you want to change the version of a package in an underlay without rebuilding the whole chain of workspaces.
+This can be done by  <strong>overriding</strong> the package.
+It is accomplished by sourcing an existing workspace, then building a different version of that package again in a new overlay workspace.</p>
+<p>Overriding a package is not always possible.
+This page offers tips for avoiding common issues.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overriding-packages" id="id16">Overriding Packages</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-to-avoid-common-issues" id="id17">How to avoid common issues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#use-isolated-workspaces" id="id18">Use isolated workspaces</a></p></li>
+<li><p><a class="reference internal" href="#override-every-package-that-depends-on-the-one-you-want-to-override" id="id19">Override every package that depends on the one you want to override</a></p></li>
+<li><p><a class="reference internal" href="#make-sure-overridden-python-packages-do-not-change-entry-point-specifications" id="id20">Make sure overridden Python packages do not change entry point specifications</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#how-to-make-it-easier-for-your-users-to-override" id="id21">How to make it easier for your users to override</a></p>
+<ul>
+<li><p><a class="reference internal" href="#install-headers-to-a-unique-include-directory" id="id22">Install headers to a unique include directory</a></p></li>
+<li><p><a class="reference internal" href="#dynamically-link-to-libraries-outside-your-package" id="id23">Dynamically link to libraries outside your package</a></p></li>
+<li><p><a class="reference internal" href="#handling-python-entry-point-specifications" id="id24">Handling Python entry point specifications</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#all-known-issues" id="id25">All Known issues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#include-directory-search-order-problem" id="id26">Include Directory Search Order Problem</a></p></li>
+<li><p><a class="reference internal" href="#unpredictable-behavior-when-overridden-package-breaks-api" id="id27">Unpredictable behavior when overridden package breaks API</a></p></li>
+<li><p><a class="reference internal" href="#undefined-behavior-when-overridden-package-breaks-abi" id="id28">Undefined behavior when overridden package breaks ABI</a></p></li>
+<li><p><a class="reference internal" href="#renamed-or-deleted-python-modules-still-importable" id="id29">Renamed or deleted Python modules still importable</a></p></li>
+<li><p><a class="reference internal" href="#one-definition-rule-violations-caused-by-static-linking" id="id30">One-definition rule violations caused by static linking</a></p></li>
+<li><p><a class="reference internal" href="#python-entry-points-are-duplicated" id="id31">Python entry_points are duplicated</a></p></li>
+<li><p><a class="reference internal" href="#deleted-python-entry-points-may-still-be-loaded" id="id32">Deleted Python entry_points may still be loaded</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="how-to-avoid-common-issues">
+<h2><a class="toc-backref" href="#id17">How to avoid common issues</a><a class="headerlink" href="#how-to-avoid-common-issues" title="Permalink to this headline"></a></h2>
+<p>These are good practices to avoid common issues.
+If the advice is too restrictive then see the known issue descriptions for more complex advice.</p>
+<div class="section" id="use-isolated-workspaces">
+<h3><a class="toc-backref" href="#id18">Use isolated workspaces</a><a class="headerlink" href="#use-isolated-workspaces" title="Permalink to this headline"></a></h3>
+<p>If you are building a workspace and suspect you may override a package from it in the future, then use an isolated workspace.
+This avoids include directory search order issues.
+See <a class="reference internal" href="isolated-vs-merged-workspaces.html"><span class="doc">this documentation</span></a> if you’re unsure what an isolated workspace is.</p>
+</div>
+<div class="section" id="override-every-package-that-depends-on-the-one-you-want-to-override">
+<h3><a class="toc-backref" href="#id19">Override every package that depends on the one you want to override</a><a class="headerlink" href="#override-every-package-that-depends-on-the-one-you-want-to-override" title="Permalink to this headline"></a></h3>
+<p>A <strong>leaf package</strong> is one that has no other packages that depend on it.
+Overriding a non-leaf package can be problematic.
+Packages in the underlay were built against the underlay version of the package, but they will be expected to run with the overlay version.
+If their build process stores some information about the non-leaf package, such as an expected ABI, then the behavior at runtime is unpredictable.</p>
+<p>Problems caused by packages remembering information at build time can be avoided by overriding every package that directly or indirectly depends on the one you actually want to override.
+The group of overridden packages must span all underlays.</p>
+<p>Say there are 3 workspaces, <strong>A</strong>, <strong>B</strong> and <strong>C</strong>, where <strong>C</strong> overlays <strong>B</strong> and <strong>B</strong> overlays <strong>A</strong>.
+<strong>A</strong> contains packages <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code> where <code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on <code class="docutils literal notranslate"><span class="pre">foo</span></code>.
+<strong>B</strong> contains packages <code class="docutils literal notranslate"><span class="pre">ping</span></code> that depends on <code class="docutils literal notranslate"><span class="pre">foo</span></code> and  <code class="docutils literal notranslate"><span class="pre">pong</span></code> that depends on <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<strong>C</strong> is the workspace being built.
+If you want to override <code class="docutils literal notranslate"><span class="pre">foo</span></code> then you should also override <code class="docutils literal notranslate"><span class="pre">baz</span></code>, <code class="docutils literal notranslate"><span class="pre">ping</span></code>, and <code class="docutils literal notranslate"><span class="pre">pong</span></code>.</p>
+</div>
+<div class="section" id="make-sure-overridden-python-packages-do-not-change-entry-point-specifications">
+<h3><a class="toc-backref" href="#id20">Make sure overridden Python packages do not change entry point specifications</a><a class="headerlink" href="#make-sure-overridden-python-packages-do-not-change-entry-point-specifications" title="Permalink to this headline"></a></h3>
+<p>Python packages may have <a class="reference external" href="https://packaging.python.org/en/latest/specifications/entry-points/">entry point specifications</a> in a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> or <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file.
+Make sure the package in the overlay has identical specifications to the version in the underlay, or only adds new ones.
+If any specification has been changed or removed then it may not be possible to override this package.</p>
+</div>
+</div>
+<div class="section" id="how-to-make-it-easier-for-your-users-to-override">
+<h2><a class="toc-backref" href="#id21">How to make it easier for your users to override</a><a class="headerlink" href="#how-to-make-it-easier-for-your-users-to-override" title="Permalink to this headline"></a></h2>
+<p>This section has advice for package authors about how to make easier for your users to use your package and override it or other packages.</p>
+<div class="section" id="install-headers-to-a-unique-include-directory">
+<h3><a class="toc-backref" href="#id22">Install headers to a unique include directory</a><a class="headerlink" href="#install-headers-to-a-unique-include-directory" title="Permalink to this headline"></a></h3>
+<p>Install your package’s headers to a unique folder rather than a shared folder.
+Say you’re the author of a package <code class="docutils literal notranslate"><span class="pre">foo</span></code>, and it has a header meant to be included like <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;foo/foo.hpp&gt;</span></code>.
+Instead of installing the header to <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;/include/foo/foo.hpp</span></code>, install it to <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;/include/foo/foo/foo.hpp</span></code>.</p>
+<p>If you have a CMake package <code class="docutils literal notranslate"><span class="pre">foo</span></code>  with the directory structure <code class="docutils literal notranslate"><span class="pre">include/foo/foo.hpp</span></code>, then it can install its headers to a unique directory with this:</p>
+<div class="highlight-CMake notranslate"><div class="highlight"><pre><span></span><span class="nb">install</span><span class="p">(</span><span class="s">DIRECTORY</span><span class="w"> </span><span class="s">include/</span><span class="w"> </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">include/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All exported targets in your project need to export the unique include directory too.</p>
+<div class="highlight-CMake notranslate"><div class="highlight"><pre><span></span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">some_library_in_foo</span><span class="w"> </span><span class="s">INTERFACE</span>
+<span class="w">  </span><span class="s2">&quot;$&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;&quot;</span>
+<span class="w">  </span><span class="s2">&quot;$&lt;INSTALL_INTERFACE:include/${PROJECT_NAME}&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dynamically-link-to-libraries-outside-your-package">
+<h3><a class="toc-backref" href="#id23">Dynamically link to libraries outside your package</a><a class="headerlink" href="#dynamically-link-to-libraries-outside-your-package" title="Permalink to this headline"></a></h3>
+<p>If your package <code class="docutils literal notranslate"><span class="pre">foo</span></code> statically links to a library from package <code class="docutils literal notranslate"><span class="pre">bar</span></code>, then users can’t override <code class="docutils literal notranslate"><span class="pre">bar</span></code> without also overriding yours.
+Prefer dynamic linking instead.</p>
+</div>
+<div class="section" id="handling-python-entry-point-specifications">
+<h3><a class="toc-backref" href="#id24">Handling Python entry point specifications</a><a class="headerlink" href="#handling-python-entry-point-specifications" title="Permalink to this headline"></a></h3>
+<p>If your package loads Python entry points and it encounters two specifications with the same name, then it should use the last specification returned by <a class="reference external" href="https://docs.python.org/3/library/importlib.metadata.html#entry-points">entry_points()</a>.
+It should also ignore entry points that can’t be loaded.</p>
+<p>Here’s how to do it:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">entry_points</span>
+
+<span class="c1"># Deduplicate entry point specifications before loading</span>
+<span class="n">deduplicated_entry_points</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># When faced with duplicates, this loop keeps the last entry point found</span>
+<span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">entry_points</span><span class="p">()[</span><span class="s1">&#39;your_group_name&#39;</span><span class="p">]:</span>
+    <span class="n">deduplicated_entry_points</span><span class="p">[</span><span class="n">ep</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ep</span>
+
+<span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">deduplicated_entry_points</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="c1"># Ignore entry point specifications that can&#39;t be loaded</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="all-known-issues">
+<h2><a class="toc-backref" href="#id25">All Known issues</a><a class="headerlink" href="#all-known-issues" title="Permalink to this headline"></a></h2>
+<div class="section" id="include-directory-search-order-problem">
+<h3><a class="toc-backref" href="#id26">Include Directory Search Order Problem</a><a class="headerlink" href="#include-directory-search-order-problem" title="Permalink to this headline"></a></h3>
+<p>When overriding a package, it’s possible for another package to find that package’s headers from the underlay instead of the overlay.
+This may cause a failure to build or unexpected behavior at runtime depending on the differences between those headers.</p>
+<p>Consider an overlay containing package <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code>, and an underlay containing <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> depends on <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+Say the underlay is a merged workspace, and both the overridden <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code> install their headers to a directory called <code class="docutils literal notranslate"><span class="pre">include/</span></code>.
+If any libraries or executables in <code class="docutils literal notranslate"><span class="pre">foo</span></code> are configured to search for headers in <code class="docutils literal notranslate"><span class="pre">baz</span></code>’s include directory first, then headers from overridden <code class="docutils literal notranslate"><span class="pre">bar</span></code> will also be found first.</p>
+<div class="section" id="when-it-can-happen">
+<h4>When it can happen<a class="headerlink" href="#when-it-can-happen" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The underlay workspace is a merged workspace</p></li>
+<li><p>The overridden package installs header files (C/C++)</p></li>
+<li><p>The overriding package’s headers are different from the overridden package’s</p></li>
+<li><p>Another package in the underlay is not overridden and installs headers to the same directory as the overridden package (such as <code class="docutils literal notranslate"><span class="pre">include</span></code>)</p></li>
+<li><p>A package in the overlay depends on both the package being overridden and the aforementioned additional package in the underlay</p></li>
+</ul>
+</div>
+<div class="section" id="how-to-avoid-it">
+<h4>How to avoid it<a class="headerlink" href="#how-to-avoid-it" title="Permalink to this headline"></a></h4>
+<div class="section" id="id1">
+<h5>Use isolated workspaces<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h5>
+<p>If your underlay is an isolated workspace, then no two packages in it will have the same include directory.
+Using an isolated overlay workspace won’t help if your underlay is already a merged workspace (for example, the default ROS installation when installed from binary packages).</p>
+</div>
+<div class="section" id="sort-include-directories-according-to-the-workspace-order">
+<h5>Sort include directories according to the workspace order<a class="headerlink" href="#sort-include-directories-according-to-the-workspace-order" title="Permalink to this headline"></a></h5>
+<p>One solution is to sort include directories before passing them to the compiler such that headers are found in overlay workspaces before underlays.
+This requires making the build system for every package in an overlay aware of workspaces and the order they were sourced.
+The only known implementation of this is the <code class="docutils literal notranslate"><span class="pre">find_package(catkin</span> <span class="pre">COMPONENTS</span> <span class="pre">...)</span></code> CMake feature in ROS 1.</p>
+</div>
+<div class="section" id="only-override-packages-that-install-headers-to-unique-include-directories">
+<h5>Only override packages that install headers to unique include directories<a class="headerlink" href="#only-override-packages-that-install-headers-to-unique-include-directories" title="Permalink to this headline"></a></h5>
+<p>If every package in the underlay installs their headers to unique directories, then packages in the overlay cannot accidentally find headers when depending on other packages in the underlay.</p>
+</div>
+</div>
+</div>
+<div class="section" id="unpredictable-behavior-when-overridden-package-breaks-api">
+<h3><a class="toc-backref" href="#id27">Unpredictable behavior when overridden package breaks API</a><a class="headerlink" href="#unpredictable-behavior-when-overridden-package-breaks-api" title="Permalink to this headline"></a></h3>
+<p>Consider an overlay containing <code class="docutils literal notranslate"><span class="pre">bar</span></code>, and an underlay containing <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on <code class="docutils literal notranslate"><span class="pre">bar</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">bar</span></code> in the overlay changed an API used by <code class="docutils literal notranslate"><span class="pre">baz</span></code>, then the behavior of <code class="docutils literal notranslate"><span class="pre">baz</span></code> at runtime can’t be predicted.</p>
+<div class="section" id="id2">
+<h4>When it can happen<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The overriding package removed or changed APIs compared to the overridden package</p></li>
+<li><p>A package in the underlay depends on the overridden package</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h4>How to avoid it<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
+<div class="section" id="build-everything-above-the-overridden-package-from-source">
+<h5>Build everything above the overridden package from source<a class="headerlink" href="#build-everything-above-the-overridden-package-from-source" title="Permalink to this headline"></a></h5>
+<p>If an API has changed, then every package in the underlay which depends on the overridden package (directly or indirectly) must be overridden too.
+You will need to find versions of those packages that are compatible with the API changes.</p>
+</div>
+</div>
+</div>
+<div class="section" id="undefined-behavior-when-overridden-package-breaks-abi">
+<h3><a class="toc-backref" href="#id28">Undefined behavior when overridden package breaks ABI</a><a class="headerlink" href="#undefined-behavior-when-overridden-package-breaks-abi" title="Permalink to this headline"></a></h3>
+<p>Consider an overlay containing <code class="docutils literal notranslate"><span class="pre">bar</span></code>, and an underlay containing <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on <code class="docutils literal notranslate"><span class="pre">bar</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">bar</span></code> in the overlay changed ABI, then it is unpredictable what will happen when <code class="docutils literal notranslate"><span class="pre">baz</span></code> is used at runtime.</p>
+<div class="section" id="id4">
+<h4>When it can happen<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The overridden package uses a compiled language (C/C++, etc.)</p></li>
+<li><p>The overriding package is ABI incompatible with the overridden one</p></li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h4>How to avoid it<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h4>
+<div class="section" id="id6">
+<h5>Build everything above the overridden package from source<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h5>
+<p>If ABI has changed, then every package in the underlay which depends on the overridden package (directly or indirectly) must be overridden too.
+If only ABI has changed, then no changes to the packages are needed.
+Compiling them again is enough.</p>
+</div>
+</div>
+</div>
+<div class="section" id="renamed-or-deleted-python-modules-still-importable">
+<h3><a class="toc-backref" href="#id29">Renamed or deleted Python modules still importable</a><a class="headerlink" href="#renamed-or-deleted-python-modules-still-importable" title="Permalink to this headline"></a></h3>
+<p>Consider an overlay containing a Python package <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> and an underlay containing a Python package <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code>.
+<code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> in the underlay installs the Python modules <code class="docutils literal notranslate"><span class="pre">foo</span></code>, <code class="docutils literal notranslate"><span class="pre">foo.bar</span></code>, and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> in the overlay installs only the Python modules <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<p>When the overlay is active, users will still be able to import <code class="docutils literal notranslate"><span class="pre">baz</span></code> from the underlay version of <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code>
+However, they will not be able to import <code class="docutils literal notranslate"><span class="pre">foo.bar</span></code> because Python will find the <code class="docutils literal notranslate"><span class="pre">foo</span></code> package in overlay first, and that one does not contain <code class="docutils literal notranslate"><span class="pre">bar</span></code>.</p>
+<div class="section" id="id7">
+<h4>When it can happen<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The package being overridden is a Python package</p></li>
+<li><p>The overridden package installs top level modules not present in the overriding package</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4>How to avoid it<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h4>
+<p>No workaround is known yet, but it’s unlikely to cause problems unless combined with another issue.</p>
+</div>
+</div>
+<div class="section" id="one-definition-rule-violations-caused-by-static-linking">
+<h3><a class="toc-backref" href="#id30">One-definition rule violations caused by static linking</a><a class="headerlink" href="#one-definition-rule-violations-caused-by-static-linking" title="Permalink to this headline"></a></h3>
+<p>Consider an overlay containing packages <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code>, and an underlay containing packages <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> depends on <code class="docutils literal notranslate"><span class="pre">bar</span></code> and <code class="docutils literal notranslate"><span class="pre">baz</span></code>.
+<code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on <code class="docutils literal notranslate"><span class="pre">bar</span></code> and has a library that statically links to another library in <code class="docutils literal notranslate"><span class="pre">bar</span></code>.
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> has a library depending on both the mentioned library in <code class="docutils literal notranslate"><span class="pre">baz</span></code> and in <code class="docutils literal notranslate"><span class="pre">bar</span></code>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">foo</span></code> is used there are two definitions for symbols from <code class="docutils literal notranslate"><span class="pre">bar</span></code>: the ones from the underlay version of <code class="docutils literal notranslate"><span class="pre">bar</span></code> via <code class="docutils literal notranslate"><span class="pre">baz</span></code>, and the one from the overlay version of <code class="docutils literal notranslate"><span class="pre">bar</span></code>.
+At runtime, the implementations from the underlay version may be used.</p>
+<div class="section" id="id9">
+<h4>When it can happen<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>a package in the underlay statically links to the overridden package</p></li>
+<li><p>a package in the overlay depends on the overriding package and the package in the underlay</p></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h4>How to avoid it<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h4>
+<div class="section" id="id11">
+<h5>Build everything above the overridden package from source<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h5>
+<p>All packages directly or indirectly depending on the overridden package must be added to the overlay.
+No changes to the packages are needed.
+Compiling them again is enough.</p>
+</div>
+</div>
+</div>
+<div class="section" id="python-entry-points-are-duplicated">
+<h3><a class="toc-backref" href="#id31">Python entry_points are duplicated</a><a class="headerlink" href="#python-entry-points-are-duplicated" title="Permalink to this headline"></a></h3>
+<p>Consider a package <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> that has an entry point specification  <code class="docutils literal notranslate"><span class="pre">foobar</span> <span class="pre">=</span> <span class="pre">pyfoo.bar:baz</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> is overridden and the overridden version has same specification, then the entry point will be listed twice.
+Whether or not it is a problem depends on how those entry points are loaded.</p>
+<p>If the code loading entry points loads all of them without checking for duplicates, then the same entry points may be used twice.</p>
+<div class="section" id="id12">
+<h4>When it can happen<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>A python package providing entry points is overridden with a version that provides the same specification.</p></li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h4>How to avoid it<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h4>
+<p>There is no known workaround.</p>
+</div>
+</div>
+<div class="section" id="deleted-python-entry-points-may-still-be-loaded">
+<h3><a class="toc-backref" href="#id32">Deleted Python entry_points may still be loaded</a><a class="headerlink" href="#deleted-python-entry-points-may-still-be-loaded" title="Permalink to this headline"></a></h3>
+<p>Consider a package <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> that has an entry point specification  <code class="docutils literal notranslate"><span class="pre">foobar</span> <span class="pre">=</span> <span class="pre">pyfoo.bar:baz</span></code>.
+say <code class="docutils literal notranslate"><span class="pre">pyfoo</span></code> is overridden and the overridden version does not have that specification.</p>
+<p>If the specification is still importable, then entry points from the underlay may be run undesirably.
+If the specification is not importable, then the code loading them must gracefully handle import errors.</p>
+<div class="section" id="id14">
+<h4>When it can happen<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>A python package providing entry points is overridden with a version that omits an entry point available in the underlay.</p></li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h4>How to avoid it<a class="headerlink" href="#id15" title="Permalink to this headline"></a></h4>
+<p>There is no known workaround.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="using-multiple-workspaces.html" class="btn btn-neutral float-left" title="Using Multiple Workspaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../reference/verb/build.html" class="btn btn-neutral float-right" title="build - Build Packages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

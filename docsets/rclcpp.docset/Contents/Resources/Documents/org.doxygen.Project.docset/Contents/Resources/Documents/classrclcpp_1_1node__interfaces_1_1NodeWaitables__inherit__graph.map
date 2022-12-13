@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::NodeWaitables" name="rclcpp::node_interfaces::NodeWaitables">
+<area shape="rect" id="node1" title="Implementation of the NodeWaitables part of the Node API." alt="" coords="12,95,185,136"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1node__interfaces_1_1NodeWaitablesInterface.html" title="Pure virtual interface class for the NodeWaitables part of the Node API." alt="" coords="5,5,192,47"/>
+</map>

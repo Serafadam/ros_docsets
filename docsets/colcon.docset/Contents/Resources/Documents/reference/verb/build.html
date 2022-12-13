@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>build - Build Packages — colcon  documentation</title>
+<link href="../../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/colcon.ico" rel="shortcut icon"/>
+<!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+<script src="../../_static/jquery.js"></script>
+<script src="../../_static/underscore.js"></script>
+<script src="../../_static/doctools.js"></script>
+<script src="../../_static/js/theme.js"></script>
+<link href="../../genindex.html" rel="index" title="Index"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="edit.html" rel="next" title="edit - Edit File"/>
+<link href="../../user/overriding-packages.html" rel="prev" title="Overriding Packages"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../../index.html">
+<img alt="Logo" class="logo" src="../../_static/colcon.svg"/>
+</a>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-arguments">Command line arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cmake-specific-arguments">CMake specific arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ros-ament-cmake-specific-arguments">ROS <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> specific arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ros-catkin-specific-arguments">ROS <code class="docutils literal notranslate"><span class="pre">catkin</span></code> specific arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../index.html">colcon</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../../index.html"></a></li>
+<li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</li>
+<li class="wy-breadcrumbs-aside">
+<a href="../../_sources/reference/verb/build.rst.txt" rel="nofollow"> View page source</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="build-build-packages">
+<h1><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages<a class="headerlink" href="#build-build-packages" title="Permalink to this headline"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">build</span></code> verb is building a set of packages.
+It is provided by the <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> package.</p>
+<div class="section" id="command-line-arguments">
+<h2>Command line arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline"></a></h2>
+<p>These common arguments can be used:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../executor-arguments.html"><span class="doc">executor</span></a> arguments</p></li>
+<li><p><a class="reference internal" href="../event-handler-arguments.html"><span class="doc">event handler</span></a> arguments</p></li>
+<li><p><a class="reference internal" href="../discovery-arguments.html"><span class="doc">discovery</span></a> arguments</p></li>
+<li><p><a class="reference internal" href="../package-selection-arguments.html"><span class="doc">package selection</span></a> arguments</p></li>
+<li><p><a class="reference internal" href="../mixin-arguments.html"><span class="doc">mixin</span></a> arguments</p></li>
+</ul>
+<p>Additionally, the following specific command line arguments can be used:</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_build-base_arg"></a><dl class="simple" id="build-verb-build-base-arg">
+<dt>\–build-base BUILD_BASE</dt><dd><p>The base path for all build directories.
+The default value is <code class="docutils literal notranslate"><span class="pre">./build</span></code>.
+Each package uses a subdirectory in that base path as its package specific
+build directory.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_install-base_arg"></a><dl class="simple" id="build-verb-install-base-arg">
+<dt>\–install-base INSTALL_BASE</dt><dd><p>The base path for all install prefixes.
+The default value is <code class="docutils literal notranslate"><span class="pre">./install</span></code>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_merge-install_arg"></a><dl id="build-verb-merge-install-arg">
+<dt>\–merge-install</dt><dd><p>Use the <code class="docutils literal notranslate"><span class="pre">--install-base</span></code> as the install prefix for all packages instead of
+a package specific subdirectory in the install base.</p>
+<p>Without this option each package will contribute its own paths to environment
+variables which leads to very long environment variable values.</p>
+<p>With this option most of the paths added to environment variables will be the
+same, resulting in shorter environment variable
+values.</p>
+<p>The disadvantage of using this option is that it doesn’t provide proper
+isolation between packages.
+For example declaring a dependency on one package also allows access to
+resources from other packages installed in the same install prefix (without
+requiring a declared dependency).</p>
+<p>Note: on Windows using <code class="docutils literal notranslate"><span class="pre">cmd</span></code> this argument should be used for workspaces
+with many packages otherwise the environment variables might exceed the
+supported maximum length.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_symlink-install_arg"></a><dl class="simple" id="build-verb-symlink-install-arg">
+<dt>\–symlink-install</dt><dd><p>Use symlinks instead of copying files from the source and build directories
+where possible.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_test-result-base_arg"></a><dl class="simple" id="build-verb-test-result-base-arg">
+<dt>\–test-result-base TEST_RESULT_BASE</dt><dd><p>The base path for all test results.
+The default value is the <code class="docutils literal notranslate"><span class="pre">--build-base</span></code> argument.
+Each package uses a subdirectory in that base path as its package specific
+test result directory.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_continue-on-error_arg"></a><dl class="simple" id="build-verb-continue-on-error-arg">
+<dt>\–continue-on-error</dt><dd><p>Continue building other packages when a package fails to build.
+Packages recursively depending on the failed package are skipped.</p>
+</dd>
+</dl>
+<div class="section" id="cmake-specific-arguments">
+<h3>CMake specific arguments<a class="headerlink" href="#cmake-specific-arguments" title="Permalink to this headline"></a></h3>
+<p>The following arguments are provided by the <code class="docutils literal notranslate"><span class="pre">colcon-cmake</span></code> package:</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-args_arg"></a><dl class="simple" id="build-verb-cmake-args-arg">
+<dt>\–cmake-args [* [* …]]</dt><dd><p>Pass arbitrary arguments to CMake projects.
+Arguments matching other options must be prefixed by a space, e.g.
+<code class="docutils literal notranslate"><span class="pre">--cmake-args</span> <span class="pre">"</span> <span class="pre">--help"</span></code>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-target_arg"></a><dl class="simple" id="build-verb-cmake-target-arg">
+<dt>\–cmake-target CMAKE_TARGET</dt><dd><p>Build a specific target instead of the default target.
+To avoid packages which don’t have that target causing the build to fail, also pass
+<a class="reference internal" href="#build-verb-cmake-target-skip-unavailable-arg"><span class="std std-ref">–cmake-target-skip-unavailable</span></a>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-target-skip-unavailable_arg"></a><dl class="simple" id="build-verb-cmake-target-skip-unavailable-arg">
+<dt>\–cmake-target-skip-unavailable</dt><dd><p>Skip building packages which don’t have the target passed to
+<a class="reference internal" href="#build-verb-cmake-target-arg"><span class="std std-ref">–cmake-target</span></a>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-clean-cache_arg"></a><dl class="simple" id="build-verb-cmake-clean-cache-arg">
+<dt>\–cmake-clean-cache</dt><dd><p>Remove the CMake cache file <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code> from the build directory
+before proceeding with the build.
+This implicitly forces a CMake configure step.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-clean-first_arg"></a><dl class="simple" id="build-verb-cmake-clean-first-arg">
+<dt>\–cmake-clean-first</dt><dd><p>Build the target <code class="docutils literal notranslate"><span class="pre">clean</span></code> first, then proceed with a regular build.
+To only invoke the clean target use
+<a class="reference internal" href="#build-verb-cmake-target-arg"><span class="std std-ref">–cmake-target clean</span></a>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_cmake-force-configure_arg"></a><dl class="simple" id="build-verb-cmake-force-configure-arg">
+<dt>\–cmake-force-configure</dt><dd><p>Force CMake configure step.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ros-ament-cmake-specific-arguments">
+<h3>ROS <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code> specific arguments<a class="headerlink" href="#ros-ament-cmake-specific-arguments" title="Permalink to this headline"></a></h3>
+<p>The following arguments are provided by the <code class="docutils literal notranslate"><span class="pre">colcon-ros</span></code> package:</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_ament-cmake-args_arg"></a><dl class="simple" id="build-verb-ament-cmake-args-arg">
+<dt>\–ament-cmake-args [* [* …]]</dt><dd><p>Pass arbitrary arguments to ROS packages with the build type <code class="docutils literal notranslate"><span class="pre">ament_cmake</span></code>.
+Arguments matching other options must be prefixed by a space, e.g.
+<code class="docutils literal notranslate"><span class="pre">--ament-cmake-args</span> <span class="pre">"</span> <span class="pre">--help"</span></code>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ros-catkin-specific-arguments">
+<h3>ROS <code class="docutils literal notranslate"><span class="pre">catkin</span></code> specific arguments<a class="headerlink" href="#ros-catkin-specific-arguments" title="Permalink to this headline"></a></h3>
+<p>The following arguments are provided by the <code class="docutils literal notranslate"><span class="pre">colcon-ros</span></code> package:</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_catkin-cmake-args_arg"></a><dl class="simple" id="build-verb-catkin-cmake-args-arg">
+<dt>\–catkin-cmake-args [* [* …]]</dt><dd><p>Pass arbitrary arguments to ROS packages with the build type <code class="docutils literal notranslate"><span class="pre">catkin</span></code>.
+Arguments matching other options must be prefixed by a space, e.g.
+<code class="docutils literal notranslate"><span class="pre">--catkin-cmake-args</span> <span class="pre">"</span> <span class="pre">--help"</span></code>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/build-verb_catkin-skip-building-tests_arg"></a><dl class="simple" id="build-verb-catkin-skip-building-tests-arg">
+<dt>\–catkin-skip-building-tests</dt><dd><p>By default the <code class="docutils literal notranslate"><span class="pre">tests</span></code> target building the tests in <code class="docutils literal notranslate"><span class="pre">catkin</span></code> packages is
+invoked.
+If running <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span></code> later isn’t intended this can be skipped.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="../../user/overriding-packages.html" rel="prev" title="Overriding Packages"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="edit.html" rel="next" title="edit - Edit File">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<map id="rclcpp::strategies::message_pool_memory_strategy::MessagePoolMemoryStrategy&lt; MessageT, Size, &gt;" name="rclcpp::strategies::message_pool_memory_strategy::MessagePoolMemoryStrategy&lt; MessageT, Size, &gt;">
+<area shape="rect" id="node1" title="Completely static memory allocation strategy for messages." alt="" coords="19,109,249,180"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1message__memory__strategy_1_1MessageMemoryStrategy.html" title="Default allocation strategy for messages received by subscriptions." alt="" coords="5,5,263,61"/>
+</map>

@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quality of Service — rclpy 3.2.1 documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/alabaster.css" rel="stylesheet" type="text/css"/>
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/sphinx_highlight.js"></script>
+<link href="../about.html" rel="author" title="About these documents"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="utilities.html" rel="prev" title="Utilities"/>
+<link href="../_static/custom.css" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
+</head><body>
+<div class="document">
+<div class="documentwrapper">
+<div class="bodywrapper">
+<div class="body" role="main">
+<div class="section" id="module-rclpy.qos">
+<span id="quality-of-service"></span><a class="dashAnchor" name="//apple_ref/cpp/Module/rclpy.qos"></a><h1>Quality of Service<a class="headerlink" href="#module-rclpy.qos" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">DurabilityPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.DurabilityPolicy"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum for QoS Durability settings.</p>
+<p>This enum matches the one defined in rmw/types.h</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_DURABILITY_SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_DURABILITY_UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_VOLATILE">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_DURABILITY_VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_VOLATILE"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.RMW_QOS_POLICY_DURABILITY_VOLATILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.TRANSIENT_LOCAL">
+<span class="sig-name descname"><span class="pre">TRANSIENT_LOCAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.TRANSIENT_LOCAL"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.TRANSIENT_LOCAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.DurabilityPolicy.VOLATILE">
+<span class="sig-name descname"><span class="pre">VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.DurabilityPolicy.VOLATILE"></a><a class="headerlink" href="#rclpy.qos.DurabilityPolicy.VOLATILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">HistoryPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.HistoryPolicy"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum for QoS History settings.</p>
+<p>This enum matches the one defined in rmw/types.h</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.KEEP_ALL">
+<span class="sig-name descname"><span class="pre">KEEP_ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.KEEP_ALL"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.KEEP_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.KEEP_LAST">
+<span class="sig-name descname"><span class="pre">KEEP_LAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.KEEP_LAST"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.KEEP_LAST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_ALL">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_HISTORY_KEEP_ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_ALL"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_LAST">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_HISTORY_KEEP_LAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_LAST"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_KEEP_LAST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_HISTORY_SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_UNKNOWN">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_HISTORY_UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.RMW_QOS_POLICY_HISTORY_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.HistoryPolicy.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.HistoryPolicy.UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.HistoryPolicy.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="rclpy.qos.InvalidQoSProfileException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">InvalidQoSProfileException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Exception/rclpy.qos.InvalidQoSProfileException"></a><a class="headerlink" href="#rclpy.qos.InvalidQoSProfileException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when constructing a QoSProfile with invalid arguments.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">LivelinessPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.LivelinessPolicy"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum for QoS Liveliness settings.</p>
+<p>This enum matches the one defined in rmw/types.h</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.AUTOMATIC">
+<span class="sig-name descname"><span class="pre">AUTOMATIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.AUTOMATIC"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.AUTOMATIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.MANUAL_BY_TOPIC">
+<span class="sig-name descname"><span class="pre">MANUAL_BY_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.MANUAL_BY_TOPIC"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.MANUAL_BY_TOPIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_DURABILITY_UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_DURABILITY_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_AUTOMATIC">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_LIVELINESS_AUTOMATIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_AUTOMATIC"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_AUTOMATIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.LivelinessPolicy.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.LivelinessPolicy.UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.LivelinessPolicy.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSDurabilityPolicy">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSDurabilityPolicy</span></span><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSDurabilityPolicy"></a><a class="headerlink" href="#rclpy.qos.QoSDurabilityPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#rclpy.qos.DurabilityPolicy" title="rclpy.qos.DurabilityPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DurabilityPolicy</span></code></a></p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSHistoryPolicy">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSHistoryPolicy</span></span><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSHistoryPolicy"></a><a class="headerlink" href="#rclpy.qos.QoSHistoryPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#rclpy.qos.HistoryPolicy" title="rclpy.qos.HistoryPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">HistoryPolicy</span></code></a></p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSLivelinessPolicy">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSLivelinessPolicy</span></span><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSLivelinessPolicy"></a><a class="headerlink" href="#rclpy.qos.QoSLivelinessPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#rclpy.qos.LivelinessPolicy" title="rclpy.qos.LivelinessPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">LivelinessPolicy</span></code></a></p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSPolicyEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.QoSPolicyEnum"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base for QoS Policy enumerations.</p>
+<p>Provides helper function to filter keys for utilities.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyEnum.get_from_short_key">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_from_short_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Method/rclpy.qos.QoSPolicyEnum.get_from_short_key"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyEnum.get_from_short_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a policy type from a short name, case-insensitive.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyEnum.short_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">short_key</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSPolicyEnum.short_key"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyEnum.short_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyEnum.short_keys">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">short_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Method/rclpy.qos.QoSPolicyEnum.short_keys"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyEnum.short_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of shortened typing-friendly enum values.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSPolicyKind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.QoSPolicyKind"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum for types of QoS policies that a Publisher or Subscription can set.</p>
+<p>This enum matches the one defined in rmw/incompatible_qos_events_statuses.h</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.AVOID_ROS_NAMESPACE_CONVENTIONS">
+<span class="sig-name descname"><span class="pre">AVOID_ROS_NAMESPACE_CONVENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">512</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.AVOID_ROS_NAMESPACE_CONVENTIONS"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.AVOID_ROS_NAMESPACE_CONVENTIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.DEADLINE">
+<span class="sig-name descname"><span class="pre">DEADLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.DEADLINE"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.DEADLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.DEPTH">
+<span class="sig-name descname"><span class="pre">DEPTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.DEPTH"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.DEPTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.DURABILITY">
+<span class="sig-name descname"><span class="pre">DURABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.DURABILITY"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.DURABILITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.HISTORY">
+<span class="sig-name descname"><span class="pre">HISTORY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.HISTORY"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.HISTORY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.INVALID">
+<span class="sig-name descname"><span class="pre">INVALID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.INVALID"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.INVALID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.LIFESPAN">
+<span class="sig-name descname"><span class="pre">LIFESPAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.LIFESPAN"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.LIFESPAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.LIVELINESS">
+<span class="sig-name descname"><span class="pre">LIVELINESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.LIVELINESS"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.LIVELINESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.LIVELINESS_LEASE_DURATION">
+<span class="sig-name descname"><span class="pre">LIVELINESS_LEASE_DURATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.LIVELINESS_LEASE_DURATION"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.LIVELINESS_LEASE_DURATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPolicyKind.RELIABILITY">
+<span class="sig-name descname"><span class="pre">RELIABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPolicyKind.RELIABILITY"></a><a class="headerlink" href="#rclpy.qos.QoSPolicyKind.RELIABILITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSPresetProfiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.QoSPresetProfiles"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.ACTION_STATUS_DEFAULT">
+<span class="sig-name descname"><span class="pre">ACTION_STATUS_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.ACTION_STATUS_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.ACTION_STATUS_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Noted that the following are duplicated from QoSPolicyEnum.</p>
+<p>Our supported version of Python3 (3.5) doesn’t have a fix that allows mixins on Enum.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.PARAMETERS">
+<span class="sig-name descname"><span class="pre">PARAMETERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.PARAMETERS"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.PARAMETERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.PARAMETER_EVENTS">
+<span class="sig-name descname"><span class="pre">PARAMETER_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.PARAMETER_EVENTS"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.PARAMETER_EVENTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.SENSOR_DATA">
+<span class="sig-name descname"><span class="pre">SENSOR_DATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.SENSOR_DATA"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.SENSOR_DATA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.SERVICES_DEFAULT">
+<span class="sig-name descname"><span class="pre">SERVICES_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.SERVICES_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.SERVICES_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSPresetProfiles.UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.get_from_short_key">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_from_short_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Method/rclpy.qos.QoSPresetProfiles.get_from_short_key"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.get_from_short_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a policy type from a short name, case-insensitive.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.qos.QoSPresetProfiles.short_keys">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">short_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Method/rclpy.qos.QoSPresetProfiles.short_keys"></a><a class="headerlink" href="#rclpy.qos.QoSPresetProfiles.short_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of shortened typing-friendly enum values.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.QoSProfile"></a><a class="headerlink" href="#rclpy.qos.QoSProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define Quality of Service policies.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.avoid_ros_namespace_conventions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avoid_ros_namespace_conventions</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.avoid_ros_namespace_conventions"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.avoid_ros_namespace_conventions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘avoid_ros_namespace_conventions’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>avoid_ros_namespace_conventions attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.deadline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deadline</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.deadline"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘deadline’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>deadline attribute.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Duration</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.depth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.depth"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.depth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘depth’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>depth attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.durability">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">durability</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.durability"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.durability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘durability’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>durability attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>QoSDurabilityPolicy</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.get_c_qos_profile">
+<span class="sig-name descname"><span class="pre">get_c_qos_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Method/rclpy.qos.QoSProfile.get_c_qos_profile"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.get_c_qos_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.history">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.history"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘history’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>history attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>QoSHistoryPolicy</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.lifespan">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lifespan</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.lifespan"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.lifespan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘lifespan’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>lifespan attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Duration</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.liveliness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">liveliness</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.liveliness"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.liveliness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘liveliness’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>liveliness attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>QoSLivelinessPolicy</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.liveliness_lease_duration">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">liveliness_lease_duration</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.liveliness_lease_duration"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.liveliness_lease_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘liveliness_lease_duration’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>liveliness_lease_duration attribute.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Duration</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="rclpy.qos.QoSProfile.reliability">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reliability</span></span><a class="dashAnchor" name="//apple_ref/cpp/Property/rclpy.qos.QoSProfile.reliability"></a><a class="headerlink" href="#rclpy.qos.QoSProfile.reliability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get field ‘reliability’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>reliability attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>QoSReliabilityPolicy</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.QoSReliabilityPolicy">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">QoSReliabilityPolicy</span></span><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.QoSReliabilityPolicy"></a><a class="headerlink" href="#rclpy.qos.QoSReliabilityPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#rclpy.qos.ReliabilityPolicy" title="rclpy.qos.ReliabilityPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReliabilityPolicy</span></code></a></p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">ReliabilityPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Class/rclpy.qos.ReliabilityPolicy"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enum for QoS Reliability settings.</p>
+<p>This enum matches the one defined in rmw/types.h</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.BEST_EFFORT">
+<span class="sig-name descname"><span class="pre">BEST_EFFORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.BEST_EFFORT"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.BEST_EFFORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.RELIABLE">
+<span class="sig-name descname"><span class="pre">RELIABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.RELIABLE"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.RELIABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_RELIABLE">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_RELIABILITY_RELIABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_RELIABLE"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_RELIABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_RELIABILITY_SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_UNKNOWN">
+<span class="sig-name descname"><span class="pre">RMW_QOS_POLICY_RELIABILITY_UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.SYSTEM_DEFAULT">
+<span class="sig-name descname"><span class="pre">SYSTEM_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.SYSTEM_DEFAULT"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.SYSTEM_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rclpy.qos.ReliabilityPolicy.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="dashAnchor" name="//apple_ref/cpp/Attribute/rclpy.qos.ReliabilityPolicy.UNKNOWN"></a><a class="headerlink" href="#rclpy.qos.ReliabilityPolicy.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.qos.qos_check_compatible">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_check_compatible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">publisher_qos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription_qos</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.qos.qos_check_compatible"></a><a class="headerlink" href="#rclpy.qos.qos_check_compatible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if two QoS profiles are compatible.</p>
+<p>Two QoS profiles are compatible if a publisher and subscription
+using the QoS policies can communicate with each other.</p>
+<p>If any policies have value “system default” or “unknown” then it is possible that
+compatibility cannot be determined.
+In this case, the value QoSCompatibility.WARNING is set as part of
+the returned structure.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.qos.qos_policy_name_from_kind">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_policy_name_from_kind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy_kind</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.qos.qos_policy_name_from_kind"></a><a class="headerlink" href="#rclpy.qos.qos_policy_name_from_kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get QoS policy name from QoSPolicyKind enum.</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_action_status_default">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_action_status_default</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_action_status_default"></a><a class="headerlink" href="#rclpy.qos.qos_profile_action_status_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>For actions, using reliable reliability, transient-local durability.</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_parameter_events">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_parameter_events</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_parameter_events"></a><a class="headerlink" href="#rclpy.qos.qos_profile_parameter_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>For parameter change events. Currently same as the QoS profile for
+parameters.</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_parameters">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_parameters"></a><a class="headerlink" href="#rclpy.qos.qos_profile_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>For parameter communication. Similar to service QoS profile but with larger
+queue depth so that requests do not get lost.</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_sensor_data">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_sensor_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_sensor_data"></a><a class="headerlink" href="#rclpy.qos.qos_profile_sensor_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>For sensor data, using best effort reliability and small
+queue depth</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_services_default">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_services_default</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_services_default"></a><a class="headerlink" href="#rclpy.qos.qos_profile_services_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>For services, using reliable reliability and volatile durability</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_system_default">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_system_default</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_system_default"></a><a class="headerlink" href="#rclpy.qos.qos_profile_system_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the default QoS settings defined in the DDS vendor tool</p>
+</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="rclpy.qos.qos_profile_unknown">
+<span class="sig-prename descclassname"><span class="pre">rclpy.qos.</span></span><span class="sig-name descname"><span class="pre">qos_profile_unknown</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rclpy.qos.QoSProfile</span> <span class="pre">object&gt;</span></em><a class="dashAnchor" name="//apple_ref/cpp/Value/rclpy.qos.qos_profile_unknown"></a><a class="headerlink" href="#rclpy.qos.qos_profile_unknown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for initialization. Should not be used as the actual QoS profile.</p>
+</dd></dl>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+<div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">rclpy</a></h1>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="init_shutdown.html">Initialization, Shutdown, and Spinning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timers.html">Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_and_callbacks.html">Execution and Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quality of Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.DurabilityPolicy"><code class="docutils literal notranslate"><span class="pre">DurabilityPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.HistoryPolicy"><code class="docutils literal notranslate"><span class="pre">HistoryPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.InvalidQoSProfileException"><code class="docutils literal notranslate"><span class="pre">InvalidQoSProfileException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.LivelinessPolicy"><code class="docutils literal notranslate"><span class="pre">LivelinessPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSDurabilityPolicy"><code class="docutils literal notranslate"><span class="pre">QoSDurabilityPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSHistoryPolicy"><code class="docutils literal notranslate"><span class="pre">QoSHistoryPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSLivelinessPolicy"><code class="docutils literal notranslate"><span class="pre">QoSLivelinessPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSPolicyEnum"><code class="docutils literal notranslate"><span class="pre">QoSPolicyEnum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSPolicyKind"><code class="docutils literal notranslate"><span class="pre">QoSPolicyKind</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSPresetProfiles"><code class="docutils literal notranslate"><span class="pre">QoSPresetProfiles</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSProfile"><code class="docutils literal notranslate"><span class="pre">QoSProfile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.QoSReliabilityPolicy"><code class="docutils literal notranslate"><span class="pre">QoSReliabilityPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.ReliabilityPolicy"><code class="docutils literal notranslate"><span class="pre">ReliabilityPolicy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_check_compatible"><code class="docutils literal notranslate"><span class="pre">qos_check_compatible()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_policy_name_from_kind"><code class="docutils literal notranslate"><span class="pre">qos_policy_name_from_kind()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_action_status_default"><code class="docutils literal notranslate"><span class="pre">qos_profile_action_status_default</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_parameter_events"><code class="docutils literal notranslate"><span class="pre">qos_profile_parameter_events</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_parameters"><code class="docutils literal notranslate"><span class="pre">qos_profile_parameters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_sensor_data"><code class="docutils literal notranslate"><span class="pre">qos_profile_sensor_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_services_default"><code class="docutils literal notranslate"><span class="pre">qos_profile_services_default</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_system_default"><code class="docutils literal notranslate"><span class="pre">qos_profile_system_default</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.qos.qos_profile_unknown"><code class="docutils literal notranslate"><span class="pre">qos_profile_unknown</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+<li><a href="../index.html">Documentation overview</a><ul>
+<li><a href="../api.html">API</a><ul>
+<li>Previous: <a href="utilities.html" title="previous chapter">Utilities</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+<h3 id="searchlabel">Quick search</h3>
+<div class="searchformwrapper">
+<form action="../search.html" class="search" method="get">
+<input aria-labelledby="searchlabel" autocapitalize="off" autocomplete="off" autocorrect="off" name="q" spellcheck="false" type="text"/>
+<input type="submit" value="Go"/>
+</form>
+</div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+</div>
+</div>
+<div class="clearer"></div>
+</div>
+<div class="footer">
+      ©2016-2022, Open Source Robotics Foundation, Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/qos.rst.txt" rel="nofollow">Page source</a>
+</div>
+</body>
+</html>

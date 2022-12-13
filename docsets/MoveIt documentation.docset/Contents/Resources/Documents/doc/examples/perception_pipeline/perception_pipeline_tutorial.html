@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perception Pipeline Tutorial &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/perception_pipeline/perception_pipeline_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Hand-Eye Calibration" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html" />
+    <link rel="prev" title="Low Level Controllers" href="../controller_configuration/controller_configuration_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Perception Pipeline Tutorial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#yaml-configuration-file-point-cloud">YAML Configuration file (Point Cloud)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#yaml-configuration-file-depth-map">YAML Configuration file (Depth Map)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#update-the-launch-file">Update the launch file</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#add-the-yaml-file-to-the-launch-script">Add the YAML file to the launch script</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#octomap-configuration">Octomap Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#obstacle-avoidance">Obstacle Avoidance</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#running-the-interface">Running the Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#detecting-and-adding-object-as-collision-object">Detecting and Adding Object as Collision Object</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#running-the-code">Running the Code</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#relevant-code">Relevant Code</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#perception-related">Perception Related</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#storing-relevant-cylinder-values">Storing Relevant Cylinder Values</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#extracting-location-and-height">Extracting Location and Height</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#adding-cylinder-to-planning-scene">Adding Cylinder to Planning Scene</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Perception Pipeline Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/perception_pipeline/perception_pipeline_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="perception-pipeline-tutorial">
+<h1>Perception Pipeline Tutorial<a class="headerlink" href="#perception-pipeline-tutorial" title="Permalink to this headline"></a></h1>
+<p>MoveIt allows for seamless integration of 3D sensors using <a class="reference external" href="http://octomap.github.io/">Octomap</a>.
+Once properly configured, you should see something like this in rviz:</p>
+<a class="reference internal image-reference" href="../../../_images/perception_configuration_demo.png"><img alt="../../../_images/perception_configuration_demo.png" src="../../../_images/perception_configuration_demo.png" style="width: 700px;" /></a>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p>In this section, we will walk through configuring the 3D sensors on your robot with MoveIt. The primary component in MoveIt that deals with 3D perception is the Occupancy Map Updater. The updater uses a plugin architecture to process different types of input. The currently available plugins in MoveIt are:</p>
+<ul class="simple">
+<li><p>The PointCloud Occupancy Map Updater: which can take as input point clouds (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/PointCloud2</span></code>)</p></li>
+<li><p>The Depth Image Occupancy Map Updater: which can take as input Depth Images (<code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span></code>)</p></li>
+</ul>
+<p>To use the Occupancy Map Updater, it is only necessary to set the appropriate parameters on the ROS parameter server and to call <code class="docutils literal notranslate"><span class="pre">startWorldGeometryMonitor</span></code> from your <code class="docutils literal notranslate"><span class="pre">PlanningSceneMonitor</span></code>.  This latter step is performed automatically when using Move Group functionality like in this tutorial’s example, so in that case it is only necessary to set the parameters for the octomap and octomap updater.</p>
+<div class="section" id="yaml-configuration-file-point-cloud">
+<h3>YAML Configuration file (Point Cloud)<a class="headerlink" href="#yaml-configuration-file-point-cloud" title="Permalink to this headline"></a></h3>
+<p>We will have to generate a YAML configuration file for configuring the 3D sensors. Please see <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config/blob/melodic-devel/config/sensors_kinect_pointcloud.yaml">this example file</a> for processing point clouds.</p>
+<p>Save this file in the config folder in the robot’s moveit_config package with name “sensors_kinect_pointcloud.yaml”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sensors</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">sensor_plugin</span><span class="p">:</span> <span class="n">occupancy_map_monitor</span><span class="o">/</span><span class="n">PointCloudOctomapUpdater</span>
+    <span class="n">point_cloud_topic</span><span class="p">:</span> <span class="o">/</span><span class="n">camera</span><span class="o">/</span><span class="n">depth_registered</span><span class="o">/</span><span class="n">points</span>
+    <span class="n">max_range</span><span class="p">:</span> <span class="mf">5.0</span>
+    <span class="n">point_subsample</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="n">padding_offset</span><span class="p">:</span> <span class="mf">0.1</span>
+    <span class="n">padding_scale</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="n">max_update_rate</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="n">filtered_cloud_topic</span><span class="p">:</span> <span class="n">filtered_cloud</span>
+</pre></div>
+</div>
+<p><strong>The general parameters are:</strong></p>
+<ul class="simple">
+<li><p><em>sensor_plugin</em>: The name of the plugin that we are using.</p></li>
+<li><p><em>max_update_rate</em>: The octomap representation will be updated at rate less than or equal to this value.</p></li>
+</ul>
+<p><strong>Parameters specific to the Point cloud updater are:</strong></p>
+<ul class="simple">
+<li><p><em>point_cloud_topic</em>: This specifies the topic to listen on for a point cloud.</p></li>
+<li><p><em>max_range</em>: (in m) Points further than this will not be used.</p></li>
+<li><p><em>point_subsample</em>: Choose one of every <em>point_subsample</em> points.</p></li>
+<li><p><em>padding_offset</em>: The size of the padding (in cm).</p></li>
+<li><p><em>padding_scale</em>: The scale of the padding.</p></li>
+<li><p><em>filtered_cloud_topic</em>: The topic on which the filtered cloud will be published (mainly for debugging). The filtering cloud is the resultant cloud after self-filtering has been performed.</p></li>
+</ul>
+</div>
+<div class="section" id="yaml-configuration-file-depth-map">
+<h3>YAML Configuration file (Depth Map)<a class="headerlink" href="#yaml-configuration-file-depth-map" title="Permalink to this headline"></a></h3>
+<p>We will have to generate a YAML configuration file for configuring the 3D sensors. An <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config/blob/melodic-devel/config/sensors_kinect_depthmap.yaml">example file for processing depth images</a> can be found in the panda_moveit_config repository as well.
+Save this file in the config folder in the robot’s moveit_config package with name “sensors_kinect_depthmap.yaml”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sensors</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">sensor_plugin</span><span class="p">:</span> <span class="n">occupancy_map_monitor</span><span class="o">/</span><span class="n">DepthImageOctomapUpdater</span>
+    <span class="n">image_topic</span><span class="p">:</span> <span class="o">/</span><span class="n">camera</span><span class="o">/</span><span class="n">depth_registered</span><span class="o">/</span><span class="n">image_raw</span>
+    <span class="n">queue_size</span><span class="p">:</span> <span class="mi">5</span>
+    <span class="n">near_clipping_plane_distance</span><span class="p">:</span> <span class="mf">0.3</span>
+    <span class="n">far_clipping_plane_distance</span><span class="p">:</span> <span class="mf">5.0</span>
+    <span class="n">shadow_threshold</span><span class="p">:</span> <span class="mf">0.2</span>
+    <span class="n">padding_scale</span><span class="p">:</span> <span class="mf">4.0</span>
+    <span class="n">padding_offset</span><span class="p">:</span> <span class="mf">0.03</span>
+    <span class="n">max_update_rate</span><span class="p">:</span> <span class="mf">1.0</span>
+    <span class="n">filtered_cloud_topic</span><span class="p">:</span> <span class="n">filtered_cloud</span>
+</pre></div>
+</div>
+<p><strong>The general parameters are:</strong></p>
+<ul class="simple">
+<li><p><em>sensor_plugin</em>: The name of the plugin that we are using.</p></li>
+<li><p><em>max_update_rate</em>: The octomap representation will be updated at rate less than or equal to this value.</p></li>
+</ul>
+<p><strong>Parameters specific to the Depth Map updater are:</strong></p>
+<ul class="simple">
+<li><p><em>image_topic</em>: This specifies the topic to listen on for a depth image.</p></li>
+<li><p><em>queue_size</em>: The number of images to queue up.</p></li>
+<li><p><em>near_clipping_plane_distance</em>: The minimum distance before lack of visibility.</p></li>
+<li><p><em>far_clipping_plane_distance</em>: The maximum distance before lack of visibility.</p></li>
+<li><p><em>shadow_threshold</em>: The minimum brightness of the shadow map below an entity for its dynamic shadow to be visible</p></li>
+<li><p><em>padding_offset</em>: The size of the padding (in cm).</p></li>
+<li><p><em>padding_scale</em>: The scale of the padding.</p></li>
+<li><p><em>filtered_cloud_topic</em>: The topic on which the filtered cloud will be published (mainly for debugging). The filtering cloud is the resultant cloud after self-filtering has been performed.</p></li>
+</ul>
+</div>
+<div class="section" id="update-the-launch-file">
+<h3>Update the launch file<a class="headerlink" href="#update-the-launch-file" title="Permalink to this headline"></a></h3>
+<div class="section" id="add-the-yaml-file-to-the-launch-script">
+<h4>Add the YAML file to the launch script<a class="headerlink" href="#add-the-yaml-file-to-the-launch-script" title="Permalink to this headline"></a></h4>
+<p>You will now need to update the <em>sensor_manager.launch</em> file in the “launch” directory of your panda_moveit_config directory with this sensor information (this file is auto-generated by the Setup Assistant but is empty). You will need to add the following line into that file to configure the set of sensor sources for MoveIt to use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">rosparam</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;load&quot;</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;$(find panda_moveit_config)/config/sensors_kinect_pointcloud.yaml&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>If you are using depthmap change the name of the yaml file to <code class="docutils literal notranslate"><span class="pre">sensors_kinect_depthmap.yaml</span></code>.
+Note that you will need to input the path to the right file you have created above.</p>
+</div>
+<div class="section" id="octomap-configuration">
+<h4>Octomap Configuration<a class="headerlink" href="#octomap-configuration" title="Permalink to this headline"></a></h4>
+<p>You will also need to configure the <a class="reference external" href="http://octomap.github.io/">Octomap</a> by adding the following lines into the <em>sensor_manager.launch</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;octomap_frame&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;odom_combined&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;octomap_resolution&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;double&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;0.05&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;max_range&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;double&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;5.0&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>MoveIt uses an octree-based framework to represent the world around it. The <em>Octomap</em> parameters above are configuration parameters for this representation:</dt><dd><ul class="simple">
+<li><p><em>octomap_frame</em>: specifies the coordinate frame in which this representation will be stored. If you are working with a mobile robot, this frame should be a fixed frame in the world.</p></li>
+<li><p><em>octomap_resolution</em>: specifies the resolution at which this representation is maintained (in meters).</p></li>
+<li><p><em>max_range</em>: specifies the maximum range value to be applied for any sensor input to this node.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="obstacle-avoidance">
+<h2>Obstacle Avoidance<a class="headerlink" href="#obstacle-avoidance" title="Permalink to this headline"></a></h2>
+<p>If you set the initial and the final location of the robot in a way that there is no straight path between them, then the planner will automatically avoid the octomap and plan around it.</p>
+<a class="reference internal image-reference" href="../../../_images/obstacle_avoidance.gif"><img alt="../../../_images/obstacle_avoidance.gif" src="../../../_images/obstacle_avoidance.gif" style="width: 700px;" /></a>
+<div class="section" id="running-the-interface">
+<h3>Running the Interface<a class="headerlink" href="#running-the-interface" title="Permalink to this headline"></a></h3>
+<p>Roslaunch the launch file to run the code directly from moveit_tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_tutorials</span> <span class="n">obstacle_avoidance_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>You should see something like the image shown at the beginning of this tutorial.
+If not, you may have run into a <a class="reference external" href="http://wiki.ros.org/rviz/Troubleshooting">known OpenGL rendering issue</a>. To work around the issue, you can force CPU-based rendering with this command:</p>
+<blockquote>
+<div><p>export LIBGL_ALWAYS_SOFTWARE=1</p>
+</div></blockquote>
+<p>You can test obstacle avoidance for yourself by setting the goal state manually and then planning and executing. To learn how to do that look at <a class="reference internal" href="../../tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">MoveIt Quickstart in RViz</span></a></p>
+</div>
+</div>
+<div class="section" id="detecting-and-adding-object-as-collision-object">
+<h2>Detecting and Adding Object as Collision Object<a class="headerlink" href="#detecting-and-adding-object-as-collision-object" title="Permalink to this headline"></a></h2>
+<p>In this section, we will demonstrate an example of extracting a cylinder from a pointcloud, computing relevant values and adding it as a collision object to the planning scene.
+We will be working with point clouds but it can be implemented similarly with depth maps.</p>
+<p>After running the code, you should be able to see something like this in rviz:</p>
+<a class="reference internal image-reference" href="../../../_images/cylinder_collision_object.png"><img alt="../../../_images/cylinder_collision_object.png" src="../../../_images/cylinder_collision_object.png" style="width: 700px;" /></a>
+<div class="section" id="running-the-code">
+<h3>Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h3>
+<p>Roslaunch the launch file to run the code directly from moveit_tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_tutorials</span> <span class="n">detect_and_add_cylinder_collision_object_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>KNOWN ISSUE - You may see the following error when running the demo</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">.</span><span class="n">moveit_ros_planning</span><span class="o">.</span><span class="n">planning_scene_monitor</span><span class="p">:</span> <span class="n">Transform</span> <span class="n">error</span><span class="p">:</span> <span class="n">Lookup</span> <span class="n">would</span> <span class="n">require</span> <span class="n">extrapolation</span> <span class="n">into</span> <span class="n">the</span> <span class="n">future</span><span class="o">.</span>  <span class="n">Requested</span> <span class="n">time</span> <span class="mf">1527473962.793050157</span> <span class="n">but</span> <span class="n">the</span> <span class="n">latest</span> <span class="n">data</span> <span class="ow">is</span> <span class="n">at</span> <span class="n">time</span> <span class="mf">1527473962.776993978</span><span class="p">,</span> <span class="n">when</span> <span class="n">looking</span> <span class="n">up</span> <span class="n">transform</span> <span class="kn">from</span> <span class="nn">frame</span> <span class="p">[</span><span class="n">panda_link2</span><span class="p">]</span> <span class="n">to</span> <span class="n">frame</span> <span class="p">[</span><span class="n">camera_rgb_optical_frame</span><span class="p">]</span>
+<span class="n">ros</span><span class="o">.</span><span class="n">moveit_ros_perception</span><span class="p">:</span> <span class="n">Transform</span> <span class="n">cache</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">updated</span><span class="o">.</span> <span class="n">Self</span><span class="o">-</span><span class="n">filtering</span> <span class="n">may</span> <span class="n">fail</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>We are working on fixing it, it should not break the working of the demo.
+You can follow its status in the <a class="reference external" href="https://github.com/ros-planning/moveit_tutorials/issues/192">issue tracker</a></p>
+</div>
+<div class="section" id="relevant-code">
+<h3>Relevant Code<a class="headerlink" href="#relevant-code" title="Permalink to this headline"></a></h3>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/perception_pipeline">here</a> in the moveit_tutorials GitHub project.</p>
+<p>The details regarding the implementation of each of the perception pipeline function have been omitted in this tutorial as they are well documented <a class="reference external" href="http://wiki.ros.org/pcl/Tutorials">here</a>.</p>
+<div class="section" id="perception-related">
+<h4>Perception Related<a class="headerlink" href="#perception-related" title="Permalink to this headline"></a></h4>
+<p>First, convert from sensor_msgs to pcl::PointXYZRGB which is needed for most of the processing.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZRGB</span><span class="o">&gt;::</span><span class="n">Ptr</span><span class="w"> </span><span class="n">cloud</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">PointXYZRGB</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
+<span class="n">pcl</span><span class="o">::</span><span class="n">fromROSMsg</span><span class="p">(</span><span class="o">*</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">cloud</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Using passthough filter to get region of interest. A passthrough filter just eliminates the point cloud values
+which do not lie in the user specified range.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">passThroughFilter</span><span class="p">(</span><span class="n">cloud</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Declare normals and call function to compute point normals.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">Normal</span><span class="o">&gt;::</span><span class="n">Ptr</span><span class="w"> </span><span class="n">cloud_normals</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">pcl</span><span class="o">::</span><span class="n">Normal</span><span class="o">&gt;</span><span class="p">);</span><span class="w"></span>
+<span class="n">computeNormals</span><span class="p">(</span><span class="n">cloud</span><span class="p">,</span><span class="w"> </span><span class="n">cloud_normals</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>inliers_plane will hold the indices of the point cloud that correspond to a plane.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="o">::</span><span class="n">PointIndices</span><span class="o">::</span><span class="n">Ptr</span><span class="w"> </span><span class="nf">inliers_plane</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointIndices</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Detect and eliminate the plane on which the cylinder is kept to ease the process of finding the cylinder.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">removePlaneSurface</span><span class="p">(</span><span class="n">cloud</span><span class="p">,</span><span class="w"> </span><span class="n">inliers_plane</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We had calculated the point normals in a previous call to computeNormals,
+now we will be extracting the normals that correspond to the plane on which cylinder lies.
+It will be used to extract the cylinder.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">extractNormals</span><span class="p">(</span><span class="n">cloud_normals</span><span class="p">,</span><span class="w"> </span><span class="n">inliers_plane</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>ModelCoefficients will hold the parameters using which we can define a cylinder of infinite length.
+It has a public attribute <code> values</code> of type <code> std::vector&lt;float&gt;</code>.
+<br />
+<code> Values[0-2]</code> hold a point on the center line of the cylinder. <br />
+<code> Values[3-5]</code> hold direction vector of the z-axis. <br />
+<code> Values[6]</code> is the radius of the cylinder.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">pcl</span><span class="o">::</span><span class="n">ModelCoefficients</span><span class="o">::</span><span class="n">Ptr</span><span class="w"> </span><span class="nf">coefficients_cylinder</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">ModelCoefficients</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Extract the cylinder using SACSegmentation. */</span><span class="w"></span>
+<span class="n">extractCylinder</span><span class="p">(</span><span class="n">cloud</span><span class="p">,</span><span class="w"> </span><span class="n">coefficients_cylinder</span><span class="p">,</span><span class="w"> </span><span class="n">cloud_normals</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="storing-relevant-cylinder-values">
+<h4>Storing Relevant Cylinder Values<a class="headerlink" href="#storing-relevant-cylinder-values" title="Permalink to this headline"></a></h4>
+<p>The information that we have in <code> coefficients_cylinder</code> is not enough to define our
+cylinder.
+It does not have the actual location of the cylinder nor the actual height. <br />
+We define a struct to hold the parameters that are actually needed for defining a collision object completely.
+<br />
+There are 4 fields and a total of 7 parameters used to define this.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">AddCylinderParams</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Radius of the cylinder. */</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">radius</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Direction vector towards the z-axis of the cylinder. */</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Center point of the cylinder. */</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">center_pt</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Height of the cylinder. */</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Declare a variable of type AddCylinderParams and store relevant values from ModelCoefficients.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">AddCylinderParams</span><span class="o">*</span><span class="w"> </span><span class="n">cylinder_params</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Store the radius of the cylinder. */</span><span class="w"></span>
+<span class="w">    </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">radius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficients_cylinder</span><span class="o">-&gt;</span><span class="n">values</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Store direction vector of z-axis of cylinder. */</span><span class="w"></span>
+<span class="w">    </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficients_cylinder</span><span class="o">-&gt;</span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficients_cylinder</span><span class="o">-&gt;</span><span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coefficients_cylinder</span><span class="o">-&gt;</span><span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-location-and-height">
+<h4>Extracting Location and Height<a class="headerlink" href="#extracting-location-and-height" title="Permalink to this headline"></a></h4>
+<p>Compute the center point of the cylinder using standard geometry</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">extractLocationHeight</span><span class="p">(</span><span class="n">cloud</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Consider a point inside the point cloud and imagine that point is formed on a XY plane where the perpendicular
+distance from the plane to the camera is Z. <br />
+The perpendicular drawn from the camera to the plane hits at center of the XY plane. <br />
+We have the x and y coordinate of the point which is formed on the XY plane. <br />
+X is the horizontal axis and Y is the vertical axis. <br />
+C is the center of the plane which is Z meter away from the center of camera and A is any point on the plane.
+<br />
+Now we know Z is the perpendicular distance from the point to the camera. <br />
+If you need to find the  actual distance d from the point to the camera, you should calculate the hypotenuse-
+<code> hypot(point.z, point.x);</code> <br />
+angle the point made horizontally- <code> atan2(point.z,point.x);</code> <br />
+angle the point made Vertically- <code> atan2(point.z, point.y);</code> <br />
+Loop over the entire pointcloud.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atan2</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Find the coordinates of the highest point */</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">min_angle_y</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">min_angle_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angle</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Find the coordinates of the lowest point */</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">max_angle_y</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">max_angle_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angle</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point</span><span class="p">.</span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="cm">/* Store the center point of cylinder */</span><span class="w"></span>
+<span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">highest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">highest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">highest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Store the height of cylinder */</span><span class="w"></span>
+<span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="n">sqrt</span><span class="p">(</span><span class="n">pow</span><span class="p">((</span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pow</span><span class="p">((</span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">         </span><span class="n">pow</span><span class="p">((</span><span class="n">lowest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">highest_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Use the parameters extracted to add the cylinder to the planning scene as a collision object.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">addCylinder</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-cylinder-to-planning-scene">
+<h4>Adding Cylinder to Planning Scene<a class="headerlink" href="#adding-cylinder-to-planning-scene" title="Permalink to this headline"></a></h4>
+<p>Define a collision object ROS message.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">collision_object</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;camera_rgb_optical_frame&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cylinder&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Define a cylinder which will be added to the world.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">primitive</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">primitive</span><span class="p">.</span><span class="n">CYLINDER</span><span class="p">;</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Setting height of cylinder. */</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Setting radius of cylinder. */</span><span class="w"></span>
+<span class="n">primitive</span><span class="p">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">radius</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Define a pose for the cylinder (specified relative to frame_id).</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">cylinder_pose</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Computing and setting quaternion from axis angle representation. */</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="nf">cylinder_z_direction</span><span class="p">(</span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">direction_vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="nf">origin_z_direction</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="w"> </span><span class="mf">0.</span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="p">);</span><span class="w"></span>
+<span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="w"> </span><span class="n">axis</span><span class="p">;</span><span class="w"></span>
+<span class="n">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">origin_z_direction</span><span class="p">.</span><span class="n">cross</span><span class="p">(</span><span class="n">cylinder_z_direction</span><span class="p">);</span><span class="w"></span>
+<span class="n">axis</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="n">cylinder_z_direction</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">origin_z_direction</span><span class="p">));</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">axis</span><span class="p">.</span><span class="n">x</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">axis</span><span class="p">.</span><span class="n">y</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">axis</span><span class="p">.</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Setting the position of cylinder.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">cylinder_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="n">cylinder_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cylinder_params</span><span class="o">-&gt;</span><span class="n">center_pt</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Add cylinder as collision object</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">primitive</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">cylinder_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_object</span><span class="p">.</span><span class="n">ADD</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene_interface</span><span class="p">.</span><span class="n">applyCollisionObject</span><span class="p">(</span><span class="n">collision_object</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../controller_configuration/controller_configuration_tutorial.html" class="btn btn-neutral float-left" title="Low Level Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../hand_eye_calibration/hand_eye_calibration_tutorial.html" class="btn btn-neutral float-right" title="Hand-Eye Calibration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

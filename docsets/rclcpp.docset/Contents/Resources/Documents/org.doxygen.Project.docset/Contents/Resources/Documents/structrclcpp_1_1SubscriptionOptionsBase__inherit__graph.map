@@ -1,0 +1,5 @@
+<map id="rclcpp::SubscriptionOptionsBase" name="rclcpp::SubscriptionOptionsBase">
+<area shape="rect" id="node1" title="Non&#45;template base class for subscription options." alt="" coords="5,57,236,84"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1SubscriptionOptionsWithAllocator.html" title=" " alt="" coords="284,5,495,61"/>
+<area shape="rect" id="node3" href="$structrclcpp_1_1SubscriptionOptionsWithAllocator.html" title="Structure containing optional configuration for Subscriptions." alt="" coords="290,86,489,127"/>
+</map>

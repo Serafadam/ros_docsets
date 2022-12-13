@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Low Level Controllers &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/controller_configuration/controller_configuration_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Perception Pipeline Tutorial" href="../perception_pipeline/perception_pipeline_tutorial.html" />
+    <link rel="prev" title="URDF and SRDF" href="../urdf_srdf/urdf_srdf_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Low Level Controllers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#moveit-controller-managers">MoveIt Controller Managers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moveit-controller-interfaces">MoveIt Controller Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optional-allowed-trajectory-execution-duration-parameters">Optional Allowed Trajectory Execution Duration Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugging-information">Debugging Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remapping-joint-states-topic">Remapping /joint_states topic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trajectory-execution-manager-options">Trajectory Execution Manager Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-controller-manager">Example Controller Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simulation">Simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller-switching-and-namespaces">Controller Switching and Namespaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controllers-for-multiple-nodes">Controllers for Multiple Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ikfast/ikfast_tutorial.html">IKFast Kinematics Solver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Low Level Controllers</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/controller_configuration/controller_configuration_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="low-level-controllers">
+<h1>Low Level Controllers<a class="headerlink" href="#low-level-controllers" title="Permalink to this headline"></a></h1>
+<p>MoveIt typically publishes manipulator motion commands to a <a class="reference external" href="https://github.com/ros-controls/ros2_controllers/tree/master/joint_trajectory_controller">JointTrajectoryController</a>. This tutorial assumes MoveGroup is being used to control the robot rather than MoveItCpp or MoveIt Servo. A minimal setup is as follows:</p>
+<ol class="arabic simple">
+<li><p>A YAML config file. As best practice, we suggest naming this <code class="code docutils literal notranslate"><span class="pre">moveit_controllers.yaml</span></code>. It tells MoveIt which controllers are available, which joints are associated with each, and the MoveIt controller interface type (<code class="code docutils literal notranslate"><span class="pre">FollowJointTrajectory</span></code> or <code class="code docutils literal notranslate"><span class="pre">GripperCommand</span></code>). <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/ros2/panda_moveit_config/config/moveit_controllers.yaml">Example controller config file</a>.</p></li>
+<li><p>A launch file. This launch file must load the <code class="code docutils literal notranslate"><span class="pre">moveit_controllers</span></code> yaml file and specify the <code class="code docutils literal notranslate"><span class="pre">moveit_simple_controller_manager/MoveItSimpleControllerManager</span></code>. After these yaml files are loaded, they are passed as parameters to the Move Group node. <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/ros2/panda_moveit_config/launch/demo.launch.py">Example Move Group launch file</a>.</p></li>
+<li><p>Launch the corresponding <code class="code docutils literal notranslate"><span class="pre">ros2_control</span></code> JointTrajectoryControllers. This is separate from the MoveIt2 ecosystem. <a class="reference external" href="https://github.com/ros-controls/ros2_control_demos">Example ros2_control launching</a>. Each JointTrajectoryController provides an action interface. Given the yaml file above, MoveIt automatically connects to this action interface.</p></li>
+<li><p>Note: it is not required to use <code class="code docutils literal notranslate"><span class="pre">ros2_control</span></code> for your robot. You could write a proprietary action interface. In practice, 99% of users choose <code class="code docutils literal notranslate"><span class="pre">ros2_control</span></code>.</p></li>
+</ol>
+<div class="section" id="moveit-controller-managers">
+<h2>MoveIt Controller Managers<a class="headerlink" href="#moveit-controller-managers" title="Permalink to this headline"></a></h2>
+<p>The base class of controller managers is called MoveItControllerManager (MICM). One of the child classes of MICM is known as Ros2ControlManager (R2CM) and it is the best way to interface with ros2_control. The R2CM can parse the joint names in a trajectory command coming from MoveIt and activate the appropriate controllers. For example, it can automatically switch between controlling two manipulators in a single joint group at once to a single manipulator. To use a R2CM, just set <code class="code docutils literal notranslate"><span class="pre">moveit_manage_controllers</span> <span class="pre">=</span> <span class="pre">true</span></code> in the launch file. <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/ros2/panda_moveit_config/launch/demo.launch.py">Example R2CM launch file</a>.</p>
+</div>
+<div class="section" id="moveit-controller-interfaces">
+<h2>MoveIt Controller Interfaces<a class="headerlink" href="#moveit-controller-interfaces" title="Permalink to this headline"></a></h2>
+<p>The text above describes launching of a joint trajectory controller action interface. In addition, MoveIt supports parallel-jaw gripper control via action interface. This section describes the parameters of these two options.</p>
+<ol class="arabic simple">
+<li><p>FollowJointTrajectory Controller Interface</p></li>
+</ol>
+<dl class="simple">
+<dt>The parameters are:</dt><dd><ul class="simple">
+<li><p><em>name</em>: The name of the controller.  (See debugging information below for important notes).</p></li>
+<li><p><em>action_ns</em>: The action namespace for the controller. (See debugging information below for important notes).</p></li>
+<li><p><em>type</em>: The type of action being used (here FollowJointTrajectory).</p></li>
+<li><p><em>default</em>: The default controller is the primary controller chosen by MoveIt for communicating with a particular set of joints.</p></li>
+<li><p><em>joints</em>: Names of all the joints that are being addressed by this interface.</p></li>
+</ul>
+</dd>
+</dl>
+<ol class="arabic simple">
+<li><p>GripperCommand Controller Interface</p></li>
+</ol>
+<dl class="simple">
+<dt>The parameters are:</dt><dd><ul class="simple">
+<li><p><em>name</em>: The name of the controller.  (See debugging information below for important notes).</p></li>
+<li><p><em>action_ns</em>: The action namespace for the controller. (See debugging information below for important notes).</p></li>
+<li><p><em>type</em>: The type of action being used (here GripperCommand).</p></li>
+<li><p><em>default</em>: The default controller is the primary controller chosen by MoveIt for communicating with a particular set of joints.</p></li>
+<li><p><em>joints</em>: Names of all the joints that are being addressed by this interface.</p></li>
+<li><p><em>command_joint</em>: The single joint, controlling the actual state of the gripper. This is the only value that is sent to the controller. Has to be one of the joints above. If not specified, the first entry in <em>joints</em> will be used instead.</p></li>
+<li><p><em>parallel</em>: When this is set, <em>joints</em> should be of size 2, and the command will be the sum of the two joints.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="optional-allowed-trajectory-execution-duration-parameters">
+<h2>Optional Allowed Trajectory Execution Duration Parameters<a class="headerlink" href="#optional-allowed-trajectory-execution-duration-parameters" title="Permalink to this headline"></a></h2>
+<p>(TODO: update for ROS2)</p>
+<p>For each controller it is optional to set the <em>allowed_execution_duration_scaling</em> and <em>allowed_goal_duration_margin</em> parameters. These are controller-specific overrides of the global values <em>trajectory_execution/allowed_execution_duration_scaling</em> and <em>trajectory_execution/allowed_goal_duration_margin</em>. As opposed to the global values, the contoller-specific ones cannot be dynamically reconfigured at runtime. The parameters are used to compute the allowed trajectory execution duration by scaling the expected execution duration and adding the margin afterwards. If this duration is exceeded the trajectory will be cancelled. The controller-specific parameters can be set as follows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">controller_list</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">arm_controller</span>
+   <span class="n">action_ns</span><span class="p">:</span> <span class="n">follow_joint_trajectory</span>
+   <span class="nb">type</span><span class="p">:</span> <span class="n">FollowJointTrajectory</span>
+   <span class="n">allowed_execution_duration_scaling</span><span class="p">:</span> <span class="mf">1.2</span>
+   <span class="n">allowed_goal_duration_margin</span><span class="p">:</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debugging-information">
+<h2>Debugging Information<a class="headerlink" href="#debugging-information" title="Permalink to this headline"></a></h2>
+<p>(TODO: update for ROS2)</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">FollowJointTrajectory</span></code> or <code class="docutils literal notranslate"><span class="pre">GripperCommand</span></code> interfaces on your robot must be communicating in the namespace: <code class="docutils literal notranslate"><span class="pre">/name/action_ns</span></code>. In the above example, you should be able to see the following topics (using <em>ros2 topic list</em>) on your robot:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>/panda_arm_controller/follow_joint_trajectory/goal</p></li>
+<li><p>/panda_arm_controller/follow_joint_trajectory/feedback</p></li>
+<li><p>/panda_arm_controller/follow_joint_trajectory/result</p></li>
+<li><p>/hand_controller/gripper_action/goal</p></li>
+<li><p>/hand_controller/gripper_action/feedback</p></li>
+<li><p>/hand_controller/gripper_action/result</p></li>
+</ul>
+</div></blockquote>
+<p>You should also be able to see (using <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">info</span> <span class="pre">topic_name</span></code>) that the topics are published/subscribed to by the controllers on your robot and also by the <strong>move_group</strong> node.</p>
+</div>
+<div class="section" id="remapping-joint-states-topic">
+<h2>Remapping /joint_states topic<a class="headerlink" href="#remapping-joint-states-topic" title="Permalink to this headline"></a></h2>
+<p>(TODO: update for ROS2)</p>
+<p>When you run a <a class="reference internal" href="../move_group_interface/move_group_interface_tutorial.html"><span class="doc">move group node</span></a>, you may need to remap the topic /joint_states to /robot/joint_states, otherwise MoveIt won’t have feedback from the joints. To do this remapping you could make a simple launch file for your node as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">node</span> <span class="n">pkg</span><span class="o">=</span><span class="s2">&quot;moveit_ros_move_group&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;move_group&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;any_name&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">remap</span> <span class="n">from</span><span class="o">=</span><span class="s2">&quot;joint_states&quot;</span> <span class="n">to</span><span class="o">=</span><span class="s2">&quot;robot/joint_states&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">node</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Or you can make a subscriber with the correct topic name and then ensure that the starting robot state for your move group corresponds to a correct joints angle by using the call back of this subscriber.</p>
+</div>
+<div class="section" id="trajectory-execution-manager-options">
+<h2>Trajectory Execution Manager Options<a class="headerlink" href="#trajectory-execution-manager-options" title="Permalink to this headline"></a></h2>
+<p>There are several options for tuning the behavior and safety checks of the execution pipeline in MoveIt. In your <code class="docutils literal notranslate"><span class="pre">moveit_config</span></code> package edit the <code class="docutils literal notranslate"><span class="pre">trajectory_execution.launch.xml</span></code> file to change the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">execution_duration_monitoring</span></code>: when false, will not throw error is trajectory takes longer than expected to complete at the low-level controller side</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">allowed_goal_duration_margin</span></code>: Allow more than the expected execution time before triggering a trajectory cancel (applied after scaling)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">allowed_start_tolerance</span></code>: Allowed joint-value tolerance for validation that trajectory’s first point matches current robot state. If set to zero will skip waiting for robot to stop after execution</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="example-controller-manager">
+<h2>Example Controller Manager<a class="headerlink" href="#example-controller-manager" title="Permalink to this headline"></a></h2>
+<p>MoveIt controller managers, somewhat a misnomer, are the interfaces to your custom low level controllers. A better way to think of them are <em>controller interfaces</em>. For most use cases, the included <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_plugins/moveit_simple_controller_manager">MoveItSimpleControllerManager</a> is sufficient if your robot controllers already provide ROS actions for FollowJointTrajectory. If you use <em>ros_control</em>, the included <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_plugins/moveit_ros_control_interface">MoveItRosControlInterface</a> is also ideal.</p>
+<p>However, for some applications you might desire a more custom controller manager. An example template for starting your custom controller manager is provided <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/controller_configuration/src/moveit_controller_manager_example.cpp">here</a>.</p>
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline"></a></h2>
+<p>If you do not have a physical robot, <code class="code docutils literal notranslate"><span class="pre">ros2_control</span></code> makes it very easy to simulate one. Ignition or Gazebo is not required; RViz is sufficient. All examples in the <a class="reference external" href="https://github.com/ros-controls/ros2_control_demos">ros2_control_demos repo</a> are simulated.</p>
+</div>
+<div class="section" id="controller-switching-and-namespaces">
+<h2>Controller Switching and Namespaces<a class="headerlink" href="#controller-switching-and-namespaces" title="Permalink to this headline"></a></h2>
+<p>(TODO: update for ROS2)</p>
+<p>All controller names get prefixed by the namespace of their ros_control node. For this reason controller names should not contain slashes, and can’t be named <code class="docutils literal notranslate"><span class="pre">/</span></code>. For a particular node MoveIt can decide which controllers to have started or stopped. Since only controller names with registered allocator plugins are handled over MoveIt, MoveIt takes care of stopping controllers based on their claimed resources if a to-be-started controller needs any of those resources.</p>
+</div>
+<div class="section" id="controllers-for-multiple-nodes">
+<h2>Controllers for Multiple Nodes<a class="headerlink" href="#controllers-for-multiple-nodes" title="Permalink to this headline"></a></h2>
+<p>There is a variation on the Ros2ControlManager, the Ros2ControlMultiManager. Ros2ControlMultiManager can be used for more than one ros_control nodes. It works by creating several Ros2ControlManagers, one for each node. It instantiates them with their respective namespace and takes care of proper delegation. To use it must be added to the launch file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;moveit_controller_manager&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;moveit_ros_control_interface::Ros2ControlMultiManager&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../urdf_srdf/urdf_srdf_tutorial.html" class="btn btn-neutral float-left" title="URDF and SRDF" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../perception_pipeline/perception_pipeline_tutorial.html" class="btn btn-neutral float-right" title="Perception Pipeline Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

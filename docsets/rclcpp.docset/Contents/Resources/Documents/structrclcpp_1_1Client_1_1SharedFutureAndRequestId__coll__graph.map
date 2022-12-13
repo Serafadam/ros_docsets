@@ -1,0 +1,4 @@
+<map id="rclcpp::Client&lt; ServiceT &gt;::SharedFutureAndRequestId" name="rclcpp::Client&lt; ServiceT &gt;::SharedFutureAndRequestId">
+<area shape="rect" id="node1" title="A convenient Client::SharedFuture and request id pair." alt="" coords="5,109,227,151"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1detail_1_1FutureAndRequestId.html" title=" " alt="" coords="5,5,227,61"/>
+</map>

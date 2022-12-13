@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Bullet for Collision Checking &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/bullet_collision_checker/bullet_collision_checker.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Planning For Differential-Drive Mobile Base and an Arm" href="../mobile_base_arm/mobile_base_arm_tutorial.html" />
+    <link rel="prev" title="MoveItCpp Tutorial" href="../moveit_cpp/moveitcpp_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Bullet for Collision Checking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code">Running the Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#continuous-collision-detection">Continuous Collision Detection</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#relevant-code">Relevant Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#changing-the-collision-detector-to-bullet">Changing the collision detector to Bullet</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id1">Continuous Collision Detection</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-file">Launch file</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Using Bullet for Collision Checking</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/bullet_collision_checker/bullet_collision_checker.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="using-bullet-for-collision-checking">
+<h1>Using Bullet for Collision Checking<a class="headerlink" href="#using-bullet-for-collision-checking" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/bullet_collision_visualized.png"><img alt="../../../_images/bullet_collision_visualized.png" src="../../../_images/bullet_collision_visualized.png" style="width: 600px;" /></a>
+<p>In addition to the Flexible Collision Library (FCL), <a class="reference external" href="https://pybullet.org/wordpress/">Bullet Collision Detection</a> is available as a collision checker.
+The tutorial builds on top of the <a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html"><span class="doc">Visualizing Collisions</span></a> tutorial to show collisions.</p>
+<p>Furthermore, Continuous Collision Detection (CCD) is available and demonstrated with Bullet.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="running-the-code">
+<h2>Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline"></a></h2>
+<p>Roslaunch the launch file to run the code directly from moveit_tutorials:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_tutorials</span> <span class="n">bullet_collision_checker_tutorial</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>You should now see the Panda robot and a box both with interactive markers which you can drag around. Note that different to FCL, Bullet does not calculate all individual contact points for a shape but only the point of deepest penetration.</p>
+<div class="figure align-default">
+<img alt="../../../_images/fcl_vs_bullet_markers.png" src="../../../_images/fcl_vs_bullet_markers.png" />
+<div class="legend">
+<p>Left: FCL collision results. Right: Bullet collision results.</p>
+</div>
+</div>
+<p>Please note that the current implementation of Bullet as a collision detector is not thread safe as the internal collision managers are mutable members.</p>
+<div class="section" id="continuous-collision-detection">
+<h3>Continuous Collision Detection<a class="headerlink" href="#continuous-collision-detection" title="Permalink to this headline"></a></h3>
+<p>Additionally, Bullet has continuous collision capabilities. This means that it can be guaranteed that no collision occurs during the transition between two discrete robot states with the environment. To get a demonstration of the CCD click the <code class="docutils literal notranslate"><span class="pre">Next</span></code> button of the <code class="docutils literal notranslate"><span class="pre">moveit_visual_tools</span></code> panel on the bottom left in RViz. The interactive robot disappears and the robot appears in a state where its hand is just behind a box. On pressing next again, the robot jumps to a configuration where the hand is right in front of the box. In both states, no collision is detected (see terminal output).</p>
+<div class="figure align-default">
+<img alt="../../../_images/bullet_CCD_discrete.png" src="../../../_images/bullet_CCD_discrete.png" />
+<div class="legend">
+<p>Left: robot in configuration 1. Right: robot in configuration 2.</p>
+</div>
+</div>
+<p>On a following <code class="docutils literal notranslate"><span class="pre">Next</span></code>, CCD is performed using a casted robot model between the two discrete poses. A collision is reported
+(see terminal output for details).</p>
+<a class="reference internal image-reference" href="../../../_images/bullet_CCD_both_states.png"><img alt="../../../_images/bullet_CCD_both_states.png" src="../../../_images/bullet_CCD_both_states.png" style="width: 600px;" /></a>
+<p>Pressing <code class="docutils literal notranslate"><span class="pre">Next</span></code> one more time finishes the tutorial.</p>
+</div>
+</div>
+<div class="section" id="relevant-code">
+<h2>Relevant Code<a class="headerlink" href="#relevant-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/bullet_collision_checker">here</a> in the moveit_tutorials GitHub project. A lot of information necessary for understanding how this demo works is left out to keep this tutorial focused on Bullet. Please see <a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html"><span class="doc">Visualizing Collisions</span></a> for code explanation regarding the visualizing of the collisions.</p>
+<p>The code starts with creating an interactive robot and a new planning scene.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">InteractiveRobot</span><span class="w"> </span><span class="n">interactive_robot</span><span class="p">(</span><span class="s">&quot;robot_description&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bullet_collision_tutorial/interactive_robot_state&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">g_planning_scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="n">interactive_robot</span><span class="p">.</span><span class="n">robotModel</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="changing-the-collision-detector-to-bullet">
+<h3>Changing the collision detector to Bullet<a class="headerlink" href="#changing-the-collision-detector-to-bullet" title="Permalink to this headline"></a></h3>
+<p>The active collision detector is set from the planning scene using the specific collision detector allocator for
+Bullet.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">g_planning_scene</span><span class="o">-&gt;</span><span class="n">setActiveCollisionDetector</span><span class="p">(</span><span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionDetectorAllocatorBullet</span><span class="o">::</span><span class="n">create</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For understanding the interactive interactive_robot, please refer to the Visualizing Collisions tutorial.</p>
+</div>
+<div class="section" id="id1">
+<h3>Continuous Collision Detection<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>For the CCD demonstration, the Panda robot is loaded again and with it a new planning scene created. Bullet is
+again set as the active collision detector.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">robot_model</span><span class="o">::</span><span class="n">RobotModelPtr</span><span class="w"> </span><span class="n">robot_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">loadTestingRobotModel</span><span class="p">(</span><span class="s">&quot;panda&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">planning_scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">planning_scene</span><span class="o">::</span><span class="n">PlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robot_model</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">setActiveCollisionDetector</span><span class="p">(</span><span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionDetectorAllocatorBullet</span><span class="o">::</span><span class="n">create</span><span class="p">());</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The box is added and the robot brought into its position.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="w"> </span><span class="n">box_pose</span><span class="p">{</span><span class="w"> </span><span class="n">Eigen</span><span class="o">::</span><span class="n">Isometry3d</span><span class="o">::</span><span class="n">Identity</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.43</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">y</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">z</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.55</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">shapes</span><span class="o">::</span><span class="n">Box</span><span class="o">&gt;</span><span class="p">(</span><span class="n">BOX_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">BOX_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">BOX_SIZE</span><span class="p">);</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">getWorldNonConst</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addToObject</span><span class="p">(</span><span class="s">&quot;box&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">box_pose</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">robot_state</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">getCurrentStateNonConst</span><span class="p">();</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">setToDefaultValues</span><span class="p">();</span><span class="w"></span>
+
+<span class="kt">double</span><span class="w"> </span><span class="n">joint2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.785</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">joint4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-2.356</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">joint6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.571</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">joint7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.785</span><span class="p">;</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">setJointPositions</span><span class="p">(</span><span class="s">&quot;panda_joint2&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">joint2</span><span class="p">);</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">setJointPositions</span><span class="p">(</span><span class="s">&quot;panda_joint4&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">joint4</span><span class="p">);</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">setJointPositions</span><span class="p">(</span><span class="s">&quot;panda_joint6&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">joint6</span><span class="p">);</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">setJointPositions</span><span class="p">(</span><span class="s">&quot;panda_joint7&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">joint7</span><span class="p">);</span><span class="w"></span>
+<span class="n">state</span><span class="p">.</span><span class="n">update</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">robot_state</span><span class="o">::</span><span class="n">RobotState</span><span class="w"> </span><span class="nf">state_before</span><span class="p">(</span><span class="n">state</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, a collision check is performed and the result printed to the terminal.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionResult</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_detection</span><span class="o">::</span><span class="n">CollisionRequest</span><span class="w"> </span><span class="n">req</span><span class="p">;</span><span class="w"></span>
+<span class="n">req</span><span class="p">.</span><span class="n">contacts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">checkCollision</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+<span class="n">ROS_INFO_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;bullet_tutorial&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;In collision.&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Not in collision.&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This code is repeated for the second robot configuration.
+For the CCD check, we display both robot states at the same time.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">DisplayRobotState</span><span class="w"> </span><span class="n">msg_state_before</span><span class="p">;</span><span class="w"></span>
+<span class="n">robot_state</span><span class="o">::</span><span class="n">robotStateToRobotStateMsg</span><span class="p">(</span><span class="n">state_before</span><span class="p">,</span><span class="w"> </span><span class="n">msg_state_before</span><span class="p">.</span><span class="n">state</span><span class="p">);</span><span class="w"></span>
+<span class="n">robot_state_publisher_2</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg_state_before</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now a continuous collision check using the two different robot states can be performed. As the planning scene does
+not yet contain any direct functions to do CCD, we have to access the collision environment and perform the check.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="n">planning_scene</span><span class="o">-&gt;</span><span class="n">getCollisionEnv</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">checkRobotCollision</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">state_before</span><span class="p">);</span><span class="w"></span>
+<span class="n">ROS_INFO_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;bullet_tutorial&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">collision</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;In collision.&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;Not in collision.&quot;</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that the terminal output displays “In collision.”.</p>
+</div>
+</div>
+<div class="section" id="launch-file">
+<h2>Launch file<a class="headerlink" href="#launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is  <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/bullet_collision_checker">here</a> on GitHub. All the code in this tutorial can be compiled and run from the <code class="docutils literal notranslate"><span class="pre">moveit_tutorials</span></code> package.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../moveit_cpp/moveitcpp_tutorial.html" class="btn btn-neutral float-left" title="MoveItCpp Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../mobile_base_arm/mobile_base_arm_tutorial.html" class="btn btn-neutral float-right" title="Planning For Differential-Drive Mobile Base and an Arm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

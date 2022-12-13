@@ -1,0 +1,5 @@
+<map id="rclcpp::wait_set_policies::detail::WritePreferringReadWriteLock" name="rclcpp::wait_set_policies::detail::WritePreferringReadWriteLock">
+<area shape="rect" id="node1" title="Writer&#45;perferring read&#45;write lock." alt="" coords="5,55,277,97"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1WritePreferringReadWriteLock_1_1WriteMutex.html" title="Write mutex for the WritePreferringReadWriteLock." alt="" coords="419,5,661,61"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1WritePreferringReadWriteLock_1_1ReadMutex.html" title="Read mutex for the WritePreferringReadWriteLock." alt="" coords="419,91,661,147"/>
+</map>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IKFast Kinematics Solver &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/ikfast/ikfast_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="TRAC-IK Kinematics Solver" href="../trac_ik/trac_ik_tutorial.html" />
+    <link rel="prev" title="Hand-Eye Calibration" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html">MoveIt Setup Assistant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../urdf_srdf/urdf_srdf_tutorial.html">URDF and SRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../perception_pipeline/perception_pipeline_tutorial.html">Perception Pipeline Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hand_eye_calibration/hand_eye_calibration_tutorial.html">Hand-Eye Calibration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IKFast Kinematics Solver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-ikfast">What is IKFast?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moveit-ikfast">MoveIt IKFast</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-the-ikfast-moveit-plugin">Creating the IKFast MoveIt plugin</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#select-ik-type">Select IK Type</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#choose-planning-group">Choose Planning Group</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#generate-ikfast-moveit-plugin">Generate IKFast MoveIt plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#test-the-plugin">Test the Plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#updating-the-plugin">Updating the Plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tweaking-the-creation-process">Tweaking the creation process</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../trac_ik/trac_ik_tutorial.html">TRAC-IK Kinematics Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">IKFast Kinematics Solver</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/ikfast/ikfast_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="ikfast-kinematics-solver">
+<h1>IKFast Kinematics Solver<a class="headerlink" href="#ikfast-kinematics-solver" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/openrave_panda.png"><img alt="../../../_images/openrave_panda.png" src="../../../_images/openrave_panda.png" style="width: 700px;" /></a>
+<p>In this section, we will walk through configuring an IKFast plugin for MoveIt.</p>
+<div class="section" id="what-is-ikfast">
+<h2>What is IKFast?<a class="headerlink" href="#what-is-ikfast" title="Permalink to this headline"></a></h2>
+<p>IKFast, the Robot Kinematics Compiler, is a powerful inverse kinematics solver provided within Rosen Diankov’s <a class="reference external" href="http://openrave.org">OpenRAVE</a> motion planning software. IKFast automatically analyses any complex kinematic chain for common patterns that allow for an analytic solution and generates C++ code to find them.
+As a consequence, IKFast provides extremely stable solutions that can be found in a few microseconds on recent processors.</p>
+</div>
+<div class="section" id="moveit-ikfast">
+<h2>MoveIt IKFast<a class="headerlink" href="#moveit-ikfast" title="Permalink to this headline"></a></h2>
+<p>MoveIt provides tools to generate an IKFast kinematics plugin for MoveIt using the OpenRAVE generated cpp files.
+This tutorial will step you through setting up your robot to utilize the power of IKFast.
+MoveIt IKFast is tested on ROS Melodic with a 6DOF and 7DOF robot arm manipulator.
+While it works in theory, MoveIt IKFast doesn’t currently support &gt;7 degree of freedom arms.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+<p>You should have a MoveIt configuration package for your robot that was created by using the <a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html"><span class="doc">Setup Assistant</span></a>.</p>
+<p>OpenRAVE is a planning framework as complex as MoveIt itself and installing it is tricky – particularly because its public documentation is not maintained anymore.
+Fortunately, personalrobotics provide a <a class="reference external" href="https://hub.docker.com/r/personalrobotics/ros-openrave">docker image</a> based on Ubuntu 14.04 with OpenRAVE 0.9.0 and ROS Indigo installed, which can be used to generate the solver code once.</p>
+<p>So the easiest way to run the IKFast code generator is through this docker image.
+For manual building instructions (tailored towards Ubuntu 16.04), please see the <a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/ikfast/ikfast_tutorial.html">Kinetic version of this tutorial</a>.
+To follow the recommended, docker-based approach, ensure you have docker installed and started:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="o">.</span><span class="n">io</span>
+<span class="n">sudo</span> <span class="n">service</span> <span class="n">docker</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>The following command will ensure that you can run docker with your user account (adding $USER to the docker group):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo usermod -a -G docker $USER
+</pre></div>
+</div>
+<p>You need to log off/log on in order to actually activate this permission change.</p>
+<p>Install the MoveIt IKFast package either from Debian packages or from source.</p>
+<p><strong>Binary Install</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-${ROS_DISTRO}-moveit-kinematics
+</pre></div>
+</div>
+<p><strong>Source</strong></p>
+<p>Inside your catkin workspace’s <code class="docutils literal notranslate"><span class="pre">./src</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/ros-planning/moveit.git
+rosdep install -y --from-paths . --ignore-src --rosdistro ${ROS_DISTRO}
+catkin build
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-ikfast-moveit-plugin">
+<h2>Creating the IKFast MoveIt plugin<a class="headerlink" href="#creating-the-ikfast-moveit-plugin" title="Permalink to this headline"></a></h2>
+<p>To facilitate copy-and-paste, we suggest to define the robot name as an environment variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">MYROBOT_NAME</span><span class="o">=</span><span class="s2">&quot;panda_arm&quot;</span>
+</pre></div>
+</div>
+<p>OpenRAVE uses Collada instead of URDF to describe the robot. In order to automatically convert your robot’s URDF to Collada, you need to provide the .urdf file.
+If your .urdf file is generated from <a class="reference external" href="http://wiki.ros.org/xacro/">xacro</a> files, you can generate the URDF using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rosrun xacro xacro -o $MYROBOT_NAME.urdf $MYROBOT_NAME.urdf.xacro
+</pre></div>
+</div>
+<div class="section" id="select-ik-type">
+<h3>Select IK Type<a class="headerlink" href="#select-ik-type" title="Permalink to this headline"></a></h3>
+<p>You need to choose which type of IK you want to solve for. See <a class="reference external" href="http://openrave.org/docs/latest_stable/openravepy/ikfast/#ik-types">this page</a> for more info.
+The most common IK type is <em>transform6d</em>.</p>
+</div>
+<div class="section" id="choose-planning-group">
+<h3>Choose Planning Group<a class="headerlink" href="#choose-planning-group" title="Permalink to this headline"></a></h3>
+<p>If your robot has more than one arm or “planning group” that you want to generate an IKFast solver for, you need to repeat the following process for each group.
+The following instructions will assume you have chosen one <code class="docutils literal notranslate"><span class="pre">&lt;planning_group_name&gt;</span></code>. Furthermore, you need to know the names of the base link and the endeffector link of the chain to solve for.</p>
+</div>
+<div class="section" id="generate-ikfast-moveit-plugin">
+<h3>Generate IKFast MoveIt plugin<a class="headerlink" href="#generate-ikfast-moveit-plugin" title="Permalink to this headline"></a></h3>
+<p>To generate the IKFast MoveIt plugin, issue the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rosrun moveit_kinematics auto_create_ikfast_moveit_plugin.sh --iktype Transform6D $MYROBOT_NAME.urdf &lt;planning_group_name&gt; &lt;base_link&gt; &lt;eef_link&gt;
+</pre></div>
+</div>
+<p>The speed and success of this process will depend on the complexity of your robot. A typical 6 DOF manipulator with 3 intersecting axes at the base or wrist will take only a few minutes to generate the solver code. For a detailed explanation of the creation procedure and additional tweaks of the process, see <a class="reference internal" href="#tweaking-the-creation-process">Tweaking the creation process</a>.</p>
+<p>The command above creates a new ROS package named <code class="docutils literal notranslate"><span class="pre">$MYROBOT_NAME_&lt;planning_group_name&gt;_ikfast_plugin</span></code> within the current folder.
+Thus, you need to rebuild your workspace so the new package is detected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catkin</span> <span class="n">build</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<p>The IKFast plugin can be used as a drop-in replacement for the default KDL IK Solver, but with greatly increased performance. The MoveIt configuration file should be automatically edited by the generator script but in some cases this might fail. In this situation you can switch between the KDL and IKFast solvers using the <em>kinematics_solver</em> parameter in the robot’s kinematics.yaml file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosed</span> <span class="s2">&quot;$MYROBOT_NAME&quot;</span><span class="n">_moveit_config</span> <span class="n">kinematics</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>Edit these parts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">planning_group</span><span class="o">&gt;</span><span class="p">:</span>
+  <span class="n">kinematics_solver</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">myrobot_name</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">planning_group</span><span class="o">&gt;</span><span class="n">_ikfast_plugin</span><span class="o">/</span><span class="n">IKFastKinematicsPlugin</span>
+</pre></div>
+</div>
+<div class="section" id="test-the-plugin">
+<h3>Test the Plugin<a class="headerlink" href="#test-the-plugin" title="Permalink to this headline"></a></h3>
+<p>Use the MoveIt RViz Motion Planning Plugin and use the interactive markers to see if correct IK Solutions are found.</p>
+</div>
+</div>
+<div class="section" id="updating-the-plugin">
+<h2>Updating the Plugin<a class="headerlink" href="#updating-the-plugin" title="Permalink to this headline"></a></h2>
+<p>If any future changes occur with MoveIt or IKFast, you might need to re-generate this plugin using our scripts. To facilitate this, a bash script was automatically created in the root of your IKFast MoveIt package, named <em>update_ikfast_plugin.sh</em>. This regenerates the plugin from the OpenRAVE-generated .cpp solver file.</p>
+</div>
+<div class="section" id="tweaking-the-creation-process">
+<h2>Tweaking the creation process<a class="headerlink" href="#tweaking-the-creation-process" title="Permalink to this headline"></a></h2>
+<p>The process of creating the IKFast MoveIt plugin comprises several steps, performed one-by-one by the creation script:</p>
+<ol class="arabic">
+<li><p>Downloading the docker image provided by <a class="reference external" href="https://hub.docker.com/r/personalrobotics/ros-openrave">personalrobotics</a></p></li>
+<li><p>Converting the ROS URDF file to Collada required for OpenRAVE:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rosrun collada_urdf urdf_to_collada $MYROBOT_NAME.urdf $MYROBOT_NAME.dae
+</pre></div>
+</div>
+<p>Sometimes floating point issues arise in converting a URDF file to Collada, which prevents OpenRAVE to find IK solutions.
+Using a utility script, one can easily round all numbers down to n decimal places in your .dae file.
+From experience we recommend 5 decimal places, but if the OpenRave ikfast generator takes too long to find a solution (say more than an hour), lowering the accuracy should help. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rosrun moveit_kinematics round_collada_numbers.py $MYROBOT_NAME.dae $MYROBOT_NAME.rounded.dae 5
+</pre></div>
+</div>
+</li>
+<li><p>Running the OpenRAVE IKFast tool to generate C++ solver code</p></li>
+<li><p>Creating the MoveIt IKFast plugin package wrapping the generated solver</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">auto_create_ikfast_moveit_plugin.sh</span></code> script evaluates the file extension of the input file to determine which steps to run. To re-run the script from any intermediate step (e.g. after having tweaked the accuracy of the <code class="docutils literal notranslate"><span class="pre">.dae</span></code> file), simply provide the corresponding output from the previous step as input (<code class="docutils literal notranslate"><span class="pre">.dae</span></code> or <code class="docutils literal notranslate"><span class="pre">.cpp</span></code>) instead of the initial <code class="docutils literal notranslate"><span class="pre">.urdf</span></code> file.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../hand_eye_calibration/hand_eye_calibration_tutorial.html" class="btn btn-neutral float-left" title="Hand-Eye Calibration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../trac_ik/trac_ik_tutorial.html" class="btn btn-neutral float-right" title="TRAC-IK Kinematics Solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Utilities — rclpy 3.2.1 documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/alabaster.css" rel="stylesheet" type="text/css"/>
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/sphinx_highlight.js"></script>
+<link href="../about.html" rel="author" title="About these documents"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="qos.html" rel="next" title="Quality of Service"/>
+<link href="execution_and_callbacks.html" rel="prev" title="Execution and Callbacks"/>
+<link href="../_static/custom.css" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
+</head><body>
+<div class="document">
+<div class="documentwrapper">
+<div class="bodywrapper">
+<div class="body" role="main">
+<div class="section" id="module-rclpy.utilities">
+<span id="utilities"></span><a class="dashAnchor" name="//apple_ref/cpp/Module/rclpy.utilities"></a><h1>Utilities<a class="headerlink" href="#module-rclpy.utilities" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.get_available_rmw_implementations">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">get_available_rmw_implementations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.get_available_rmw_implementations"></a><a class="headerlink" href="#rclpy.utilities.get_available_rmw_implementations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the set of all available RMW implementations as registered in the ament index.</p>
+<p>The result can be overridden by setting an environment variable named
+<code class="docutils literal notranslate"><span class="pre">RMW_IMPLEMENTATIONS</span></code>.
+The variable can contain RMW implementation names separated by the platform
+specific path separator.
+Including an unavailable RMW implementation results in a RuntimeError.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.get_default_context">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">get_default_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shutting_down</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.get_default_context"></a><a class="headerlink" href="#rclpy.utilities.get_default_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the global default context singleton.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.get_rmw_implementation_identifier">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">get_rmw_implementation_identifier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.get_rmw_implementation_identifier"></a><a class="headerlink" href="#rclpy.utilities.get_rmw_implementation_identifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.ok">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">ok</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.ok"></a><a class="headerlink" href="#rclpy.utilities.ok" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.remove_ros_args">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">remove_ros_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.remove_ros_args"></a><a class="headerlink" href="#rclpy.utilities.remove_ros_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.shutdown">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.shutdown"></a><a class="headerlink" href="#rclpy.utilities.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.timeout_sec_to_nsec">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">timeout_sec_to_nsec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_sec</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.timeout_sec_to_nsec"></a><a class="headerlink" href="#rclpy.utilities.timeout_sec_to_nsec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert timeout in seconds to rcl compatible timeout in nanoseconds.</p>
+<p>Python tends to use floating point numbers in seconds for timeouts. This utility converts a
+python-style timeout to an integer in nanoseconds that can be used by rcl_wait.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout_sec</strong> (<em>float</em><em> or </em><em>None</em>) – Seconds to wait. Block forever if None or negative. Don’t wait if &lt; 1ns</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>rcl_wait compatible timeout in nanoseconds</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.utilities.try_shutdown">
+<span class="sig-prename descclassname"><span class="pre">rclpy.utilities.</span></span><span class="sig-name descname"><span class="pre">try_shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.utilities.try_shutdown"></a><a class="headerlink" href="#rclpy.utilities.try_shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutdown rclpy if not already shutdown.</p>
+</dd></dl>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+<div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">rclpy</a></h1>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="init_shutdown.html">Initialization, Shutdown, and Spinning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timers.html">Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_and_callbacks.html">Execution and Callbacks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.get_available_rmw_implementations"><code class="docutils literal notranslate"><span class="pre">get_available_rmw_implementations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.get_default_context"><code class="docutils literal notranslate"><span class="pre">get_default_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.get_rmw_implementation_identifier"><code class="docutils literal notranslate"><span class="pre">get_rmw_implementation_identifier()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.ok"><code class="docutils literal notranslate"><span class="pre">ok()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.remove_ros_args"><code class="docutils literal notranslate"><span class="pre">remove_ros_args()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.shutdown"><code class="docutils literal notranslate"><span class="pre">shutdown()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.timeout_sec_to_nsec"><code class="docutils literal notranslate"><span class="pre">timeout_sec_to_nsec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.utilities.try_shutdown"><code class="docutils literal notranslate"><span class="pre">try_shutdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="qos.html">Quality of Service</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+<li><a href="../index.html">Documentation overview</a><ul>
+<li><a href="../api.html">API</a><ul>
+<li>Previous: <a href="execution_and_callbacks.html" title="previous chapter">Execution and Callbacks</a></li>
+<li>Next: <a href="qos.html" title="next chapter">Quality of Service</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+<h3 id="searchlabel">Quick search</h3>
+<div class="searchformwrapper">
+<form action="../search.html" class="search" method="get">
+<input aria-labelledby="searchlabel" autocapitalize="off" autocomplete="off" autocorrect="off" name="q" spellcheck="false" type="text"/>
+<input type="submit" value="Go"/>
+</form>
+</div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+</div>
+</div>
+<div class="clearer"></div>
+</div>
+<div class="footer">
+      ©2016-2022, Open Source Robotics Foundation, Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/utilities.rst.txt" rel="nofollow">Page source</a>
+</div>
+</body>
+</html>

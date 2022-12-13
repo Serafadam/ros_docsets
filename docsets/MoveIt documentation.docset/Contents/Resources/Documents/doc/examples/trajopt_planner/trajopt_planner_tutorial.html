@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrajOpt Planner — MoveIt documentation  documentation</title>
+<link href="../../../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/css/override.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://moveit.picknik.ai/rolling/doc/examples/trajopt_planner/trajopt_planner_tutorial.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+<script src="../../../_static/jquery.js"></script>
+<script src="../../../_static/underscore.js"></script>
+<script src="../../../_static/doctools.js"></script>
+<script src="../../../_static/clipboard.min.js"></script>
+<script src="../../../_static/copybutton.js"></script>
+<script src="../../../_static/js/theme.js"></script>
+<link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="../../../search.html" rel="search" title="Search"/>
+<link href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html" rel="next" title="Pilz Industrial Motion Planner"/>
+<link href="../stomp_planner/stomp_planner_tutorial.html" rel="prev" title="STOMP Planner"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../../../index.html">
+<img alt="Logo" class="logo" src="../../../_static/rolling-small.png"/>
+</a>
+<div role="search">
+<form action="../../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#configuration">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../kinematics_configuration/kinematics_configuration_tutorial.html">Kinematics Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_constraint_samplers/custom_constraint_samplers_tutorial.html">Custom Constraint Samplers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ompl_interface/ompl_interface_tutorial.html">OMPL Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chomp_planner/chomp_planner_tutorial.html">CHOMP Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../stomp_planner/stomp_planner_tutorial.html">STOMP Planner</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">TrajOpt Planner</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-demo">Running the Demo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-trajopt-works">How TrajOpt works</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-use-trajopt">How to use TrajOpt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html">Pilz Industrial Motion Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html#sequence-of-multiple-segments">Sequence of multiple segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_adapters/planning_adapters_tutorial.html">Planning Adapter Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../persistent_scenes_and_states/persistent_scenes_and_states.html">Warehouse - Persistent Scenes and States</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../../index.html">MoveIt documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../../../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+<li class="breadcrumb-item active">TrajOpt Planner</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/trajopt_planner/trajopt_planner_tutorial.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="trajopt-planner">
+<h1>TrajOpt Planner<a class="headerlink" href="#trajopt-planner" title="Permalink to this headline"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The TrajOpt planner is still an alpha feature of MoveIt from a summer 2019 intern project, and needs further hardening. Please contact <a class="reference external" href="mailto:hello%40picknik.ai">hello<span>@</span>picknik<span>.</span>ai</a> if you are interested in further development.</p>
+</div>
+<p>TrajOpt is a sequential convex optimization algorithm for motion planning problems where the non-convex, non-affine equality, and non-equality constraints are relaxed, approximately linearized and convexified to create an objective function. This work has been done based on <a class="reference internal" href="#schulman2013" id="id1"><span>[schulman2013]</span></a> and the <a class="reference external" href="https://github.com/ros-industrial-consortium/trajopt_ros">original implementation</a>. Sequential convex programming, simply refers to using a convex model and repeatedly minimizing it. Consider the following non-convex problem:</p>
+<a class="reference internal image-reference" href="../../../_images/non_convex.png"><img alt="../../../_images/non_convex.png" src="../../../_images/non_convex.png" style="width: 220px;"/></a>
+<p>where <em>f(x)</em> is the minimum-length path given by</p>
+<a class="reference internal image-reference" href="../../../_images/fx.png"><img alt="../../../_images/fx.png" src="../../../_images/fx.png" style="width: 180px;"/></a>
+<p>The basic idea is to iterate by maintaining an estimate of the solution and a convex trust region over which we trust our solution. The two key points are:</p>
+<ul class="simple">
+<li><p>convex approximation of <em>f(x)</em> and <em>g(x)</em> over the trust region. Then the approximated ones are converted to penalty functions.</p></li>
+<li><p>affine approximation of <em>h(x)</em> over the trust region. Then the approximated <em>h(x)</em> is convetered to penalty function by considering its absolute value.</p></li>
+</ul>
+<blockquote>
+<div><p>The following figure shows how TrajOpt algorithm works</p>
+</div></blockquote>
+<a class="reference internal image-reference" href="../../../_images/algorithm.png"><img alt="../../../_images/algorithm.png" src="../../../_images/algorithm.png" style="width: 400px;"/></a>
+<p>The bold italic parameters are the ones loaded from yaml file. All the constraints including obstacle avoidance, joint limits and target poses in joint space or Cartesian space are converted to penalty functions so they make the final objective function. The most inner loop is where sequential quadratic programming is used as a trust region method. It calculates the second-order Taylor approximation in a box trust region.</p>
+<p>One important part of TrajOpt is how the obstacle avoidance constraint is formulated. In discrete case, the constraint is basically the difference between the signed distance (between robot link with itself or with obstacles) and a safe value and in the continuous case, the signed distance is between convex hull of two waypoints and obstacles.</p>
+<p><strong>Note:</strong> The current implementation of TrajOpt supports constraints in joint space only.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+<p>You should also have gone through the steps in <a class="reference internal" href="../../tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">Visualization with MoveIt RViz Plugin</span></a></p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>To use TrajOpt with your robot you must already have a MoveIt configuration package for your robot. For example, if you have a Panda robot, it’s called <code class="docutils literal notranslate"><span class="pre">panda_moveit_config</span></code>.
+This is typically configured using the <a class="reference internal" href="../setup_assistant/setup_assistant_tutorial.html"><span class="doc">MoveIt Setup Assistant</span></a>.</p>
+<p><strong>Note:</strong> in this tutorial, we use <code class="docutils literal notranslate"><span class="pre">panda_moveit_config</span></code> from the <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">ros-planning/panda_moveit_config</a> repository which contains the necessary config files for trajopt planner.</p>
+</div>
+<div class="section" id="running-the-demo">
+<h2>Running the Demo<a class="headerlink" href="#running-the-demo" title="Permalink to this headline"></a></h2>
+<p>To run the example, you need to run <code class="docutils literal notranslate"><span class="pre">panda_moveit_config</span></code> from the <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">ros-planning/panda_moveit_config</a> repository at first by passing <code class="docutils literal notranslate"><span class="pre">trajopt</span></code> as the planner:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">panda_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>  <span class="n">pipeline</span><span class="o">:=</span><span class="n">trajopt</span>
+</pre></div>
+</div>
+<p>Then you can run the trajopt example from <a class="reference external" href="https://github.com/ros-planning/moveit_tutorials">ros-planning/moveit_tutorials</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_tutorials</span> <span class="n">trajopt_example_launch</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-trajopt-works">
+<h2>How TrajOpt works<a class="headerlink" href="#how-trajopt-works" title="Permalink to this headline"></a></h2>
+<p>Motion planning problem in TrajOpt is defined by a set of cost (COST) and constraints (CNT) functions that are added to <code class="docutils literal notranslate"><span class="pre">TrajOptProblem</span></code> through <code class="docutils literal notranslate"><span class="pre">ConstructProblem</span></code> function. This function gets the information regarding to the problem (<code class="docutils literal notranslate"><span class="pre">ProblemInfo</span></code>) which carries different types of information explained below:</p>
+<ul class="simple">
+<li><p><strong>BasicInfo</strong>: This type holds general information of the optimization algorithm. (These parameters are further investigated in the following section):
+* <code class="docutils literal notranslate"><span class="pre">n_steps</span></code>: The number of steps from start to goal
+* <code class="docutils literal notranslate"><span class="pre">convex_solver</span></code>: Which convex solver is to be used
+* <code class="docutils literal notranslate"><span class="pre">use_time</span></code>: Set to <code class="docutils literal notranslate"><span class="pre">false</span></code> value to use a unitless timestep. x1-x0 is the velocity
+* <code class="docutils literal notranslate"><span class="pre">start_fixed</span></code>: Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to add a constraint for the current joint value</p></li>
+<li><p><strong>InitInfo</strong>: It defines how to initialize the optimization problem by setting a guessed trajectory in a matrix whose number of rows is the same as number of timesteps and whose number of columns is equal to the degrees of freedom. There are three different types for initialization:</p>
+<ul>
+<li><p><em>STATIONARY</em>: the initialization matrix has joint values of the current state for all timesteps.</p></li>
+<li><p><em>JOINT_INTERPOLATED</em>: the initialization matrix is a trajectory interpolated between the current state and the joint state that the user provides for <code class="docutils literal notranslate"><span class="pre">data</span></code> member.</p></li>
+<li><p><em>GIVEN_TRAJ</em>: the user provides the entire trajectory for <code class="docutils literal notranslate"><span class="pre">data</span></code> member.</p></li>
+</ul>
+</li>
+<li><p><strong>TermInfo</strong>: This is the base struct for all types of COST and CNT functions that are carried by <code class="docutils literal notranslate"><span class="pre">cost_infos</span></code> and <code class="docutils literal notranslate"><span class="pre">cnt_infos</span></code> members. COST functions are the objectives that are supposed to be minimized and CNT are the ones that must be satisfied. The current implementation contains <code class="docutils literal notranslate"><span class="pre">JointPoseTermInfo</span></code>, <code class="docutils literal notranslate"><span class="pre">JointVelTermInfo</span></code> (hard-coded) and <code class="docutils literal notranslate"><span class="pre">CartPoseTermInfo</span></code> (is partially implemented). Member <em>term_type</em> dictates the type of the term we are adding; it could be <code class="docutils literal notranslate"><span class="pre">TT_COST</span></code> or <code class="docutils literal notranslate"><span class="pre">TT_CNT</span></code> which means a cost term or constraint term respectively. Also <code class="docutils literal notranslate"><span class="pre">TT_USE_TIME</span></code> can be selected for this member which allows time parameterization. In this case <em>use_time</em> of <code class="docutils literal notranslate"><span class="pre">BasicInfo</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> as well.  The other parameters of these terms which need to be set are loaded from <code class="docutils literal notranslate"><span class="pre">trajopt_planning.yaml</span></code> file. The following list describes these parametrs:</p>
+<ul>
+<li><p><em>coeffs</em>: weight coefficients for joints</p></li>
+<li><p><em>targets</em>: the values of the joints at the constraint</p></li>
+<li><p><em>upper_tols</em>: the upper limits for joint values at the constraint</p></li>
+<li><p><em>lower_tols</em>: the lower limits for joint values at the constraint</p></li>
+<li><p><em>first_step</em>: the first step that is the term is applied to</p></li>
+<li><p><em>last_step</em>: the last step that is the term is applied to</p></li>
+</ul>
+</li>
+</ul>
+<p>Moreover, the algorithm needs parameters specific to <code class="docutils literal notranslate"><span class="pre">BasicTrustRegionSQP</span></code> which are defined in a yaml file under <em>trajopt_param</em>.</p>
+<p>The following flowchart illustrates how the problem gets constructed:</p>
+<a class="reference internal image-reference" href="../../../_images/trajopt.png"><img alt="../../../_images/trajopt.png" src="../../../_images/trajopt.png" style="width: 700px;"/></a>
+</div>
+<div class="section" id="how-to-use-trajopt">
+<h2>How to use TrajOpt<a class="headerlink" href="#how-to-use-trajopt" title="Permalink to this headline"></a></h2>
+<p>In this section, we describe how to convert the request in MoveIt to TrajOpt constraints. The first important point is that in TrajOpt, we can have the start state to be different than current state. Basically, any joint state that we want the robot pass through is just a constraint that should be added to the objective function. This joint state can be received from start state in MoveIt <code class="docutils literal notranslate"><span class="pre">MotionPlanRequest</span></code> or the current state from Planning Scene. The designed architecture for TrajOpt in MoveIt creates <em>JointPoseTermInfo</em> for all the constraints in <em>goal_constraints</em> and <em>start_state</em> of <code class="docutils literal notranslate"><span class="pre">MotionPlanRequest</span></code>. On the other hand, current state of the robot also can be a constraint to add as a <em>JointPoseTermInfo</em> if the user wants the robot to start from the current state. Look at the following figure for a an example with two goal constraints:</p>
+<a class="reference internal image-reference" href="../../../_images/req_traj.png"><img alt="../../../_images/req_traj.png" src="../../../_images/req_traj.png" style="width: 400px;"/></a>
+<p><em>start_fixed</em> is the parameter that determines the relation between current state and start state. If it is set to true, then the algorithm adds a constraint to restrict the trajectory to start from the current state. If it is false, then the trajectory will start from request start state. The following two gifs show the above example in action; notice the difference between starting from the current state and starting from the request start state, left and right respectively:</p>
+<a class="reference internal image-reference" href="../../../_images/start_fixed_true.gif"><img alt="../../../_images/start_fixed_true.gif" src="../../../_images/start_fixed_true.gif" style="width: 250px;"/></a>
+<a class="reference internal image-reference" href="../../../_images/start_fixed_false.gif"><img alt="../../../_images/start_fixed_false.gif" src="../../../_images/start_fixed_false.gif" style="width: 250px;"/></a>
+<p>The use case example of this is when we are trying to execute a process like sanding, the critical part is the actual process path not how we get to the start of the process path. So we plan the process path first leaving the start free to hopefully get the most optimal and then we plan from the current location start fixed to the start of the process path.</p>
+<p>Two other important parameters are <em>first_timestep</em> and <em>last_timestep</em>. These are the steps that we want a specific <code class="docutils literal notranslate"><span class="pre">TermInfo</span></code> gets applied to. For our example in this section, we have one constraint from request start state and two goal constraints as well as the current state constraint. If the number of steps (<em>num_stpes</em>) is set to 20, then the index that our last goal constraint applied to is 19.  The user does not set the parameters of current state constraint that is created by <em>start_fixed=true</em>; its timestep is set to 0 by default. So basically the figure above changes to the following if we add the steps the constraints are applied to:</p>
+<a class="reference internal image-reference" href="../../../_images/req_traj_steps.png"><img alt="../../../_images/req_traj_steps.png" src="../../../_images/req_traj_steps.png" style="width: 400px;"/></a>
+<p><em>term_type</em> of the above constraint should be set to <em>TT_CNT</em> as we want the robot pass through all those states exactly.</p>
+<p>Note that if we want to use TrajOpt through MotionPlanning Display in RViz, we should set <em>start_fixed</em> to false as the current state of the robot is sent through request start state, meaning current and start are the same so we do not need two constraints (that are the same) for the same state. In this case, do not forget to set the <em>first_timestep</em> and <em>last_timestep</em> of the start state constraint to zero. So our example above changes to the following:</p>
+<a class="reference internal image-reference" href="../../../_images/req_traj_start.png"><img alt="../../../_images/req_traj_start.png" src="../../../_images/req_traj_start.png" style="width: 500px;"/></a>
+<p>For any new joint constraint, the corresponding information should be added to the yaml file. The current implementation can only handle the joint space constraints as <code class="docutils literal notranslate"><span class="pre">JointPoseTermInfo</span></code> from <code class="docutils literal notranslate"><span class="pre">TermInfo</span></code>. The some of the remaining constraints to add are <code class="docutils literal notranslate"><span class="pre">JointAccTermInfo</span></code>, <code class="docutils literal notranslate"><span class="pre">JointJerkTermInfo</span></code>, <code class="docutils literal notranslate"><span class="pre">CartPoseTermInfo</span></code>, <code class="docutils literal notranslate"><span class="pre">TotalTimeTermInfo</span></code> and <code class="docutils literal notranslate"><span class="pre">CollisionTermInfo</span></code>.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<dl class="citation">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/schulman2013"></a><dt class="label" id="schulman2013"><span class="brackets"><a class="fn-backref" href="#id1">schulman2013</a></span></dt>
+<dd><p>Schulman, John &amp; Ho, Jonathan &amp; Lee, Alex &amp; Awwal, Ibrahim &amp; Bradlow, Henry &amp; Abbeel, Pieter. (2013). Finding Locally Optimal, Collision-Free Trajectories with Sequential Convex Optimization. 10.15607/RSS.2013.IX.031.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="../stomp_planner/stomp_planner_tutorial.html" rel="prev" title="STOMP Planner"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="../pilz_industrial_motion_planner/pilz_industrial_motion_planner.html" rel="next" title="Pilz Industrial Motion Planner">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, PickNik Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

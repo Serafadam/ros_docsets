@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pick and Place &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/pick_place/pick_place_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MoveIt Grasps" href="../moveit_grasps/moveit_grasps_tutorial.html" />
+    <link rel="prev" title="Planning with Approximated Constraint Manifolds" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pick and Place</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-demo">Running The Demo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-moveit-msgs-grasp">Understanding <code class="docutils literal notranslate"><span class="pre">moveit_msgs::Grasp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-entire-code">The Entire Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#creating-environment">Creating Environment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pick-pipeline">Pick Pipeline</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#setting-grasp-pose">Setting grasp pose</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-pre-grasp-approach">Setting pre-grasp approach</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-post-grasp-retreat">Setting post-grasp retreat</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-posture-of-eef-before-grasp">Setting posture of eef before grasp</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#opengripper-function">openGripper function</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-posture-of-eef-during-grasp">Setting posture of eef during grasp</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#closedgripper-function">closedGripper function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#place-pipeline">Place Pipeline</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#setting-place-location-pose">Setting place location pose</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-pre-place-approach">Setting pre-place approach</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id1">Setting post-grasp retreat</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#setting-posture-of-eef-after-placing-object">Setting posture of eef after placing object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Pick and Place</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/pick_place/pick_place_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="pick-and-place">
+<h1>Pick and Place<a class="headerlink" href="#pick-and-place" title="Permalink to this headline"></a></h1>
+<p><strong>NOTE:</strong> The functionality used in this tutorial is deprecated. To perform a pick and place operation, MoveIt Task Constructor (MTC) should be used (<a class="reference external" href="https://moveit.picknik.ai/humble/doc/tutorials/pick_and_place_with_moveit_task_constructor/pick_and_place_with_moveit_task_constructor.html">Pick and Place with MoveIt Task Constructor</a>). More information on the MoveIt Task Constructor can be found <a class="reference external" href="https://moveit.picknik.ai/humble/doc/examples/moveit_task_constructor/moveit_task_constructor_tutorial.html">here.</a></p>
+<p>In MoveIt, grasping is done using the MoveGroup interface. In order to grasp an object we need to create <code class="docutils literal notranslate"><span class="pre">moveit_msgs::Grasp</span></code> msg which will allow defining the various poses and postures involved in a grasping operation.
+Watch this video to see the output of this tutorial:</p>
+<div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+    <iframe width="700px" height="400px" src="https://www.youtube.com/embed/QBJPxx_63Bs?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div><div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="running-the-demo">
+<h2>Running The Demo<a class="headerlink" href="#running-the-demo" title="Permalink to this headline"></a></h2>
+<p>Open two terminals. In the first terminal start RViz and wait for everything to finish loading:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">panda_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>In the second terminal run the pick and place tutorial:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">moveit_tutorials</span> <span class="n">pick_place_tutorial</span>
+</pre></div>
+</div>
+<p>You should see something similar to the video at the beginning of this tutorial.</p>
+</div>
+<div class="section" id="understanding-moveit-msgs-grasp">
+<h2>Understanding <code class="docutils literal notranslate"><span class="pre">moveit_msgs::Grasp</span></code><a class="headerlink" href="#understanding-moveit-msgs-grasp" title="Permalink to this headline"></a></h2>
+<p>For complete documentation refer to <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/Grasp.html">moveit_msgs/Grasp.msg.</a></p>
+<p>The relevant fields of the message are:-</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory_msgs/JointTrajectory</span> <span class="pre">pre_grasp_posture</span></code> - This defines the trajectory position of the joints in the end effector group before we go in for the grasp.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trajectory_msgs/JointTrajectory</span> <span class="pre">grasp_posture</span></code> - This defines the trajectory position of the joints in the end effector group for grasping the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped</span> <span class="pre">grasp_pose</span></code> - Pose of the end effector in which it should attempt grasping.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moveit_msgs/GripperTranslation</span> <span class="pre">pre_grasp_approach</span></code> - This is used to define the direction from which to approach the object and the distance to travel.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moveit_msgs/GripperTranslation</span> <span class="pre">post_grasp_retreat</span></code> - This is used to define the direction in which to move once the object is grasped and the distance to travel.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moveit_msgs/GripperTranslation</span> <span class="pre">post_place_retreat</span></code> - This is used to define the direction in which to move once the object is placed at some location and the distance to travel.</p></li>
+</ul>
+</div>
+<div class="section" id="the-entire-code">
+<h2>The Entire Code<a class="headerlink" href="#the-entire-code" title="Permalink to this headline"></a></h2>
+<p>The entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/pick_place">here</a> in the moveit_tutorials GitHub project.</p>
+<div class="section" id="creating-environment">
+<h3>Creating Environment<a class="headerlink" href="#creating-environment" title="Permalink to this headline"></a></h3>
+<p>Create vector to hold 3 collision objects.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">CollisionObject</span><span class="o">&gt;</span><span class="w"> </span><span class="n">collision_objects</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Add the first table where the cube will originally be kept.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;table1&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the primitive and its dimensions. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the pose of the table. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Add the second table where we will be placing the cube.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;table2&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the primitive and its dimensions. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the pose of the table. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Define the object that we will be manipulating</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;object&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the primitive and its dimensions. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Define the pose of the object. */</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_objects</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pick-pipeline">
+<h3>Pick Pipeline<a class="headerlink" href="#pick-pipeline" title="Permalink to this headline"></a></h3>
+<p>Create a vector of grasps to be attempted, currently only creating single grasp.
+This is essentially useful when using a grasp generator to generate and test multiple grasps.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">Grasp</span><span class="o">&gt;</span><span class="w"> </span><span class="n">grasps</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="setting-grasp-pose">
+<h4>Setting grasp pose<a class="headerlink" href="#setting-grasp-pose" title="Permalink to this headline"></a></h4>
+<p>This is the pose of panda_link8. <br />
+Make sure that when you set the grasp_pose, you are setting it to be the pose of the last link in
+your manipulator which in this case would be <strong>panda_link8</strong> You will have to compensate for the
+transform from <strong>panda_link8</strong> to the palm of the end effector.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_pose</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">tf2</span><span class="o">::</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation</span><span class="p">.</span><span class="n">setRPY</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tf2</span><span class="o">::</span><span class="n">toMsg</span><span class="p">(</span><span class="n">orientation</span><span class="p">);</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.415</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-pre-grasp-approach">
+<h4>Setting pre-grasp approach<a class="headerlink" href="#setting-pre-grasp-approach" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Defined with respect to frame_id */</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_grasp_approach</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Direction is set as positive x axis */</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_grasp_approach</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_grasp_approach</span><span class="p">.</span><span class="n">min_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.095</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_grasp_approach</span><span class="p">.</span><span class="n">desired_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.115</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-post-grasp-retreat">
+<h4>Setting post-grasp retreat<a class="headerlink" href="#setting-post-grasp-retreat" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Defined with respect to frame_id */</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_grasp_retreat</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Direction is set as positive z axis */</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_grasp_retreat</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_grasp_retreat</span><span class="p">.</span><span class="n">min_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_grasp_retreat</span><span class="p">.</span><span class="n">desired_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-posture-of-eef-before-grasp">
+<h4>Setting posture of eef before grasp<a class="headerlink" href="#setting-posture-of-eef-before-grasp" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">openGripper</span><span class="p">(</span><span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_grasp_posture</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="opengripper-function">
+<h5>openGripper function<a class="headerlink" href="#opengripper-function" title="Permalink to this headline"></a></h5>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Add both finger joints of panda robot. */</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_finger_joint1&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_finger_joint2&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Set them as open, wide enough for the object to fit. */</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.04</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.04</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">time_from_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ros</span><span class="o">::</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="setting-posture-of-eef-during-grasp">
+<h4>Setting posture of eef during grasp<a class="headerlink" href="#setting-posture-of-eef-during-grasp" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">closedGripper</span><span class="p">(</span><span class="n">grasps</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grasp_posture</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="closedgripper-function">
+<h5>closedGripper function<a class="headerlink" href="#closedgripper-function" title="Permalink to this headline"></a></h5>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Add both finger joints of panda robot. */</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_finger_joint1&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">joint_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_finger_joint2&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="cm">/* Set them as closed. */</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.00</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.00</span><span class="p">;</span><span class="w"></span>
+<span class="n">posture</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">time_from_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ros</span><span class="o">::</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Set support surface as table1.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">move_group</span><span class="p">.</span><span class="n">setSupportSurfaceName</span><span class="p">(</span><span class="s">&quot;table1&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Call pick to pick up the object using the grasps given</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">move_group</span><span class="p">.</span><span class="n">pick</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">grasps</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="place-pipeline">
+<h3>Place Pipeline<a class="headerlink" href="#place-pipeline" title="Permalink to this headline"></a></h3>
+<p>TODO(&#64;ridhwanluthra) - Calling place function may lead to “All supplied place locations failed. Retrying last
+location in verbose mode.” This is a known issue. <br />
+<br />
+Ideally, you would create a vector of place locations to be attempted although in this example, we only create
+a single place location.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">PlaceLocation</span><span class="o">&gt;</span><span class="w"> </span><span class="n">place_location</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="setting-place-location-pose">
+<h4>Setting place location pose<a class="headerlink" href="#setting-place-location-pose" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">place_pose</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">tf2</span><span class="o">::</span><span class="n">Quaternion</span><span class="w"> </span><span class="n">orientation</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation</span><span class="p">.</span><span class="n">setRPY</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">place_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tf2</span><span class="o">::</span><span class="n">toMsg</span><span class="p">(</span><span class="n">orientation</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* For place location, we set the value to the exact location of the center of the object. */</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">place_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">place_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">place_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-pre-place-approach">
+<h4>Setting pre-place approach<a class="headerlink" href="#setting-pre-place-approach" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Defined with respect to frame_id */</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_place_approach</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Direction is set as negative z axis */</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_place_approach</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_place_approach</span><span class="p">.</span><span class="n">min_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.095</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pre_place_approach</span><span class="p">.</span><span class="n">desired_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.115</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>Setting post-grasp retreat<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Defined with respect to frame_id */</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_place_retreat</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">/* Direction is set as negative y axis */</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_place_retreat</span><span class="p">.</span><span class="n">direction</span><span class="p">.</span><span class="n">vector</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_place_retreat</span><span class="p">.</span><span class="n">min_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_place_retreat</span><span class="p">.</span><span class="n">desired_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-posture-of-eef-after-placing-object">
+<h4>Setting posture of eef after placing object<a class="headerlink" href="#setting-posture-of-eef-after-placing-object" title="Permalink to this headline"></a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Similar to the pick case */</span><span class="w"></span>
+<span class="n">openGripper</span><span class="p">(</span><span class="n">place_location</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">post_place_posture</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Set support surface as table2.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">group</span><span class="p">.</span><span class="n">setSupportSurfaceName</span><span class="p">(</span><span class="s">&quot;table2&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Call place to place the object using the place locations given.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">group</span><span class="p">.</span><span class="n">place</span><span class="p">(</span><span class="s">&quot;object&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">place_location</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html" class="btn btn-neutral float-left" title="Planning with Approximated Constraint Manifolds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../moveit_grasps/moveit_grasps_tutorial.html" class="btn btn-neutral float-right" title="MoveIt Grasps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Program flow &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Extension points" href="extension-point.html" />
+    <link rel="prev" title="Environment setup" href="environment.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Program flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build">build</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Program flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/developer/program-flow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="program-flow">
+<h1>Program flow<a class="headerlink" href="#program-flow" title="Permalink to this headline"></a></h1>
+<p>The following depicts the high level program flow of a couple of verbs.</p>
+<div class="section" id="list">
+<h2>list<a class="headerlink" href="#list" title="Permalink to this headline"></a></h2>
+<p>This verb is provided by the <code class="docutils literal notranslate"><span class="pre">colcon-package-information</span></code> package.</p>
+<div class="graphviz"><img src="../_images/graphviz-b33595792592ecaef78c6eb1753a605485dac31c.png" alt="digraph list {
+initial [shape=&quot;point&quot;, width=&quot;0.2&quot;];
+initial -&gt; get_package_descriptors [label=&quot; args&quot;];
+get_package_descriptors -&gt; topological_order_packages [label=&quot; set(pkg descriptor)&quot;];
+topological_order_packages -&gt; select_package_decorators [label=&quot; list(pkg decorator)&quot;];
+select_package_decorators -&gt; decision [label=&quot; list(pkg decorator)&quot;];
+decision [label=&quot;&quot;, shape=&quot;diamond&quot;];
+
+merge [label=&quot;&quot;, shape=&quot;diamond&quot;];
+decision:sw -&gt; merge:nw [xlabel=&quot; alphabetical order &quot;];
+decision:se -&gt; merge:ne [label=&quot; topological order&quot;];
+
+merge -&gt; print [label=&quot; list(pkg decorator)&quot;];
+print [label=&quot;print pkg name / path / type&quot;];
+print -&gt; activity_final;
+activity_final [label=&quot;&quot;, shape=&quot;circle&quot;, width=&quot;0.2&quot;];
+}" class="graphviz" /></div>
+</div>
+<div class="section" id="build">
+<h2>build<a class="headerlink" href="#build" title="Permalink to this headline"></a></h2>
+<p>This verb is provided by the <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> package.</p>
+<div class="graphviz"><img src="../_images/graphviz-d68f63bbaa98e2a18a938811ec792023e536a0a3.png" alt="digraph list {
+initial [shape=&quot;point&quot;, width=&quot;0.2&quot;];
+initial -&gt; get_package_descriptors [label=&quot; args&quot;];
+
+subgraph cluster_get_packages {
+   color = &quot;gray&quot;;
+   label = &quot;get_packages&quot;;
+   labeljust = &quot;l&quot;;
+   get_package_descriptors -&gt; topological_order_packages [label=&quot; set(pkg descriptor)&quot;];
+   topological_order_packages -&gt; select_package_decorators [label=&quot; list(pkg decorator)&quot;];
+   select_package_decorators -&gt; decision [label=&quot; list(pkg decorator)&quot;];
+   decision [label=&quot;&quot;, shape=&quot;diamond&quot;];
+
+   decision -&gt; flow_final [label=&quot; duplicate pkg names&quot;];
+   flow_final [fixedsize=&quot;true&quot;, label=&quot;✕&quot;, shape=&quot;circle&quot;, width=&quot;0.18&quot;];
+   {rank = same; decision; flow_final;}
+}
+
+decision -&gt; get_jobs [label=&quot; no duplicates&quot;];
+get_jobs -&gt; execute_jobs [label=&quot; OrderedDict(job)&quot;];
+execute_jobs -&gt; create_prefix_scripts [label=&quot; rc&quot;];
+create_prefix_scripts -&gt; activity_final [label=&quot; rc&quot;]
+activity_final [fillcolor=&quot;black&quot;, label=&quot;&quot;, shape=&quot;doublecircle&quot;, style=&quot;filled&quot;, width=&quot;0.2&quot;];
+}" class="graphviz" /></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="environment.html" class="btn btn-neutral float-left" title="Environment setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="extension-point.html" class="btn btn-neutral float-right" title="Extension points" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

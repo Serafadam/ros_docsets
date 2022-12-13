@@ -1,0 +1,4 @@
+<map id="rclcpp::TypeAdapter&lt; T, void, std::enable_if_t&lt; is_type_adapter&lt; T &gt;::value &gt; &gt;" name="rclcpp::TypeAdapter&lt; T, void, std::enable_if_t&lt; is_type_adapter&lt; T &gt;::value &gt; &gt;">
+<area shape="rect" id="node1" title="Identity specialization for TypeAdapter." alt="" coords="5,80,175,151"/>
+<area shape="rect" id="node2" title=" " alt="" coords="71,5,109,32"/>
+</map>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using OMPL Constrained Planning &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/how_to_guides/using_ompl_constrained_planning/ompl_constrained_planning.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Running Multiple Planning Pipelines in Parallel with MoveItCpp" href="../parallel_planning/parallel_planning_tutorial.html" />
+    <link rel="prev" title="How to Contribute Doxygen Comments" href="../how_to_write_doxygen.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guide.html">How-To Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_generate_api_doxygen_locally.html">How To Generate API Doxygen Reference Locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_setup_docker_containers_in_ubuntu.html">How to Set Up MoveIt 2 Docker Containers in Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_write_doxygen.html">How to Contribute Doxygen Comments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using OMPL Constrained Planning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-this-planner">When to use this Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-configure-ompl-to-use-constrained-planning">How to Configure OMPL to use Constrained Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-example">Running the Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-set-constraints">How to Set Constraints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initial-setup">Initial Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#box-constraints">Box Constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equality-constraints">Equality Constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#orientation-constraints">Orientation Constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mixed-constraints">Mixed Constraints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../parallel_planning/parallel_planning_tutorial.html">Running Multiple Planning Pipelines in Parallel with MoveItCpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../controller_teleoperation/controller_teleoperation.html">How to Teleoperate a Robotic Arm with a Gamepad</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Using OMPL Constrained Planning</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/using_ompl_constrained_planning/ompl_constrained_planning.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="using-ompl-constrained-planning">
+<h1>Using OMPL Constrained Planning<a class="headerlink" href="#using-ompl-constrained-planning" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/ompl_constrained_planning_header.png"><img alt="../../../_images/ompl_constrained_planning_header.png" src="../../../_images/ompl_constrained_planning_header.png" style="width: 600px;" /></a>
+<p>This tutorial shows you how to use OMPL’s <a class="reference external" href="http://ompl.kavrakilab.org/constrainedPlanning.html">Constrained planning capabilities</a> from MoveIt. To illustrate the capabilities of this planner, four planning problems are solved with different types of path constraints. It will be easier to follow if you have read through the example on how to use the  <a class="reference internal" href="../../examples/move_group_interface/move_group_interface_tutorial.html"><span class="doc">Move Group interface</span></a>.</p>
+<div class="section" id="when-to-use-this-planner">
+<h2>When to use this Planner<a class="headerlink" href="#when-to-use-this-planner" title="Permalink to this headline"></a></h2>
+<p>The interface currently only supports a single position or orientation constraint on any link of the robot. The planning approach provides an alternative for the <a class="reference external" href="../../examples/ompl_interface/ompl_interface_tutorial.html#enforce-planning-in-joint-space">enforce_joint_model_state_space</a> option. It is expected to be most valuable for constraints regions that have a small (or zero) volume in Cartesian space, where rejection sampling does not always work. For example, this planner can be used to constrain the robot end-effector on a plane or along a line.</p>
+</div>
+<div class="section" id="how-to-configure-ompl-to-use-constrained-planning">
+<h2>How to Configure OMPL to use Constrained Planning<a class="headerlink" href="#how-to-configure-ompl-to-use-constrained-planning" title="Permalink to this headline"></a></h2>
+<p>OMPL reads configurations parameters from a file called <code class="code docutils literal notranslate"><span class="pre">ompl_planning.yaml</span></code>. This guide adds the required parameters directly in the launch file, but they can also be set in the yaml file. This guide uses the Panda robot, for which this file can be found <a class="reference external" href="https://github.com/ros-planning/moveit_resources/tree/ros2/panda_moveit_config/config/ompl_planning.yaml">here</a>. Add a parameter to your robot’s <code class="docutils literal notranslate"><span class="pre">ompl_planning.yaml</span></code> to tell OMPL to plan in a constrained state space by setting <code class="code docutils literal notranslate"><span class="pre">enforce_constrained_state_space</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>. In addition, if the parameter <a class="reference external" href="../../examples/ompl_interface/ompl_interface_tutorial.html#projection-evaluator">projection_evaluator</a> was not yet specified, we also need to add it. The projection evaluator is used to help with discretizing the state space with high dimensionality by using projections from the state space to a low dimensional Euclidean space. You can read more about it <a class="reference external" href="https://ompl.kavrakilab.org/projections.html">here</a>. In general, using the first couple joints works pretty well.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">panda_arm</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">enforce_constrained_state_space</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">   </span><span class="nt">projection_evaluator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joints(panda_joint1,panda_joint2)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This tutorial adds the parameters in the <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/using_ompl_constrained_planning/launch/ompl_constrained_planning.launch.py">launch file</a>. The launch file uses <code class="docutils literal notranslate"><span class="pre">moveit_configs_utils</span></code> to simplify the launch file. The <code class="docutils literal notranslate"><span class="pre">moveit_config</span></code> is configured with the moveit_resources Panda MoveIt config. We add our OMPL parameters to the <code class="docutils literal notranslate"><span class="pre">planning_pipelines</span></code> with the following lines:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_config</span><span class="o">.</span><span class="n">planning_pipelines</span><span class="p">[</span><span class="s2">&quot;ompl&quot;</span><span class="p">][</span><span class="s2">&quot;panda_arm&quot;</span><span class="p">][</span><span class="s2">&quot;enforce_constrained_state_space&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">moveit_config</span><span class="o">.</span><span class="n">planning_pipelines</span><span class="p">[</span><span class="s2">&quot;ompl&quot;</span><span class="p">][</span><span class="s2">&quot;panda_arm&quot;</span><span class="p">][</span><span class="s2">&quot;projection_evaluator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;joints(panda_joint1,panda_joint2)&quot;</span>
+<span class="n">moveit_config</span><span class="o">.</span><span class="n">planning_pipelines</span><span class="p">[</span><span class="s2">&quot;ompl&quot;</span><span class="p">][</span><span class="s2">&quot;panda_arm_hand&quot;</span><span class="p">][</span><span class="s2">&quot;enforce_constrained_state_space&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">moveit_config</span><span class="o">.</span><span class="n">planning_pipelines</span><span class="p">[</span><span class="s2">&quot;ompl&quot;</span><span class="p">][</span><span class="s2">&quot;panda_arm_hand&quot;</span><span class="p">][</span><span class="s2">&quot;projection_evaluator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;joints(panda_joint1,panda_joint2)&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-example">
+<h2>Running the Example<a class="headerlink" href="#running-the-example" title="Permalink to this headline"></a></h2>
+<p>Run the following command to launch the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">ompl_constrained_planning</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>The Panda robot should appear, with the RViz Visual Tools and the Trajectory Slider panel in the bottom-left. You should also see this text in your terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Waiting</span> <span class="n">to</span> <span class="k">continue</span><span class="p">:</span> <span class="n">Press</span> <span class="s1">&#39;Next&#39;</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">RvizVisualToolsGui</span> <span class="n">window</span> <span class="n">to</span> <span class="n">start</span> <span class="k">with</span> <span class="n">the</span> <span class="n">box</span> <span class="n">constraint</span> <span class="n">example</span>
+</pre></div>
+</div>
+<p>To start the first example, click the Next button.</p>
+<a class="reference internal image-reference" href="../../../_images/RVizVisualTools.png"><img alt="../../../_images/RVizVisualTools.png" src="../../../_images/RVizVisualTools.png" style="width: 700px;" /></a>
+<p>The first example shows a plan with box constraints. A red and green sphere should appear in Rviz to show the start and goal states respectively. In addition, a grey box should appear that represents the position constraint on the link <code class="code docutils literal notranslate"><span class="pre">panda_link8</span></code>. If planning succeeds, you should see a preview of the trajectory that was planned. You can use the Trajectory Slider panel to inspect the trajectory.</p>
+<video width="300px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/ompl_constraints_box.webm" type="video/webm">
+    OMPL constrained planning box constraint example
+</video><p>The following message appears in the terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Waiting</span> <span class="n">to</span> <span class="k">continue</span><span class="p">:</span> <span class="n">Press</span> <span class="s1">&#39;Next&#39;</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">RvizVisualToolsGui</span> <span class="n">window</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">the</span> <span class="n">planar</span> <span class="n">constraint</span> <span class="n">example</span>
+</pre></div>
+</div>
+<p>After pressing Next, the next planning problem is solved. This example uses equality constraints to plan a trajectory with the end effector constrained in a plane.</p>
+<video width="300px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/ompl_constraints_plane.webm" type="video/webm">
+    OMPL constrained planning plane constraint example
+</video><p>Again, if planning succeeds, the trajectory is animated in Rviz. Press Next again to move on to the third planning problem, using equality constraints again to plan along a line.</p>
+<video width="300px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/ompl_constraints_line.webm" type="video/webm">
+    OMPL constrained planning line constraint example
+</video><p>You can see the trajectory animated if planning succeeds. Finally, press Next to move to the orientation constraint example.</p>
+<video width="300px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/ompl_constraints_orientation.webm" type="video/webm">
+    OMPL constrained planning orientation constraint example
+</video><p>This example may take longer to plan. If planning fails, you can start at the beginning of the section to try again. Press Next to try mixed constraints.</p>
+<video width="300px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/ompl_mixed_constraints.webm" type="video/webm">
+    OMPL constrained planning orientation constraint example
+</video><p>Press Next to remove all markers and end the example.</p>
+</div>
+<div class="section" id="how-to-set-constraints">
+<h2>How to Set Constraints<a class="headerlink" href="#how-to-set-constraints" title="Permalink to this headline"></a></h2>
+<p>This section will cover how to use position, equality, and orientation constraints using the Move Group interface. This section walks through the <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_guides/using_ompl_constrained_planning/src/ompl_constrained_planning_tutorial.cpp">example code</a>. Some lines have been omitted for brevity.</p>
+<p>Be sure to add <code class="docutils literal notranslate"><span class="pre">enforce_constrained_state_space</span></code> and <code class="docutils literal notranslate"><span class="pre">projection_evaluator</span></code> to your <code class="docutils literal notranslate"><span class="pre">ompl_planning.yaml</span></code>!</p>
+<div class="section" id="initial-setup">
+<h3>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline"></a></h3>
+<p>First, we start off by setting up the <code class="docutils literal notranslate"><span class="pre">MoveGroupInterface</span></code> similarly to the <a class="reference internal" href="../../examples/move_group_interface/move_group_interface_tutorial.html"><span class="doc">Move Group interface example page</span></a>. This assumes you’ve already set up your node.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;panda_arm&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we create a lambda to help us create a pose at a given relative position from the current pose.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">current_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getCurrentPose</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// Creates a pose at a given positional offset from the current pose</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">get_relative_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">current_pose</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">moveit_visual_tools</span><span class="p">](</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">auto</span><span class="w"> </span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">target_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">target_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">target_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">moveit_visual_tools</span><span class="p">.</span><span class="n">publishSphere</span><span class="p">(</span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="n">rviz_visual_tools</span><span class="o">::</span><span class="n">RED</span><span class="p">,</span><span class="w"> </span><span class="mf">0.05</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">moveit_visual_tools</span><span class="p">.</span><span class="n">publishSphere</span><span class="p">(</span><span class="n">target_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">,</span><span class="w"> </span><span class="n">rviz_visual_tools</span><span class="o">::</span><span class="n">GREEN</span><span class="p">,</span><span class="w"> </span><span class="mf">0.05</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">moveit_visual_tools</span><span class="p">.</span><span class="n">trigger</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">target_pose</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we’re ready to set up some constraints, starting with a box constraint.</p>
+</div>
+<div class="section" id="box-constraints">
+<h3>Box Constraints<a class="headerlink" href="#box-constraints" title="Permalink to this headline"></a></h3>
+<p>We start by using the lambda to create a target pose offset from the current pose. This pose should be within the box that we make. In this example, we make a box of size <code class="docutils literal notranslate"><span class="pre">(0.1,</span> <span class="pre">0.4,</span> <span class="pre">0.4)</span></code>, so the target pose should be within our constraint region.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_relative_pose</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.3</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now, we set up the constraints. A box is a <code class="docutils literal notranslate"><span class="pre">PositionConstraint</span></code> - see the full message definition :<a class="reference external" href="https://github.com/ros-planning/moveit_msgs/blob/ros2/msg/PositionConstraint.msg">here</a>. We set the <code class="docutils literal notranslate"><span class="pre">frame_id</span></code> in the header, as well as the <code class="docutils literal notranslate"><span class="pre">link_name</span></code> of the link to be constrained (in this case, the end effector). We then create a box using <code class="docutils literal notranslate"><span class="pre">shape_msgs</span></code> and set its dimensiions. We then place that box into <code class="docutils literal notranslate"><span class="pre">box_constraint</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Let&#39;s try the simple box constraints first!</span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PositionConstraint</span><span class="w"> </span><span class="n">box_constraint</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getPoseReferenceFrame</span><span class="p">();</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getEndEffectorLink</span><span class="p">();</span><span class="w"></span>
+<span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">box</span><span class="p">;</span><span class="w"></span>
+<span class="n">box</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="o">::</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">box</span><span class="p">.</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">box</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we set the pose of our box constraint. This is done by using <code class="docutils literal notranslate"><span class="pre">geometry_msgs</span></code>. We set the position and orientation of the box, and add the pose to <code class="docutils literal notranslate"><span class="pre">box_constraint</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">box_pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.45</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">box_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, we create a generic <code class="docutils literal notranslate"><span class="pre">Constraints</span></code> message and add our <code class="docutils literal notranslate"><span class="pre">box_constraint</span></code> to the <code class="docutils literal notranslate"><span class="pre">position_constraints</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">box_constraints</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_constraints</span><span class="p">.</span><span class="n">position_constraints</span><span class="p">.</span><span class="n">push_bemplace_backack</span><span class="p">(</span><span class="n">box_constraint</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now that we’ve created our constraint, set the path constraints via the Move Group interface and plan. It’s helpful to increase the default planning time, as planning with constraints can be slower.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit</span><span class="o">::</span><span class="n">planning_interface</span><span class="o">::</span><span class="n">MoveGroupInterface</span><span class="o">::</span><span class="n">Plan</span><span class="w"> </span><span class="n">plan</span><span class="p">;</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPathConstraints</span><span class="p">(</span><span class="n">box_constraints</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPlanningTime</span><span class="p">(</span><span class="mf">10.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="equality-constraints">
+<h3>Equality Constraints<a class="headerlink" href="#equality-constraints" title="Permalink to this headline"></a></h3>
+<p>We can plan with the end-effector constrained to a plane or a line using equality constraints. First, we’ll cover the plane case.</p>
+<p>We need to create a pose goal that lies in this plane. The plane is tilted by 45 degrees, so moving an equal amount in the y and z direction will be on the plane. Be sure that both the goal and the start state satisfy the path constraints, or planning will always fail.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_relative_pose</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.3</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We create a plane perpendicular to the y-axis and tilt it by 45 degrees. We create a plane by making a box and setting one dimension <code class="docutils literal notranslate"><span class="pre">0.0005</span></code>. This is an important number that we will cover shortly.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PositionConstraint</span><span class="w"> </span><span class="n">plane_constraint</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_constraint</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getPoseReferenceFrame</span><span class="p">();</span><span class="w"></span>
+<span class="n">plane_constraint</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getEndEffectorLink</span><span class="p">();</span><span class="w"></span>
+<span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">plane</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="o">::</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane</span><span class="p">.</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0005</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">plane_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">plane</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">plane_pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">M_PI_4</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">M_PI_4</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="n">plane_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">plane_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">plane_constraint</span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Solving the problem using equality constraints is a bit more complicated. We need to tell the planner explicitly that we want to use equality constraints for the small dimensions. This is achieved by setting the name of the constraint to <code class="code docutils literal notranslate"><span class="pre">&quot;use_equality_constraints&quot;</span></code>. In addition, any dimension of the box below a threshold of <code class="code docutils literal notranslate"><span class="pre">0.001</span></code> will be considered an equality constraint. However, if we make it too small, the box will be thinner that the tolerance used by OMPL to evaluate constraints (<code class="code docutils literal notranslate"><span class="pre">1e-4</span></code> by default). MoveIt will use the stricter tolerance (the box width) to check the constraints, and many states will appear invalid. That’s where the magic number <code class="code docutils literal notranslate"><span class="pre">0.0005</span></code> comes from, it is between <code class="code docutils literal notranslate"><span class="pre">0.00001</span></code> and <code class="code docutils literal notranslate"><span class="pre">0.001</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">plane_constraints</span><span class="p">;</span><span class="w"></span>
+<span class="n">plane_constraints</span><span class="p">.</span><span class="n">position_constraints</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">plane_constraint</span><span class="p">);</span><span class="w"></span>
+<span class="n">plane_constraints</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;use_equality_constraints&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPathConstraints</span><span class="p">(</span><span class="n">plane_constraints</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>As before, set the target and plan.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPlanningTime</span><span class="p">(</span><span class="mf">10.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Building on the previous constraint, we can make it a line by also reducing the dimension of the box in the x-direction.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PositionConstraint</span><span class="w"> </span><span class="n">line_constraint</span><span class="p">;</span><span class="w"></span>
+<span class="n">line_constraint</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getPoseReferenceFrame</span><span class="p">();</span><span class="w"></span>
+<span class="n">line_constraint</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getEndEffectorLink</span><span class="p">();</span><span class="w"></span>
+<span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">line</span><span class="p">;</span><span class="w"></span>
+<span class="n">line</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="o">::</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">line</span><span class="p">.</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0005</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0005</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">line_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">line</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orientation-constraints">
+<h3>Orientation Constraints<a class="headerlink" href="#orientation-constraints" title="Permalink to this headline"></a></h3>
+<p>We can place constraints on orientation. We set the target pose to be the other side of the robot for a more drastic move as we are no longer constrained by position.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_relative_pose</span><span class="p">(</span><span class="mf">-0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We create an <code class="docutils literal notranslate"><span class="pre">OrientationConstraint</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Constraint</span></code>, but similarly to before, we set the <code class="docutils literal notranslate"><span class="pre">header.frame_id</span></code> and the <code class="docutils literal notranslate"><span class="pre">link_name</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">OrientationConstraint</span><span class="w"> </span><span class="n">orientation_constraint</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getPoseReferenceFrame</span><span class="p">();</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">link_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">getEndEffectorLink</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We then can use a <code class="docutils literal notranslate"><span class="pre">geometry_msgs::msg::Quaternion</span></code> to set the orientation constraint, or in this case, we just constrain the orientation to not change from <code class="docutils literal notranslate"><span class="pre">current_pose</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">orientation_constraint</span><span class="p">.</span><span class="n">orientation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">absolute_x_axis_tolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">absolute_y_axis_tolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">absolute_z_axis_tolerance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.4</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraint</span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Similarly to the position constraints, we need to use a generic <code class="docutils literal notranslate"><span class="pre">Constraints</span></code> message, but this time we add it to the <code class="docutils literal notranslate"><span class="pre">orientation_constraints</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">orientation_constraints</span><span class="p">;</span><span class="w"></span>
+<span class="n">orientation_constraints</span><span class="p">.</span><span class="n">orientation_constraints</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">orientation_constraint</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Set up the planning problem as before and plan.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPathConstraints</span><span class="p">(</span><span class="n">orientation_constraints</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPlanningTime</span><span class="p">(</span><span class="mf">10.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mixed-constraints">
+<h3>Mixed Constraints<a class="headerlink" href="#mixed-constraints" title="Permalink to this headline"></a></h3>
+<p>Finally, we can set both a position and an orientation constraint. We will use the same target pose that we used for the orientation constraint.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">target_pose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_relative_pose</span><span class="p">(</span><span class="mf">-0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We will also reuse our orientation constraint - but this time, the original box constraint won’t work as the target pose is outside of our original box. Let’s modify the box pose and dimensions such that the goal pose is reachable. Be aware that having a both a position and orientation constraint can drastically shrink the reachable area - the target pose not only needs to be within the box constraint as mentioned, but needs to be reachable while satisfying the orientation constriant, which is more difficult to visualize.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">box</span><span class="p">.</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">box</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.1</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">constraint_region</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">box_pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_constraint</span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>As before, we create a generalized constraint message, this time adding both our position and orientation constrint.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Constraints</span><span class="w"> </span><span class="n">mixed_constraints</span><span class="p">;</span><span class="w"></span>
+<span class="n">mixed_constraints</span><span class="p">.</span><span class="n">position_constraints</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">box_constraint</span><span class="p">);</span><span class="w"></span>
+<span class="n">mixed_constraints</span><span class="p">.</span><span class="n">orientation_constraints</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">orientation_constraint</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPathConstraints</span><span class="p">(</span><span class="n">mixed_constraints</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPoseTarget</span><span class="p">(</span><span class="n">target_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">setPlanningTime</span><span class="p">(</span><span class="mf">10.0</span><span class="p">);</span><span class="w"></span>
+<span class="n">move_group_interface</span><span class="p">.</span><span class="n">plan</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../how_to_write_doxygen.html" class="btn btn-neutral float-left" title="How to Contribute Doxygen Comments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../parallel_planning/parallel_planning_tutorial.html" class="btn btn-neutral float-right" title="Running Multiple Planning Pipelines in Parallel with MoveItCpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

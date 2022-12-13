@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Humble Hawksbill (humble) — ROS 2 documentation  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://docs.ros.org/en/Releases/Release-Humble-Hawksbill.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/clipboard.min.js"></script>
+<script src="../_static/copybutton.js"></script>
+<script src="../_static/tabs.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="Humble-Hawksbill-Complete-Changelog.html" rel="next" title="Humble Hawksbill changelog"/>
+<link href="../Releases.html" rel="prev" title="Distributions"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../index.html"> ROS 2 documentation
+          </a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../Releases.html">Distributions</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="End-of-Life.html">End-of-Life Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Dashing-Diademata.html">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Advanced.html">Advanced</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Simulation-Main.html">Simulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Webots.html">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Simulators/Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Tutorials/Advanced/Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorials/Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorials/Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../How-To-Guides.html">How-to Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installation-Troubleshooting.html">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Documentation.html">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../How-To-Guides/RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The-ROS2-Project.html">The ROS 2 Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../The-ROS2-Project/Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Governance.html">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../The-ROS2-Project/Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../The-ROS2-Project/Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Citations.html">Citations</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">ROS 2 documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../Releases.html">Distributions</a></li>
+<li class="breadcrumb-item active">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros2_documentation/blob/rolling/source/Releases/Release-Humble-Hawksbill.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/humble-release"></a><span class="target" id="humble-release"><a class="dashAnchor" name="//apple_ref/cpp/Section/latest_release"></a><span id="latest-release"></span></span><div class="section" id="humble-hawksbill-humble">
+<h1>Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)<a class="headerlink" href="#humble-hawksbill-humble" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#supported-platforms" id="id29">Supported Platforms</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id30">Installation</a></p></li>
+<li><p><a class="reference internal" href="#new-features-in-this-ros-2-release" id="id31">New features in this ROS 2 release</a></p></li>
+<li><p><a class="reference internal" href="#changes-in-patch-release-1-2022-11-23" id="id32">Changes in Patch Release 1 (2022-11-23)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ros2topic" id="id33">ros2topic</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#changes-since-the-galactic-release" id="id34">Changes since the Galactic release</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ament-cmake-gen-version-h" id="id35">ament_cmake_gen_version_h</a></p></li>
+<li><p><a class="reference internal" href="#launch" id="id36">launch</a></p></li>
+<li><p><a class="reference internal" href="#launch-ros" id="id37">launch_ros</a></p></li>
+<li><p><a class="reference internal" href="#sros2-security-enclaves-now-support-certificate-revocation-lists" id="id38">SROS2 Security enclaves now support Certificate Revocation Lists</a></p></li>
+<li><p><a class="reference internal" href="#content-filtered-topics" id="id39">Content Filtered Topics</a></p></li>
+<li><p><a class="reference internal" href="#ros2cli" id="id40">ros2cli</a></p></li>
+<li><p><a class="reference internal" href="#rviz2" id="id41">rviz2</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id2" id="id42">Changes since the Galactic release</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-interfaces" id="id43">common_interfaces</a></p></li>
+<li><p><a class="reference internal" href="#rmw" id="id44">rmw</a></p></li>
+<li><p><a class="reference internal" href="#rmw-connextdds" id="id45">rmw_connextdds</a></p></li>
+<li><p><a class="reference internal" href="#rcl" id="id46">rcl</a></p></li>
+<li><p><a class="reference internal" href="#rclcpp" id="id47">rclcpp</a></p></li>
+<li><p><a class="reference internal" href="#rclcpp-lifecycle" id="id48">rclcpp_lifecycle</a></p></li>
+<li><p><a class="reference internal" href="#rclpy" id="id49">rclpy</a></p></li>
+<li><p><a class="reference internal" href="#ros1-bridge" id="id50">ros1_bridge</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id51">ros2cli</a></p></li>
+<li><p><a class="reference internal" href="#robot-state-publisher" id="id52">robot_state_publisher</a></p></li>
+<li><p><a class="reference internal" href="#rosidl-cmake" id="id53">rosidl_cmake</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id54">rviz2</a></p></li>
+<li><p><a class="reference internal" href="#geometry2" id="id55">geometry2</a></p></li>
+<li><p><a class="reference internal" href="#rosbag2" id="id56">rosbag2</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#known-issues" id="id57">Known Issues</a></p></li>
+<li><p><a class="reference internal" href="#release-timeline" id="id58">Release Timeline</a></p></li>
+</ul>
+</div>
+<p><em>Humble Hawksbill</em> is the eighth release of ROS 2.
+What follows is highlights of the important changes and features in Humble Hawksbill since the last release.
+For a list of all of the changes since Galactic, see the <a class="reference internal" href="Humble-Hawksbill-Complete-Changelog.html"><span class="doc">long form changelog</span></a>.</p>
+<div class="section" id="supported-platforms">
+<h2><a class="toc-backref" href="#id29">Supported Platforms</a><a class="headerlink" href="#supported-platforms" title="Permalink to this headline"></a></h2>
+<p>Humble Hawksbill is primarily supported on the following platforms:</p>
+<p>Tier 1 platforms:</p>
+<ul class="simple">
+<li><p>Ubuntu 22.04 (Jammy): <code class="docutils literal notranslate"><span class="pre">amd64</span></code> and <code class="docutils literal notranslate"><span class="pre">arm64</span></code></p></li>
+<li><p>Windows 10 (Visual Studio 2019): <code class="docutils literal notranslate"><span class="pre">amd64</span></code></p></li>
+</ul>
+<p>Tier 2 platforms:</p>
+<ul class="simple">
+<li><p>RHEL 8: <code class="docutils literal notranslate"><span class="pre">amd64</span></code></p></li>
+</ul>
+<p>Tier 3 platforms:</p>
+<ul class="simple">
+<li><p>Ubuntu 20.04 (Focal): <code class="docutils literal notranslate"><span class="pre">amd64</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">amd64</span></code></p></li>
+<li><p>Debian Bullseye: <code class="docutils literal notranslate"><span class="pre">amd64</span></code></p></li>
+</ul>
+<p>For more information about RMW implementations, compiler / interpreter versions, and system dependency versions see <a class="reference external" href="https://www.ros.org/reps/rep-2000.html">REP 2000</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id30">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p><a class="reference external" href="../../humble/Installation.html">Install Humble Hawksbill</a></p>
+</div>
+<div class="section" id="new-features-in-this-ros-2-release">
+<h2><a class="toc-backref" href="#id31">New features in this ROS 2 release</a><a class="headerlink" href="#new-features-in-this-ros-2-release" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="changes-in-patch-release-1-2022-11-23">
+<h2><a class="toc-backref" href="#id32">Changes in Patch Release 1 (2022-11-23)</a><a class="headerlink" href="#changes-in-patch-release-1-2022-11-23" title="Permalink to this headline"></a></h2>
+<div class="section" id="ros2topic">
+<h3><a class="toc-backref" href="#id33">ros2topic</a><a class="headerlink" href="#ros2topic" title="Permalink to this headline"></a></h3>
+<div class="section" id="now-as-keyword-for-builtin-interfaces-msg-time-and-auto-for-std-msgs-msg-header">
+<h4><code class="docutils literal notranslate"><span class="pre">now</span></code> as keyword for <code class="docutils literal notranslate"><span class="pre">builtin_interfaces.msg.Time</span></code> and <code class="docutils literal notranslate"><span class="pre">auto</span></code> for <code class="docutils literal notranslate"><span class="pre">std_msgs.msg.Header</span></code><a class="headerlink" href="#now-as-keyword-for-builtin-interfaces-msg-time-and-auto-for-std-msgs-msg-header" title="Permalink to this headline"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">pub</span></code> now allows to set a <code class="docutils literal notranslate"><span class="pre">builtin_interfaces.msg.Time</span></code> message to the current time via the <code class="docutils literal notranslate"><span class="pre">now</span></code> keyword.
+Similarly, a <code class="docutils literal notranslate"><span class="pre">std_msg.msg.Header</span></code> message will be automatically generated when passed the keyword <code class="docutils literal notranslate"><span class="pre">auto</span></code>.
+This behavior matches that of ROS 1’s <code class="docutils literal notranslate"><span class="pre">rostopic</span></code> (<a class="reference external" href="http://wiki.ros.org/ROS/YAMLCommandLine#Headers.2Ftimestamps">http://wiki.ros.org/ROS/YAMLCommandLine#Headers.2Ftimestamps</a>)</p>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/ros2cli/pull/751">ros2/ros2cli#751</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="changes-since-the-galactic-release">
+<h2><a class="toc-backref" href="#id34">Changes since the Galactic release</a><a class="headerlink" href="#changes-since-the-galactic-release" title="Permalink to this headline"></a></h2>
+<div class="section" id="ament-cmake-gen-version-h">
+<h3><a class="toc-backref" href="#id35">ament_cmake_gen_version_h</a><a class="headerlink" href="#ament-cmake-gen-version-h" title="Permalink to this headline"></a></h3>
+<div class="section" id="generating-a-c-c-header-with-version-info">
+<h4>Generating a C/C++ header with version info<a class="headerlink" href="#generating-a-c-c-header-with-version-info" title="Permalink to this headline"></a></h4>
+<p>A new CMake function to generate a header with the package version info was added to the <code class="docutils literal notranslate"><span class="pre">ament_cmake_gen_version_h</span></code> in <a class="reference external" href="https://github.com/ament/ament_cmake/pull/377">ament/ament_cmake#377</a>.
+Here’s the simplest use case:</p>
+<div class="highlight-CMake notranslate"><div class="highlight"><pre><span></span><span class="nb">project</span><span class="p">(</span><span class="s">my_project</span><span class="p">)</span>
+<span class="nb">add_library</span><span class="p">(</span><span class="s">my_lib</span><span class="w"> </span><span class="s">...</span><span class="p">)</span>
+<span class="nb">ament_generate_version_header</span><span class="p">(</span><span class="s">my_lib</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It will generate a header with version info from the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> and make it available to targets that link against the <code class="docutils literal notranslate"><span class="pre">my_lib</span></code> library.</p>
+<p>How to include the header:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;my_project/version.h&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>Where the header is installed to:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">VERSION_HEADER</span><span class="w"> </span><span class="o">${</span><span class="nv">CMAKE_INSTALL_PREFIX</span><span class="o">}</span><span class="s">/include/my_project/my_project/version.h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="launch">
+<h3><a class="toc-backref" href="#id36">launch</a><a class="headerlink" href="#launch" title="Permalink to this headline"></a></h3>
+<div class="section" id="scoping-environment-variables-in-group-actions">
+<h4>Scoping environment variables in group actions<a class="headerlink" href="#scoping-environment-variables-in-group-actions" title="Permalink to this headline"></a></h4>
+<p>Similar to launch configurations, now by default, the state of environment variables are scoped to group actions.</p>
+<p>For example, in the following launch files the executed processe will echo the value <code class="docutils literal notranslate"><span class="pre">1</span></code> (before Humble it would echo <code class="docutils literal notranslate"><span class="pre">2</span></code>):</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-WE1M" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-WE1M" name="WE1M" role="tab" tabindex="0">XML</button><button aria-controls="panel-0-UHl0aG9u" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-UHl0aG9u" name="UHl0aG9u" role="tab" tabindex="-1">Python</button></div><div aria-labelledby="tab-0-WE1M" class="sphinx-tabs-panel group-tab" id="panel-0-WE1M" name="WE1M" role="tabpanel" tabindex="0"><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;set_env</span> <span class="na">name=</span><span class="s">"FOO"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;group&gt;</span>
+    <span class="nt">&lt;set_env</span> <span class="na">name=</span><span class="s">"FOO"</span> <span class="na">value=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/group&gt;</span>
+  <span class="nt">&lt;executable</span> <span class="na">cmd=</span><span class="s">"echo $FOO"</span> <span class="na">output=</span><span class="s">"screen"</span> <span class="na">shell=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-UHl0aG9u" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-UHl0aG9u" name="UHl0aG9u" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">launch</span>
+<span class="kn">import</span> <span class="nn">launch.actions</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">launch</span><span class="o">.</span><span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'FOO'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'1'</span><span class="p">),</span>
+        <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">GroupAction</span><span class="p">([</span>
+            <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'FOO'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'2'</span><span class="p">),</span>
+        <span class="p">]),</span>
+        <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">ExecuteProcess</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="p">[</span><span class="s1">'echo'</span><span class="p">,</span> <span class="s1">'$FOO'</span><span class="p">],</span> <span class="n">output</span><span class="o">=</span><span class="s1">'screen'</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div></div>
+<p>If you would like disable scoping for launch configurations and and environment variables you can set the <code class="docutils literal notranslate"><span class="pre">scoped</span></code> argument (or attribute) to false.</p>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/601">ros2/launch#601</a></p>
+</div>
+<div class="section" id="launch-pytest">
+<h4>launch_pytest<a class="headerlink" href="#launch-pytest" title="Permalink to this headline"></a></h4>
+<p>We’ve added a new package, <code class="docutils literal notranslate"><span class="pre">launch_pytest</span></code>, that acts as an alternative to <code class="docutils literal notranslate"><span class="pre">launch_testing</span></code>.
+<code class="docutils literal notranslate"><span class="pre">launch_pytest</span></code> is a simple pytest plugin that provides pytest fixtures to manage the lifetime of a launch service.</p>
+<p>Check out the <a class="reference external" href="https://github.com/ros2/launch/tree/humble/launch_pytest">package README for details and examples.</a></p>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/528">ros2/launch#528</a></p>
+</div>
+<div class="section" id="allow-matching-target-actions-with-a-callable">
+<h4>Allow matching target actions with a callable<a class="headerlink" href="#allow-matching-target-actions-with-a-callable" title="Permalink to this headline"></a></h4>
+<p>Event handlers that take a target action object to match can now also take a callable instead to do the matching.</p>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/540">ros2/launch#540</a></p>
+</div>
+<div class="section" id="access-to-math-module-when-evaluating-python-expressions">
+<h4>Access to math module when evaluating Python expressions<a class="headerlink" href="#access-to-math-module-when-evaluating-python-expressions" title="Permalink to this headline"></a></h4>
+<p>Inside <code class="docutils literal notranslate"><span class="pre">PythonExpression</span></code> substitutions (<code class="docutils literal notranslate"><span class="pre">eval</span></code>) we can now use symbols from Python’s math module.
+For example,</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;log</span> <span class="na">message=</span><span class="s">"$(eval 'ceil(pi)')"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/557">ros2/launch#557</a></p>
+</div>
+<div class="section" id="boolean-substitutions">
+<h4>Boolean substitutions<a class="headerlink" href="#boolean-substitutions" title="Permalink to this headline"></a></h4>
+<p>New substitutions <code class="docutils literal notranslate"><span class="pre">NotSubstitution</span></code>, <code class="docutils literal notranslate"><span class="pre">AndSubstitution</span></code>, and <code class="docutils literal notranslate"><span class="pre">OrSubstitution</span></code> provide a convenient way to perform logical operations, for example</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;let</span> <span class="na">name=</span><span class="s">"p"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;let</span> <span class="na">name=</span><span class="s">"q"</span> <span class="na">value=</span><span class="s">"false"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">if=</span><span class="s">"$(or $(var p) $(var q))"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;log</span> <span class="na">message=</span><span class="s">"The first condition is true"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/group&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">unless=</span><span class="s">"$(and $(var p) $(var q))"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;log</span> <span class="na">message=</span><span class="s">"The second condition is false"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/group&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">if=</span><span class="s">"$(not $(var q))"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;log</span> <span class="na">message=</span><span class="s">"The third condition is true"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/group&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/598">ros2/launch#598</a></p>
+</div>
+<div class="section" id="new-actions">
+<h4>New actions<a class="headerlink" href="#new-actions" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AppendEnvironmentVariable</span></code> appends a value to an existing environment variable.</p>
+<ul>
+<li><p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/543">ros2/launch#543</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ResetLaunchConfigurations</span></code> resets any configuration applied to the launch configuration.</p>
+<ul>
+<li><p>Related PR: <a class="reference external" href="https://github.com/ros2/launch/pull/515">ros2/launch#515</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="launch-ros">
+<h3><a class="toc-backref" href="#id37">launch_ros</a><a class="headerlink" href="#launch-ros" title="Permalink to this headline"></a></h3>
+<div class="section" id="passing-ros-arguments-to-node-actions">
+<h4>Passing ROS arguments to node actions<a class="headerlink" href="#passing-ros-arguments-to-node-actions" title="Permalink to this headline"></a></h4>
+<p>It is now possible to provide <a class="reference internal" href="../How-To-Guides/Node-arguments.html"><span class="doc">ROS-specific node arguments</span></a> directly, without needing to use <code class="docutils literal notranslate"><span class="pre">args</span></code> with a leading <code class="docutils literal notranslate"><span class="pre">--ros-args</span></code> flag:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-WE1M" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-WE1M" name="WE1M" role="tab" tabindex="0">XML</button><button aria-controls="panel-1-WUFNTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-WUFNTA==" name="WUFNTA==" role="tab" tabindex="-1">YAML</button></div><div aria-labelledby="tab-1-WE1M" class="sphinx-tabs-panel group-tab" id="panel-1-WE1M" name="WE1M" role="tabpanel" tabindex="0"><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">"demo_nodes_cpp"</span> <span class="na">exec=</span><span class="s">"talker"</span> <span class="na">ros_args=</span><span class="s">"--log-level debug"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-WUFNTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-WUFNTA==" name="WUFNTA==" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">launch</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo_nodes_cpp</span><span class="w"></span>
+<span class="w">    </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">talker</span><span class="w"></span>
+<span class="w">    </span><span class="nt">ros_args</span><span class="p">:</span><span class="w"> </span><span class="s">'--log-level</span><span class="nv"> </span><span class="s">debug'</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+<p>The corresponding parameter for the <code class="docutils literal notranslate"><span class="pre">Node</span></code> action in Python launch files is <code class="docutils literal notranslate"><span class="pre">ros_arguments</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">import</span> <span class="nn">launch_ros.actions</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">launch_ros</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">'demo_nodes_cpp'</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">'talker'</span><span class="p">,</span>
+            <span class="n">ros_arguments</span><span class="o">=</span><span class="p">[</span><span class="s1">'--log-level'</span><span class="p">,</span> <span class="s1">'debug'</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+<p>Related PRs: <a class="reference external" href="https://github.com/ros2/launch_ros/pull/249">ros2/launch_ros#249</a> and <a class="reference external" href="https://github.com/ros2/launch_ros/pull/253">ros2/launch_ros#253</a>.</p>
+</div>
+<div class="section" id="frontend-support-for-composable-nodes">
+<h4>Frontend support for composable nodes<a class="headerlink" href="#frontend-support-for-composable-nodes" title="Permalink to this headline"></a></h4>
+<p>We can now start node containers and load components into them from frontend launch files, for example:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-WE1M" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-WE1M" name="WE1M" role="tab" tabindex="0">XML</button><button aria-controls="panel-2-WUFNTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-WUFNTA==" name="WUFNTA==" role="tab" tabindex="-1">YAML</button></div><div aria-labelledby="tab-2-WE1M" class="sphinx-tabs-panel group-tab" id="panel-2-WE1M" name="WE1M" role="tabpanel" tabindex="0"><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;node_container</span> <span class="na">pkg=</span><span class="s">"rclcpp_components"</span> <span class="na">exec=</span><span class="s">"component_container"</span> <span class="na">name=</span><span class="s">"my_container"</span> <span class="na">namespace=</span><span class="s">""</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;composable_node</span> <span class="na">pkg=</span><span class="s">"composition"</span> <span class="na">plugin=</span><span class="s">"composition::Talker"</span> <span class="na">name=</span><span class="s">"talker"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/node_container&gt;</span>
+  <span class="nt">&lt;load_composable_node</span> <span class="na">target=</span><span class="s">"my_container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;composable_node</span> <span class="na">pkg=</span><span class="s">"composition"</span> <span class="na">plugin=</span><span class="s">"composition::Listener"</span> <span class="na">name=</span><span class="s">"listener"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/load_composable_node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-WUFNTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-WUFNTA==" name="WUFNTA==" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">launch</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node_container</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rclcpp_components</span><span class="w"></span>
+<span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">component_container</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_container</span><span class="w"></span>
+<span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">''</span><span class="w"></span>
+<span class="w">      </span><span class="nt">composable_node</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">composition</span><span class="w"></span>
+<span class="w">          </span><span class="nt">plugin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">composition::Talker</span><span class="w"></span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">talker</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">load_composable_node</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_container</span><span class="w"></span>
+<span class="w">      </span><span class="nt">composable_node</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">composition</span><span class="w"></span>
+<span class="w">          </span><span class="nt">plugin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">composition::Listener</span><span class="w"></span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">listener</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch_ros/pull/235">ros2/launch_ros#235</a></p>
+</div>
+<div class="section" id="parameter-substitution">
+<h4>Parameter substitution<a class="headerlink" href="#parameter-substitution" title="Permalink to this headline"></a></h4>
+<p>The new <code class="docutils literal notranslate"><span class="pre">ParameterSubstitution</span></code> lets you substitute the value of a parameter set previously in launch with the <code class="docutils literal notranslate"><span class="pre">SetParameter</span></code> action.
+For example,</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;set_parameter</span> <span class="na">name=</span><span class="s">"foo"</span> <span class="na">value=</span><span class="s">"bar"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;log</span> <span class="na">message=</span><span class="s">"Parameter foo has value $(param foo)"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>Related PR: <a class="reference external" href="https://github.com/ros2/launch_ros/pull/297">ros2/launch_ros#297</a></p>
+</div>
+<div class="section" id="id1">
+<h4>New actions<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RosTimer</span></code> acts like the launch <code class="docutils literal notranslate"><span class="pre">TimerAction</span></code>, but uses a ROS clock (so it can use simulation time, for example).</p>
+<ul>
+<li><p>Related PRs: <a class="reference external" href="https://github.com/ros2/launch_ros/pull/244">ros2/launch_ros#244</a> and <a class="reference external" href="https://github.com/ros2/launch_ros/pull/264">ros2/launch_ros#264</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetParametersFromFile</span></code> passes a ROS parameters file to all nodes in a launch file (including node components).</p>
+<ul>
+<li><p>Related PRs: <a class="reference external" href="https://github.com/ros2/launch_ros/pull/260">ros2/launch_ros#260</a> and <a class="reference external" href="https://github.com/ros2/launch_ros/pull/281">ros2/launch_ros#281</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="sros2-security-enclaves-now-support-certificate-revocation-lists">
+<h3><a class="toc-backref" href="#id38">SROS2 Security enclaves now support Certificate Revocation Lists</a><a class="headerlink" href="#sros2-security-enclaves-now-support-certificate-revocation-lists" title="Permalink to this headline"></a></h3>
+<p>Certificate Revocation Lists (CRLs) are a concept where particular certificates can be revoked before their expiration.
+As of Humble, it is now possible to put a CRL in an SROS2 security enclave and have it be honored.
+See <a class="reference external" href="https://github.com/ros2/sros2/blob/humble/SROS2_Linux.md#certificate-revocation-lists">the SROS2 tutorials</a> for an example of how to use it.</p>
+</div>
+<div class="section" id="content-filtered-topics">
+<h3><a class="toc-backref" href="#id39">Content Filtered Topics</a><a class="headerlink" href="#content-filtered-topics" title="Permalink to this headline"></a></h3>
+<p>Content Filtered Topics supports a more sophisticated subscription that indicates the subscriber does not want to necessarily see all values of each instance published under the Topic.
+Content Filtered Topics can be used to request content-based subscriptions when underlying RMW implementation supports this feature.</p>
+<table class="colwidths-given docutils align-default" id="id28">
+<caption><span class="caption-text">RMW Content Filtered Topics support</span><a class="headerlink" href="#id28" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>rmw_fastrtps</p></td>
+<td><p>supported</p></td>
+</tr>
+<tr class="row-even"><td><p>rmw_connextdds</p></td>
+<td><p>supported</p></td>
+</tr>
+<tr class="row-odd"><td><p>rmw_cyclonedds</p></td>
+<td><p>not supported</p></td>
+</tr>
+</tbody>
+</table>
+<p>To learn more, see the <a class="reference external" href="https://github.com/ros2/examples/blob/humble/rclcpp/topics/minimal_subscriber/content_filtering.cpp">content_filtering</a> examples.</p>
+<p>Related design PR: <a class="reference external" href="https://github.com/ros2/design/pull/282">ros2/design#282</a>.</p>
+</div>
+<div class="section" id="ros2cli">
+<h3><a class="toc-backref" href="#id40">ros2cli</a><a class="headerlink" href="#ros2cli" title="Permalink to this headline"></a></h3>
+<div class="section" id="ros2-launch-has-a-launch-prefix-argument">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">launch</span></code> has a <code class="docutils literal notranslate"><span class="pre">--launch-prefix</span></code> argument<a class="headerlink" href="#ros2-launch-has-a-launch-prefix-argument" title="Permalink to this headline"></a></h4>
+<p>This allows passing a prefix to all executables in a launch file, which is useful in many debugging situations.
+See the associated <a class="reference external" href="https://github.com/ros2/launch_ros/pull/254">pull request</a>, as well as the <a class="reference internal" href="../How-To-Guides/Launch-files-migration-guide.html#launch-prefix-example"><span class="std std-ref">tutorial</span></a> for more information.</p>
+<p>Relatedly, the <code class="docutils literal notranslate"><span class="pre">--launch-prefix-filter</span></code> command-line option was added to selectively add the prefix from <code class="docutils literal notranslate"><span class="pre">--launch-prefix</span></code> to executables.
+See the <a class="reference external" href="https://github.com/ros2/launch_ros/pull/261">pull request</a> for more information.</p>
+</div>
+<div class="section" id="ros2-topic-echo-has-a-flow-style-argument">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">echo</span></code> has a <code class="docutils literal notranslate"><span class="pre">--flow-style</span></code> argument<a class="headerlink" href="#ros2-topic-echo-has-a-flow-style-argument" title="Permalink to this headline"></a></h4>
+<p>This allows the user to force <code class="docutils literal notranslate"><span class="pre">flow</span> <span class="pre">style</span></code> for the YAML representation of data on a topic.
+Without this option, the output from <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">echo</span> <span class="pre">/tf_static</span></code> could look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">transforms</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">header</span><span class="p">:</span>
+    <span class="n">stamp</span><span class="p">:</span>
+      <span class="n">sec</span><span class="p">:</span> <span class="mi">1651172841</span>
+      <span class="n">nanosec</span><span class="p">:</span> <span class="mi">433705575</span>
+    <span class="n">frame_id</span><span class="p">:</span> <span class="n">single_rrbot_link3</span>
+  <span class="n">child_frame_id</span><span class="p">:</span> <span class="n">single_rrbot_camera_link</span>
+  <span class="n">transform</span><span class="p">:</span>
+    <span class="n">translation</span><span class="p">:</span>
+      <span class="n">x</span><span class="p">:</span> <span class="mf">0.05</span>
+      <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span>
+      <span class="n">z</span><span class="p">:</span> <span class="mf">0.9</span>
+    <span class="n">rotation</span><span class="p">:</span>
+      <span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span>
+      <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span>
+      <span class="n">z</span><span class="p">:</span> <span class="mf">0.0</span>
+      <span class="n">w</span><span class="p">:</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>With this option, the output would look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">transforms</span><span class="p">:</span> <span class="p">[{</span><span class="n">header</span><span class="p">:</span> <span class="p">{</span><span class="n">stamp</span><span class="p">:</span> <span class="p">{</span><span class="n">sec</span><span class="p">:</span> <span class="mi">1651172841</span><span class="p">,</span> <span class="n">nanosec</span><span class="p">:</span> <span class="mi">433705575</span><span class="p">},</span> <span class="n">frame_id</span><span class="p">:</span> <span class="n">single_rrbot_link3</span><span class="p">},</span> <span class="n">child_frame_id</span><span class="p">:</span> <span class="n">single_rrbot_camera_link</span><span class="p">,</span> <span class="n">transform</span><span class="p">:</span> <span class="p">{</span><span class="n">translation</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},</span> <span class="n">rotation</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}}}]</span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://pyyaml.docsforge.com/master/documentation/#dictionaries-without-nested-collections-are-not-dumped-correctly">PyYAML documentation</a> for more information.</p>
+</div>
+<div class="section" id="ros2-topic-echo-can-filter-data-based-on-message-contents">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">echo</span></code> can filter data based on message contents<a class="headerlink" href="#ros2-topic-echo-can-filter-data-based-on-message-contents" title="Permalink to this headline"></a></h4>
+<p>This allows the user to only print out data on a topic that matches a certain Python expression.
+For instance, using the following argument will only print out string messages that start with ‘foo’:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">topic</span> <span class="n">echo</span> <span class="o">--</span><span class="nb">filter</span> <span class="s1">'m.data.startswith("foo")` /chatter</span>
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://github.com/ros2/ros2cli/pull/654">pull request</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="rviz2">
+<h3><a class="toc-backref" href="#id41">rviz2</a><a class="headerlink" href="#rviz2" title="Permalink to this headline"></a></h3>
+<div class="section" id="apply-textures-to-arbitrary-triangle-lists">
+<h4>Apply textures to arbitrary triangle lists<a class="headerlink" href="#apply-textures-to-arbitrary-triangle-lists" title="Permalink to this headline"></a></h4>
+<p>We’ve added <a class="reference external" href="https://github.com/ros2/rviz/pull/719">the ability to apply textures defined via URI to arbitrary triangle lists using UV Coordinates</a>.
+Now we can create a gradient pull from a texture map instead of the default grayscale.
+This will enable complex coloring of markers.
+To use this, you should use the <code class="docutils literal notranslate"><span class="pre">visualization_msgs/Marker.msg</span></code> and fill the <code class="docutils literal notranslate"><span class="pre">texture_resource</span></code>, <code class="docutils literal notranslate"><span class="pre">texture</span></code>, <code class="docutils literal notranslate"><span class="pre">uv_coordinates</span></code> and <code class="docutils literal notranslate"><span class="pre">mesh_file</span></code> fields.
+You can find more information <a class="reference external" href="https://github.com/ros2/common_interfaces/pull/153">here</a>.</p>
+<img alt="../_images/triangle_marker_with_gradient.png" src="../_images/triangle_marker_with_gradient.png"/>
+</div>
+<div class="section" id="visualization-of-mass-properties-including-inertia">
+<h4>Visualization of mass properties (including inertia)<a class="headerlink" href="#visualization-of-mass-properties-including-inertia" title="Permalink to this headline"></a></h4>
+<p>We also added the ability to visualize inertias. To do this, you select enable ‘Inertia’ in the ‘Mass Properties’ under the robot model:</p>
+<img alt="../_images/rviz_mass_inertia.png" src="../_images/rviz_mass_inertia.png"/>
+<p>You can see an image of an inertia below.</p>
+<img alt="../_images/tb4_inertia.png" src="../_images/tb4_inertia.png"/>
+</div>
+<div class="section" id="visualize-yuv-images-in-rviz">
+<h4>Visualize YUV images in RViz<a class="headerlink" href="#visualize-yuv-images-in-rviz" title="Permalink to this headline"></a></h4>
+<p>It is now possible to directly visualize YUV images inside of RViz, rather than having to convert to RGB first.
+See <a class="reference external" href="https://github.com/ros2/rviz/pull/701">ros2/rviz#701</a> for details.</p>
+</div>
+<div class="section" id="allow-rendering-of-objects-100-meters">
+<h4>Allow rendering of objects &gt; 100 meters<a class="headerlink" href="#allow-rendering-of-objects-100-meters" title="Permalink to this headline"></a></h4>
+<p>By default, RViz only renders objects that are within 100 meters of a camera.
+A new configuration property called “Far Plane Distance” in the rviz camera plugin allows that rendering distance to be configured.</p>
+<img alt="../_images/rviz2-far-plane-distance.png" src="../_images/rviz2-far-plane-distance.png"/>
+<p>See <a class="reference external" href="https://github.com/ros2/rviz/pull/849">ros2/rviz#849</a> for more information.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id42">Changes since the Galactic release</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<div class="section" id="common-interfaces">
+<h3><a class="toc-backref" href="#id43">common_interfaces</a><a class="headerlink" href="#common-interfaces" title="Permalink to this headline"></a></h3>
+<div class="section" id="support-textures-and-embedded-meshes-for-marker-messages">
+<h4>Support Textures and Embedded Meshes for Marker Messages<a class="headerlink" href="#support-textures-and-embedded-meshes-for-marker-messages" title="Permalink to this headline"></a></h4>
+<p>These two additions will improve the ability to both visualize data in new ways with standard messages and, simultaneously, enable the ability to track this data in rosbag.</p>
+<p><strong>Textures</strong> bring the addition of three new fields to markers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Texture resource is a special URI that can either reference a texture file in</span>
+<span class="c1"># a format acceptable to (resource retriever)[https://index.ros.org/p/resource_retriever/]</span>
+<span class="c1"># or an embedded texture via a string matching the format:</span>
+<span class="c1">#   "embedded://texture_name"</span>
+string texture_resource
+<span class="c1"># An image to be loaded into the rendering engine as the texture for this marker.</span>
+<span class="c1"># This will be used iff texture_resource is set to embedded.</span>
+sensor_msgs/CompressedImage texture
+<span class="c1"># Location of each vertex within the texture; in the range: [0.0-1.0]</span>
+UVCoordinate<span class="o">[]</span> uv_coordinates
+</pre></div>
+</div>
+<p>RViz will fully support texture rendering through the embedded format.</p>
+<p>To those familiar with <code class="docutils literal notranslate"><span class="pre">mesh_resource</span></code>, <code class="docutils literal notranslate"><span class="pre">resource_retriever</span></code> should be familiar.
+This will allow the programmer to choose where they want to load data from, either a local file or a networked file.
+In the interest of being able to record all data in a rosbag, the ability to embed the texture image is included.</p>
+<p><strong>Meshes</strong> were modified in a similar way to add the ability to embed a raw Mesh file for the purpose of recording and are modified in a similar way. The Meshfile message has two fields:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># The filename is used for both debug purposes and to provide a file extension</span>
+<span class="c1"># for whatever parser is used.</span>
+string filename
+
+<span class="c1"># This stores the raw text of the mesh file.</span>
+uint8<span class="o">[]</span> data
+</pre></div>
+</div>
+<p>The embedded <code class="docutils literal notranslate"><span class="pre">Meshfile</span></code> message is not yet supported in implementation.</p>
+<p>Related PRs: <a class="reference external" href="https://github.com/ros2/common_interfaces/pull/153">ros2/common_interfaces#153</a> <a class="reference external" href="https://github.com/ros2/rviz/pull/719">ros2/rviz#719</a></p>
+</div>
+<div class="section" id="added-prism-type-to-solidprimitive">
+<h4>Added <code class="docutils literal notranslate"><span class="pre">PRISM</span></code> type to SolidPrimitive<a class="headerlink" href="#added-prism-type-to-solidprimitive" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">SolidPrimitive</span></code> message had a new <code class="docutils literal notranslate"><span class="pre">PRISM</span></code> type added, along with the appropriate metadata.
+See <a class="reference external" href="https://github.com/ros2/common_interfaces/pull/167">ros2/common_interfaces#167</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="rmw">
+<h3><a class="toc-backref" href="#id44">rmw</a><a class="headerlink" href="#rmw" title="Permalink to this headline"></a></h3>
+<div class="section" id="struct-type-name-suffix-changed-from-t-to-s">
+<h4><code class="docutils literal notranslate"><span class="pre">struct</span></code> type name suffix changed from <code class="docutils literal notranslate"><span class="pre">_t</span></code> to <code class="docutils literal notranslate"><span class="pre">_s</span></code><a class="headerlink" href="#struct-type-name-suffix-changed-from-t-to-s" title="Permalink to this headline"></a></h4>
+<p>To avoid type name duplication errors between <code class="docutils literal notranslate"><span class="pre">struct</span></code> type names and their <code class="docutils literal notranslate"><span class="pre">typedef</span></code>-ed aliases when generating code documentation, the suffix for all <code class="docutils literal notranslate"><span class="pre">struct</span></code> type names has been changed from <code class="docutils literal notranslate"><span class="pre">_t</span></code> to <code class="docutils literal notranslate"><span class="pre">_s</span></code>.
+Aliases with <code class="docutils literal notranslate"><span class="pre">_t</span></code> suffixes remain in place.
+Thus, this change is a breaking change only for code that uses full <code class="docutils literal notranslate"><span class="pre">struct</span></code> type specifiers i.e. <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">type_name_t</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/rmw/pull/313">ros2/rmw#313</a> for more details.</p>
+</div>
+</div>
+<div class="section" id="rmw-connextdds">
+<h3><a class="toc-backref" href="#id45">rmw_connextdds</a><a class="headerlink" href="#rmw-connextdds" title="Permalink to this headline"></a></h3>
+<div class="section" id="use-connext-6-by-default">
+<h4>Use Connext 6 by default<a class="headerlink" href="#use-connext-6-by-default" title="Permalink to this headline"></a></h4>
+<p>By default, Humble Hawksbill uses Connext 6.0.1 as the DDS implementation for <code class="docutils literal notranslate"><span class="pre">rmw_connextdds</span></code>.
+It is still possible to use Connext 5.3.1 with <code class="docutils literal notranslate"><span class="pre">rmw_connextdds</span></code>, but it must be rebuilt from source.</p>
+</div>
+</div>
+<div class="section" id="rcl">
+<h3><a class="toc-backref" href="#id46">rcl</a><a class="headerlink" href="#rcl" title="Permalink to this headline"></a></h3>
+<div class="section" id="id3">
+<h4><code class="docutils literal notranslate"><span class="pre">struct</span></code> type name suffix changed from <code class="docutils literal notranslate"><span class="pre">_t</span></code> to <code class="docutils literal notranslate"><span class="pre">_s</span></code><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
+<p>To avoid type name duplication errors between <code class="docutils literal notranslate"><span class="pre">struct</span></code> type names and their <code class="docutils literal notranslate"><span class="pre">typedef</span></code>-ed aliases when generating code documentation, the suffix for all <code class="docutils literal notranslate"><span class="pre">struct</span></code> type names has been changed from <code class="docutils literal notranslate"><span class="pre">_t</span></code> to <code class="docutils literal notranslate"><span class="pre">_s</span></code>.
+Aliases with <code class="docutils literal notranslate"><span class="pre">_t</span></code> suffixes remain in place.
+Thus, this change is a breaking change only for code that uses full <code class="docutils literal notranslate"><span class="pre">struct</span></code> type specifiers i.e. <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">type_name_t</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/rcl/pull/932">ros2/rcl#932</a> for more details.</p>
+</div>
+<div class="section" id="ros-disable-loaned-messages-environment-variable-added">
+<h4>ROS_DISABLE_LOANED_MESSAGES environment variable added<a class="headerlink" href="#ros-disable-loaned-messages-environment-variable-added" title="Permalink to this headline"></a></h4>
+<p>This environment variable can be used to disable loaned messages support, independently if the rmw supports them or not.
+For more details, see the guide <a class="reference internal" href="../How-To-Guides/Disabling-ZeroCopy-loaned-messages.html"><span class="doc">Disabling Zero Copy Loaned Messages</span></a>.</p>
+</div>
+</div>
+<div class="section" id="rclcpp">
+<h3><a class="toc-backref" href="#id47">rclcpp</a><a class="headerlink" href="#rclcpp" title="Permalink to this headline"></a></h3>
+<div class="section" id="support-type-adaption-for-publishers-and-subscriptions">
+<h4>Support Type Adaption for Publishers and Subscriptions<a class="headerlink" href="#support-type-adaption-for-publishers-and-subscriptions" title="Permalink to this headline"></a></h4>
+<p>After defining a type adapter, custom data structures can be used directly by publishers and subscribers, which helps to avoid additional work for the programmer and potential sources of errors.
+This is especially useful when working with complex data types, such as when converting OpenCV’s <code class="docutils literal notranslate"><span class="pre">cv::Mat</span></code> to ROS’s <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/Image</span></code> type.</p>
+<p>Here is an example of a type adapter that converts <code class="docutils literal notranslate"><span class="pre">std_msgs::msg::String</span></code> to <code class="docutils literal notranslate"><span class="pre">std::string</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">rclcpp</span><span class="o">::</span><span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">String</span><span class="w"></span>
+<span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">is_specialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">true_type</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">custom_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">ros_message_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">String</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">static</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="nf">convert_to_ros_message</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">custom_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ros_message_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">destination</span><span class="p">.</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">static</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="nf">convert_to_custom</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">ros_message_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">custom_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">destination</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="n">data</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And an example of how the type adapter can be used:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">MyAdaptedType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">String</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Publish a std::string</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">pub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">MyAdaptedType</span><span class="o">&gt;</span><span class="p">(...);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">custom_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"My std::string"</span><span class="w"></span>
+<span class="n">pub</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">custom_msg</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Pass a std::string to a subscription's callback</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">create_subscription</span><span class="o">&lt;</span><span class="n">MyAdaptedType</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="s">"topic"</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{...});</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To learn more, see the <a class="reference external" href="https://github.com/ros2/examples/blob/b83b18598b198b4a5ba44f9266c1bb39a393fa17/rclcpp/topics/minimal_publisher/member_function_with_type_adapter.cpp">publisher</a> and <a class="reference external" href="https://github.com/ros2/examples/blob/b83b18598b198b4a5ba44f9266c1bb39a393fa17/rclcpp/topics/minimal_subscriber/member_function_with_type_adapter.cpp">subscription</a> examples, as well as a more complex <a class="reference external" href="https://github.com/ros2/demos/pull/482">demo</a>.
+For more details, see <a class="reference external" href="https://ros.org/reps/rep-2007.html">REP 2007</a>.</p>
+</div>
+<div class="section" id="client-asnyc-send-request-request-returns-a-std-future-instead-of-a-std-shared-future">
+<h4><code class="docutils literal notranslate"><span class="pre">Client::asnyc_send_request(request)</span></code> returns a <code class="docutils literal notranslate"><span class="pre">std::future</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">std::shared_future</span></code><a class="headerlink" href="#client-asnyc-send-request-request-returns-a-std-future-instead-of-a-std-shared-future" title="Permalink to this headline"></a></h4>
+<p>This change was implemented in <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1734">rclcpp#1734</a>.
+This breaks API, as <code class="docutils literal notranslate"><span class="pre">std::future::get()</span></code> methods extracts the value from the future.
+That means, if that method is called for a second time it will throw an exception.
+That doesn’t happen with a <code class="docutils literal notranslate"><span class="pre">std::shared_future</span></code>, as its <code class="docutils literal notranslate"><span class="pre">get()</span></code> method returns a <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">&amp;</span></code>.
+Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">-&gt;</span><span class="n">async_send_request</span><span class="p">(</span><span class="n">req</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">do_something_with_response</span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">do_something_else_with_response</span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w">  </span><span class="c1">// this will throw an exception now!!</span>
+</pre></div>
+</div>
+<p>should be updated to:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="o">-&gt;</span><span class="n">async_send_request</span><span class="p">(</span><span class="n">req</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">();</span><span class="w"></span>
+<span class="n">do_something_with_response</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">do_something_else_with_response</span><span class="p">(</span><span class="n">response</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If a shared future is needed, the <code class="docutils literal notranslate"><span class="pre">std::future::share()</span></code> method can be used.</p>
+</div>
+<div class="section" id="wait-for-all-acked-method-added-to-publisher">
+<h4><code class="docutils literal notranslate"><span class="pre">wait_for_all_acked</span></code> method added to <code class="docutils literal notranslate"><span class="pre">Publisher</span></code><a class="headerlink" href="#wait-for-all-acked-method-added-to-publisher" title="Permalink to this headline"></a></h4>
+<p>This new method will block until all messages in the publisher queue are acked by the matching subscriptions or the specified timeout expires.
+It is only useful for reliable publishers, as in the case of best effort QoS there’s no acking.
+Examples:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">pub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">std_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">String</span><span class="o">&gt;</span><span class="p">(...);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">pub</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">my_msg</span><span class="p">);</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">pub</span><span class="o">-&gt;</span><span class="n">wait_for_all_acked</span><span class="p">();</span><span class="w"> </span><span class="c1">// or pub-&gt;wait_for_all_acked(timeout)</span>
+</pre></div>
+</div>
+<p>For a more complete example, see <a class="reference external" href="https://github.com/ros2/examples/blob/humble/rclcpp/topics/minimal_publisher/member_function_with_wait_for_all_acked.cpp">here</a>.</p>
+</div>
+<div class="section" id="get-callback-groups-method-removed-from-nodebase-and-node-classes">
+<h4><code class="docutils literal notranslate"><span class="pre">get_callback_groups</span></code> method removed from <code class="docutils literal notranslate"><span class="pre">NodeBase</span></code> and <code class="docutils literal notranslate"><span class="pre">Node</span></code> classes<a class="headerlink" href="#get-callback-groups-method-removed-from-nodebase-and-node-classes" title="Permalink to this headline"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">for_each_callback_group()</span></code> method has replaced <code class="docutils literal notranslate"><span class="pre">get_callback_groups()</span></code> by providing a thread-safe way to access <code class="docutils literal notranslate"><span class="pre">callback_groups_</span></code> vector.
+<code class="docutils literal notranslate"><span class="pre">for_each_callback_group()</span></code> accepts a function as an argument, iterates over the stored callback groups, and calls the passed function to ones that are valid.</p>
+<p>For more details, please refer to this <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1723">pull request</a>.</p>
+</div>
+<div class="section" id="add-to-wait-set-method-from-waitable-class-changes-its-return-type-from-bool-to-void">
+<h4><code class="docutils literal notranslate"><span class="pre">add_to_wait_set</span></code> method from <code class="docutils literal notranslate"><span class="pre">Waitable</span></code> class changes its return type from <code class="docutils literal notranslate"><span class="pre">bool</span></code> to <code class="docutils literal notranslate"><span class="pre">void</span></code><a class="headerlink" href="#add-to-wait-set-method-from-waitable-class-changes-its-return-type-from-bool-to-void" title="Permalink to this headline"></a></h4>
+<p>Before, classes derived from <code class="docutils literal notranslate"><span class="pre">Waitable</span></code> overriding <code class="docutils literal notranslate"><span class="pre">add_to_wait_set</span></code> were returning false when failing to add elements to the wait set, so the caller had to check this return value and throw or handle the error.
+This error handling should now be done directly on <code class="docutils literal notranslate"><span class="pre">add_to_wait_set</span></code> method, throwing if necessary.
+It is not required to return anything if no errors happened.
+Thus, this is a breaking change for downstream uses of <code class="docutils literal notranslate"><span class="pre">Waitable</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1612">ros2/rclcpp#1612</a> for more details.</p>
+</div>
+<div class="section" id="get-notify-guard-condition-method-return-type-from-nodebaseinterface-class-changed">
+<h4><code class="docutils literal notranslate"><span class="pre">get_notify_guard_condition</span></code> method return type from <code class="docutils literal notranslate"><span class="pre">NodeBaseInterface</span></code> class changed<a class="headerlink" href="#get-notify-guard-condition-method-return-type-from-nodebaseinterface-class-changed" title="Permalink to this headline"></a></h4>
+<p>Now <code class="docutils literal notranslate"><span class="pre">rclcpp</span></code> uses the <code class="docutils literal notranslate"><span class="pre">GuardCondition</span></code> class wrapper around <code class="docutils literal notranslate"><span class="pre">rcl_guard_condition_t</span></code>, so <code class="docutils literal notranslate"><span class="pre">get_notify_guard_condition</span></code> returns a reference to the node’s <code class="docutils literal notranslate"><span class="pre">rclcpp::GuardCondition</span></code>.
+Thus, this is a breaking change for downstream uses of <code class="docutils literal notranslate"><span class="pre">NodeBaseInterface</span></code> and <code class="docutils literal notranslate"><span class="pre">NodeBase</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1612">ros2/rclcpp#1612</a> for more details.</p>
+</div>
+<div class="section" id="sleep-until-and-sleep-for-methods-added-to-clock">
+<h4><code class="docutils literal notranslate"><span class="pre">sleep_until</span></code> and <code class="docutils literal notranslate"><span class="pre">sleep_for</span></code> methods added to <code class="docutils literal notranslate"><span class="pre">Clock</span></code><a class="headerlink" href="#sleep-until-and-sleep-for-methods-added-to-clock" title="Permalink to this headline"></a></h4>
+<p>Two new methods were added to allow sleeping on a particular clock in <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1814">ros2/rclcpp#1814</a> and <a class="reference external" href="https://github.com/ros2/rclcpp/pull/1828">ros2/rclcpp#1828</a>.
+<code class="docutils literal notranslate"><span class="pre">Clock::sleep_until</span></code> will suspend the current thread until the clock reaches a particular time.
+<code class="docutils literal notranslate"><span class="pre">Clock::sleep_for</span></code> will suspend the current thread until the clock advances a certain amount of time from when the method was called.
+Both methods will wake early if the <code class="docutils literal notranslate"><span class="pre">Context</span></code> is shutdown.</p>
+</div>
+</div>
+<div class="section" id="rclcpp-lifecycle">
+<h3><a class="toc-backref" href="#id48">rclcpp_lifecycle</a><a class="headerlink" href="#rclcpp-lifecycle" title="Permalink to this headline"></a></h3>
+<div class="section" id="active-and-deactivate-transitions-of-publishers-will-be-triggered-automatically">
+<h4>Active and deactivate transitions of publishers will be triggered automatically<a class="headerlink" href="#active-and-deactivate-transitions-of-publishers-will-be-triggered-automatically" title="Permalink to this headline"></a></h4>
+<p>Before, users needed to override <code class="docutils literal notranslate"><span class="pre">LifecylceNode::on_activate()</span></code> and <code class="docutils literal notranslate"><span class="pre">LifecylceNode::on_deactivate()</span></code> and call the similarly named methods on <code class="docutils literal notranslate"><span class="pre">LifecyclePublisher</span></code> to make the transition actually happen.
+Now, <code class="docutils literal notranslate"><span class="pre">LifecylceNode</span></code> provides a default interface of these methods that already do this.
+See the implementation of the <code class="docutils literal notranslate"><span class="pre">lifecycle_talker</span></code> node <a class="reference external" href="https://github.com/ros2/demos/tree/humble/lifecycle">here</a>.</p>
+</div>
+</div>
+<div class="section" id="rclpy">
+<h3><a class="toc-backref" href="#id49">rclpy</a><a class="headerlink" href="#rclpy" title="Permalink to this headline"></a></h3>
+<div class="section" id="managed-nodes">
+<h4>Managed nodes<a class="headerlink" href="#managed-nodes" title="Permalink to this headline"></a></h4>
+<p>Lifecycle nodes support was added to rclpy.
+A complete demo can be found <a class="reference external" href="https://github.com/ros2/demos/tree/humble/lifecycle_py">here</a>.</p>
+</div>
+<div class="section" id="id4">
+<h4><code class="docutils literal notranslate"><span class="pre">wait_for_all_acked</span></code> method added to <code class="docutils literal notranslate"><span class="pre">Publisher</span></code><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
+<p>Similar to the feature added to rclcpp.</p>
+</div>
+<div class="section" id="id5">
+<h4><code class="docutils literal notranslate"><span class="pre">sleep_until</span></code> and <code class="docutils literal notranslate"><span class="pre">sleep_for</span></code> methods added to <code class="docutils literal notranslate"><span class="pre">Clock</span></code><a class="headerlink" href="#id5" title="Permalink to this headline"></a></h4>
+<p>Two new methods were added to allow sleeping on a particular clock in <a class="reference external" href="https://github.com/ros2/rclpy/pull/858">ros2/rclpy#858</a> and <a class="reference external" href="https://github.com/ros2/rclpy/pull/864">ros2/rclpy#864</a>.
+<code class="docutils literal notranslate"><span class="pre">sleep_until</span></code> will suspend the current thread until the clock reaches a particular time.
+<code class="docutils literal notranslate"><span class="pre">sleep_for</span></code> will suspend the current thread until the clock advances a certain amount of time from when the method was called.
+Both methods will wake early if the <code class="docutils literal notranslate"><span class="pre">Context</span></code> is shutdown.</p>
+</div>
+</div>
+<div class="section" id="ros1-bridge">
+<h3><a class="toc-backref" href="#id50">ros1_bridge</a><a class="headerlink" href="#ros1-bridge" title="Permalink to this headline"></a></h3>
+<p>Since there is no official ROS 1 distribution on Ubuntu Jammy and forward, <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> is now compatible with the Ubuntu-packaged versions of ROS 1.
+More details about using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with Jammy packages are available in <a class="reference external" href="../How-To-Guides/Using-ros1_bridge-Jammy-upstream.rst">the how-to guides</a>.</p>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id51">ros2cli</a><a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
+<div class="section" id="ros2-commands-disable-output-buffering-by-default">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span></code> commands disable output buffering by default<a class="headerlink" href="#ros2-commands-disable-output-buffering-by-default" title="Permalink to this headline"></a></h4>
+<p>Prior to this release, running a command like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">echo</span> <span class="o">/</span><span class="n">chatter</span> <span class="o">|</span> <span class="n">grep</span> <span class="s2">"Hello"</span>
+</pre></div>
+</div>
+<p>would not print any data until the output buffer was full.
+Users could work around this by setting <code class="docutils literal notranslate"><span class="pre">PYTHONUNBUFFERED=1</span></code>, but that was not very user friendly.</p>
+<p>Instead, all <code class="docutils literal notranslate"><span class="pre">ros2</span></code> commands now do line-buffering by default, so commands like the above work as soon as a newline is printed.
+To disable this behavior and use default python buffering rules, use the option <code class="docutils literal notranslate"><span class="pre">--use-python-default-buffering</span></code>.
+See the <a class="reference external" href="https://github.com/ros2/ros2cli/issues/595">original issue</a> and the <a class="reference external" href="https://github.com/ros2/ros2cli/pull/659">pull request</a> for more information.</p>
+</div>
+<div class="section" id="ros2-topic-pub-will-wait-for-one-matching-subscription-when-using-times-once-1">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">pub</span></code> will wait for one matching subscription when using <code class="docutils literal notranslate"><span class="pre">--times/--once/-1</span></code><a class="headerlink" href="#ros2-topic-pub-will-wait-for-one-matching-subscription-when-using-times-once-1" title="Permalink to this headline"></a></h4>
+<p>When using <code class="docutils literal notranslate"><span class="pre">--times/--once/-1</span></code> flags, <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">pub</span></code> will wait for one matching subscription to be found before starting to publish.
+This avoids the issue of the ros2cli node starting to publish before discovering a matching subscription, which results in some of the first messages being lost.
+This is particularly unexpected when using a reliable qos profile.</p>
+<p>The number of matching subscriptions to wait before starting publishing can be configured with the <code class="docutils literal notranslate"><span class="pre">-w/--wait-matching-subscriptions</span></code> flags, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ros2 topic pub -1 -w 3 /chatter std_msgs/msg/String "{data: 'foo'}"</span>
+</pre></div>
+</div>
+<p>to wait for three matching subscriptions before starting to publish.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-w</span></code> can also be used independently of <code class="docutils literal notranslate"><span class="pre">--times/--once/-1</span></code> but it only defaults to one when combined with them, otherwise the <code class="docutils literal notranslate"><span class="pre">-w</span></code> default is zero.</p>
+<p>See <a class="reference external" href="https://github.com/ros2/ros2cli/pull/642">https://github.com/ros2/ros2cli/pull/642</a> for more details.</p>
+</div>
+<div class="section" id="ros2-param-dump-default-output-changed">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span> <span class="pre">dump</span></code> default output changed<a class="headerlink" href="#ros2-param-dump-default-output-changed" title="Permalink to this headline"></a></h4>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--print</span></code> option for dump command was <a class="reference external" href="https://github.com/ros2/ros2cli/pull/638">deprecated</a>.</p>
+<p>It prints to stdout by default:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 param dump /my_node_name
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output-dir</span></code> option for dump command was <a class="reference external" href="https://github.com/ros2/ros2cli/pull/638">deprecated</a>.</p>
+<p>To dump parameters to a file, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2 param dump /my_node_name &gt; my_node_name.yaml
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="ros2-param-set-now-accepts-more-yaml-syntax">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span> <span class="pre">set</span></code> now accepts more YAML syntax<a class="headerlink" href="#ros2-param-set-now-accepts-more-yaml-syntax" title="Permalink to this headline"></a></h4>
+<p>Previously, attempting to set a string like “off” to a parameter that was of string type did not work.
+That’s because <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span> <span class="pre">set</span></code> interprets the command-line arguments as YAML, and YAML considers “off” to be a boolean type.
+As of <a class="reference external" href="https://github.com/ros2/ros2cli/pull/684">https://github.com/ros2/ros2cli/pull/684</a> , <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span> <span class="pre">set</span></code> now accepts the YAML escape sequence of “!!str off” to ensure that the value is considered a string.</p>
+</div>
+<div class="section" id="ros2-pkg-create-can-automatically-generate-a-license-file">
+<h4><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">pkg</span> <span class="pre">create</span></code> can automatically generate a LICENSE file<a class="headerlink" href="#ros2-pkg-create-can-automatically-generate-a-license-file" title="Permalink to this headline"></a></h4>
+<p>If the <code class="docutils literal notranslate"><span class="pre">--license</span></code> flag is passed to <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">pkg</span> <span class="pre">create</span></code>, and the license is one of the known licenses, <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">pkg</span> <span class="pre">create</span></code> will now automatically generate a LICENSE file in the root of the package.
+For a list of known licenses, run <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">pkg</span> <span class="pre">create</span> <span class="pre">--license</span> <span class="pre">?</span> <span class="pre">&lt;package_name&gt;</span></code>.
+See the associated <a class="reference external" href="https://github.com/ros2/ros2cli/pull/650">pull request</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="robot-state-publisher">
+<h3><a class="toc-backref" href="#id52">robot_state_publisher</a><a class="headerlink" href="#robot-state-publisher" title="Permalink to this headline"></a></h3>
+<div class="section" id="added-frame-prefix-parameter">
+<h4>Added <code class="docutils literal notranslate"><span class="pre">frame_prefix</span></code> parameter<a class="headerlink" href="#added-frame-prefix-parameter" title="Permalink to this headline"></a></h4>
+<p>A new parameter <code class="docutils literal notranslate"><span class="pre">frame_prefix</span></code> was added in <a class="reference external" href="https://github.com/ros/robot_state_publisher/pull/159">ros/robot_state_publisher#159</a>.
+This parameter is a string which is prepended to all frame names published by <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code>.
+Similar to <code class="docutils literal notranslate"><span class="pre">tf_prefix</span></code> in the original <code class="docutils literal notranslate"><span class="pre">tf</span></code> library in ROS 1, this parameter can be used to publish the same robot description multiple times with different frame names.</p>
+</div>
+<div class="section" id="removal-of-deprecated-use-tf-static-parameter">
+<h4>Removal of deprecated <code class="docutils literal notranslate"><span class="pre">use_tf_static</span></code> parameter<a class="headerlink" href="#removal-of-deprecated-use-tf-static-parameter" title="Permalink to this headline"></a></h4>
+<p>The deprecated <code class="docutils literal notranslate"><span class="pre">use_tf_static</span></code> parameter has been removed from <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code>.
+This means that static transforms are unconditionally published to the <code class="docutils literal notranslate"><span class="pre">/tf_static</span></code> topic, and that the static transforms are published in a <code class="docutils literal notranslate"><span class="pre">transient_local</span></code> Quality of Service.
+This was the default behavior, and the behavior which the <code class="docutils literal notranslate"><span class="pre">tf2_ros::TransformListener</span></code> class expected before, so most code will not have to be changed.
+Any code that was relying on <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code> to periodically publish static transforms to <code class="docutils literal notranslate"><span class="pre">/tf</span></code> will have to be updated to subscribe to <code class="docutils literal notranslate"><span class="pre">/tf_static</span></code> as a <code class="docutils literal notranslate"><span class="pre">transient_local</span></code> subscription instead.</p>
+</div>
+</div>
+<div class="section" id="rosidl-cmake">
+<h3><a class="toc-backref" href="#id53">rosidl_cmake</a><a class="headerlink" href="#rosidl-cmake" title="Permalink to this headline"></a></h3>
+<div class="section" id="deprecation-of-rosidl-target-interfaces">
+<h4>Deprecation of <code class="docutils literal notranslate"><span class="pre">rosidl_target_interfaces()</span></code><a class="headerlink" href="#deprecation-of-rosidl-target-interfaces" title="Permalink to this headline"></a></h4>
+<p>The CMake function <code class="docutils literal notranslate"><span class="pre">rosidl_target_interfaces()</span></code> has been deprecated, and now issues a CMake warning when called.
+Users wanting to use messages/services/actions in the same ROS package that generated them should instead call <code class="docutils literal notranslate"><span class="pre">rosidl_get_typesupport_target()</span></code> and then <code class="docutils literal notranslate"><span class="pre">target_link_libraries()</span></code> to make their targets depend on the returned typesupport target.
+See <a class="reference external" href="https://github.com/ros2/rosidl/pull/606">https://github.com/ros2/rosidl/pull/606</a> for more details, and <a class="reference external" href="https://github.com/ros2/demos/pull/529">https://github.com/ros2/demos/pull/529</a> for an example of using the new function.</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id54">rviz2</a><a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros2/rviz/pull/743">improved the efficiency of 3-bytes pixel formats</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros2/rviz/pull/751">changed the way inertias are computed to use ignition math rather than Ogre’s math libraries</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="geometry2">
+<h3><a class="toc-backref" href="#id55">geometry2</a><a class="headerlink" href="#geometry2" title="Permalink to this headline"></a></h3>
+<div class="section" id="deprecation-of-tf2error-no-error-etc">
+<h4>Deprecation of TF2Error::NO_ERROR, etc<a class="headerlink" href="#deprecation-of-tf2error-no-error-etc" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">tf2</span></code> library uses an enumeration called <code class="docutils literal notranslate"><span class="pre">TF2Error</span></code> to return errors.
+Unfortunately, one of the enumerators in there is called <code class="docutils literal notranslate"><span class="pre">NO_ERROR</span></code>, which conflicts with a macro on Windows.
+To remedy this, a new set of enumerators in <code class="docutils literal notranslate"><span class="pre">TF2Error</span></code> were created, each with a <code class="docutils literal notranslate"><span class="pre">TF2</span></code> prefix.
+The previous enumerators are still available, but are now deprecated and will print a deprecation warning if used.
+All code that uses the <code class="docutils literal notranslate"><span class="pre">TF2Error</span></code> enumerator should be updated to use the new <code class="docutils literal notranslate"><span class="pre">TF2</span></code> prefixed errors.
+See <a class="reference external" href="https://github.com/ros2/geometry2/pull/349">https://github.com/ros2/geometry2/pull/349</a> for more details.</p>
+</div>
+<div class="section" id="more-intuitive-command-line-arguments-for-static-transform-publisher">
+<h4>More intuitive command-line arguments for static_transform_publisher<a class="headerlink" href="#more-intuitive-command-line-arguments-for-static-transform-publisher" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">static_transform_publisher</span></code> program used to take arguments like: <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">tf2_ros</span> <span class="pre">static_transform_publisher</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">1</span> <span class="pre">foo</span> <span class="pre">bar</span></code>.
+The first three numbers are the translation x, y, and z, the next 4 are the quaternion x, y, z, and w, and the last two arguments are the parent and child frame IDs.
+While this worked, it had a couple of problems:</p>
+<ul class="simple">
+<li><p>The user had to specify <em>all</em> of the arguments, even if only setting one number</p></li>
+<li><p>Reading the command-line to figure out what it was publishing was tricky</p></li>
+</ul>
+<p>To fix both of these issues, the command-line handling has been changed to use flags instead, and all flags except for <code class="docutils literal notranslate"><span class="pre">--frame-id</span></code> and <code class="docutils literal notranslate"><span class="pre">--child-frame-id</span></code> are optional.
+Thus, the above command-line can be simplified to: <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">tf2_ros</span> <span class="pre">static_transform_publisher</span> <span class="pre">--frame-id</span> <span class="pre">foo</span> <span class="pre">--child-frame-id</span> <span class="pre">bar</span></code>
+To change just the translation x, the command-line would be: <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">tf2_ros</span> <span class="pre">static_transform_publisher</span> <span class="pre">--x</span> <span class="pre">1.5</span> <span class="pre">--frame-id</span> <span class="pre">foo</span> <span class="pre">--child-frame-id</span> <span class="pre">bar</span></code>.</p>
+<p>The old-style arguments are still allowed in this release, but are deprecated and will print a warning.
+They will be removed in future releases.
+See <a class="reference external" href="https://github.com/ros2/geometry2/pull/392">https://github.com/ros2/geometry2/pull/392</a> for more details.</p>
+</div>
+<div class="section" id="transform-listener-spin-thread-no-longer-executes-node-callbacks">
+<h4>Transform listener spin thread no longer executes node callbacks<a class="headerlink" href="#transform-listener-spin-thread-no-longer-executes-node-callbacks" title="Permalink to this headline"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">tf2_ros::TransformListener</span></code> no longer spins on the provided node object.
+Instead, it creates a callback group to execute callbacks on the entities it creates internally.
+This means if you have set the parameter <code class="docutils literal notranslate"><span class="pre">spin_thread=true</span></code> when creating a transform listener, you
+can no longer depend on your own callbacks to be executed.
+You must call a <code class="docutils literal notranslate"><span class="pre">spin</span></code> function on your node (e.g. <code class="docutils literal notranslate"><span class="pre">rclcpp::spin</span></code>), or add your node to your own executor.</p>
+<p>Related pull request: <a class="reference external" href="https://github.com/ros2/geometry2/pull/442">geometry2#442</a></p>
+</div>
+</div>
+<div class="section" id="rosbag2">
+<h3><a class="toc-backref" href="#id56">rosbag2</a><a class="headerlink" href="#rosbag2" title="Permalink to this headline"></a></h3>
+<div class="section" id="new-playback-and-recording-controls">
+<h4>New playback and recording controls<a class="headerlink" href="#new-playback-and-recording-controls" title="Permalink to this headline"></a></h4>
+<p>Several pull requests have been added to enhance the user’s control over playback of bags.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/931">931</a> adds the ability to specify a time stamp to begin playing from.
+Due to pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/789">789</a> it is now possible to delay the start of playback by a specified interval.</p>
+<p>Relatedly, <code class="docutils literal notranslate"><span class="pre">rosbag2</span></code> has gained new ways for users to control playback as it is happening.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/847">847</a> adds keyboard controls for pausing, resuming, and playing the next message during playback from a terminal.
+It is also possible to start playback paused thanks to pull requests <a class="reference external" href="https://github.com/ros2/rosbag2/pull/905">905</a> and <a class="reference external" href="https://github.com/ros2/rosbag2/pull/904">904</a>, which makes it easy for the user to initiate playback and then step through messages, such as when debugging a pipeline.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/836">836</a> adds an interface for seeking within bags, allowing the user to move around within a bag during playback.</p>
+<p>Finally, a new snapshot mode has been added to recording in pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/851">851</a>.
+This mode, useful for incident recording, allows recording to begin filling up buffers, but not begin writing data to disc until a service is called.</p>
+</div>
+<div class="section" id="burst-mode-playback">
+<h4>Burst-mode playback<a class="headerlink" href="#burst-mode-playback" title="Permalink to this headline"></a></h4>
+<p>While the playback of data from a bag in real-time is the most well-known use case for bag files, there are situations where you want the data in the bag as fast as possible.
+With pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/977">977</a>, <code class="docutils literal notranslate"><span class="pre">rosbag2</span></code> has gained the ability to “burst” data from the bag.
+In burst mode, the data is played back as fast as possible.
+This is useful in applications such as machine learning.</p>
+</div>
+<div class="section" id="zero-copy-playback">
+<h4>Zero-Copy playback<a class="headerlink" href="#zero-copy-playback" title="Permalink to this headline"></a></h4>
+<p>By default, if loaned message can be used, playback messages are published as loaned message.
+This can help to reduce the number of data copies, so there is a greater benefit for sending big data.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/981">981</a> adds <code class="docutils literal notranslate"><span class="pre">--disable-loan-message</span></code> option for playback.</p>
+</div>
+<div class="section" id="wait-for-an-acknowledgment">
+<h4>Wait for an acknowledgment<a class="headerlink" href="#wait-for-an-acknowledgment" title="Permalink to this headline"></a></h4>
+<p>This new option will wait until all published messages are acknowledged by all subscribers or until the timeout elapses in millisecond before play is terminated.
+Especially for the case of sending message with big size in a short time.
+This option is valid only if the publisher’s QOS profile is RELIABLE.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/951">951</a> adds <code class="docutils literal notranslate"><span class="pre">--wait-for-all-acked</span></code> option for playback.</p>
+</div>
+<div class="section" id="bag-editing">
+<h4>Bag editing<a class="headerlink" href="#bag-editing" title="Permalink to this headline"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">rosbag2</span></code> is taking steps towards enabling the editing of bags, such as removing all messages for one topic or merging multiple bags into a single bag.
+Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/921">921</a> adds bag rewriting and the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">bag</span> <span class="pre">convert</span></code> verb.</p>
+</div>
+<div class="section" id="other-changes">
+<h4>Other changes<a class="headerlink" href="#other-changes" title="Permalink to this headline"></a></h4>
+<p>Pull request <a class="reference external" href="https://github.com/ros2/rosbag2/pull/925">925</a> makes <code class="docutils literal notranslate"><span class="pre">rosbag2</span></code> ignore “leaf topics” (topics without a publisher) when recording.
+These topics will no longer be automatically added to the bag.</p>
+</div>
+</div>
+</div>
+<div class="section" id="known-issues">
+<h2><a class="toc-backref" href="#id57">Known Issues</a><a class="headerlink" href="#known-issues" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>When <a class="reference external" href="../../humble/Installation/Ubuntu-Install-Debians.html">installing ROS 2 on an Ubuntu 22.04 Jammy host</a> it is important to update your system before installing ROS 2 packages.
+It is <em>particularly</em> important to make sure that <code class="docutils literal notranslate"><span class="pre">systemd</span></code> and <code class="docutils literal notranslate"><span class="pre">udev</span></code> are updated to the latest available version otherwise installing <code class="docutils literal notranslate"><span class="pre">ros-humble-desktop</span></code>, which depends on <code class="docutils literal notranslate"><span class="pre">libudev1</span></code>, could cause the removal of system critical packages.
+Details can be found in <a class="reference external" href="https://github.com/ros2/ros2/issues/1272">ros2/ros2#1272</a> and <a class="reference external" href="https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1974196">Launchpad #1974196</a></p></li>
+<li><p>When ROS 2 apt repositories are available, ROS 1 packages in Ubuntu are not installable.  See the <a class="reference internal" href="../How-To-Guides/Using-ros1_bridge-Jammy-upstream.html"><span class="doc">ros1_bridge on Ubuntu Jammy</span></a> document for more information.</p></li>
+<li><p>Some major Linux distributions have started patching Python to install packages to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>, which is breaking some parts of <code class="docutils literal notranslate"><span class="pre">ament_package</span></code> and builds with <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.
+In particular, using Ubuntu Jammy with <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> installed from pip will manifest this misbehavior, and is therefore not recommended.
+There is currently a <a class="reference external" href="https://github.com/colcon/colcon-core/pull/512">proposed solution</a> which requires further testing before widespread release.</p></li>
+<li><p>ROS 2 bags that are split by size or duration are not played correctly.
+Only the last bag recorded is played.
+It is recommended to avoid splitting bags by size or duration.
+Details can be found in <a class="reference external" href="https://github.com/ros2/rosbag2/issues/966">ros2/rosbag2#966</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="release-timeline">
+<h2><a class="toc-backref" href="#id58">Release Timeline</a><a class="headerlink" href="#release-timeline" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><dl class="simple">
+<dt>Mon. March 21, 2022 - Alpha + RMW freeze</dt><dd><p>Preliminary testing and stabilization of ROS Base <a class="footnote-reference brackets" href="#id26" id="id21">1</a> packages, and API and feature freeze for RMW provider packages.</p>
+</dd>
+<dt>Mon. April 4, 2022 - Freeze</dt><dd><p>API and feature freeze for ROS Base <a class="footnote-reference brackets" href="#id26" id="id22">1</a> packages in Rolling Ridley.
+Only bug fix releases should be made after this point.
+New packages can be released independently.</p>
+</dd>
+<dt>Mon. April 18, 2022 - Branch</dt><dd><p>Branch from Rolling Ridley.
+<code class="docutils literal notranslate"><span class="pre">rosdistro</span></code> is reopened for Rolling PRs for ROS Base <a class="footnote-reference brackets" href="#id26" id="id23">1</a> packages.
+Humble development shifts from <code class="docutils literal notranslate"><span class="pre">ros-rolling-*</span></code> packages to <code class="docutils literal notranslate"><span class="pre">ros-humble-*</span></code> packages.</p>
+</dd>
+<dt>Mon. April 25, 2022 - Beta</dt><dd><p>Updated releases of ROS Desktop <a class="footnote-reference brackets" href="#id27" id="id24">2</a> packages available.
+Call for general testing.</p>
+</dd>
+<dt>Mon. May 16, 2022 - Release Candidate</dt><dd><p>Release Candidate packages are built.
+Updated releases of ROS Desktop <a class="footnote-reference brackets" href="#id27" id="id25">2</a> packages available.</p>
+</dd>
+<dt>Thu. May 19, 2022 - Distro Freeze</dt><dd><p>Freeze rosdistro.
+No PRs for Humble on the <code class="docutils literal notranslate"><span class="pre">rosdistro</span></code> repo will be merged (reopens after the release announcement).</p>
+</dd>
+<dt>Mon. May 23, 2022 - General Availability</dt><dd><p>Release announcement.
+<code class="docutils literal notranslate"><span class="pre">rosdistro</span></code> is reopened for Humble PRs.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="footnote brackets">
+<dt class="label" id="id26"><span class="brackets">1</span><span class="fn-backref">(<a href="#id21">1</a>,<a href="#id22">2</a>,<a href="#id23">3</a>)</span></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">ros_base</span></code> variant is described in <a class="reference external" href="https://www.ros.org/reps/rep-2001.html#ros-base">REP 2001 (ros-base)</a>.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets">2</span><span class="fn-backref">(<a href="#id24">1</a>,<a href="#id25">2</a>)</span></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">desktop</span></code> variant is described in <a class="reference external" href="https://www.ros.org/reps/rep-2001.html#desktop-variants">REP 2001 (desktop-variants)</a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="../Releases.html" rel="prev" title="Distributions"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="Humble-Hawksbill-Complete-Changelog.html" rel="next" title="Humble Hawksbill changelog">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, Open Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

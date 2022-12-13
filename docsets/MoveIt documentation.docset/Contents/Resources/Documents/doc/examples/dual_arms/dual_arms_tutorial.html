@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dual Arms with MoveIt &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/dual_arms/dual_arms_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Hybrid Planning" href="../hybrid_planning/hybrid_planning_tutorial.html" />
+    <link rel="prev" title="Benchmarking" href="../benchmarking/benchmarking_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../benchmarking/benchmarking_tutorial.html">Benchmarking</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Dual Arms with MoveIt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-demo">Running the Demo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-changes-were-required-for-the-dual-arm-system">What Changes were required for the Dual-Arm System?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../hybrid_planning/hybrid_planning_tutorial.html">Hybrid Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../realtime_servo/realtime_servo_tutorial.html">Realtime Arm Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tests/tests_tutorial.html">Integration/Unit Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Dual Arms with MoveIt</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/dual_arms/dual_arms_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="dual-arms-with-moveit">
+<h1>Dual Arms with MoveIt<a class="headerlink" href="#dual-arms-with-moveit" title="Permalink to this headline"></a></h1>
+<p>There are quite a few configuration steps to control two or more manipulators with MoveIt. Luckily it has gotten easier over time. Here, an example is provided and we list all the changes needed to go from 1 robot to X robots.</p>
+<p>The launch and configuration files in this example are available <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/dual_arms">here.</a></p>
+<div class="section" id="running-the-demo">
+<h2>Running the Demo<a class="headerlink" href="#running-the-demo" title="Permalink to this headline"></a></h2>
+<p>Let’s jump right in. Run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">dual_arm_panda_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You should see RViz come up with a dual-arm system. In the drop-down menu you can select either <code class="docutils literal notranslate"><span class="pre">left_panda_arm</span></code> or <code class="docutils literal notranslate"><span class="pre">right_panda_arm</span></code>, and you can Plan and Execute motions with either one.</p>
+<a class="reference internal image-reference" href="../../../_images/rviz_dual_arms.png"><img alt="../../../_images/rviz_dual_arms.png" src="../../../_images/rviz_dual_arms.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="what-changes-were-required-for-the-dual-arm-system">
+<h2>What Changes were required for the Dual-Arm System?<a class="headerlink" href="#what-changes-were-required-for-the-dual-arm-system" title="Permalink to this headline"></a></h2>
+<ul>
+<li><p>A prefix argument was added to the Panda arm xacro, <code class="docutils literal notranslate"><span class="pre">panda_arm_macro.urdf.xacro</span></code>. Now all links and joints are prepended with <code class="docutils literal notranslate"><span class="pre">left_</span></code> or <code class="docutils literal notranslate"><span class="pre">right_</span></code>.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">left_initial_positions.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">right_initial_positions.yaml</span></code>. (This is only necessary when simulating – it doesn’t apply when a hardware robot is used.) Pass a <code class="docutils literal notranslate"><span class="pre">left_</span></code> or <code class="docutils literal notranslate"><span class="pre">right_</span></code> prefix to <code class="docutils literal notranslate"><span class="pre">panda.ros2_control.xacro</span></code> to select this file.</p></li>
+<li><p>Ensure all joints in <code class="docutils literal notranslate"><span class="pre">panda.ros2_control.xacro</span></code> are prepended by the <code class="docutils literal notranslate"><span class="pre">prefix</span></code> arg so they will be unique for the left and right arms.</p></li>
+<li><p>Ensure the name of the ros2_control macro is prepended with <code class="docutils literal notranslate"><span class="pre">prefix</span></code> as well, so it is unique:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">ros2_control</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;$</span><span class="si">{prefix}</span><span class="s2">$</span><span class="si">{name}</span><span class="s2">&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;system&quot;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Enumerate the controllers we will need for both arms in the ros2_control config file, <code class="docutils literal notranslate"><span class="pre">ros2_controllers.yaml</span></code>. Make sure these controllers are launched from <code class="docutils literal notranslate"><span class="pre">demo.launch.py</span></code>.</p></li>
+<li><p>Define joint groups for each arm in <code class="docutils literal notranslate"><span class="pre">panda.srdf</span></code>. This tells MoveIt which joints constitute each arm. The joint groups are named <code class="docutils literal notranslate"><span class="pre">left_panda_arm</span></code> and <code class="docutils literal notranslate"><span class="pre">right_panda_arm</span></code>. Also define an end effector for each arm.</p></li>
+<li><p>Define a kinematics solver for each arm in <code class="docutils literal notranslate"><span class="pre">kinematics.yaml</span></code>.</p></li>
+<li><p>Define the controllers which MoveIt can execute trajectories with in <code class="docutils literal notranslate"><span class="pre">moveit_controllers.yaml</span></code>. Here we have a trajectory controller for each arm.</p></li>
+<li><p>Also in <code class="docutils literal notranslate"><span class="pre">moveit_controllers.yaml</span></code>, define the controller management strategy MoveIt will use. The simplest option from a configuration standpoint is <code class="docutils literal notranslate"><span class="pre">moveit_ros_control_interface/Ros2ControlManager</span></code>. You can also use a <code class="docutils literal notranslate"><span class="pre">moveit_simple_controller_manager/MoveItSimpleControllerManager</span></code> although it requires additional namespacing and additional enumeration of the joints.</p></li>
+</ul>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../benchmarking/benchmarking_tutorial.html" class="btn btn-neutral float-left" title="Benchmarking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../hybrid_planning/hybrid_planning_tutorial.html" class="btn btn-neutral float-right" title="Hybrid Planning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

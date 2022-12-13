@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setting up a robot simulation (Webots) — ROS 2 documentation  documentation</title>
+<link href="../../../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/copybutton.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/tabs.css" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/favicon.ico" rel="shortcut icon"/>
+<link href="https://docs.ros.org/en/Tutorials/Advanced/Simulators/Webots.html" rel="canonical"/>
+<!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+<script src="../../../_static/jquery.js"></script>
+<script src="../../../_static/underscore.js"></script>
+<script src="../../../_static/doctools.js"></script>
+<script src="../../../_static/clipboard.min.js"></script>
+<script src="../../../_static/copybutton.js"></script>
+<script src="../../../_static/tabs.js"></script>
+<script src="../../../_static/js/theme.js"></script>
+<link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="../../../search.html" rel="search" title="Search"/>
+<link href="Gazebo.html" rel="next" title="Setting up a robot simulation (Gazebo)"/>
+<link href="Simulation-Main.html" rel="prev" title="Simulation"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../../index.html"> ROS 2 documentation
+          </a>
+<div role="search">
+<form action="../../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/Ubuntu-Install-Debians.html">Ubuntu (Debian)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/Windows-Install-Binary.html">Windows (binary)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/RHEL-Install-RPMs.html">RHEL (RPM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/Alternatives.html">Alternatives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/Ubuntu-Development-Setup.html">Ubuntu (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/Ubuntu-Install-Binary.html">Ubuntu (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/Windows-Development-Setup.html">Windows (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/RHEL-Development-Setup.html">RHEL (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/RHEL-Install-Binary.html">RHEL (binary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/macOS-Development-Setup.html">macOS (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/Fedora-Development-Setup.html">Fedora (source)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/Alternatives/Latest-Development-Setup.html">Latest development (source)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/Maintaining-a-Source-Checkout.html">Maintain source checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/Testing.html">Testing with pre-release binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Installation/DDS-Implementations.html">DDS implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/DDS-Implementations/Install-Connext-Security-Plugins.html">Connext security plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/DDS-Implementations/Install-Connext-University-Eval.html">RTI Connext DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/DDS-Implementations/Working-with-Eclipse-CycloneDDS.html">Eclipse Cyclone DDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/DDS-Implementations/Working-with-GurumNetworks-GurumDDS.html">GurumNetworks GurumDDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Installation/DDS-Implementations/Working-with-eProsima-Fast-DDS.html">eProsima Fast DDS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Releases.html">Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/Release-Humble-Hawksbill.html">Humble Hawksbill (<code class="docutils literal notranslate"><span class="pre">humble</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Humble-Hawksbill-Complete-Changelog.html">Humble Hawksbill changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/Release-Foxy-Fitzroy.html">Foxy Fitzroy (<code class="docutils literal notranslate"><span class="pre">foxy</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/Release-Rolling-Ridley.html">Rolling Ridley (<code class="docutils literal notranslate"><span class="pre">rolling</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/Development.html">Development Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Iron-Irwini.html">ROS 2 Iron Irwini (codename ‘iron’; May, 2023)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/End-of-Life.html">End-of-Life Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Galactic-Geochelone.html">Galactic Geochelone (<code class="docutils literal notranslate"><span class="pre">galactic</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../Releases/Galactic-Geochelone-Complete-Changelog.html">Galactic Geochelone changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Eloquent-Elusor.html">Eloquent Elusor (<code class="docutils literal notranslate"><span class="pre">eloquent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Dashing-Diademata.html">Dashing Diademata (<code class="docutils literal notranslate"><span class="pre">dashing</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Crystal-Clemmys.html">Crystal Clemmys (<code class="docutils literal notranslate"><span class="pre">crystal</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Bouncy-Bolson.html">Bouncy Bolson (<code class="docutils literal notranslate"><span class="pre">bouncy</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Release-Ardent-Apalone.html">Ardent Apalone (<code class="docutils literal notranslate"><span class="pre">ardent</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Beta3-Overview.html">Beta 3 (<code class="docutils literal notranslate"><span class="pre">r2b3</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Beta2-Overview.html">Beta 2 (<code class="docutils literal notranslate"><span class="pre">r2b2</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Beta1-Overview.html">Beta 1 (<code class="docutils literal notranslate"><span class="pre">Asphalt</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../Releases/Alpha-Overview.html">Alphas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Releases/Release-Process.html">Development process for a release</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../Tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Beginner-CLI-Tools.html">Beginner: CLI tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Configuring-ROS2-Environment.html">Configuring environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html">Using <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> and <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html">Understanding nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html">Understanding topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html">Understanding services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html">Understanding actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html">Using <code class="docutils literal notranslate"><span class="pre">rqt_console</span></code> to view logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Launching-Multiple-Nodes/Launching-Multiple-Nodes.html">Launching nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html">Recording and playing back data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Beginner-Client-Libraries.html">Beginner: Client libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Colcon-Tutorial.html">Using <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to build packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html">Creating a workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html">Creating a package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html">Writing a simple publisher and subscriber (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html">Writing a simple service and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html">Writing a simple service and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">Creating custom msg and srv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Single-Package-Define-And-Use-Interface.html">Implementing custom interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Getting-Started-With-Ros2doctor.html">Using <code class="docutils literal notranslate"><span class="pre">ros2doctor</span></code> to identify issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Beginner-Client-Libraries/Pluginlib.html">Creating and using plugins (C++)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Intermediate.html">Intermediate</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Rosdep.html">Managing Dependencies with rosdep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Creating-an-Action.html">Creating an action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Writing-an-Action-Server-Client/Cpp.html">Writing an action server and client (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Writing-an-Action-Server-Client/Py.html">Writing an action server and client (Python)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Composition.html">Composing multiple nodes in a single process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Monitoring-For-Parameter-Changes-CPP.html">Monitoring for parameter changes (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Launch/Launch-Main.html">Launch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Launch/Creating-Launch-Files.html">Creating a launch file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Launch/Launch-system.html">Integrating launch files into ROS 2 packages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Launch/Using-Substitutions.html">Using substitutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Launch/Using-Event-Handlers.html">Using event handlers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html">Managing large projects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Tf2/Tf2-Main.html"><code class="docutils literal notranslate"><span class="pre">tf2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Introduction-To-Tf2.html">Introducing <code class="docutils literal notranslate"><span class="pre">tf2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html">Writing a static broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Cpp.html">Writing a static broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html">Writing a broadcaster (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Cpp.html">Writing a broadcaster (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html">Writing a listener (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Writing-A-Tf2-Listener-Cpp.html">Writing a listener (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Adding-A-Frame-Py.html">Adding a frame (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Adding-A-Frame-Cpp.html">Adding a frame (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Learning-About-Tf2-And-Time-Py.html">Using time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html">Using time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Time-Travel-With-Tf2-Py.html">Traveling in time (Python)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Time-Travel-With-Tf2-Cpp.html">Traveling in time (C++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Debugging-Tf2-Problems.html">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Quaternion-Fundamentals.html">Quaternion fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Tf2/Using-Stamped-Datatypes-With-Tf2-Ros-MessageFilter.html">Using stamped datatypes with <code class="docutils literal notranslate"><span class="pre">tf2_ros::MessageFilter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/Testing/Testing-Main.html">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Testing/CLI.html">Running Tests in ROS 2 from the Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/Testing/Python.html">Writing Basic Tests with Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../Intermediate/URDF/URDF-Main.html">URDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html">Building a visual robot model from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/URDF/Building-a-Movable-Robot-Model-with-URDF.html">Building a movable robot model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html">Adding physical and collision properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/URDF/Using-Xacro-to-Clean-Up-a-URDF-File.html">Using Xacro to clean up your code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../Intermediate/URDF/Using-URDF-with-Robot-State-Publisher.html">Using URDF with <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../Topic-Statistics-Tutorial/Topic-Statistics-Tutorial.html">Enabling topic statistics (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Discovery-Server/Discovery-Server.html">Using Fast DDS Discovery Server as discovery protocol [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Allocator-Template-Tutorial.html">Implementing a custom memory allocator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../FastDDS-Configuration.html">Unlocking the potential of Fast DDS middleware [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Recording-A-Bag-From-Your-Own-Node-CPP.html">Recording a bag from a node (C++)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Recording-A-Bag-From-Your-Own-Node-Py.html">Recording a bag from a node (Python)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="Simulation-Main.html">Simulation</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Setting up a robot simulation (Webots)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Gazebo.html">Setting up a robot simulation (Gazebo)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Security/Security-Main.html">Security</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../Security/Introducing-ros2-security.html">Setting up security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Security/The-Keystore.html">Understanding the security keystore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Security/Security-on-Two.html">Ensuring security across machines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Security/Examine-Traffic.html">Examining network traffic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Security/Access-Controls.html">Setting access controls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Demos.html">Demos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Quality-of-Service.html">Using quality-of-service settings for lossy networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Managed-Nodes.html">Managing nodes with managed lifecycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Intra-Process-Communication.html">Setting up efficient intra-process communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Rosbag-with-ROS1-Bridge.html">Recording and playing back data with <code class="docutils literal notranslate"><span class="pre">rosbag</span></code> using the ROS 1 bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Real-Time-Programming.html">Understanding real-time programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/dummy-robot-demo.html">Experimenting with a dummy robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Logging-and-logger-configuration.html">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Demos/Content-Filtering-Subscription.html">Creating a content filtering subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Miscellaneous.html">Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../Miscellaneous/Deploying-ROS-2-on-IBM-Cloud.html">Deploying on IBM Cloud Kubernetes [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Miscellaneous/Eclipse-Oxygen-with-ROS-2-and-rviz2.html">Using Eclipse Oxygen with <code class="docutils literal notranslate"><span class="pre">rviz2</span></code> [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Miscellaneous/Building-Realtime-rt_preempt-kernel-for-ROS-2.html">Building a real-time Linux kernel [community-contributed]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Miscellaneous/Building-ROS2-Package-with-eclipse-2021-06.html">Building a package with Eclipse 2021-06</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../How-To-Guides.html">How-to Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Installation-Troubleshooting.html">Installation troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Developing-a-ROS-2-Package.html">Developing a ROS 2 package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Ament-CMake-Documentation.html">ament_cmake user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Ament-CMake-Python-Documentation.html">ament_cmake_python user documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Launch-files-migration-guide.html">Migrating launch files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Launch-file-different-formats.html">Using Python, XML, and YAML for ROS 2 Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Launching-composable-nodes.html">Using ROS 2 launch to launch composable nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Parameters-YAML-files-migration-guide.html">Migrating YAML parameter files from ROS 1 to ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Node-arguments.html">Passing ROS arguments to nodes via the command-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Sync-Vs-Async.html">Synchronous vs. asynchronous service clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/DDS-tuning.html">DDS tuning information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Overriding-QoS-Policies-For-Recording-And-Playback.html">rosbag2: Overriding QoS Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Working-with-multiple-RMW-implementations.html">Working with multiple ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Cross-compilation.html">Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Releasing/Releasing-a-Package.html">Releasing a Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/Releasing/First-Time-Release.html">First Time Release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/Releasing/Subsequent-Releases.html">Subsequent Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/Releasing/Release-Team-Repository.html">Release Team / Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/Releasing/Release-Track.html">Release Track</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Using-Python-Packages.html">Using Python Packages with ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/RQt-Port-Plugin-Windows.html">Porting RQt plugins to Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html">Running ROS 2 nodes in Docker [community-contributed]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing ROS 2 data with Foxglove Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Package-maintainer-guide.html">ROS 2 Package Maintainer Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Building-a-Custom-Debian-Package.html">Building a custom Debian package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Building-ROS-2-with-Tracing-Instrumentation.html">Building ROS 2 with tracing instrumentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Topics-Services-Actions.html">Topics vs Services vs Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Using-Variants.html">Using variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Using-ros2-param.html">Using the <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">param</span></code> command-line tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Using-ros1_bridge-Jammy-upstream.html">Using <code class="docutils literal notranslate"><span class="pre">ros1_bridge</span></code> with upstream ROS on Ubuntu 22.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Disabling-ZeroCopy-loaned-messages.html">Disabling Zero Copy Loaned Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Installing-on-Raspberry-Pi.html">ROS 2 on Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/Using-callback-groups.html">Using Callback Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../How-To-Guides/RQt-Source-Install.html">Building RQt from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/RQt-Source-Install-MacOS.html">Building RQt from source on macOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../How-To-Guides/RQt-Source-Install-Windows10.html">Building RQt from source on Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Domain-ID.html">The ROS_DOMAIN_ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Different-Middleware-Vendors.html">About different ROS 2 DDS/RTPS vendors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Logging.html">About logging and logger configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Quality-of-Service-Settings.html">About Quality of Service settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-ROS-Interfaces.html">About ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-ROS-2-Parameters.html">About parameters in ROS 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Executors.html">Executors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Topic-Statistics.html">About topic statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Command-Line-Tools.html">Introspection with command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-RQt.html">Overview and usage of RQt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Composition.html">About Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Catment.html">On the mixing of ament and catkin (catment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Cross-Compilation.html">About Cross-compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Security.html">About ROS 2 Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Tf2.html">About tf2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Build-System.html">About the build system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Internal-Interfaces.html">About internal ROS 2 interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-Middleware-Implementations.html">About ROS 2 middleware implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Concepts/About-ROS-2-Client-Libraries.html">About ROS 2 client libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../The-ROS2-Project.html">The ROS 2 Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Developer-Guide.html">ROS 2 developer guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Code-Style-Language-Versions.html">Code style and language versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Quality-Guide.html">Quality guide: ensuring code quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Migration-Guide.html">Migration guide from ROS 1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Migration-Guide-Python.html">Python migration guide from ROS 1</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Build-Farms.html">ROS Build Farms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Windows-Tips-and-Tricks.html">Windows Tips and Tricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Contributing/Contributing-To-ROS-2-Documentation.html">Contributing to ROS 2 Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Features.html">Features Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Feature-Ideas.html">Feature Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Roadmap.html">Roadmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/ROSCon-Content.html">ROSCon Talks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Governance.html">Project Governance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Governance/ROS2-TSC-Charter.html">ROS 2 Technical Steering Committee Charter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Governance/ROS2-TSC-Intake-process.html">ROS 2 TSC applicant intake process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../The-ROS2-Project/Governance/How-To-Start-A-Community-Working-Group.html">How to Start a Community Working Group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../The-ROS2-Project/Marketing.html">Marketing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Related-Projects.html">Related Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../Related-Projects/Intel-ROS2-Projects.html">Intel ROS 2 Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Related-Projects/Nvidia-ROS2-Projects.html">NVIDIA ROS 2 Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Citations.html">Citations</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../../index.html">ROS 2 documentation</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../../../index.html"></a></li>
+<li class="breadcrumb-item"><a href="../../../Tutorials.html">Tutorials</a></li>
+<li class="breadcrumb-item"><a href="../../Advanced.html">Advanced</a></li>
+<li class="breadcrumb-item"><a href="Simulation-Main.html">Simulation</a></li>
+<li class="breadcrumb-item active">Setting up a robot simulation (Webots)</li>
+<li class="wy-breadcrumbs-aside">
+<a class="fa fa-github" href="https://github.com/ros2/ros2_documentation/blob/rolling/source/Tutorials/Advanced/Simulators/Webots.rst"> Edit on GitHub</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="setting-up-a-robot-simulation-webots">
+<a class="dashAnchor" name="//apple_ref/cpp/Section/Setting up a robot simulation (Webots)"></a><span id="simulators"></span><h1>Setting up a robot simulation (Webots)<a class="headerlink" href="#setting-up-a-robot-simulation-webots" title="Permalink to this headline"></a></h1>
+<p><strong>Goal:</strong> Setup a robot simulation and control it from ROS 2.</p>
+<p><strong>Tutorial level:</strong> Advanced</p>
+<p><strong>Time:</strong> 20 minutes</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#background" id="id1">Background</a></p></li>
+<li><p><a class="reference internal" href="#prerequisites" id="id2">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#tasks" id="id3">Tasks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#create-the-package-structure" id="id4">1 Create the package structure</a></p></li>
+<li><p><a class="reference internal" href="#setup-the-simulation-world" id="id5">2 Setup the simulation world</a></p></li>
+<li><p><a class="reference internal" href="#change-the-my-robot-driver-py-file" id="id6">3 Change the my_robot_driver.py file</a></p></li>
+<li><p><a class="reference internal" href="#create-the-my-robot-urdf-file" id="id7">4 Create the my_robot.urdf file</a></p></li>
+<li><p><a class="reference internal" href="#create-the-launch-file" id="id8">5 Create the launch file</a></p></li>
+<li><p><a class="reference internal" href="#modify-the-setup-py-file" id="id9">6 Modify the setup.py file</a></p></li>
+<li><p><a class="reference internal" href="#test-the-code" id="id10">7 Test the code</a></p></li>
+<li><p><a class="reference internal" href="#updating-my-robot-urdf" id="id11">8 Updating my_robot.urdf</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-ros-node-to-avoid-obstacles" id="id12">9 Creating a ROS node to avoid obstacles</a></p></li>
+<li><p><a class="reference internal" href="#updating-setup-py-and-robot-launch-py" id="id13">10 Updating setup.py and robot_launch.py</a></p></li>
+<li><p><a class="reference internal" href="#test-the-obstacle-avoidance-code" id="id14">11 Test the obstacle avoidance code</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#summary" id="id15">Summary</a></p></li>
+<li><p><a class="reference internal" href="#next-steps" id="id16">Next steps</a></p></li>
+</ul>
+</div>
+<div class="section" id="background">
+<h2><a class="toc-backref" href="#id1">Background</a><a class="headerlink" href="#background" title="Permalink to this headline"></a></h2>
+<p>Several robot simulators can be used with ROS 2, such as Gazebo, Webots, etc.
+Unlike turtlesim, they provide fairly realistic results relying on physics-based models for robots, sensors, actuators and objects.
+Hence, what you observe in simulation is very close to what you will get when transferring your ROS 2 controllers to a real robot.
+In this tutorial, you are going to use the Webots robot simulator to set-up and run a very simple ROS 2 simulation scenario.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">webots_ros2</span></code> package provides an interface between ROS 2 and Webots.
+It includes several sub-packages, but in this tutorial, you are going to use only the <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> sub-package to implement a Python plugin controlling a simulated robot.
+Some other sub-packages contain demos with different robots such as the TurtleBot3.
+They are documented in the <a class="reference internal" href="../../Demos.html"><span class="doc">Demos</span></a> page.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2><a class="toc-backref" href="#id2">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<p>It is recommended to understand basic ROS principles covered in the beginner <a class="reference internal" href="../../../Tutorials.html"><span class="doc">Tutorials</span></a>.
+In particular, <a class="reference internal" href="../../Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html"><span class="doc">Using turtlesim and rqt</span></a>, <a class="reference internal" href="../../Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html"><span class="doc">Understanding topics</span></a>, <a class="reference internal" href="../../Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html"><span class="doc">Creating a workspace</span></a>, <a class="reference internal" href="../../Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html"><span class="doc">Creating a package</span></a> and <a class="reference internal" href="../../Intermediate/Launch/Creating-Launch-Files.html"><span class="doc">Creating a launch file</span></a> are useful prerequisites.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-0-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button><button aria-controls="panel-0-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button></div><div aria-labelledby="tab-0-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-0-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><p>The Linux and ROS commands of this tutorial can be run in a standard Linux terminal.
+See the <a class="reference external" href="https://github.com/cyberbotics/webots_ros2/wiki/Linux-Installation-Guide">Webots ROS 2 Linux installation instructions</a>.</p>
+</div><div aria-labelledby="tab-0-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>The Linux and ROS commands of this tutorial must be run in a WSL (Windows Subsystem for Linux) environment.
+See the <a class="reference external" href="https://github.com/cyberbotics/webots_ros2/wiki/Windows-Installation-Guide">Webots ROS 2 Windows installation instructions</a>.</p>
+</div><div aria-labelledby="tab-0-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>The Linux and ROS commands of this tutorial must be run in a custom Docker container configured with the <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> package.
+See the <a class="reference external" href="https://github.com/cyberbotics/webots_ros2/wiki/macOS-Installation-Guide">Webots ROS 2 macOS installation instructions</a>.</p>
+</div></div>
+<p>To install <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> from a terminal, proceed with the following commands.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo apt update</span>
+<span class="go">sudo apt install ros-rolling-webots-ros2-driver</span>
+<span class="go">source /opt/ros/rolling/setup.bash</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to install the whole <code class="docutils literal notranslate"><span class="pre">webots_ros2</span></code> package, follow these <a class="reference external" href="https://github.com/cyberbotics/webots_ros2/wiki/Getting-Started">instructions</a>.</p>
+</div>
+</div>
+<div class="section" id="tasks">
+<h2><a class="toc-backref" href="#id3">Tasks</a><a class="headerlink" href="#tasks" title="Permalink to this headline"></a></h2>
+<div class="section" id="create-the-package-structure">
+<h3><a class="toc-backref" href="#id4">1 Create the package structure</a><a class="headerlink" href="#create-the-package-structure" title="Permalink to this headline"></a></h3>
+<p>Let’s organize the code in a custom ROS 2 package.
+Create a new package named <code class="docutils literal notranslate"><span class="pre">my_package</span></code> from the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder of your ROS 2 workspace.
+Change the current directory of your terminal to <code class="docutils literal notranslate"><span class="pre">ros2_ws/src</span></code> and run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ros2 pkg create --build-type ament_python --node-name my_robot_driver my_package --dependencies rclpy geometry_msgs webots_ros2_driver</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--node-name</span> <span class="pre">my_robot_driver</span></code> option will create a <code class="docutils literal notranslate"><span class="pre">my_robot_driver.py</span></code> template Python plugin in the <code class="docutils literal notranslate"><span class="pre">my_package</span></code> subfolder that you will modify later.
+The <code class="docutils literal notranslate"><span class="pre">--dependencies</span> <span class="pre">rclpy</span> <span class="pre">geometry_msgs</span> <span class="pre">webots_ros2_driver</span></code> option specifies the packages needed by the <code class="docutils literal notranslate"><span class="pre">my_robot_driver.py</span></code> plugin in the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> file.
+Let’s add a <code class="docutils literal notranslate"><span class="pre">launch</span></code> and a <code class="docutils literal notranslate"><span class="pre">worlds</span></code> folder inside the <code class="docutils literal notranslate"><span class="pre">my_package</span></code> folder.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd my_package</span>
+<span class="go">mkdir launch</span>
+<span class="go">mkdir worlds</span>
+</pre></div>
+</div>
+<p>You should end up with the following folder structure:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">src/</span>
+<span class="go">└── my_package/</span>
+<span class="go">    ├── launch/</span>
+<span class="go">    ├── my_package/</span>
+<span class="go">    │   ├── __init__.py</span>
+<span class="go">    │   └── my_robot_driver.py</span>
+<span class="go">    ├── resource/</span>
+<span class="go">    │   └── my_package</span>
+<span class="go">    ├── test/</span>
+<span class="go">    │   ├── test_copyright.py</span>
+<span class="go">    │   ├── test_flake8.py</span>
+<span class="go">    │   └── test_pep257.py</span>
+<span class="go">    ├── worlds/</span>
+<span class="go">    ├── package.xml</span>
+<span class="go">    ├── setup.cfg</span>
+<span class="go">    └── setup.py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-the-simulation-world">
+<h3><a class="toc-backref" href="#id5">2 Setup the simulation world</a><a class="headerlink" href="#setup-the-simulation-world" title="Permalink to this headline"></a></h3>
+<p>You will need a world file containing a robot to launch your simulation.
+<a class="reference download internal" download="" href="../../../_downloads/c0d343388f672b7ea879394d1f179ca1/my_world.wbt"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">this</span> <span class="pre">world</span> <span class="pre">file</span></code></a> and move it inside <code class="docutils literal notranslate"><span class="pre">my_package/worlds/</span></code>.</p>
+<p>This is actually a fairly simple text file you can visualize in a text editor.
+A simple robot is already included in this <code class="docutils literal notranslate"><span class="pre">my_world.wbt</span></code> world file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case you want to learn how to create your own robot model in Webots, you can check this <a class="reference external" href="https://github.com/cyberbotics/webots_ros2/wiki/Tutorial-Create-Webots-Robot">tutorial</a>.</p>
+</div>
+</div>
+<div class="section" id="change-the-my-robot-driver-py-file">
+<h3><a class="toc-backref" href="#id6">3 Change the my_robot_driver.py file</a><a class="headerlink" href="#change-the-my-robot-driver-py-file" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> sub-package automatically creates a ROS 2 interface for most sensors.
+In this task, you will extend this interface by changing the <code class="docutils literal notranslate"><span class="pre">my_robot_driver.py</span></code> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The purpose of this tutorial is to show a basic example with a minimum number of dependencies.
+However, you could avoid the use of this Python plugin by using another <code class="docutils literal notranslate"><span class="pre">webots_ros2</span></code> sub-package named <code class="docutils literal notranslate"><span class="pre">webots_ros2_control</span></code>, introducing a new dependency.
+This other sub-package creates an interface with the <code class="docutils literal notranslate"><span class="pre">ros2_control</span></code> package that facilitates the control of a differential wheeled robot.</p>
+</div>
+<p>Open <code class="docutils literal notranslate"><span class="pre">my_package/my_package/my_robot_driver.py</span></code> in your favorite editor and replace its contents with the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rclpy</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Twist</span>
+
+<span class="n">HALF_DISTANCE_BETWEEN_WHEELS</span> <span class="o">=</span> <span class="mf">0.045</span>
+<span class="n">WHEEL_RADIUS</span> <span class="o">=</span> <span class="mf">0.025</span>
+
+<span class="k">class</span> <span class="nc">MyRobotDriver</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webots_node</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span> <span class="o">=</span> <span class="n">webots_node</span><span class="o">.</span><span class="n">robot</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="s1">'left wheel motor'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="s1">'right wheel motor'</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+
+        <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__node</span> <span class="o">=</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">create_node</span><span class="p">(</span><span class="s1">'my_robot_driver'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Twist</span><span class="p">,</span> <span class="s1">'cmd_vel'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cmd_vel_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__cmd_vel_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span> <span class="o">=</span> <span class="n">twist</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rclpy</span><span class="o">.</span><span class="n">spin_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__node</span><span class="p">,</span> <span class="n">timeout_sec</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">forward_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">angular_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span>
+
+        <span class="n">command_motor_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">forward_speed</span> <span class="o">-</span> <span class="n">angular_speed</span> <span class="o">*</span> <span class="n">HALF_DISTANCE_BETWEEN_WHEELS</span><span class="p">)</span> <span class="o">/</span> <span class="n">WHEEL_RADIUS</span>
+        <span class="n">command_motor_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">forward_speed</span> <span class="o">+</span> <span class="n">angular_speed</span> <span class="o">*</span> <span class="n">HALF_DISTANCE_BETWEEN_WHEELS</span><span class="p">)</span> <span class="o">/</span> <span class="n">WHEEL_RADIUS</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">command_motor_left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">command_motor_right</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, the <code class="docutils literal notranslate"><span class="pre">MyRobotDriver</span></code> class implements three methods.</p>
+<p>The first method, named <code class="docutils literal notranslate"><span class="pre">init(self,</span> <span class="pre">...)</span></code>, is actually the ROS node counterpart of the Python <code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">...)</span></code> constructor.
+It first gets the robot instance from the simulation (which can be used to access the <a class="reference external" href="https://cyberbotics.com/doc/reference/robot?tab-language=python">Webots robot API</a>).
+Then, it gets the two motor instances and initializes them with a target position and a target velocity.
+Finally a ROS node is created and a callback method is registered for a ROS topic named <code class="docutils literal notranslate"><span class="pre">/cmd_vel</span></code> that will handle <code class="docutils literal notranslate"><span class="pre">Twist</span></code> messages.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webots_node</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span> <span class="o">=</span> <span class="n">webots_node</span><span class="o">.</span><span class="n">robot</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="s1">'left wheel motor'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__robot</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="s1">'right wheel motor'</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__node</span> <span class="o">=</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">create_node</span><span class="p">(</span><span class="s1">'my_robot_driver'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__node</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Twist</span><span class="p">,</span> <span class="s1">'cmd_vel'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cmd_vel_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then comes the implementation of the <code class="docutils literal notranslate"><span class="pre">__cmd_vel_callback(self,</span> <span class="pre">twist)</span></code> callback private method that will be called for each <code class="docutils literal notranslate"><span class="pre">Twist</span></code> message received on the <code class="docutils literal notranslate"><span class="pre">/cmd_vel</span></code> topic and will save it in the <code class="docutils literal notranslate"><span class="pre">self.__target_twist</span></code> member variable.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__cmd_vel_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span> <span class="o">=</span> <span class="n">twist</span>
+</pre></div>
+</div>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">step(self)</span></code> method is called at every time step of the simulation.
+The call to <code class="docutils literal notranslate"><span class="pre">rclpy.spin_once()</span></code> is needed to keep the ROS node running smoothly.
+At each time step, the method will retrieve the desired <code class="docutils literal notranslate"><span class="pre">forward_speed</span></code> and <code class="docutils literal notranslate"><span class="pre">angular_speed</span></code> from <code class="docutils literal notranslate"><span class="pre">self.__target_twist</span></code>.
+As the motors are controlled with angular velocities, the method will then convert the <code class="docutils literal notranslate"><span class="pre">forward_speed</span></code> and <code class="docutils literal notranslate"><span class="pre">angular_speed</span></code> into individual commands for each wheel.
+This conversion depends on the structure of the robot, more specifically on the radius of the wheel and the distance between them.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__node</span><span class="p">,</span> <span class="n">timeout_sec</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">forward_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">angular_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__target_twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span>
+
+    <span class="n">command_motor_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">forward_speed</span> <span class="o">-</span> <span class="n">angular_speed</span> <span class="o">*</span> <span class="n">HALF_DISTANCE_BETWEEN_WHEELS</span><span class="p">)</span> <span class="o">/</span> <span class="n">WHEEL_RADIUS</span>
+    <span class="n">command_motor_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">forward_speed</span> <span class="o">+</span> <span class="n">angular_speed</span> <span class="o">*</span> <span class="n">HALF_DISTANCE_BETWEEN_WHEELS</span><span class="p">)</span> <span class="o">/</span> <span class="n">WHEEL_RADIUS</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__left_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">command_motor_left</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__right_motor</span><span class="o">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">command_motor_right</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-my-robot-urdf-file">
+<h3><a class="toc-backref" href="#id7">4 Create the my_robot.urdf file</a><a class="headerlink" href="#create-the-my-robot-urdf-file" title="Permalink to this headline"></a></h3>
+<p>You now have to create a URDF file to declare the <code class="docutils literal notranslate"><span class="pre">my_robot_driver.py</span></code> Python plugin.
+This will allow the <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> ROS node to launch the plugin.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">my_package/resource</span></code> folder create a text file named <code class="docutils literal notranslate"><span class="pre">my_robot.urdf</span></code> with this contents:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" ?&gt;</span>
+<span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">"My robot"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;webots&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"my_package.my_robot_driver.MyRobotDriver"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/webots&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This simple URDF file doesn’t contain any link or joint information about the robot as it is not needed in this tutorial.
+However, URDF files usually contain much more information as explained in the <a class="reference internal" href="../../Intermediate/URDF/URDF-Main.html"><span class="doc">URDF</span></a>.</p>
+</div>
+</div>
+<div class="section" id="create-the-launch-file">
+<h3><a class="toc-backref" href="#id8">5 Create the launch file</a><a class="headerlink" href="#create-the-launch-file" title="Permalink to this headline"></a></h3>
+<p>Let’s create now the launch file to easily launch the simulation and the ROS controller with a single command.
+In the <code class="docutils literal notranslate"><span class="pre">my_package/launch</span></code> folder create a new text file named <code class="docutils literal notranslate"><span class="pre">robot_launch.py</span></code> with this code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">launch</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">ament_index_python.packages</span> <span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<span class="kn">from</span> <span class="nn">webots_ros2_driver.webots_launcher</span> <span class="kn">import</span> <span class="n">WebotsLauncher</span><span class="p">,</span> <span class="n">Ros2SupervisorLauncher</span>
+<span class="kn">from</span> <span class="nn">webots_ros2_driver.utils</span> <span class="kn">import</span> <span class="n">controller_url_prefix</span>
+
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="n">package_dir</span> <span class="o">=</span> <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">'my_package'</span><span class="p">)</span>
+    <span class="n">robot_description</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_dir</span><span class="p">,</span> <span class="s1">'resource'</span><span class="p">,</span> <span class="s1">'my_robot.urdf'</span><span class="p">))</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+
+    <span class="n">webots</span> <span class="o">=</span> <span class="n">WebotsLauncher</span><span class="p">(</span>
+        <span class="n">world</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_dir</span><span class="p">,</span> <span class="s1">'worlds'</span><span class="p">,</span> <span class="s1">'my_world.wbt'</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">ros2_supervisor</span> <span class="o">=</span> <span class="n">Ros2SupervisorLauncher</span><span class="p">()</span>
+
+    <span class="n">my_robot_driver</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s1">'webots_ros2_driver'</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s1">'driver'</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s1">'screen'</span><span class="p">,</span>
+        <span class="n">additional_env</span><span class="o">=</span><span class="p">{</span><span class="s1">'WEBOTS_CONTROLLER_URL'</span><span class="p">:</span> <span class="n">controller_url_prefix</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'my_robot'</span><span class="p">},</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span><span class="s1">'robot_description'</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">webots</span><span class="p">,</span>
+        <span class="n">my_robot_driver</span><span class="p">,</span>
+        <span class="n">ros2_supervisor</span><span class="p">,</span>
+        <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">RegisterEventHandler</span><span class="p">(</span>
+            <span class="n">event_handler</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">event_handlers</span><span class="o">.</span><span class="n">OnProcessExit</span><span class="p">(</span>
+                <span class="n">target_action</span><span class="o">=</span><span class="n">webots</span><span class="p">,</span>
+                <span class="n">on_exit</span><span class="o">=</span><span class="p">[</span><span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">EmitEvent</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">())],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">WebotsLauncher</span></code> object is a custom action that allows you to start a Webots simulation instance.
+You have to specify in the constructor which world file the simulator will open.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">webots</span> <span class="o">=</span> <span class="n">WebotsLauncher</span><span class="p">(</span>
+    <span class="n">world</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_dir</span><span class="p">,</span> <span class="s1">'worlds'</span><span class="p">,</span> <span class="s1">'my_world.wbt'</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>A supervisor Robot is always automatically added to the world file by <code class="docutils literal notranslate"><span class="pre">WebotsLauncher</span></code>.
+This robot is controlled by the custom node <code class="docutils literal notranslate"><span class="pre">Ros2Supervisor</span></code>, which must also be started using the <code class="docutils literal notranslate"><span class="pre">Ros2SupervisorLauncher</span></code>.
+This node allows to spawn URDF robots directly into the world, and it also publishes useful topics like <code class="docutils literal notranslate"><span class="pre">/clock</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ros2_supervisor</span> <span class="o">=</span> <span class="n">Ros2SupervisorLauncher</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then, the ROS node interacting with the simulated robot is created.
+This node, named <code class="docutils literal notranslate"><span class="pre">driver</span></code>, is located in the <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> package.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-1-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button><button aria-controls="panel-1-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button></div><div aria-labelledby="tab-1-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-1-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><p>The node will be able to communicate with the simulated robot by using a custom protocol based on IPC and shared memory.</p>
+</div><div aria-labelledby="tab-1-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>The node (in WSL) will be able to communicate with the simulated robot (in Webots on Windows) through a TCP connection.</p>
+</div><div aria-labelledby="tab-1-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>The node (in the docker container) will be able to communicate with the simulated robot (in Webots on macOS) through a TCP connection.</p>
+</div></div>
+<p>In your case, you need to run a single instance of this node, because you have a single robot in the simulation.
+But if you had more robots in the simulation, you would have to run one instance of this node per robot.
+<code class="docutils literal notranslate"><span class="pre">WEBOTS_CONTROLLER_URL</span></code> is used to define the name of the robot the driver should connect to.
+The <code class="docutils literal notranslate"><span class="pre">controller_url_prefix()</span></code> method is mandatory, as it allows <code class="docutils literal notranslate"><span class="pre">webots_ros2_driver</span></code> to add the correct protocol prefix depending on your platform.
+The <code class="docutils literal notranslate"><span class="pre">robot_description</span></code> parameter holds the contents of the URDF file which refers to the <code class="docutils literal notranslate"><span class="pre">my_robot_driver.py</span></code> Python plugin.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_robot_driver</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+    <span class="n">package</span><span class="o">=</span><span class="s1">'webots_ros2_driver'</span><span class="p">,</span>
+    <span class="n">executable</span><span class="o">=</span><span class="s1">'driver'</span><span class="p">,</span>
+    <span class="n">output</span><span class="o">=</span><span class="s1">'screen'</span><span class="p">,</span>
+    <span class="n">additional_env</span><span class="o">=</span><span class="p">{</span><span class="s1">'WEBOTS_CONTROLLER_URL'</span><span class="p">:</span> <span class="n">controller_url_prefix</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'my_robot'</span><span class="p">},</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">'robot_description'</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>After that, the three nodes are set to be launched in the <code class="docutils literal notranslate"><span class="pre">LaunchDescription</span></code> constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+    <span class="n">webots</span><span class="p">,</span>
+    <span class="n">my_robot_driver</span><span class="p">,</span>
+    <span class="n">ros2_supervisor</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Finally, an optional part is added in order to shutdown all the nodes once Webots terminates (e.g., when it gets closed from the graphical user interface).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">RegisterEventHandler</span><span class="p">(</span>
+    <span class="n">event_handler</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">event_handlers</span><span class="o">.</span><span class="n">OnProcessExit</span><span class="p">(</span>
+        <span class="n">target_action</span><span class="o">=</span><span class="n">webots</span><span class="p">,</span>
+        <span class="n">on_exit</span><span class="o">=</span><span class="p">[</span><span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">EmitEvent</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">())],</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-the-setup-py-file">
+<h3><a class="toc-backref" href="#id9">6 Modify the setup.py file</a><a class="headerlink" href="#modify-the-setup-py-file" title="Permalink to this headline"></a></h3>
+<p>Finally, before you can start the launch file, you have to modify the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file to include the extra files you added.
+Open <code class="docutils literal notranslate"><span class="pre">my_package/setup.py</span></code> and replace its contents with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">package_name</span> <span class="o">=</span> <span class="s1">'my_package'</span>
+<span class="n">data_files</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">data_files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'share/ament_index/resource_index/packages'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'resource/'</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">]))</span>
+<span class="n">data_files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'share/'</span> <span class="o">+</span> <span class="n">package_name</span> <span class="o">+</span> <span class="s1">'/launch'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'launch/robot_launch.py'</span><span class="p">]))</span>
+<span class="n">data_files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'share/'</span> <span class="o">+</span> <span class="n">package_name</span> <span class="o">+</span> <span class="s1">'/worlds'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'worlds/my_world.wbt'</span><span class="p">]))</span>
+<span class="n">data_files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'share/'</span> <span class="o">+</span> <span class="n">package_name</span> <span class="o">+</span> <span class="s1">'/resource'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'resource/my_robot.urdf'</span><span class="p">]))</span>
+<span class="n">data_files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'share/'</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">,</span> <span class="p">[</span><span class="s1">'package.xml'</span><span class="p">]))</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">package_name</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">'0.0.0'</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="p">[</span><span class="n">package_name</span><span class="p">],</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="n">data_files</span><span class="p">,</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">'setuptools'</span><span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">maintainer</span><span class="o">=</span><span class="s1">'user'</span><span class="p">,</span>
+    <span class="n">maintainer_email</span><span class="o">=</span><span class="s1">'user.name@mail.com'</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">'TODO: Package description'</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">'TODO: License declaration'</span><span class="p">,</span>
+    <span class="n">tests_require</span><span class="o">=</span><span class="p">[</span><span class="s1">'pytest'</span><span class="p">],</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'console_scripts'</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">'my_robot_driver = my_package.my_robot_driver:main'</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This sets-up the package and adds in the <code class="docutils literal notranslate"><span class="pre">data_files</span></code> variable the newly added files: <code class="docutils literal notranslate"><span class="pre">my_world.wbt</span></code>, <code class="docutils literal notranslate"><span class="pre">my_robot.urdf</span></code> and <code class="docutils literal notranslate"><span class="pre">robot_launch.py</span></code>.</p>
+</div>
+<div class="section" id="test-the-code">
+<h3><a class="toc-backref" href="#id10">7 Test the code</a><a class="headerlink" href="#test-the-code" title="Permalink to this headline"></a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-2-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button><button aria-controls="panel-2-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button></div><div aria-labelledby="tab-2-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-2-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><p>From a terminal in your ROS 2 workspace run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">colcon build</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+<p>This will launch the simulation.
+Webots will be automatically installed on the first run in case it was not already installed.</p>
+</div><div aria-labelledby="tab-2-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>From a terminal in your WSL ROS 2 workspace run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">colcon build</span>
+<span class="go">export WEBOTS_HOME=/mnt/c/Program\ Files/Webots</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+<p>Be sure to use the <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> prefix in front of your path to the Webots installation folder to access the Windows file system from WSL.</p>
+<p>This will launch the simulation.
+Webots will be automatically installed on the first run in case it was not already installed.</p>
+</div><div aria-labelledby="tab-2-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>On macOS, a local server must be started on the host to start Webots from the Docker container.
+The local server can be downloaded <a class="reference external" href="https://github.com/cyberbotics/webots-server/blob/main/local_simulation_server.py">on the webots-server repository</a>.</p>
+<p>In a terminal of the host machine (not in the container), specify the Webots installation folder (e.g. <code class="docutils literal notranslate"><span class="pre">/Applications/Webots.app</span></code>) and start the server using the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export WEBOTS_HOME=/Applications/Webots.app</span>
+<span class="go">python3 local_simulation_server.py</span>
+</pre></div>
+</div>
+<p>From the terminal of the Docker container, build and launch your custom package with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/ros2_ws</span>
+<span class="go">colcon build</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+</div></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to install Webots manually, you can download it <a class="reference external" href="https://github.com/cyberbotics/webots/releases/latest">here</a>.</p>
+</div>
+<p>Then, open a second terminal and send a command with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ros2 topic pub /cmd_vel geometry_msgs/Twist  "linear: { x: 0.1 }"</span>
+</pre></div>
+</div>
+<p>The robot is now moving forward.</p>
+<img alt="../../../_images/Robot_moving_forward.png" src="../../../_images/Robot_moving_forward.png"/>
+<p>At this point, the robot is able to blindly follow your motor commands.
+But it will eventually bump into the wall as you order it to move forwards.</p>
+<img alt="../../../_images/Robot_colliding_wall.png" src="../../../_images/Robot_colliding_wall.png"/>
+<p>To prevent this, let’s use the sensors of the robot to detect the obstacles and avoid them.
+Close the Webots window, this should also shutdown your ROS nodes started from the launcher.
+Close also the topic command with <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> in the second terminal.</p>
+</div>
+<div class="section" id="updating-my-robot-urdf">
+<h3><a class="toc-backref" href="#id11">8 Updating my_robot.urdf</a><a class="headerlink" href="#updating-my-robot-urdf" title="Permalink to this headline"></a></h3>
+<p>You have to modify the URDF file in order to enable the sensors.
+In <code class="docutils literal notranslate"><span class="pre">my_robot.urdf</span></code> replace the whole contents with:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" ?&gt;</span>
+<span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">"My robot"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;webots&gt;</span>
+        <span class="nt">&lt;device</span> <span class="na">reference=</span><span class="s">"ds0"</span> <span class="na">type=</span><span class="s">"DistanceSensor"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ros&gt;</span>
+                <span class="nt">&lt;topicName&gt;</span>/left_sensor<span class="nt">&lt;/topicName&gt;</span>
+                <span class="nt">&lt;alwaysOn&gt;</span>true<span class="nt">&lt;/alwaysOn&gt;</span>
+            <span class="nt">&lt;/ros&gt;</span>
+        <span class="nt">&lt;/device&gt;</span>
+        <span class="nt">&lt;device</span> <span class="na">reference=</span><span class="s">"ds1"</span> <span class="na">type=</span><span class="s">"DistanceSensor"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ros&gt;</span>
+                <span class="nt">&lt;topicName&gt;</span>/right_sensor<span class="nt">&lt;/topicName&gt;</span>
+                <span class="nt">&lt;alwaysOn&gt;</span>true<span class="nt">&lt;/alwaysOn&gt;</span>
+            <span class="nt">&lt;/ros&gt;</span>
+        <span class="nt">&lt;/device&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"my_package.my_robot_driver.MyRobotDriver"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/webots&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+</div>
+<p>The ROS 2 interface will parse the <code class="docutils literal notranslate"><span class="pre">&lt;device&gt;</span></code> tags referring to the <strong>DistanceSensor</strong> nodes and use the standard parameters in the <code class="docutils literal notranslate"><span class="pre">&lt;ros&gt;</span></code> tags to enable the sensors and name their topics.</p>
+</div>
+<div class="section" id="creating-a-ros-node-to-avoid-obstacles">
+<h3><a class="toc-backref" href="#id12">9 Creating a ROS node to avoid obstacles</a><a class="headerlink" href="#creating-a-ros-node-to-avoid-obstacles" title="Permalink to this headline"></a></h3>
+<p>The robot will use a standard ROS node to detect the wall and send motor commands to avoid it.
+In the <code class="docutils literal notranslate"><span class="pre">my_package/my_package/</span></code> folder, create a file named <code class="docutils literal notranslate"><span class="pre">obstacle_avoider.py</span></code> with this code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rclpy</span>
+<span class="kn">from</span> <span class="nn">rclpy.node</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">Range</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Twist</span>
+
+
+<span class="n">MAX_RANGE</span> <span class="o">=</span> <span class="mf">0.15</span>
+
+
+<span class="k">class</span> <span class="nc">ObstacleAvoider</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">'obstacle_avoider'</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Twist</span><span class="p">,</span> <span class="s1">'cmd_vel'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Range</span><span class="p">,</span> <span class="s1">'left_sensor'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Range</span><span class="p">,</span> <span class="s1">'right_sensor'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__left_sensor_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_value</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">range</span>
+
+    <span class="k">def</span> <span class="nf">__right_sensor_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_value</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">range</span>
+
+        <span class="n">command_message</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+
+        <span class="n">command_message</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_value</span> <span class="o">&lt;</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">MAX_RANGE</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_value</span> <span class="o">&lt;</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">MAX_RANGE</span><span class="p">:</span>
+            <span class="n">command_message</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">command_message</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">avoider</span> <span class="o">=</span> <span class="n">ObstacleAvoider</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">avoider</span><span class="p">)</span>
+    <span class="c1"># Destroy the node explicitly</span>
+    <span class="c1"># (optional - otherwise it will be done automatically</span>
+    <span class="c1"># when the garbage collector destroys the node object)</span>
+    <span class="n">avoider</span><span class="o">.</span><span class="n">destroy_node</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This node will create a publisher for the command and subscribe to the sensors topics here:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">__publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Twist</span><span class="p">,</span> <span class="s1">'cmd_vel'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Range</span><span class="p">,</span> <span class="s1">'left_sensor'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">Range</span><span class="p">,</span> <span class="s1">'right_sensor'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_callback</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a measurement is received from the left sensor it will be copied to a member field:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__left_sensor_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_value</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">range</span>
+</pre></div>
+</div>
+<p>Finally, a message will be sent to the <code class="docutils literal notranslate"><span class="pre">/cmd_vel</span></code> topic when a measurement from the right sensor is received.
+The <code class="docutils literal notranslate"><span class="pre">command_message</span></code> will register at least a forward speed in <code class="docutils literal notranslate"><span class="pre">linear.x</span></code> in order to make the robot move when no obstacle is detected.
+If any of the two sensors detect an obstacle, <code class="docutils literal notranslate"><span class="pre">command_message</span></code> will also register a rotational speed in <code class="docutils literal notranslate"><span class="pre">angular.z</span></code> in order to make the robot turn right.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__right_sensor_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_value</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">range</span>
+
+    <span class="n">command_message</span> <span class="o">=</span> <span class="n">Twist</span><span class="p">()</span>
+
+    <span class="n">command_message</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__left_sensor_value</span> <span class="o">&lt;</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">MAX_RANGE</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__right_sensor_value</span> <span class="o">&lt;</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">MAX_RANGE</span><span class="p">:</span>
+        <span class="n">command_message</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">__publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">command_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-setup-py-and-robot-launch-py">
+<h3><a class="toc-backref" href="#id13">10 Updating setup.py and robot_launch.py</a><a class="headerlink" href="#updating-setup-py-and-robot-launch-py" title="Permalink to this headline"></a></h3>
+<p>You have to modify these two other files to launch your new node.
+Edit <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> and replace <code class="docutils literal notranslate"><span class="pre">'console_scripts'</span></code> with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">'console_scripts'</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s1">'my_robot_driver = my_package.my_robot_driver:main'</span><span class="p">,</span>
+    <span class="s1">'obstacle_avoider = my_package.obstacle_avoider:main'</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>This will add an entry point for the <code class="docutils literal notranslate"><span class="pre">obstacle_avoider</span></code> node.</p>
+<p>Go to the file <code class="docutils literal notranslate"><span class="pre">robot_launch.py</span></code> and replace <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">generate_launch_description():</span></code> with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="n">package_dir</span> <span class="o">=</span> <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">'my_package'</span><span class="p">)</span>
+    <span class="n">robot_description</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_dir</span><span class="p">,</span> <span class="s1">'resource'</span><span class="p">,</span> <span class="s1">'my_robot.urdf'</span><span class="p">))</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+
+    <span class="n">webots</span> <span class="o">=</span> <span class="n">WebotsLauncher</span><span class="p">(</span>
+        <span class="n">world</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package_dir</span><span class="p">,</span> <span class="s1">'worlds'</span><span class="p">,</span> <span class="s1">'my_world.wbt'</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">ros2_supervisor</span> <span class="o">=</span> <span class="n">Ros2SupervisorLauncher</span><span class="p">()</span>
+
+    <span class="n">my_robot_driver</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s1">'webots_ros2_driver'</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s1">'driver'</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s1">'screen'</span><span class="p">,</span>
+        <span class="n">additional_env</span><span class="o">=</span><span class="p">{</span><span class="s1">'WEBOTS_CONTROLLER_URL'</span><span class="p">:</span> <span class="n">controller_url_prefix</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'my_robot'</span><span class="p">},</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span><span class="s1">'robot_description'</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">obstacle_avoider</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s1">'my_package'</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s1">'obstacle_avoider'</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">webots</span><span class="p">,</span>
+        <span class="n">my_robot_driver</span><span class="p">,</span>
+        <span class="n">ros2_supervisor</span><span class="p">,</span>
+        <span class="n">obstacle_avoider</span><span class="p">,</span>
+        <span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">RegisterEventHandler</span><span class="p">(</span>
+            <span class="n">event_handler</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">event_handlers</span><span class="o">.</span><span class="n">OnProcessExit</span><span class="p">(</span>
+                <span class="n">target_action</span><span class="o">=</span><span class="n">webots</span><span class="p">,</span>
+                <span class="n">on_exit</span><span class="o">=</span><span class="p">[</span><span class="n">launch</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">EmitEvent</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">launch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">())],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+<p>This will create an <code class="docutils literal notranslate"><span class="pre">obstacle_avoider</span></code> node that will be included in the <code class="docutils literal notranslate"><span class="pre">LaunchDescription</span></code>.</p>
+</div>
+<div class="section" id="test-the-obstacle-avoidance-code">
+<h3><a class="toc-backref" href="#id14">11 Test the obstacle avoidance code</a><a class="headerlink" href="#test-the-obstacle-avoidance-code" title="Permalink to this headline"></a></h3>
+<p>As in task <code class="docutils literal notranslate"><span class="pre">7</span></code>, launch the simulation from a terminal in your ROS 2 workspace:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-TGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-TGludXg=" name="TGludXg=" role="tab" tabindex="0">Linux</button><button aria-controls="panel-3-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button><button aria-controls="panel-3-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button></div><div aria-labelledby="tab-3-TGludXg=" class="sphinx-tabs-panel group-tab" id="panel-3-TGludXg=" name="TGludXg=" role="tabpanel" tabindex="0"><p>From a terminal in your ROS 2 workspace run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">colcon build</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-3-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>From a terminal in your WSL ROS 2 workspace run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">colcon build</span>
+<span class="go">export WEBOTS_HOME=/mnt/c/Program\ Files/Webots</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+<p>Be sure to use the <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> prefix in front of your path to the Webots installation folder to access the Windows file system from WSL.</p>
+</div><div aria-labelledby="tab-3-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>In a terminal of the host machine (not in the container), if not done already, specify the Webots installation folder (e.g. <code class="docutils literal notranslate"><span class="pre">/Applications/Webots.app</span></code>) and start the server using the following commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export WEBOTS_HOME=/Applications/Webots.app</span>
+<span class="go">python3 local_simulation_server.py</span>
+</pre></div>
+</div>
+<p>Note that the server keeps running once the ROS 2 nodes are ended.
+You don’t need to restart it every time you want to launch a new simulation.
+From the terminal of the Docker container, build and launch your custom package with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ~/ros2_ws</span>
+<span class="go">colcon build</span>
+<span class="go">source install/local_setup.bash</span>
+<span class="go">ros2 launch my_package robot_launch.py</span>
+</pre></div>
+</div>
+</div></div>
+<p>Your robot should go forward and before hitting the wall it should turn clockwise.
+You can press <code class="docutils literal notranslate"><span class="pre">Ctrl+F10</span></code> in Webots or go to the <code class="docutils literal notranslate"><span class="pre">View</span></code> menu, <code class="docutils literal notranslate"><span class="pre">Optional</span> <span class="pre">Rendering</span></code> and <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">DistanceSensor</span> <span class="pre">Rays</span></code> to display the range of the distance sensors of the robot.</p>
+<img alt="../../../_images/Robot_turning_clockwise.png" src="../../../_images/Robot_turning_clockwise.png"/>
+</div>
+</div>
+<div class="section" id="summary">
+<h2><a class="toc-backref" href="#id15">Summary</a><a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<p>In this tutorial, you set-up a realistic robot simulation with Webots, implemented a Python plugin to control the motors of the robot, and implemented a ROS node using the sensors to avoid the obstacles.</p>
+</div>
+<div class="section" id="next-steps">
+<h2><a class="toc-backref" href="#id16">Next steps</a><a class="headerlink" href="#next-steps" title="Permalink to this headline"></a></h2>
+<p>You might want to improve the plugin or create new nodes to change the behavior of the robot.
+Taking inspiration from these previous tutorials could be a starting point:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../Recording-A-Bag-From-Your-Own-Node-Py.html"><span class="doc">Recording a bag from a node (Python)</span></a>.</p></li>
+<li><p><a class="reference internal" href="../../Intermediate/Tf2/Tf2-Main.html"><span class="doc">tf2</span></a>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="Simulation-Main.html" rel="prev" title="Simulation"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="Gazebo.html" rel="next" title="Setting up a robot simulation (Gazebo)">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2022, Open Robotics.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- Theme Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-17821189-2"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-17821189-2', {
+          'anonymize_ip': false,
+      });
+    </script>
+</body>
+</html>

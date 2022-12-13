@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveIt Deep Grasps &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/moveit_deep_grasps/moveit_deep_grasps_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Subframes" href="../subframes/subframes_tutorial.html" />
+    <link rel="prev" title="MoveIt Grasps" href="../moveit_grasps/moveit_grasps_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../time_parameterization/time_parameterization_tutorial.html">Time Parameterization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MoveIt Deep Grasps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conceptual-overview">Conceptual Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grasp-pose-detection">Grasp Pose Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Dex-Net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-demos">Running the Demos</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#fake-controllers">Fake Controllers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#gazebo">Gazebo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">MoveIt Deep Grasps</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/moveit_deep_grasps/moveit_deep_grasps_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="moveit-deep-grasps">
+<h1>MoveIt Deep Grasps<a class="headerlink" href="#moveit-deep-grasps" title="Permalink to this headline"></a></h1>
+<p>This tutorial demonstrates how to use <a class="reference external" href="https://github.com/atenpas/gpd">Grasp Pose Detection (GPD)</a> and
+<a class="reference external" href="https://berkeleyautomation.github.io/dex-net/">Dex-Net</a> within the MoveIt Task Constructor.</p>
+<p>GPD (left) and Dex-Net (right) were used to generate the grasp pose to pick up the cylinder.</p>
+<p><a class="reference internal" href="../../../_images/mtc_gpd_panda.gif"><img alt="gif1" src="../../../_images/mtc_gpd_panda.gif" style="width: 250pt;" /></a> <a class="reference internal" href="../../../_images/mtc_gqcnn_panda.gif"><img alt="gif2" src="../../../_images/mtc_gqcnn_panda.gif" style="width: 250pt;" /></a></p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+<p>There are additional dependencies to install in order to run the demos. Therefore, the deep grasping packages are
+located in their own repository. Please see <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo">Deep Grasp Demo</a>.
+This repository contains detailed instructions for installation, running the demos, simulating depth sensors, and tips for performance.</p>
+<p>The demos will allow you to visualize the results in rviz and use Gazebo if desired.</p>
+</div>
+<div class="section" id="conceptual-overview">
+<h2>Conceptual Overview<a class="headerlink" href="#conceptual-overview" title="Permalink to this headline"></a></h2>
+<p>The MoveIt Task Constructor contains a <code class="docutils literal notranslate"><span class="pre">DeepGraspPose</span></code> generator stage. This stage does not directly contain
+the implementation of either GPD or Dex-Net. Instead, communication with the MoveIt Task Constructor is achieved through
+ROS action messages. The <code class="docutils literal notranslate"><span class="pre">DeepGraspPose</span></code> stage contains an action client that communicates with an action server. The implementation of the action server is in
+both the <code class="docutils literal notranslate"><span class="pre">moveit_task_constructor_gpd</span></code> and <code class="docutils literal notranslate"><span class="pre">moveit_task_constructor_dexnet</span></code> packages. The action server sends the grasp
+candidates along with the associated costs back to the action client as feedback.</p>
+<p>The relevant fields for the message can be seen in <code class="docutils literal notranslate"><span class="pre">moveit_task_constructor_msgs/action/SampleGraspPoses.action</span></code>.</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">DeepGraspPose</span></code> stage is easy. Add the stage below to the current task. The implementation can be seen in <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo/blob/master/deep_grasp_task/src/deep_pick_place_task.cpp#L207">Deep Grasp Task</a>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">stages</span><span class="o">::</span><span class="n">DeepGraspPose</span><span class="o">&lt;</span><span class="n">moveit_task_constructor_msgs</span><span class="o">::</span><span class="n">SampleGraspPosesAction</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">action_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;generate grasp pose&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The template parameter is the action message. Specify the <code class="docutils literal notranslate"><span class="pre">action_name</span></code> which is the namespace for communication between
+the server and the client. Optionally, the timeouts for grasp sampling and server connection can be supplied. By default these are
+set to unlimited time.</p>
+</div>
+<div class="section" id="grasp-pose-detection">
+<h2>Grasp Pose Detection<a class="headerlink" href="#grasp-pose-detection" title="Permalink to this headline"></a></h2>
+<p>GPD samples grasp candidates from a point cloud and uses a CNN to classify whether the grasp candidate will be successful. The table plane is automatically segmented from the point cloud in the demo. This is
+useful because GPD will sample grasp candidates around this plane if not removed.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">workspace</span></code> and  <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> parameters in <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo/blob/master/moveit_task_constructor_gpd/config/gpd_config.yaml">gpd_config.yaml</a> can improve performance.
+The first  parameter specifies the volume of a cube to search for grasp candidates centered at the origin of the point cloud frame. The second
+specifies the number of samples from the cloud to detect grasp candidates.</p>
+</div>
+<div class="section" id="id1">
+<h2>Dex-Net<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>Dex-Net will sample grasp candidates from images. A color and depth image must be supplied. Dex-Net uses a grasp quality
+convolutional neural network (GQ-CNN) to predict the probability a grasp candidate will be successful. The GQ-CNN was trained
+on images using a downward facing camera. Therefore, the network is sensitive to the camera view point and will perform best
+when the camera is facing down.</p>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">deterministic</span></code> parameter to 0 in  <a class="reference external" href="https://github.com/BerkeleyAutomation/gqcnn/blob/master/cfg/examples/replication/dex-net_4.0_pj.yaml#L11">dex-net_4.0_pj.yaml</a> for nondeterministic grasp sampling.</p>
+</div>
+<div class="section" id="running-the-demos">
+<h2>Running the Demos<a class="headerlink" href="#running-the-demos" title="Permalink to this headline"></a></h2>
+<p>The point cloud and images for the demo are provided but you can optionally
+use sensor data from a simulated depth camera in Gazebo.</p>
+<p>Due to the sensitivity of the camera view point, it is recommended to use the images of the cylinder that are provided for the Dex-Net demo.</p>
+<p>The <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo#Camera-View-Point">Camera View Point</a> section shows
+how to change the camera to different positions. This will improve performance depending on the object.</p>
+<p>The <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo#Depth-Sensor-Data">Depth Sensor Data</a> section shows
+how to collect data using the simulated depth camera.</p>
+<div class="section" id="fake-controllers">
+<h3>Fake Controllers<a class="headerlink" href="#fake-controllers" title="Permalink to this headline"></a></h3>
+<p>First, launch the basic environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_task_constructor_demo</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>Next, launch either the GPD or Dex-Net demo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_task_constructor_gpd</span> <span class="n">gpd_demo</span><span class="o">.</span><span class="n">launch</span>
+<span class="n">roslaunch</span> <span class="n">moveit_task_constructor_dexnet</span> <span class="n">dexnet_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>The results should appear similar to the two animations at the top of the tutorial.</p>
+</div>
+<div class="section" id="gazebo">
+<h3>Gazebo<a class="headerlink" href="#gazebo" title="Permalink to this headline"></a></h3>
+<p>Make sure you complete the <a class="reference external" href="https://github.com/PickNikRobotics/deep_grasp_demo#Install">deep grasp demo install guide</a> for Gazebo support.</p>
+<p>The <strong>load_cloud</strong> argument in <strong>gpd_demo.launch</strong> and the <strong>load_images</strong> argument in <strong>dexnet_demo.launch</strong> specifies
+whether or not to load the sensor data from a file. Set either one of these arguments to false to use the simulated depth camera.</p>
+<p>First, launch the Gazebo environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">deep_grasp_task</span> <span class="n">gazebo_pick_place</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>Next, launch either the GPD or Dex-Net demo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_task_constructor_gpd</span> <span class="n">gpd_demo</span><span class="o">.</span><span class="n">launch</span>
+<span class="n">roslaunch</span> <span class="n">moveit_task_constructor_dexnet</span> <span class="n">dexnet_demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>The animations below demonstrate the capabilities of Dex-Net for grasp pose generation using the simulated depth camera in Gazebo.
+You may notice GPD can successfully pick up the cylinder. However, the algorithm will struggle with more complicated objects
+such as the bar clamp (seen on the right). Experiment with the <code class="docutils literal notranslate"><span class="pre">workspace</span></code> and  <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> parameters to see if you can generate a successful grasp using GPD.</p>
+<p><a class="reference internal" href="../../../_images/gqcnn_cylinder_gazebo.gif"><img alt="gif3" src="../../../_images/gqcnn_cylinder_gazebo.gif" style="width: 250pt;" /></a> <a class="reference internal" href="../../../_images/gqcnn_barclamp_gazebo.gif"><img alt="gif4" src="../../../_images/gqcnn_barclamp_gazebo.gif" style="width: 250pt;" /></a></p>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../moveit_grasps/moveit_grasps_tutorial.html" class="btn btn-neutral float-left" title="MoveIt Grasps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../subframes/subframes_tutorial.html" class="btn btn-neutral float-right" title="Subframes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

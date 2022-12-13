@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Initialization, Shutdown, and Spinning — rclpy 3.2.1 documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/alabaster.css" rel="stylesheet" type="text/css"/>
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/sphinx_highlight.js"></script>
+<link href="../about.html" rel="author" title="About these documents"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="node.html" rel="next" title="Node"/>
+<link href="../api.html" rel="prev" title="API"/>
+<link href="../_static/custom.css" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
+</head><body>
+<div class="document">
+<div class="documentwrapper">
+<div class="bodywrapper">
+<div class="body" role="main">
+<div class="section" id="module-rclpy">
+<span id="initialization-shutdown-and-spinning"></span><a class="dashAnchor" name="//apple_ref/cpp/Module/rclpy"></a><h1>Initialization, Shutdown, and Spinning<a class="headerlink" href="#module-rclpy" title="Permalink to this heading">¶</a></h1>
+<p>A collection of functions for writing a ROS program.</p>
+<p>A typical ROS program consists of the following operations:</p>
+<ol class="arabic simple">
+<li><p>Initialization</p></li>
+<li><p>Create one or more ROS nodes</p></li>
+<li><p>Process node callbacks</p></li>
+<li><p>Shutdown</p></li>
+</ol>
+<p>Inititalization is done by calling <a class="reference internal" href="#rclpy.init" title="rclpy.init"><code class="xref py py-func docutils literal notranslate"><span class="pre">init()</span></code></a> for a particular <a class="reference internal" href="context.html#rclpy.context.Context" title="rclpy.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>.
+This must be done before any ROS nodes can be created.</p>
+<p>Creating a ROS node is done by calling <a class="reference internal" href="#rclpy.create_node" title="rclpy.create_node"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_node()</span></code></a> or by instantiating a
+<a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>.
+A node can be used to create common ROS entities like publishers, subscriptions, services,
+and actions.</p>
+<p>After a node is created, items of work can be done (e.g. subscription callbacks) by <em>spinning</em> on
+the node.
+The following functions can be used to process work that is waiting to be executed: <a class="reference internal" href="#rclpy.spin" title="rclpy.spin"><code class="xref py py-func docutils literal notranslate"><span class="pre">spin()</span></code></a>,
+<a class="reference internal" href="#rclpy.spin_once" title="rclpy.spin_once"><code class="xref py py-func docutils literal notranslate"><span class="pre">spin_once()</span></code></a>, and <a class="reference internal" href="#rclpy.spin_until_future_complete" title="rclpy.spin_until_future_complete"><code class="xref py py-func docutils literal notranslate"><span class="pre">spin_until_future_complete()</span></code></a>.</p>
+<p>When finished with a previously initialized <a class="reference internal" href="context.html#rclpy.context.Context" title="rclpy.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a> (ie. done using
+all ROS nodes associated with the context), the <a class="reference internal" href="#rclpy.shutdown" title="rclpy.shutdown"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutdown()</span></code></a> function should be called.
+This will invalidate all entities derived from the context.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.create_node">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">create_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cli_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_global_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_rosout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_parameter_services</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_undeclared_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">automatically_declare_parameters_from_overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.create_node"></a><a class="headerlink" href="#rclpy.create_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of <a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A name to give to the node.</p></li>
+<li><p><strong>context</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="context.html#rclpy.context.Context" title="rclpy.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]) – The context to associated with the node, or <code class="docutils literal notranslate"><span class="pre">None</span></code> for the default global
+context.</p></li>
+<li><p><strong>cli_args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – Command line arguments to be used by the node. Being specific to a ROS node,
+an implicit <cite>–ros-args</cite> scope flag always precedes these arguments.</p></li>
+<li><p><strong>namespace</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The namespace prefix to apply to entities associated with the node
+(node name, topics, etc).</p></li>
+<li><p><strong>use_global_arguments</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> if the node should ignore process-wide command line
+arguments.</p></li>
+<li><p><strong>enable_rosout</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> if the node should ignore rosout logging.</p></li>
+<li><p><strong>start_parameter_services</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> if the node should not create parameter services.</p></li>
+<li><p><strong>parameter_overrides</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="parameters.html#rclpy.parameter.Parameter" title="rclpy.parameter.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>]]) – A list of <a class="reference internal" href="parameters.html#rclpy.parameter.Parameter" title="rclpy.parameter.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> which are used to override the
+initial values of parameters declared on this node.</p></li>
+<li><p><strong>allow_undeclared_parameters</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – if True undeclared parameters are allowed, default False.
+This option doesn’t affect <cite>parameter_overrides</cite>.</p></li>
+<li><p><strong>automatically_declare_parameters_from_overrides</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If True, the “parameter overrides” will
+be used to implicitly declare parameters on the node during creation, default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An instance of the newly created node.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.get_global_executor">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">get_global_executor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.get_global_executor"></a><a class="headerlink" href="#rclpy.get_global_executor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="execution_and_callbacks.html#rclpy.executors.Executor" title="rclpy.executors.Executor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.init">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_handler_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.init"></a><a class="headerlink" href="#rclpy.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize ROS communications for a given context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – List of command line arguments.</p></li>
+<li><p><strong>context</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="context.html#rclpy.context.Context" title="rclpy.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]) – The context to initialize. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the default context is used
+(see <a class="reference internal" href="utilities.html#rclpy.utilities.get_default_context" title="rclpy.utilities.get_default_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_context()</span></code></a>).</p></li>
+<li><p><strong>domain_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – ROS domain id.</p></li>
+<li><p><strong>signal_handler_options</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">SignalHandlerOptions</span></code>]) – Indicate which signal handlers to install.
+If <cite>None</cite>, SIGINT and SIGTERM will be installed when initializing the default context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.shutdown">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uninstall_handlers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.shutdown"></a><a class="headerlink" href="#rclpy.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutdown a previously initialized context.</p>
+<p>This will also shutdown the global executor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="context.html#rclpy.context.Context" title="rclpy.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]) – The context to invalidate. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the default context is used
+(see <a class="reference internal" href="utilities.html#rclpy.utilities.get_default_context" title="rclpy.utilities.get_default_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_default_context()</span></code></a>).</p></li>
+<li><p><strong>uninstall_handlers</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – If <cite>None</cite>, signal handlers will be uninstalled when shutting down the default context.
+If <cite>True</cite>, signal handlers will be uninstalled.
+If not, signal handlers won’t be uninstalled.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.spin">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.spin"></a><a class="headerlink" href="#rclpy.spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute work and block until the context associated with the executor is shutdown.</p>
+<p>Callbacks will be executed by the provided executor.</p>
+<p>This function blocks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – A node to add to the executor to check for work.</p></li>
+<li><p><strong>executor</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="execution_and_callbacks.html#rclpy.executors.Executor" title="rclpy.executors.Executor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a>]) – The executor to use, or the global executor if <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.spin_once">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">spin_once</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_sec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.spin_once"></a><a class="headerlink" href="#rclpy.spin_once" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute one item of work or wait until a timeout expires.</p>
+<p>One callback will be executed by the provided executor as long as that callback is ready
+before the timeout expires.</p>
+<p>If no executor is provided (ie. <code class="docutils literal notranslate"><span class="pre">None</span></code>), then the global executor is used.
+It is possible the work done is for a node other than the one provided if the global executor
+has a partially completed coroutine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – A node to add to the executor to check for work.</p></li>
+<li><p><strong>executor</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="execution_and_callbacks.html#rclpy.executors.Executor" title="rclpy.executors.Executor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a>]) – The executor to use, or the global executor if <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>timeout_sec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Seconds to wait. Block forever if <code class="docutils literal notranslate"><span class="pre">None</span></code> or negative. Don’t wait if 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="rclpy.spin_until_future_complete">
+<span class="sig-prename descclassname"><span class="pre">rclpy.</span></span><span class="sig-name descname"><span class="pre">spin_until_future_complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">future</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_sec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="dashAnchor" name="//apple_ref/cpp/Function/rclpy.spin_until_future_complete"></a><a class="headerlink" href="#rclpy.spin_until_future_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute work until the future is complete.</p>
+<p>Callbacks and other work will be executed by the provided executor until <code class="docutils literal notranslate"><span class="pre">future.done()</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">True</span></code> or the context associated with the executor is shutdown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="node.html#rclpy.node.Node" title="rclpy.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – A node to add to the executor to check for work.</p></li>
+<li><p><strong>future</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code>) – The future object to wait on.</p></li>
+<li><p><strong>executor</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="execution_and_callbacks.html#rclpy.executors.Executor" title="rclpy.executors.Executor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a>]) – The executor to use, or the global executor if <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>timeout_sec</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Seconds to wait. Block until the future is complete
+if <code class="docutils literal notranslate"><span class="pre">None</span></code> or negative. Don’t wait if 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+<div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">rclpy</a></h1>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Initialization, Shutdown, and Spinning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.create_node"><code class="docutils literal notranslate"><span class="pre">create_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.get_global_executor"><code class="docutils literal notranslate"><span class="pre">get_global_executor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.shutdown"><code class="docutils literal notranslate"><span class="pre">shutdown()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.spin"><code class="docutils literal notranslate"><span class="pre">spin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.spin_once"><code class="docutils literal notranslate"><span class="pre">spin_once()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rclpy.spin_until_future_complete"><code class="docutils literal notranslate"><span class="pre">spin_until_future_complete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="node.html">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timers.html">Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execution_and_callbacks.html">Execution and Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qos.html">Quality of Service</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+<li><a href="../index.html">Documentation overview</a><ul>
+<li><a href="../api.html">API</a><ul>
+<li>Previous: <a href="../api.html" title="previous chapter">API</a></li>
+<li>Next: <a href="node.html" title="next chapter">Node</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+<h3 id="searchlabel">Quick search</h3>
+<div class="searchformwrapper">
+<form action="../search.html" class="search" method="get">
+<input aria-labelledby="searchlabel" autocapitalize="off" autocomplete="off" autocorrect="off" name="q" spellcheck="false" type="text"/>
+<input type="submit" value="Go"/>
+</form>
+</div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+</div>
+</div>
+<div class="clearer"></div>
+</div>
+<div class="footer">
+      ©2016-2022, Open Source Robotics Foundation, Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/init_shutdown.rst.txt" rel="nofollow">Page source</a>
+</div>
+</body>
+</html>

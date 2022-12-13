@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::NodeTopicsInterface" name="rclcpp::node_interfaces::NodeTopicsInterface">
+<area shape="rect" id="node1" title="Pure virtual interface class for the NodeTopics part of the Node API." alt="" coords="5,5,179,47"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1node__interfaces_1_1NodeTopics.html" title="Implementation of the NodeTopics part of the Node API." alt="" coords="5,95,179,136"/>
+</map>

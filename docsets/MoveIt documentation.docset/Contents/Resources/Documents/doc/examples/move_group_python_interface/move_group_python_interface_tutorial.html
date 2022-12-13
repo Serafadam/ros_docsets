@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move Group Python Interface &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/move_group_python_interface/move_group_python_interface_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MoveIt Commander Scripting" href="../moveit_commander_scripting/moveit_commander_scripting_tutorial.html" />
+    <link rel="prev" title="Move Group C++ Interface" href="../move_group_interface/move_group_interface_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../move_group_interface/move_group_interface_tutorial.html">Move Group C++ Interface</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Move Group Python Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-rviz-and-movegroup-node">Start RViz and MoveGroup node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expected-output">Expected Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-entire-code">The Entire Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#getting-basic-information">Getting Basic Information</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#planning-to-a-joint-goal">Planning to a Joint Goal</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#planning-to-a-pose-goal">Planning to a Pose Goal</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cartesian-paths">Cartesian Paths</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#displaying-a-trajectory">Displaying a Trajectory</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#executing-a-plan">Executing a Plan</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#adding-objects-to-the-planning-scene">Adding Objects to the Planning Scene</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#ensuring-collision-updates-are-received">Ensuring Collision Updates Are Received</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#attaching-objects-to-the-robot">Attaching Objects to the Robot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#detaching-objects-from-the-robot">Detaching Objects from the Robot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#removing-objects-from-the-planning-scene">Removing Objects from the Planning Scene</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-launch-file">The Launch File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_commander_scripting/moveit_commander_scripting_tutorial.html">MoveIt Commander Scripting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Move Group Python Interface</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/move_group_python_interface/move_group_python_interface_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="move-group-python-interface">
+<h1>Move Group Python Interface<a class="headerlink" href="#move-group-python-interface" title="Permalink to this headline"></a></h1>
+<a class="reference internal image-reference" href="../../../_images/move_group_python_interface.png"><img alt="../../../_images/move_group_python_interface.png" src="../../../_images/move_group_python_interface.png" style="width: 700px;" /></a>
+<p>One of the simplest MoveIt user interfaces is through the Python-based Move Group Interface. These wrappers
+provide functionality for most operations that the average user will likely need,
+specifically setting joint or pose goals, creating motion plans, moving the
+robot, adding objects into the environment and attaching/detaching objects from
+the robot.</p>
+<p>Watch this quick <a class="reference external" href="https://youtu.be/3MA5ebXPLsc">YouTube video demo</a> to see the power of the Move Group Python interface!</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="start-rviz-and-movegroup-node">
+<h2>Start RViz and MoveGroup node<a class="headerlink" href="#start-rviz-and-movegroup-node" title="Permalink to this headline"></a></h2>
+<p>Open two shells. Start RViz and wait for everything to finish loading in the first shell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">panda_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p>Now run the Python code directly in the other shell using <code class="docutils literal notranslate"><span class="pre">rosrun</span></code>.
+Note in some instances you may need to make the python script executable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">moveit_tutorials</span> <span class="n">move_group_python_interface_tutorial</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Permalink to this headline"></a></h2>
+<p>In RViz, we should be able to see the following:</p>
+<dl class="simple">
+<dt>Press <em>&lt;enter&gt;</em> in the shell terminal where you ran the <code class="docutils literal notranslate"><span class="pre">rosrun</span></code> command in between each step</dt><dd><ol class="arabic simple">
+<li><p>The robot plans and moves its arm to the joint goal.</p></li>
+<li><p>The robot plans a path to a pose goal.</p></li>
+<li><p>The robot plans a Cartesian path.</p></li>
+<li><p>The robot displays the Cartesian path plan again.</p></li>
+<li><p>The robot executes the Cartesian path plan.</p></li>
+<li><p>A box appears at the location of the Panda end effector.</p></li>
+<li><p>The box changes colors to indicate that it is now attached.</p></li>
+<li><p>The robot plans and executes a Cartesian path with the box attached.</p></li>
+<li><p>The box changes colors again to indicate that it is now detached.</p></li>
+<li><p>The box disappears.</p></li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-entire-code">
+<h2>The Entire Code<a class="headerlink" href="#the-entire-code" title="Permalink to this headline"></a></h2>
+<p>Note: the entire code can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/move_group_python_interface/scripts/move_group_python_interface_tutorial.py">here in the tutorials GitHub repository</a>.</p>
+<p>To use the Python MoveIt interfaces, we will import the <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/namespacemoveit__commander.html">moveit_commander</a> namespace.
+This namespace provides us with a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html">MoveGroupCommander</a> class, a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1planning__scene__interface_1_1PlanningSceneInterface.html">PlanningSceneInterface</a> class,
+and a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1robot_1_1RobotCommander.html">RobotCommander</a> class. More on these below. We also import <a class="reference external" href="http://docs.ros.org/noetic/api/rospy/html/">rospy</a> and some messages that we will use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python 2/3 compatibility imports</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">input</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">moveit_commander</span>
+<span class="kn">import</span> <span class="nn">moveit_msgs.msg</span>
+<span class="kn">import</span> <span class="nn">geometry_msgs.msg</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">moveit_commander.conversions</span> <span class="kn">import</span> <span class="n">pose_to_list</span>
+</pre></div>
+</div>
+<p>First initialize <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/namespacemoveit__commander.html">moveit_commander</a> and a <a class="reference external" href="http://docs.ros.org/noetic/api/rospy/html/">rospy</a> node:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_commander</span><span class="o">.</span><span class="n">roscpp_initialize</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;move_group_python_interface_tutorial&quot;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Instantiate a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1robot_1_1RobotCommander.html">RobotCommander</a> object. Provides information such as the robot’s
+kinematic model and the robot’s current joint states</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">robot</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">RobotCommander</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Instantiate a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1planning__scene__interface_1_1PlanningSceneInterface.html">PlanningSceneInterface</a> object.  This provides a remote interface
+for getting, setting, and updating the robot’s internal understanding of the
+surrounding world:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Instantiate a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_commander/html/classmoveit__commander_1_1move__group_1_1MoveGroupCommander.html">MoveGroupCommander</a> object.  This object is an interface
+to a planning group (group of joints).  In this tutorial the group is the primary
+arm joints in the Panda robot, so we set the group’s name to “panda_arm”.
+If you are using a different robot, change this value to the name of your robot
+arm planning group.
+This interface can be used to plan and execute motions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">group_name</span> <span class="o">=</span> <span class="s2">&quot;panda_arm&quot;</span>
+<span class="n">move_group</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">MoveGroupCommander</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/DisplayTrajectory.html">DisplayTrajectory</a> ROS publisher which is used to display
+trajectories in Rviz:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_trajectory_publisher</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+    <span class="s2">&quot;/display_planned_path&quot;</span><span class="p">,</span> <span class="n">moveit_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">DisplayTrajectory</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="getting-basic-information">
+<h3>Getting Basic Information<a class="headerlink" href="#getting-basic-information" title="Permalink to this headline"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can get the name of the reference frame for this robot:</span>
+<span class="n">planning_frame</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">get_planning_frame</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;============ Planning frame: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">planning_frame</span><span class="p">)</span>
+
+<span class="c1"># We can also print the name of the end-effector link for this group:</span>
+<span class="n">eef_link</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">get_end_effector_link</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;============ End effector link: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">eef_link</span><span class="p">)</span>
+
+<span class="c1"># We can get a list of all the groups in the robot:</span>
+<span class="n">group_names</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_group_names</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;============ Available Planning Groups:&quot;</span><span class="p">,</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_group_names</span><span class="p">())</span>
+
+<span class="c1"># Sometimes for debugging it is useful to print the entire state of the</span>
+<span class="c1"># robot:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;============ Printing robot state&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">get_current_state</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="planning-to-a-joint-goal">
+<h3>Planning to a Joint Goal<a class="headerlink" href="#planning-to-a-joint-goal" title="Permalink to this headline"></a></h3>
+<p>The Panda’s zero configuration is at a <a class="reference external" href="https://www.quora.com/Robotics-What-is-meant-by-kinematic-singularity">singularity</a> so the first
+thing we want to do is move it to a slightly better configuration.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can get the joint values from the group and adjust some of the values:</span>
+<span class="n">joint_goal</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">get_current_joint_values</span><span class="p">()</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">joint_goal</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># The go command can be called with joint values, poses, or without any</span>
+<span class="c1"># parameters if you have already set the pose or joint target for the group</span>
+<span class="n">move_group</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">joint_goal</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Calling ``stop()`` ensures that there is no residual movement</span>
+<span class="n">move_group</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="planning-to-a-pose-goal">
+<h3>Planning to a Pose Goal<a class="headerlink" href="#planning-to-a-pose-goal" title="Permalink to this headline"></a></h3>
+<p>We can plan a motion for this group to a desired pose for the
+end-effector:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pose_goal</span> <span class="o">=</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Pose</span><span class="p">()</span>
+<span class="n">pose_goal</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="n">move_group</span><span class="o">.</span><span class="n">set_pose_target</span><span class="p">(</span><span class="n">pose_goal</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we call the planner to compute the plan and execute it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plan</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Calling `stop()` ensures that there is no residual movement</span>
+<span class="n">move_group</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="c1"># It is always good to clear your targets after planning with poses.</span>
+<span class="c1"># Note: there is no equivalent function for clear_joint_value_targets()</span>
+<span class="n">move_group</span><span class="o">.</span><span class="n">clear_pose_targets</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cartesian-paths">
+<h3>Cartesian Paths<a class="headerlink" href="#cartesian-paths" title="Permalink to this headline"></a></h3>
+<p>You can plan a Cartesian path directly by specifying a list of waypoints
+for the end-effector to go through. If executing  interactively in a
+Python shell, set scale = 1.0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">waypoints</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">wpose</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">get_current_pose</span><span class="p">()</span><span class="o">.</span><span class="n">pose</span>
+<span class="n">wpose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">-=</span> <span class="n">scale</span> <span class="o">*</span> <span class="mf">0.1</span>  <span class="c1"># First move up (z)</span>
+<span class="n">wpose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">scale</span> <span class="o">*</span> <span class="mf">0.2</span>  <span class="c1"># and sideways (y)</span>
+<span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">wpose</span><span class="p">))</span>
+
+<span class="n">wpose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">scale</span> <span class="o">*</span> <span class="mf">0.1</span>  <span class="c1"># Second move forward/backwards in (x)</span>
+<span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">wpose</span><span class="p">))</span>
+
+<span class="n">wpose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">scale</span> <span class="o">*</span> <span class="mf">0.1</span>  <span class="c1"># Third move sideways (y)</span>
+<span class="n">waypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">wpose</span><span class="p">))</span>
+
+<span class="c1"># We want the Cartesian path to be interpolated at a resolution of 1 cm</span>
+<span class="c1"># which is why we will specify 0.01 as the eef_step in Cartesian</span>
+<span class="c1"># translation.  We will disable the jump threshold by setting it to 0.0,</span>
+<span class="c1"># ignoring the check for infeasible jumps in joint space, which is sufficient</span>
+<span class="c1"># for this tutorial.</span>
+<span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span> <span class="o">=</span> <span class="n">move_group</span><span class="o">.</span><span class="n">compute_cartesian_path</span><span class="p">(</span>
+    <span class="n">waypoints</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.0</span>  <span class="c1"># waypoints to follow  # eef_step</span>
+<span class="p">)</span>  <span class="c1"># jump_threshold</span>
+
+<span class="c1"># Note: We are just planning, not asking move_group to actually move the robot yet:</span>
+<span class="k">return</span> <span class="n">plan</span><span class="p">,</span> <span class="n">fraction</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="displaying-a-trajectory">
+<h3>Displaying a Trajectory<a class="headerlink" href="#displaying-a-trajectory" title="Permalink to this headline"></a></h3>
+<p>You can ask RViz to visualize a plan (aka trajectory) for you. But the
+group.plan() method does this automatically so this is not that useful
+here (it just displays the same trajectory again):</p>
+<p>A <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/DisplayTrajectory.html">DisplayTrajectory</a> msg has two primary fields, trajectory_start and trajectory.
+We populate the trajectory_start with our current robot state to copy over
+any AttachedCollisionObjects and add our plan to the trajectory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_trajectory</span> <span class="o">=</span> <span class="n">moveit_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">DisplayTrajectory</span><span class="p">()</span>
+<span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory_start</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_current_state</span><span class="p">()</span>
+<span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+<span class="c1"># Publish</span>
+<span class="n">display_trajectory_publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="executing-a-plan">
+<h3>Executing a Plan<a class="headerlink" href="#executing-a-plan" title="Permalink to this headline"></a></h3>
+<p>Use execute if you would like the robot to follow
+the plan that has already been computed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">move_group</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> The robot’s current joint state must be within some tolerance of the
+first waypoint in the <a class="reference external" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/RobotTrajectory.html">RobotTrajectory</a> or <code class="docutils literal notranslate"><span class="pre">execute()</span></code> will fail</p>
+</div>
+<div class="section" id="adding-objects-to-the-planning-scene">
+<h3>Adding Objects to the Planning Scene<a class="headerlink" href="#adding-objects-to-the-planning-scene" title="Permalink to this headline"></a></h3>
+<p>First, we will create a box in the planning scene between the fingers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">box_pose</span> <span class="o">=</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PoseStamped</span><span class="p">()</span>
+<span class="n">box_pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;panda_hand&quot;</span>
+<span class="n">box_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">box_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.11</span>  <span class="c1"># above the panda_hand frame</span>
+<span class="n">box_name</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span>
+<span class="n">scene</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span><span class="n">box_name</span><span class="p">,</span> <span class="n">box_pose</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.075</span><span class="p">,</span> <span class="mf">0.075</span><span class="p">,</span> <span class="mf">0.075</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ensuring-collision-updates-are-received">
+<h3>Ensuring Collision Updates Are Received<a class="headerlink" href="#ensuring-collision-updates-are-received" title="Permalink to this headline"></a></h3>
+<p>If the Python node dies before publishing a collision object update message, the message
+could get lost and the box will not appear. To ensure that the updates are
+made, we wait until we see the changes reflected in the
+<code class="docutils literal notranslate"><span class="pre">get_attached_objects()</span></code> and <code class="docutils literal notranslate"><span class="pre">get_known_object_names()</span></code> lists.
+For the purpose of this tutorial, we call this function after adding,
+removing, attaching or detaching an object in the planning scene. We then wait
+until the updates have been made or <code class="docutils literal notranslate"><span class="pre">timeout</span></code> seconds have passed</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+<span class="n">seconds</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">seconds</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+    <span class="c1"># Test if the box is in attached objects</span>
+    <span class="n">attached_objects</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_attached_objects</span><span class="p">([</span><span class="n">box_name</span><span class="p">])</span>
+    <span class="n">is_attached</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">attached_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="c1"># Test if the box is in the scene.</span>
+    <span class="c1"># Note that attaching the box will remove it from known_objects</span>
+    <span class="n">is_known</span> <span class="o">=</span> <span class="n">box_name</span> <span class="ow">in</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_known_object_names</span><span class="p">()</span>
+
+    <span class="c1"># Test if we are in the expected state</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">box_is_attached</span> <span class="o">==</span> <span class="n">is_attached</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">box_is_known</span> <span class="o">==</span> <span class="n">is_known</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Sleep so that we give other threads time on the processor</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+
+<span class="c1"># If we exited the while loop without returning then we timed out</span>
+<span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="attaching-objects-to-the-robot">
+<h3>Attaching Objects to the Robot<a class="headerlink" href="#attaching-objects-to-the-robot" title="Permalink to this headline"></a></h3>
+<p>Next, we will attach the box to the Panda wrist. Manipulating objects requires the
+robot be able to touch them without the planning scene reporting the contact as a
+collision. By adding link names to the <code class="docutils literal notranslate"><span class="pre">touch_links</span></code> array, we are telling the
+planning scene to ignore collisions between those links and the box. For the Panda
+robot, we set <code class="docutils literal notranslate"><span class="pre">grasping_group</span> <span class="pre">=</span> <span class="pre">'hand'</span></code>. If you are using a different robot,
+you should change this value to the name of your end effector group name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grasping_group</span> <span class="o">=</span> <span class="s2">&quot;hand&quot;</span>
+<span class="n">touch_links</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_link_names</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">grasping_group</span><span class="p">)</span>
+<span class="n">scene</span><span class="o">.</span><span class="n">attach_box</span><span class="p">(</span><span class="n">eef_link</span><span class="p">,</span> <span class="n">box_name</span><span class="p">,</span> <span class="n">touch_links</span><span class="o">=</span><span class="n">touch_links</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detaching-objects-from-the-robot">
+<h3>Detaching Objects from the Robot<a class="headerlink" href="#detaching-objects-from-the-robot" title="Permalink to this headline"></a></h3>
+<p>We can also detach and remove the object from the planning scene:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span><span class="o">.</span><span class="n">remove_attached_object</span><span class="p">(</span><span class="n">eef_link</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">box_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-objects-from-the-planning-scene">
+<h3>Removing Objects from the Planning Scene<a class="headerlink" href="#removing-objects-from-the-planning-scene" title="Permalink to this headline"></a></h3>
+<p>We can remove the box from the world.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span><span class="o">.</span><span class="n">remove_world_object</span><span class="p">(</span><span class="n">box_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> The object must be detached before we can remove it from the world</p>
+</div>
+</div>
+<div class="section" id="the-launch-file">
+<h2>The Launch File<a class="headerlink" href="#the-launch-file" title="Permalink to this headline"></a></h2>
+<p>The entire launch file is <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/move_group_python_interface/launch/move_group_python_interface_tutorial.launch">here</a>
+on GitHub. All the code in this tutorial can be run from the
+<code class="docutils literal notranslate"><span class="pre">moveit_tutorials</span></code> package that you have as part of your MoveIt setup.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../move_group_interface/move_group_interface_tutorial.html" class="btn btn-neutral float-left" title="Move Group C++ Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../moveit_commander_scripting/moveit_commander_scripting_tutorial.html" class="btn btn-neutral float-right" title="MoveIt Commander Scripting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

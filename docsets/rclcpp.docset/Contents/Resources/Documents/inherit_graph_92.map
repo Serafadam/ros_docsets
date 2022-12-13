@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structrclcpp_1_1QoSInitialization.html" title="QoS initialization values, cannot be created directly, use KeepAll or KeepLast instead." alt="" coords="5,31,181,57"/>
+<area shape="rect" id="node2" href="$structrclcpp_1_1KeepAll.html" title="Use to initialize the QoS with the keep_all history setting." alt="" coords="234,5,353,32"/>
+<area shape="rect" id="node3" href="$structrclcpp_1_1KeepLast.html" title="Use to initialize the QoS with the keep_last history setting and the given depth." alt="" coords="229,56,357,83"/>
+</map>

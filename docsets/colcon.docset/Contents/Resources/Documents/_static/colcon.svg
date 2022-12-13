@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="178" height="48" viewBox="0 0 178 48">
+  <path d="M12 18h16v4h-12v12h12v4h-16z" fill="#ffffff"/>
+  <path d="M20 10h16v20h-16v-4h12v-12h-12z" fill="#ffffff"/>
+  <text x="56" y="38" font-family="Verdana" font-size="36" stroke="none" fill="white">
+    colcon
+  </text>
+</svg>

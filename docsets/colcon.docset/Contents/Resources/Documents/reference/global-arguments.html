@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="writer-html5" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global arguments — colcon  documentation</title>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/css/theme.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/colcon.ico" rel="shortcut icon"/>
+<!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+<script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script>
+<script src="../_static/underscore.js"></script>
+<script src="../_static/doctools.js"></script>
+<script src="../_static/js/theme.js"></script>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="executor-arguments.html" rel="next" title="Executor arguments"/>
+<link href="verb/test-result.html" rel="prev" title="test-result - Summarize Test Results"/>
+</head>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a href="../index.html">
+<img alt="Logo" class="logo" src="../_static/colcon.svg"/>
+</a>
+<div role="search">
+<form action="../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Global arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-arguments">Command line arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Mobile navigation menu" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../index.html">colcon</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Page navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a class="icon icon-home" href="../index.html"></a></li>
+<li class="breadcrumb-item active">Global arguments</li>
+<li class="wy-breadcrumbs-aside">
+<a href="../_sources/reference/global-arguments.rst.txt" rel="nofollow"> View page source</a>
+</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<div class="section" id="global-arguments">
+<h1>Global arguments<a class="headerlink" href="#global-arguments" title="Permalink to this headline"></a></h1>
+<div class="section" id="command-line-arguments">
+<h2>Command line arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline"></a></h2>
+<p>The following command line arguments can be used <em>before</em> every verb.
+For each argument the name in brackets indicates which package contributes it.</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon_log-base_arg"></a><dl id="colcon-log-base-arg">
+<dt>\–log-base LOG_BASE [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>The base path for all log directories.
+The default value is <code class="docutils literal notranslate"><span class="pre">./log</span></code>.
+To completely disable logging, pass <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code> (on POSIX) / <code class="docutils literal notranslate"><span class="pre">nul</span></code> (on
+Windows).</p>
+<p>Within the base path all log files from a specific invocation are places in a
+subdirectory named <code class="docutils literal notranslate"><span class="pre">&lt;verb&gt;_&lt;timestamp&gt;</span></code> (in the following named
+<code class="docutils literal notranslate"><span class="pre">log-dir</span></code>).
+If the system supports creating symlinks, shortcuts with the names
+<code class="docutils literal notranslate"><span class="pre">latest_&lt;verb&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">latest</span></code> are created (overwriting previous symlinks).</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">log-dir</span></code> the following files are generated:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">events.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: All generated events - only used for
+debugging.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logger_all.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]: All log messages, independent of the
+chosen log level for the console output.</p></li>
+<li><p>For each processed package a subdirectory with the following files is
+generated:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">command.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: All invoked external commands
+including their return code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stderr.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: All output from external commands to
+<code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: All output from external commands to
+<code class="docutils literal notranslate"><span class="pre">stderr</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout_stderr.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: A combination of
+<code class="docutils literal notranslate"><span class="pre">stdout.log</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr.log</span></code> in the order the two streams were
+processed.
+Since both streams are read concurrently the order is not fully
+deterministic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">streams.log</span></code> [<code class="docutils literal notranslate"><span class="pre">colcon-output</span></code>]: A combination of the command log as
+well as both output logs.
+Each line is being prefixed with the elapsed time since the package
+started being processed.</p></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon_log-level_arg"></a><dl class="simple" id="colcon-log-level-arg">
+<dt>\–log-level LOG_LEVEL [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Set the log level for the console output.
+The log file <code class="docutils literal notranslate"><span class="pre">&lt;log-dir&gt;/logger_all.log</span></code> always contains messages of all
+levels.
+The value can either be a numeric value or a string as defined in the <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging-levels">Python
+logging module</a> (the names
+are case insensitive).
+The default value is <code class="docutils literal notranslate"><span class="pre">warning</span></code>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline"></a></h2>
+<p>The following environment variables are supported.
+The name in brackets indicates which package contributes it.</p>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-cmake_cmake-command_env"></a><dl class="simple" id="colcon-cmake-cmake-command-env">
+<dt>CMAKE_COMMAND [<code class="docutils literal notranslate"><span class="pre">colcon-cmake</span></code>]</dt><dd><p>The full path to the CMake executable.
+By default the executable <code class="docutils literal notranslate"><span class="pre">cmake</span></code> is being searched for on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-all-shells_env"></a><dl class="simple" id="colcon-core-colcon-all-shells-env">
+<dt>COLCON_ALL_SHELLS [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Flag to enable all shell extensions.
+If the environment variable is set and not empty all shell extensions are
+being used even if they are supposed to be skipped based on the current
+platform.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-graphviz-anim_colcon-animation-progress_env"></a><dl class="simple" id="colcon-graphviz-anim-colcon-animation-progress-env">
+<dt>COLCON_ANIMATION_PROGRESS [<code class="docutils literal notranslate"><span class="pre">colcon-graphviz-anim</span></code>]</dt><dd><p>Flag to generate an animation of the task progress.
+If the environment variable is set and not empty the file
+<code class="docutils literal notranslate"><span class="pre">./graphviz_anim_build.gif</span></code> is generated.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-argcomplete_colcon-completion-logfile_env"></a><dl class="simple" id="colcon-argcomplete-colcon-completion-logfile-env">
+<dt>COLCON_COMPLETION_LOGFILE [<code class="docutils literal notranslate"><span class="pre">colcon-argcomplete</span></code>]</dt><dd><p>Set the path of a logfile to append the completion time to.
+If the environment variable is set and not empty a line is appended to
+the specified file.
+The line contains the duration it took to compute the completion choices as
+well as the value of the environment variable <code class="docutils literal notranslate"><span class="pre">COMP_LINE</span></code> which was passed
+to determine the completion choices.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-defaults_colcon-defaults-file_env"></a><dl class="simple" id="colcon-defaults-colcon-defaults-file-env">
+<dt>COLCON_DEFAULTS_FILE [<code class="docutils literal notranslate"><span class="pre">colcon-defaults</span></code>]</dt><dd><p>Set the path to the yaml file containing the default values.
+By default the path <a class="reference internal" href="#colcon-core-colcon-home-env"><span class="std std-ref">$COLCON_HOME</span></a><code class="docutils literal notranslate"><span class="pre">/defaults.yaml</span></code> is being used.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-default-executor_env"></a><dl class="simple" id="colcon-core-colcon-default-executor-env">
+<dt>COLCON_DEFAULT_EXECUTOR [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Select the default executor extension for verbs which support it.
+By default the executor with the highest priority is used.
+The executor can also be chosen using the <code class="docutils literal notranslate"><span class="pre">--executor</span></code> argument.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-extension-blocklist_env"></a><dl class="simple" id="colcon-core-colcon-extension-blocklist-env">
+<dt>COLCON_EXTENSION_BLOCKLIST [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Block extensions which should not be used.
+The value uses a path separator to enumerate entry point group names or full
+entry point names.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-home_env"></a><dl class="simple" id="colcon-core-colcon-home-env">
+<dt>COLCON_HOME [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Set the base path of configuration files.
+By default the path <code class="docutils literal notranslate"><span class="pre">~/.colcon</span></code> is being used.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-log-level_env"></a><dl class="simple" id="colcon-core-colcon-log-level-env">
+<dt>COLCON_LOG_LEVEL [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Set the log level for the console output.
+See the <a class="reference internal" href="#colcon-log-level-arg"><span class="std std-ref">–log-level</span></a> arguments for details
+about the possible values.
+Using the environment variable instead of the command line argument allows
+setting the log level <em>before</em> the argument parsing has been performed.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-core_colcon-warnings_env"></a><dl class="simple" id="colcon-core-colcon-warnings-env">
+<dt>COLCON_WARNINGS [<code class="docutils literal notranslate"><span class="pre">colcon-core</span></code>]</dt><dd><p>Set the warnings filter similar to <a class="reference external" href="https://docs.python.org/3/library/warnings.html#warning-filter">PYTHONWARNINGS</a> except
+that the module entry is implicitly set to <code class="docutils literal notranslate"><span class="pre">colcon.*</span></code></p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-cmake_ctest-command_env"></a><dl class="simple" id="colcon-cmake-ctest-command-env">
+<dt>CTEST_COMMAND [<code class="docutils literal notranslate"><span class="pre">colcon-cmake</span></code>]</dt><dd><p>The full path to the CTest executable.
+By default the executable <code class="docutils literal notranslate"><span class="pre">ctest</span></code> is searched for on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+</dd>
+</dl>
+<a class="dashAnchor" name="//apple_ref/cpp/Section/colcon-powershell_powershell-command_env"></a><dl class="simple" id="colcon-powershell-powershell-command-env">
+<dt>POWERSHELL_COMMAND [<code class="docutils literal notranslate"><span class="pre">colcon-powershell</span></code>]</dt><dd><p>The full path to the PowerShell executable.
+By default the executable <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code> (on Windows) / <code class="docutils literal notranslate"><span class="pre">pwsh</span></code> (on
+non-Windows) is searched for on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<footer><div aria-label="Footer" class="rst-footer-buttons" role="navigation">
+<a accesskey="p" class="btn btn-neutral float-left" href="verb/test-result.html" rel="prev" title="test-result - Summarize Test Results"><span aria-hidden="true" class="fa fa-arrow-circle-left"></span> Previous</a>
+<a accesskey="n" class="btn btn-neutral float-right" href="executor-arguments.html" rel="next" title="Executor arguments">Next <span aria-hidden="true" class="fa fa-arrow-circle-right"></span></a>
+</div>
+<hr/>
+<div role="contentinfo">
+<p>© Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+</div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+</body>
+</html>

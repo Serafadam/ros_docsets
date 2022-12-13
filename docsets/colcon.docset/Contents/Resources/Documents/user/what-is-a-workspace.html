@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is a Workspace? &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Log Files" href="log-files.html" />
+    <link rel="prev" title="How to" href="how-to.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is a Workspace?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-in-a-workspace">What’s in a workspace?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#software-packages">Software packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-artifacts">Build artifacts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logs">Logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-artifacts">Install artifacts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">What is a Workspace?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/what-is-a-workspace.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="what-is-a-workspace">
+<h1>What is a Workspace?<a class="headerlink" href="#what-is-a-workspace" title="Permalink to this headline"></a></h1>
+<p>Colcon is a command line tool to build and test multiple software packages.
+It builds and tests those packages in a <strong>colcon workspace</strong>, but what is a workspace?</p>
+<p>This page assumes you have <code class="docutils literal notranslate"><span class="pre">colcon-common-extensions</span></code> installed.</p>
+<div class="section" id="what-s-in-a-workspace">
+<h2>What’s in a workspace?<a class="headerlink" href="#what-s-in-a-workspace" title="Permalink to this headline"></a></h2>
+<p>A workspace has these parts:</p>
+<ul class="simple">
+<li><p>Software packages</p></li>
+<li><p>Build artifacts</p></li>
+<li><p>Logs</p></li>
+<li><p>Install artifacts</p></li>
+</ul>
+<p>All these parts are put into different subdirectories of single directory, called the <strong>workspace root</strong>.
+Lets create a single directory for our workspace.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ws
+</pre></div>
+</div>
+<p>Go into the root of our new workspace.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ws
+</pre></div>
+</div>
+<div class="section" id="software-packages">
+<h3>Software packages<a class="headerlink" href="#software-packages" title="Permalink to this headline"></a></h3>
+<p>A workspace needs the source code of all the software to be built.
+Colcon will search all subdirectories of the workspace to look for packages, but an established convention is to put all the packages into a directory called <code class="docutils literal notranslate"><span class="pre">src</span></code>.
+Let’s create a directory for source code.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir src
+</pre></div>
+</div>
+<p>We’ll need at least one software package in the workspace.
+Let’s create a Python package.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir src/foo
+touch src/foo/setup.cfg
+touch src/foo/setup.py
+touch src/foo/foo.py
+</pre></div>
+</div>
+<p>Put this content into <code class="docutils literal notranslate"><span class="pre">src/foo/setup.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Put this content into <code class="docutils literal notranslate"><span class="pre">src/foo/setup.cfg</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[metadata]</span><span class="w"></span>
+<span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">foo</span><span class="w"></span>
+<span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.1.0</span><span class="w"></span>
+
+<span class="k">[options]</span><span class="w"></span>
+<span class="na">py_modules</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="na">foo</span><span class="w"></span>
+<span class="na">zip_safe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span><span class="w"></span>
+
+<span class="k">[options.extras_require]</span><span class="w"></span>
+<span class="na">test</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="na">pytest</span><span class="w"></span>
+
+<span class="k">[tool:pytest]</span><span class="w"></span>
+<span class="na">junit_suite_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">foo</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Put this content into <code class="docutils literal notranslate"><span class="pre">src/foo/foo.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo_func</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello from foo.py&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-artifacts">
+<h3>Build artifacts<a class="headerlink" href="#build-artifacts" title="Permalink to this headline"></a></h3>
+<p>The software build process often produces intermediate build artifacts.
+They are usually not used directly, but keeping them around makes subsequent builds faster.
+Colcon always directs packages to build out-of-source, meaning the build artifacts are put into a directory separate from the source code.
+Every package gets its own build directory, but all build directories are put into a single base directory.
+By default it’s named  <code class="docutils literal notranslate"><span class="pre">build</span></code> at the root of the workspace.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can change where build artifacts are put using the <code class="docutils literal notranslate"><span class="pre">--build-base</span></code> option to <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.</p>
+</div>
+<p>Lets build the software and see its build artifacts.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make sure you run this command from the root of the workspace!</span>
+colcon build
+</pre></div>
+</div>
+<p>You’ll see these new directories: <code class="docutils literal notranslate"><span class="pre">build</span></code>, <code class="docutils literal notranslate"><span class="pre">install</span></code>, and <code class="docutils literal notranslate"><span class="pre">log</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ws
+├── build
+│    ├── COLCON_IGNORE
+│    └── foo/...
+├── install/...
+├── log/...
+└── src
+    └── foo
+        ├── foo.py
+        ├── setup.cfg
+        └── setup.py
+</pre></div>
+</div>
+<p>Notice the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory has a subdirectory <code class="docutils literal notranslate"><span class="pre">foo</span></code> and a file <code class="docutils literal notranslate"><span class="pre">COLCON_IGNORE</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">foo</span></code> subdirectory has all the build artifacts produced when building <code class="docutils literal notranslate"><span class="pre">foo</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">COLCON_IGNORE</span></code> file tells colcon there are no software packages in this directory.</p>
+</div>
+<div class="section" id="logs">
+<h3>Logs<a class="headerlink" href="#logs" title="Permalink to this headline"></a></h3>
+<p>If you’ve built software before you know there can be a lot of console output, but you might have noticed not much was output when you ran <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.
+This output was instead written to the <code class="docutils literal notranslate"><span class="pre">log</span></code> directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can change where logs are written to using the <code class="docutils literal notranslate"><span class="pre">--log-base</span></code> option to <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+</div>
+<p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">log</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>log
+├── build_2022-05-20_11-50-03
+│    ├── events.log
+│    ├── foo
+│    │    ├── command.log
+│    │    ├── stderr.log
+│    │    ├── stdout.log
+│    │    ├── stdout_stderr.log
+│    │    └── streams.log
+│    └── logger_all.log
+├── COLCON_IGNORE
+├── latest -&gt; latest_build
+└── latest_build -&gt; build_2022-05-20_11-50-03
+</pre></div>
+</div>
+<p>The directory <code class="docutils literal notranslate"><span class="pre">log/build_&lt;date</span> <span class="pre">and</span> <span class="pre">time&gt;</span></code> contains all logs from the invocation of <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.
+A new directory is created every time <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code> is run.
+The  <code class="docutils literal notranslate"><span class="pre">foo</span></code> sub directory contains all logs from building <code class="docutils literal notranslate"><span class="pre">foo</span></code>.
+There’s a more complete description of log files at this page: <a class="reference internal" href="log-files.html"><span class="doc">Log Files</span></a>.</p>
+<p>We’ve only built <code class="docutils literal notranslate"><span class="pre">foo</span></code>, so there are only build logs.
+Let’s add tests to <code class="docutils literal notranslate"><span class="pre">foo</span></code> and see the output.</p>
+<p>Make a new file for the test.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch src/foo/test_foo.py
+</pre></div>
+</div>
+<p>Put the following content into <code class="docutils literal notranslate"><span class="pre">test_foo.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">foo</span>
+
+<span class="k">def</span> <span class="nf">test_foo</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">foo</span><span class="o">.</span><span class="n">foo_func</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Tell <code class="docutils literal notranslate"><span class="pre">colcon</span></code> to run the tests.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make sure you run this command from the root of the workspace!</span>
+colcon <span class="nb">test</span>
+</pre></div>
+</div>
+<p>Lets look in the <code class="docutils literal notranslate"><span class="pre">log</span></code> directory again.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>log
+├── build_2022-05-20_11-50-03/...
+├── COLCON_IGNORE
+├── latest -&gt; latest_test
+├── latest_build -&gt; build_2022-05-20_11-50-03
+├── latest_test -&gt; test_2022-05-20_11-50-05
+└── test_2022-05-20_11-50-05
+    ├── events.log
+    ├── foo
+    │    ├── command.log
+    │    ├── stderr.log
+    │    ├── stdout.log
+    │    ├── stdout_stderr.log
+    │    └── streams.log
+    └── logger_all.log
+</pre></div>
+</div>
+<p>There’s a new directory <code class="docutils literal notranslate"><span class="pre">test_&lt;date</span> <span class="pre">and</span> <span class="pre">time&gt;</span></code>.
+Let’s look at <code class="docutils literal notranslate"><span class="pre">stdout_stderr.log</span></code>  to see the output of the latest test.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat log/latest_test/foo/stdout_stderr.log
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use the command <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test-result</span></code> to see a summary of test results on the console after tests have been run.</p>
+</div>
+</div>
+<div class="section" id="install-artifacts">
+<h3>Install artifacts<a class="headerlink" href="#install-artifacts" title="Permalink to this headline"></a></h3>
+<p>The last directory to talk about is the <code class="docutils literal notranslate"><span class="pre">install</span></code> directory.
+It contains both the installed software, and shell scripts that enable you to use it.
+This is sometimes called the <strong>install space</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can change where packages are installed to with the <code class="docutils literal notranslate"><span class="pre">--install-base</span></code> option to <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.</p>
+</div>
+<p>Let’s look inside.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>install
+├── COLCON_IGNORE
+├── foo/...
+├── local_setup.[bash|bat|ps1|sh|zsh|...]
+├── _local_setup_util_[sh|ps1|...].py
+└── setup.[bash|bat|ps1|sh|zsh|...]
+</pre></div>
+</div>
+<p>The package <code class="docutils literal notranslate"><span class="pre">foo</span></code> was installed into the directory <code class="docutils literal notranslate"><span class="pre">install/foo</span></code>.
+By default colcon builds an <strong>isolated workspace</strong> (for more info see <a class="reference internal" href="isolated-vs-merged-workspaces.html"><span class="doc">Isolated vs Merged Workspaces</span></a>).</p>
+<p>The shell scripts set environment variables that allow you to use the the software.
+Invoking the shell scripts is called <strong>sourcing a workspace</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always source a workspace from a different terminal than the one you used <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span></code>.
+Failure to do so can prevent colcon from detecting incorrect dependencies.</p>
+</div>
+<p>Source the workspace using the appropriate script for your shell.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sh</span></code> compatible shells:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note the . at the front; that&#39;s important!</span>
+. install/setup.sh
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">bash</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> install/setup.bash
+</pre></div>
+</div>
+<p>Windows <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code>:</p>
+<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span><span class="k">call</span> install/setup.bat
+</pre></div>
+</div>
+<p>Now you can use <code class="docutils literal notranslate"><span class="pre">foo</span></code>.
+Open a <code class="docutils literal notranslate"><span class="pre">python</span></code> interactive console and try it out.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">foo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="n">foo_func</span><span class="p">()</span>
+<span class="go">Hello from foo.py</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Sourcing a workspace also allows you to build more software that depends on the packages in it.
+For more info about using colcon to build software that depends on packages in another workspace, see <a class="reference internal" href="using-multiple-workspaces.html"><span class="doc">Using Multiple Workspaces</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how-to.html" class="btn btn-neutral float-left" title="How to" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="log-files.html" class="btn btn-neutral float-right" title="Log Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

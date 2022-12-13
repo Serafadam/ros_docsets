@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Architecture of launch &#8212; launch 0.4.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to launch’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="architecture-of-launch">
+<h1>Architecture of <cite>launch</cite><a class="headerlink" href="#architecture-of-launch" title="Permalink to this heading">¶</a></h1>
+<p><cite>launch</cite> is designed to provide core features like describing actions (e.g. executing a process or including another launch description), generating events, introspecting launch descriptions, and executing launch descriptions.
+At the same time, it provides extension points so that the set of things that these core features can operate on, or integrate with, can be expanded with additional packages.</p>
+<div class="section" id="launch-entities-and-launch-descriptions">
+<h2>Launch Entities and Launch Descriptions<a class="headerlink" href="#launch-entities-and-launch-descriptions" title="Permalink to this heading">¶</a></h2>
+<p>The main object in <cite>launch</cite> is the <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code>, from which other entities that are “launched” inherit.
+This class, or more specifically classes derived from this class, are responsible for capturing the system architect’s (a.k.a. the user’s) intent for how the system should be launched, as well as how <cite>launch</cite> itself should react to asynchronous events in the system during launch.
+A launch description entity has its <code class="xref py py-meth docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity.visit()</span></code> method called during “launching”, and has any of the “describe” methods called during “introspection”.
+It may also provide a <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity.get_asyncio_future()</span></code> method, if it has on-going asynchronous activity after returning from visit.</p>
+<p>When visited, entities may yield additional entities to be visited, and this pattern is used from the “root” of the launch, where a special entity called <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescription</span></code> is provided to start the launch process.</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescription</span></code> class encapsulates the intent of the user as a list of discrete <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Action</span></code>’s, which are also derived from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code>.
+As “launch description entities” themselves, these “actions” can either be introspected for analysis without performing the side effects, or the actions can be executed, usually in response to an event in the launch system.</p>
+<p>Additionally, launch descriptions, and the actions that they contain, can have references to <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Substitution</span></code>’s within them.
+These substitutions are things that can be evaluated during launch and can be used to do various things like: get a launch configuration, get an environment variable, or evaluate arbitrary Python expressions.</p>
+<p>Launch descriptions, and the actions contained therein, can either be introspected directly or launched by a <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchService</span></code>.
+A launch service is a long running activity that handles the event loop and dispatches actions.</p>
+</div>
+<div class="section" id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Permalink to this heading">¶</a></h2>
+<p>The aforementioned actions allow the user to express various intentions, and the set of available actions to the user can also be extended by other packages, allowing for domain specific actions.</p>
+<p>Actions can have direct side effects (e.g. run a process or set a configuration variable) and as well they can yield additional actions.
+The latter can be used to create “syntactic sugar” actions which simply yield more verbose actions.</p>
+<p>Actions may also have arguments, which can affect the behavior of the actions.
+These arguments are where <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Substitution</span></code>’s can be used to provide more flexibility when describing reusable launch descriptions.</p>
+<div class="section" id="basic-actions">
+<h3>Basic Actions<a class="headerlink" href="#basic-actions" title="Permalink to this heading">¶</a></h3>
+<p><cite>launch</cite> provides the foundational actions on which other more sophisticated actions may be built.
+This is a non-exhaustive list of actions that <cite>launch</cite> may provide:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.IncludeLaunchDescription</span></code></p>
+<ul>
+<li><p>This action will include another launch description as if it had been copy-pasted to the location of the include action.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.SetLaunchConfiguration</span></code></p>
+<ul>
+<li><p>This action will set a <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchConfiguration</span></code> to a specified value, creating it if it doesn’t already exist.</p></li>
+<li><p>These launch configurations can be accessed by any action via a substitution, but are scoped by default.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.DeclareLaunchArgument</span></code></p>
+<ul>
+<li><p>This action will declare a launch description argument, which can have a name, default value, and documentation.</p></li>
+<li><p>The argument will be exposed via a command line option for a root launch description, or as action configurations to the include launch description action for the included launch description.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.SetEnvironmentVariable</span></code></p>
+<ul>
+<li><p>This action will set an environment variable by name.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.AppendEnvironmentVariable</span></code></p>
+<ul>
+<li><p>This action will set an environment variable by name if it does not exist, otherwise it appends to the existing value using a platform-specific separator.</p></li>
+<li><p>There is also an option to prepend instead of appending and to provide a custom separator.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.GroupAction</span></code></p>
+<ul>
+<li><p>This action will yield other actions, but can be associated with conditionals (allowing you to use the conditional on the group action rather than on each sub-action individually) and can optionally scope the launch configurations.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.TimerAction</span></code></p>
+<ul>
+<li><p>This action will yield other actions after a period of time has passed without being canceled.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.ExecuteProcess</span></code></p>
+<ul>
+<li><p>This action will execute a process given its path and arguments, and optionally other things like working directory or environment variables.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.RegisterEventHandler</span></code></p>
+<ul>
+<li><p>This action will register an <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.EventHandler</span></code> class, which takes a user defined lambda to handle some event.</p></li>
+<li><p>It could be any event, a subset of events, or one specific event.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.UnregisterEventHandler</span></code></p>
+<ul>
+<li><p>This action will remove a previously registered event.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.EmitEvent</span></code></p>
+<ul>
+<li><p>This action will emit an <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Event</span></code> based class, causing all registered event handlers that match it to be called.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.LogInfo</span></code>:</p>
+<ul>
+<li><p>This action will log a user defined message to the logger, other variants (e.g. <cite>LogWarn</cite>) could also exist.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.actions.RaiseError</span></code></p>
+<ul>
+<li><p>This action will stop execution of the launch system and provide a user defined error message.</p></li>
+</ul>
+</li>
+</ul>
+<p>More actions can always be defined via extension, and there may even be additional actions defined by <cite>launch</cite> itself, but they are more situational and would likely be built on top of the above actions anyways.</p>
+</div>
+<div class="section" id="base-action">
+<h3>Base Action<a class="headerlink" href="#base-action" title="Permalink to this heading">¶</a></h3>
+<p>All actions need to inherit from the <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Action</span></code> base class, so that some common interface is available to the launch system when interacting with actions defined by external packages.
+Since the base action class is a first class element in a launch description it also inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code>, which is the polymorphic type used when iterating over the elements in a launch description.</p>
+<p>Also, the base action has a few features common to all actions, such as some introspection utilities, and the ability to be associated with a single <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Condition</span></code>, like the <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.IfCondition</span></code> class or the <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.UnlessCondition</span></code> class.</p>
+<p>The action configurations are supplied when the user uses an action and can be used to pass “arguments” to the action in order to influence its behavior, e.g. this is how you would pass the path to the executable in the execute process action.</p>
+<p>If an action is associated with a condition, that condition is evaluated to determine if the action is executed or not.
+Even if the associated action evaluates to false the action will be available for introspection.</p>
+</div>
+</div>
+<div class="section" id="substitutions">
+<h2>Substitutions<a class="headerlink" href="#substitutions" title="Permalink to this heading">¶</a></h2>
+<p>A substitution is something that cannot, or should not, be evaluated until it’s time to execute the launch description that they are used in.
+There are many possible variations of a substitution, but here are some of the core ones implemented by <cite>launch</cite> (all of which inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Substitution</span></code>):</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.Text</span></code></p>
+<ul>
+<li><p>This substitution simply returns the given string when evaluated.</p></li>
+<li><p>It is usually used to wrap literals in the launch description so they can be concatenated with other substitutions.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.PythonExpression</span></code></p>
+<ul>
+<li><p>This substitution will evaluate a python expression and get the result as a string.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.LaunchConfiguration</span></code></p>
+<ul>
+<li><p>This substitution gets a launch configuration value, as a string, by name.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.LaunchDescriptionArgument</span></code></p>
+<ul>
+<li><p>This substitution gets the value of a launch description argument, as a string, by name.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.LocalSubstitution</span></code></p>
+<ul>
+<li><p>This substitution gets a “local” variable out of the context. This is a mechanism that allows a “parent” action to pass information to sub actions.</p></li>
+<li><p>As an example, consider this pseudo code example <cite>OnShutdown(actions=LogInfo(msg=[“shutdown due to: “, LocalSubstitution(expression=’event.reason’)]))</cite>, which assumes that <cite>OnShutdown</cite> will put the shutdown event in the locals before <cite>LogInfo</cite> is visited.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.EnvironmentVariable</span></code></p>
+<ul>
+<li><p>This substitution gets an environment variable value, as a string, by name.</p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">launch.substitutions.FindExecutable</span></code></p>
+<ul>
+<li><p>This substitution locates the full path to an executable on the PATH if it exists.</p></li>
+</ul>
+</li>
+</ul>
+<p>The base substitution class provides some common introspection interfaces (which the specific derived substitutions may influence).</p>
+</div>
+<div class="section" id="the-launch-service">
+<h2>The Launch Service<a class="headerlink" href="#the-launch-service" title="Permalink to this heading">¶</a></h2>
+<p>The launch service is responsible for processing emitted events, dispatching them to event handlers, and executing actions as needed.
+The launch service offers three main services:</p>
+<ul class="simple">
+<li><p>include a launch description</p>
+<ul>
+<li><p>can be called from any thread</p></li>
+</ul>
+</li>
+<li><p>run event loop</p></li>
+<li><p>shutdown</p>
+<ul>
+<li><p>cancels any running actions and event handlers</p></li>
+<li><p>then breaks the event loop if running</p></li>
+<li><p>can be called from any thread</p></li>
+</ul>
+</li>
+</ul>
+<p>A typical use case would be:</p>
+<ul class="simple">
+<li><p>create a launch description (programmatically or based on a markup file)</p></li>
+<li><p>create a launch service</p></li>
+<li><p>include the launch description in the launch service</p></li>
+<li><p>add a signal handler for SIGINT that calls shutdown on the launch service</p></li>
+<li><p>run the event loop on the launch service</p></li>
+</ul>
+<p>Additionally you could host some SOA (like REST, SOAP, ROS Services, etc…) server in another thread, which would provide a variety of services, all of which would end up including a launch description in the launch service asynchronously or calling shutdown on the launch service asynchronously.
+Remember that a launch description can contain actions to register event handlers, emit events, run processes, etc.
+So being able to include arbitrary launch descriptions asynchronously is the only feature you require to do most things dynamically while the launch service is running.</p>
+</div>
+<div class="section" id="event-handlers">
+<h2>Event Handlers<a class="headerlink" href="#event-handlers" title="Permalink to this heading">¶</a></h2>
+<p>Event handlers are represented with the <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.EventHandler</span></code> base class.
+Event handlers define two main methods, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">launch.EventHandler.matches()</span></code> method and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">launch.EventHandler.handle()</span></code> method.
+The matches method gets the event as input and must return <cite>True</cite> if the event handler matches that event, or <cite>False</cite> otherwise.
+The handle method gets the event and launch context as input, and can optionally (in addition to any side effects) return a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code> objects to be visited by the launch service.</p>
+<p>Event handlers do not inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code>, but can similarly be “visited” for each event processed by the launch service, seeing if <cite>matches</cite> returns <cite>True</cite> and if so following up with a call to <cite>handle</cite>, then visiting each of the actions returned by <cite>handle</cite>, depth-first.</p>
+</div>
+<div class="section" id="extension-points">
+<h2>Extension Points<a class="headerlink" href="#extension-points" title="Permalink to this heading">¶</a></h2>
+<p>In order to allow customization of how <cite>launch</cite> is used in specific domains, extension of the core categories of features is provided.
+External Python packages, through extension points, may add:</p>
+<ul class="simple">
+<li><p>new actions</p>
+<ul>
+<li><p>must directly or indirectly inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Action</span></code></p></li>
+</ul>
+</li>
+<li><p>new events</p>
+<ul>
+<li><p>must directly or indirectly inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Event</span></code></p></li>
+</ul>
+</li>
+<li><p>new substitutions</p>
+<ul>
+<li><p>must directly or indirectly inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.Substitution</span></code></p></li>
+</ul>
+</li>
+<li><p>kinds of entities in the launch description</p>
+<ul>
+<li><p>must directly or indirectly inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">launch.LaunchDescriptionEntity</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>In the future, more traditional extensions (like with <cite>setuptools</cite>’ <cite>entry_point</cite> feature) may be available via the launch service, e.g. the ability to include some extra entities and event handlers before the launch description is included.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">launch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture of <cite>launch</cite></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#launch-entities-and-launch-descriptions">Launch Entities and Launch Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actions">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#substitutions">Substitutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-launch-service">The Launch Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#event-handlers">Event Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extension-points">Extension Points</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to launch’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Open Source Robotics Foundation, Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/architecture.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

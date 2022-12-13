@@ -1,0 +1,5 @@
+<map id="rclcpp::exceptions::InvalidServiceNameError" name="rclcpp::exceptions::InvalidServiceNameError">
+<area shape="rect" id="node1" title="Thrown when a service name is invalid." alt="" coords="5,169,197,211"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1exceptions_1_1NameValidationError.html" title="Thrown when a any kind of name (node, namespace, topic, etc.) is invalid." alt="" coords="19,80,184,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="19,5,183,32"/>
+</map>

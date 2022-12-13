@@ -1,0 +1,4 @@
+<map id="rclcpp::wait_set_policies::SequentialSynchronization" name="rclcpp::wait_set_policies::SequentialSynchronization">
+<area shape="rect" id="node1" title="WaitSet policy that explicitly provides no thread synchronization." alt="" coords="13,109,216,151"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1wait__set__policies_1_1detail_1_1SynchronizationPolicyCommon.html" title="Common structure for synchronization policies." alt="" coords="5,5,224,61"/>
+</map>

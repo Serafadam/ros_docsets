@@ -1,0 +1,4 @@
+<map id="rclcpp::node_interfaces::NodeLogging" name="rclcpp::node_interfaces::NodeLogging">
+<area shape="rect" id="node1" title="Implementation of the NodeLogging part of the Node API." alt="" coords="5,95,179,136"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1node__interfaces_1_1NodeLoggingInterface.html" title="Pure virtual interface class for the NodeLogging part of the Node API." alt="" coords="5,5,179,47"/>
+</map>

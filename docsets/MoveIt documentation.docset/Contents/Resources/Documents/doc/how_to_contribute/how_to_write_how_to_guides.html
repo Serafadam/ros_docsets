@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Write a MoveIt How-To Guide &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/how_to_contribute/how_to_write_how_to_guides.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="How to Write a MoveIt Tutorial" href="how_to_write_tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="how_to_contribute.html">Contributing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_to_contribute_to_site.html">How to Contribute to This Site</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_write_tutorials.html">How to Write a MoveIt Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Write a MoveIt How-To Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="how_to_contribute.html">Contributing</a></li>
+      <li class="breadcrumb-item active">How to Write a MoveIt How-To Guide</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/how_to_contribute/how_to_write_how_to_guides.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="how-to-write-a-moveit-how-to-guide">
+<h1>How to Write a MoveIt How-To Guide<a class="headerlink" href="#how-to-write-a-moveit-how-to-guide" title="Permalink to this headline"></a></h1>
+<p>This guide explains how to write How-To’s for MoveIt documentation. This guide is primarily intended for use by employees at PickNik Robotics
+to assist in standardizing how-to documents but can be used by any contributor who wants to submit a new guide. If you are looking for
+how-to guides for using MoveIt, you can find them here: <a class="reference internal" href="../how_to_guides/how_to_guides.html"><span class="doc">How-To Guides</span></a>.</p>
+<div class="section" id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>The type of information that should be included in a how-to.</p></li>
+<li><p>Proper formatting for how-to guides in the MoveIt documentation section.</p></li>
+</ul>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 20.04</p></li>
+<li><p>ROS 2 Galactic</p></li>
+<li><p>MoveIt 2</p></li>
+</ul>
+</div>
+<div class="section" id="steps">
+<h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Fork the <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials.git">MoveIt 2 Tutorials repository</a> and start a new branch with an intuitive name (e.g., <code class="docutils literal notranslate"><span class="pre">jack/how-to-write-how-tos</span></code>).</p></li>
+<li><p>Create a new file in the <code class="docutils literal notranslate"><span class="pre">doc/how_to_guides</span></code> directory with a <code class="docutils literal notranslate"><span class="pre">.rst</span></code> extension. The title should start with “How to” followed by the specific question being answered (e.g., “How to Write a MoveIt How-To Guide”).</p></li>
+<li><p>Add a link to your guide on the appropriate how-to guide page:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../how_to_guides/how_to_guides.html"><span class="doc">User Guides</span></a></p></li>
+<li><p><a class="reference internal" href="how_to_contribute.html"><span class="doc">Contributor Guides</span></a></p></li>
+</ul>
+</li>
+<li><p>Write the introduction using reStructuredText (.rst) using the following guidelines:</p>
+<ul class="simple">
+<li><p>The title should have the same name as the file.</p></li>
+<li><p>The introduction should explain the purpose of this how-to and the intended audience.</p></li>
+<li><p>If you think people may regularly find this particular guide by mistake, add links to the proper resource.</p></li>
+</ul>
+</li>
+<li><p>Write the specific learning objectives (i.e., what the reader will know when they finish reading this how-to).</p></li>
+<li><p>Add any system or equipment requirements for this how-to so users know if this how-to is appropriate for them.</p></li>
+<li><p>Lay out the individual action steps and do not leave out necessary intermediate steps.</p></li>
+<li><p>Create a “Further Reading” section that links to amplifying information.</p></li>
+<li><p>Submit the new page as a PR to the <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials.git">MoveIt 2 Tutorials repository</a>.</p></li>
+</ol>
+</div>
+<div class="section" id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this headline"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Title</span><span class="o">&gt;</span>
+<span class="o">-------</span>
+
+<span class="o">&lt;</span><span class="n">Brief</span> <span class="n">description</span> <span class="n">of</span> <span class="n">the</span> <span class="n">How</span><span class="o">-</span><span class="n">To</span> <span class="n">Guide</span> <span class="k">with</span> <span class="n">image</span> <span class="ow">or</span> <span class="n">GIF</span> <span class="n">showing</span> <span class="n">the</span> <span class="n">outcome</span><span class="o">.&gt;</span>
+
+<span class="n">Learning</span> <span class="n">Objectives</span>
+<span class="o">-------------------</span>
+
+<span class="o">&lt;</span><span class="n">List</span> <span class="n">of</span> <span class="n">things</span> <span class="n">the</span> <span class="n">user</span> <span class="n">will</span> <span class="n">learn</span><span class="o">.&gt;</span>
+
+<span class="n">Requirements</span>
+<span class="o">----------</span>
+
+<span class="o">&lt;</span><span class="n">Explanation</span> <span class="n">of</span> <span class="n">what</span> <span class="n">the</span> <span class="n">user</span> <span class="n">should</span> <span class="n">understand</span><span class="o">.</span> <span class="n">Unlike</span> <span class="n">a</span> <span class="n">tutorial</span><span class="p">,</span> <span class="n">these</span> <span class="n">guides</span> <span class="n">stand</span> <span class="n">alone</span> <span class="ow">and</span> <span class="n">can</span> <span class="n">assume</span> <span class="n">the</span> <span class="n">user</span> <span class="n">has</span> <span class="n">much</span> <span class="n">more</span> <span class="n">background</span><span class="o">.&gt;</span>
+
+<span class="n">Steps</span>
+<span class="o">-----</span>
+
+<span class="o">&lt;</span><span class="n">A</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">steps</span> <span class="n">to</span> <span class="n">take</span> <span class="n">to</span> <span class="n">solve</span> <span class="n">the</span> <span class="n">problem</span><span class="o">.&gt;</span>
+
+<span class="n">Further</span> <span class="n">Reading</span>
+<span class="o">---------------</span>
+
+<span class="o">&lt;</span><span class="n">A</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">links</span> <span class="n">to</span> <span class="n">related</span> <span class="n">content</span> <span class="n">on</span> <span class="ow">and</span> <span class="n">off</span> <span class="n">this</span> <span class="n">website</span><span class="o">.&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="how_to_contribute_to_site.html"><span class="doc">How to Contribute to This Site</span></a></p></li>
+<li><p><a class="reference internal" href="../how_to_guides/how_to_guide.html"><span class="doc">MoveIt Concepts: How-To Guide</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how_to_write_tutorials.html" class="btn btn-neutral float-left" title="How to Write a MoveIt Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

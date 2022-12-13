@@ -1,0 +1,6 @@
+<map id="rclcpp::experimental::SubscriptionROSMsgIntraProcessBuffer&lt; RosMessageT, Alloc, Deleter &gt;" name="rclcpp::experimental::SubscriptionROSMsgIntraProcessBuffer&lt; RosMessageT, Alloc, Deleter &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="33,185,277,256"/>
+<area shape="rect" id="node2" href="$classrclcpp_1_1experimental_1_1SubscriptionIntraProcessBase.html" title=" " alt="" coords="44,95,267,136"/>
+<area shape="rect" id="node3" href="$classrclcpp_1_1Waitable.html" title=" " alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node4" href="$classrclcpp_1_1GuardCondition.html" title="A condition that can be waited on in a single wait set and asynchronously triggered." alt="" coords="157,5,327,32"/>
+</map>

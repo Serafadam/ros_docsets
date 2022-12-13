@@ -1,0 +1,11 @@
+code {
+    color: #536481;
+    background-color: #E8E7ED;
+}
+
+.html-toggle {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: #536481 solid 1px;
+}

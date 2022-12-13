@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motion Planning &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/concepts/motion_planning.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Hybrid Planning" href="hybrid_planning/hybrid_planning.html" />
+    <link rel="prev" title="Kinematics" href="kinematics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kinematics.html">Kinematics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Motion Planning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-motion-planning-plugin">The Motion Planning Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-motion-plan-request">The Motion Plan Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-motion-plan-result">The Motion Plan Result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#motion-planning-adapters">Motion planning adapters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fixstartstatebounds">FixStartStateBounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fixworkspacebounds">FixWorkspaceBounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fixstartstatecollision">FixStartStateCollision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fixstartstatepathconstraints">FixStartStatePathConstraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#addtimeparameterization">AddTimeParameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#resolveconstraintframes">ResolveConstraintFrames</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ompl">OMPL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hybrid_planning/hybrid_planning.html">Hybrid Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="move_group.html">The <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planning_scene_monitor.html">Planning Scene Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory_processing.html">Trajectory Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="concepts.html">Concepts</a></li>
+      <li class="breadcrumb-item active">Motion Planning</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/concepts/motion_planning.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="motion-planning">
+<h1>Motion Planning<a class="headerlink" href="#motion-planning" title="Permalink to this headline"></a></h1>
+<div class="section" id="the-motion-planning-plugin">
+<h2>The Motion Planning Plugin<a class="headerlink" href="#the-motion-planning-plugin" title="Permalink to this headline"></a></h2>
+<p>MoveIt works with motion planners through a <strong>plugin interface</strong>.
+This allows MoveIt to communicate with and use different motion planners from multiple libraries, making MoveIt easily extensible. The interface to the motion planners is through a ROS action or service (offered by the <code class="docutils literal notranslate"><span class="pre">move_group</span></code> node).
+The default motion planners for move_group are configured using OMPL and the MoveIt interface to OMPL by the MoveIt Setup Assistant.
+Other planners that are available by default are the Pilz industrial motion planner and CHOMP.</p>
+</div>
+<div class="section" id="the-motion-plan-request">
+<h2>The Motion Plan Request<a class="headerlink" href="#the-motion-plan-request" title="Permalink to this headline"></a></h2>
+<p>The motion plan request specifies what you would like the motion planner to do.
+Typically, you will be asking the motion planner to move an arm to a different location (in joint space) or the end-effector to a new pose.
+Collisions are checked for by default (including self-collisions and attached objects).
+You can also specify the planner via the <code class="docutils literal notranslate"><span class="pre">planning_pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">planner_id</span></code> parameters, and the constraints for the motion planner to check - the inbuilt constraints provided by MoveIt are <code class="docutils literal notranslate"><span class="pre">kinematic</span> <span class="pre">constraints</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Position constraints</strong>: restrict the position of a link to lie within a region of space.</p></li>
+<li><p><strong>Orientation constraints</strong>: restrict the orientation of a link to lie within specified roll, pitch or yaw limits.</p></li>
+<li><p><strong>Visibility constraints</strong>: restrict a point on a link to lie within the visibility cone for a particular sensor.</p></li>
+<li><p><strong>Joint constraints</strong>: restrict a joint to lie between two values.</p></li>
+<li><p><strong>User-specified constraints</strong>: it is also possible to specify your own constraints with a user-defined callback.</p></li>
+</ul>
+</div>
+<div class="section" id="the-motion-plan-result">
+<h2>The Motion Plan Result<a class="headerlink" href="#the-motion-plan-result" title="Permalink to this headline"></a></h2>
+<p>The <strong>move_group</strong> node will generate a desired trajectory in response to your motion plan request.
+This trajectory will move the arm (or any group of joints) to the desired location.
+Note that the result coming out of <strong>move_group</strong> is a trajectory and not just a path.
+<strong>move_group</strong> will use the desired maximum velocities and accelerations (if specified) to generate a trajectory that obeys velocity and acceleration constraints at the joint level.</p>
+</div>
+<div class="section" id="motion-planning-adapters">
+<h2>Motion planning adapters<a class="headerlink" href="#motion-planning-adapters" title="Permalink to this headline"></a></h2>
+<img alt="../../_images/motion_planner.png" src="../../_images/motion_planner.png" />
+<p>The complete motion planning pipeline chains together a motion planner with other components called <strong>planning request adapters</strong>.
+Planning request adapters allow for pre-processing motion plan requests and post-processing motion plan responses.
+Pre-processing is useful in several situations, e.g. when a start state for the robot is slightly outside the specified joint limits for the robot.
+Post-processing is needed for several other operations, e.g. to convert paths generated for a robot into time-parameterized trajectories.
+MoveIt provides a set of default motion planning adapters that each perform a very specific function.</p>
+<div class="section" id="fixstartstatebounds">
+<h3>FixStartStateBounds<a class="headerlink" href="#fixstartstatebounds" title="Permalink to this headline"></a></h3>
+<p>The fix start state bounds adapter fixes the start state to be within the joint limits specified in the URDF.
+The need for this adapter arises in situations where the joint limits for the physical robot are not properly configured.
+The robot may then end up in a configuration where one or more of its joints is slightly outside its joint limits.
+In this case, the motion planner is unable to plan since it will think that the starting state is outside joint limits.
+The “FixStartStateBounds” planning request adapter will “fix” the start state by moving it to the joint limit.
+However, this is obviously not the right solution every time - e.g. where the joint is really outside its joint limits by a large amount.
+A parameter for the adapter specifies how much the joint can be outside its limits for it to be “fixable”.</p>
+</div>
+<div class="section" id="fixworkspacebounds">
+<h3>FixWorkspaceBounds<a class="headerlink" href="#fixworkspacebounds" title="Permalink to this headline"></a></h3>
+<p>The fix workspace bounds adapter will specify a default workspace for planning: a cube of size 10 m x 10 m x 10 m.
+This workspace will only be specified if the planning request to the planner does not have these fields filled in.</p>
+</div>
+<div class="section" id="fixstartstatecollision">
+<h3>FixStartStateCollision<a class="headerlink" href="#fixstartstatecollision" title="Permalink to this headline"></a></h3>
+<p>The fix start state collision adapter will attempt to sample a new collision-free configuration near a specified configuration (in collision) by perturbing the joint values by a small amount.
+The amount that it will perturb the values by is specified by the <strong>jiggle_fraction</strong> parameter that controls the perturbation as a percentage of the total range of motion for the joint.
+The other parameter for this adapter specifies how many random perturbations the adapter will sample before giving up.</p>
+</div>
+<div class="section" id="fixstartstatepathconstraints">
+<h3>FixStartStatePathConstraints<a class="headerlink" href="#fixstartstatepathconstraints" title="Permalink to this headline"></a></h3>
+<p>This adapter is applied when the start state for a motion plan does not obey the specified path constraints.
+It will attempt to plan a path between the current configuration of the robot to a new location where the path constraint is obeyed.
+The new location will serve as the start state for planning.</p>
+</div>
+<div class="section" id="addtimeparameterization">
+<h3>AddTimeParameterization<a class="headerlink" href="#addtimeparameterization" title="Permalink to this headline"></a></h3>
+<p>The motion planners will typically generate “kinematic paths”, i.e., paths that do not obey any velocity or acceleration constraints and are not time parameterized.
+This adapter will “time parameterize” the motion plans by applying velocity and acceleration constraints.</p>
+</div>
+<div class="section" id="resolveconstraintframes">
+<h3>ResolveConstraintFrames<a class="headerlink" href="#resolveconstraintframes" title="Permalink to this headline"></a></h3>
+<p>Goal constraints can be set using subframes (e.g. a pose goal in the frame <code class="docutils literal notranslate"><span class="pre">cup/handle</span></code>, where <code class="docutils literal notranslate"><span class="pre">handle</span></code> is a subframe on the object <code class="docutils literal notranslate"><span class="pre">cup</span></code>).
+This adapter changes the frame of constraints to an object or robot frame (e.g. <code class="docutils literal notranslate"><span class="pre">cup</span></code>).</p>
+</div>
+</div>
+<div class="section" id="ompl">
+<h2>OMPL<a class="headerlink" href="#ompl" title="Permalink to this headline"></a></h2>
+<p>OMPL (Open Motion Planning Library) is an open-source motion planning library that primarily implements randomized motion planners.
+MoveIt integrates directly with OMPL and uses the motion planners from that library as its primary/default set of planners.
+The planners in OMPL are abstract; i.e. OMPL has no concept of a robot.
+Instead, MoveIt configures OMPL and provides the back-end for OMPL to work with problems in Robotics.</p>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kinematics.html" class="btn btn-neutral float-left" title="Kinematics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hybrid_planning/hybrid_planning.html" class="btn btn-neutral float-right" title="Hybrid Planning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

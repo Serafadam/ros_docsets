@@ -1,0 +1,4 @@
+<map id="rclcpp::ContextAlreadyInitialized" name="rclcpp::ContextAlreadyInitialized">
+<area shape="rect" id="node1" title="Thrown when init is called on an already initialized context." alt="" coords="5,80,240,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="53,5,192,32"/>
+</map>

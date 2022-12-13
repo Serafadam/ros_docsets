@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Parameterization &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/time_parameterization/time_parameterization_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Planning with Approximated Constraint Manifolds" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html" />
+    <link rel="prev" title="Visualizing Collisions" href="../visualizing_collisions/visualizing_collisions_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../robot_model_and_robot_state/robot_model_and_robot_state_tutorial.html">Robot Model and Robot State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene/planning_scene_tutorial.html">Planning Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_monitor/planning_scene_monitor_tutorial.html">Planning Scene Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_scene_ros_api/planning_scene_ros_api_tutorial.html">Planning Scene ROS API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_api/motion_planning_api_tutorial.html">Motion Planning API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html">Motion Planning Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../creating_moveit_plugins/plugin_tutorial.html">Creating MoveIt Plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualizing_collisions/visualizing_collisions_tutorial.html">Visualizing Collisions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Time Parameterization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#speed-control">Speed Control</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#from-file">From File</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#during-runtime">During Runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#time-parameterization-algorithms">Time Parameterization Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jerk-limited-trajectory-smoothing">Jerk-Limited Trajectory Smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html">Planning with Approximated Constraint Manifolds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pick_place/pick_place_tutorial.html">Pick and Place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_grasps/moveit_grasps_tutorial.html">MoveIt Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_deep_grasps/moveit_deep_grasps_tutorial.html">MoveIt Deep Grasps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../subframes/subframes_tutorial.html">Subframes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../moveit_cpp/moveitcpp_tutorial.html">MoveItCpp Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bullet_collision_checker/bullet_collision_checker.html">Using Bullet for Collision Checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mobile_base_arm/mobile_base_arm_tutorial.html">Planning For Differential-Drive Mobile Base and an Arm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Time Parameterization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/time_parameterization/time_parameterization_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="time-parameterization">
+<h1>Time Parameterization<a class="headerlink" href="#time-parameterization" title="Permalink to this headline"></a></h1>
+<p>MoveIt is currently primarily a <em>kinematic</em> motion planning framework - it plans for joint or end effector positions but not velocity or acceleration. However, MoveIt does utilize <em>post</em>-processing to time parameterize kinematic trajectories for velocity and acceleration values. Below we explain the settings and components involved in this part of MoveIt.</p>
+<div class="section" id="speed-control">
+<h2>Speed Control<a class="headerlink" href="#speed-control" title="Permalink to this headline"></a></h2>
+<div class="section" id="from-file">
+<h3>From File<a class="headerlink" href="#from-file" title="Permalink to this headline"></a></h3>
+<p>By default MoveIt sets the joint velocity and acceleration limits of a joint trajectory to the default allowed in the robot’s URDF or <code class="docutils literal notranslate"><span class="pre">joint_limits.yaml</span></code>. The <code class="docutils literal notranslate"><span class="pre">joint_limits.yaml</span></code> is generated from the Setup Assistant and is initially an exact copy of the values within the URDF. The user can then modify those values to be less than the original URDF values if special constraints are needed. Specific joint properties can be changed with the keys <code class="docutils literal notranslate"><span class="pre">max_position,</span> <span class="pre">min_position,</span> <span class="pre">max_velocity,</span> <span class="pre">max_acceleration,</span> <span class="pre">max_jerk</span></code>. Joint limits can be turned on or off with the keys <code class="docutils literal notranslate"><span class="pre">has_velocity_limits,</span> <span class="pre">has_acceleration_limits,</span> <span class="pre">has_jerk_limits</span></code>.</p>
+</div>
+<div class="section" id="during-runtime">
+<h3>During Runtime<a class="headerlink" href="#during-runtime" title="Permalink to this headline"></a></h3>
+<p>The speed of a parameterized kinematic trajectory can also be modified during runtime as a fraction of the max velocity and acceleration set in the configuration values, as a value between 0-1. To change the speed on a per-motion plan basis, you can set the two scaling factors as described in <a class="reference external" href="http://docs.ros.org/noetic/api//moveit_msgs/html/msg/MotionPlanRequest.html">MotionPlanRequest.msg</a>. Spinboxes for setting both of those factors are also available in the <a class="reference internal" href="../../tutorials/quickstart_in_rviz/quickstart_in_rviz_tutorial.html"><span class="doc">MoveIt MotionPlanning RViz plugin</span></a>.</p>
+</div>
+</div>
+<div class="section" id="time-parameterization-algorithms">
+<h2>Time Parameterization Algorithms<a class="headerlink" href="#time-parameterization-algorithms" title="Permalink to this headline"></a></h2>
+<p>MoveIt can support different algorithms for post-processing a kinematic trajectory to add timestamps and velocity/acceleration values. Currently there are three available by default in MoveIt:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/trajectory_processing/src/iterative_time_parameterization.cpp">Iterative Parabolic Time Parameterization</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/trajectory_processing/src/iterative_spline_parameterization.cpp">Iterative Spline Parameterization</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_core/trajectory_processing/src/time_optimal_trajectory_generation.cpp">Time-optimal Trajectory Generation</a></p></li>
+</ul>
+<p>Iterative Parabolic Time Parameterization (IPTP) was MoveIt’s initial time parameterization algorithm. However, there is a known <a class="reference external" href="https://github.com/ros-planning/moveit/issues/160">bug with it</a>.</p>
+<p>The Iterative Spline Time Parameterization (ISTP) algorithm was merged with <a class="reference external" href="https://github.com/ros-planning/moveit/pull/382">PR 382</a>.</p>
+<p>Time-optimal Trajectory Generation (TOTG) introduced in PRs <a class="reference external" href="https://github.com/ros-planning/moveit/pull/809">#809</a> and <a class="reference external" href="https://github.com/ros-planning/moveit/pull/1365">#1365</a> produces trajectories with very smooth and continuous velocity profiles. The method is based on fitting path segments to the original trajectory and then sampling new waypoints from the optimized path. This is different from strict time parameterization methods as resulting waypoints may divert from the original trajectory within a certain tolerance. As a consequence, additional collision checks might be required when using this method. It is the default everywhere in MoveIt2.</p>
+<p>Usage of a time parameterization algorithm as a Planning Request Adapter is documented in <a class="reference external" href="../motion_planning_pipeline/motion_planning_pipeline_tutorial.html#using-a-planning-request-adapter">this tutorial</a>.</p>
+</div>
+<div class="section" id="jerk-limited-trajectory-smoothing">
+<h2>Jerk-Limited Trajectory Smoothing<a class="headerlink" href="#jerk-limited-trajectory-smoothing" title="Permalink to this headline"></a></h2>
+<p>A time parameterization algorithm such as TOTG calculates velocities and accelerations for a trajectory, but none of the time parameterization algorithms support jerk limits. This is not ideal – large jerks  along a trajectory can cause jerky motion or damage hardware. As a further post-processing step, the Ruckig jerk-limited smoothing algorithm can be appliied to limit joint jerks over the trajectories.</p>
+<p>To apply the Ruckig smoothing algorithm, jerk limits should be defined in a <code class="docutils literal notranslate"><span class="pre">joint_limits.yaml</span></code> file. If you do not specify a jerk limit for any joint, a reasonable default will be applied and a warning printed.</p>
+<p>Finally, add the Ruckig smoothing algorithm to the list of planning request adapters (typically in <code class="docutils literal notranslate"><span class="pre">ompl_planning.yaml</span></code>). The Ruckig smoothing algorithm should run last, so put it at the top of list:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">request_adapters</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span><span class="w"></span>
+<span class="w">  </span><span class="no">default_planner_request_adapters/AddRuckigTrajectorySmoothing</span><span class="w"></span>
+<span class="w">  </span><span class="no">default_planner_request_adapters/AddTimeOptimalParameterization</span><span class="w"></span>
+<span class="w">  </span><span class="no">...</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../visualizing_collisions/visualizing_collisions_tutorial.html" class="btn btn-neutral float-left" title="Visualizing Collisions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../planning_with_approximated_constraint_manifolds/planning_with_approximated_constraint_manifolds_tutorial.html" class="btn btn-neutral float-right" title="Planning with Approximated Constraint Manifolds" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

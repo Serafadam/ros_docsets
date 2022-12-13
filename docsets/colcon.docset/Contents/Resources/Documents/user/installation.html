@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; colcon  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/colcon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quick start" href="quick-start.html" />
+    <link rel="prev" title="colcon - collective construction" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/colcon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-debian-packages">Using Debian packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#in-the-context-of-the-ros-project">In the context of the ROS project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#outside-the-ros-project">Outside the ROS project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-pip-on-any-platform">Using pip on any platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-from-source">Installing from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-custom-branches-from-source">Installing custom branches from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-from-source">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-directory-changes">Quick directory changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sh-and-compatible-shells">Sh (and compatible shells)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#enable-completion">Enable completion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bash-zsh">Bash / zsh</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what-is-a-workspace.html">What is a Workspace?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log-files.html">Log Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isolated-vs-merged-workspaces.html">Isolated vs Merged Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-multiple-workspaces.html">Using Multiple Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-packages.html">Overriding Packages</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/build.html"><code class="docutils literal notranslate"><span class="pre">build</span></code> - Build Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/edit.html"><code class="docutils literal notranslate"><span class="pre">edit</span></code> - Edit File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/graph.html"><code class="docutils literal notranslate"><span class="pre">graph</span></code> - Visualize Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/info.html"><code class="docutils literal notranslate"><span class="pre">info</span></code> - Show Package Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/list.html"><code class="docutils literal notranslate"><span class="pre">list</span></code> - List Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/metadata.html"><code class="docutils literal notranslate"><span class="pre">metadata</span></code> - Manage metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/mixin.html"><code class="docutils literal notranslate"><span class="pre">mixin</span></code> - Manage mixins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test.html"><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/verb/test-result.html"><code class="docutils literal notranslate"><span class="pre">test-result</span></code> - Summarize Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/global-arguments.html">Global arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executor-arguments.html">Executor arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/event-handler-arguments.html">Event handler arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/discovery-arguments.html">Discovery arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/package-selection-arguments.html">Package selection arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/mixin-arguments.html">Mixin arguments</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bootstrap.html">Bootstrap from source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/environment.html">Environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/program-flow.html">Program flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/extension-point.html">Extension points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contribution.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/release.html">Make Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Migrate from other build tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../migration/ament_tools.html">ament_tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_make_isolated.html">catkin_make_isolated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migration/catkin_tools.html">catkin_tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">colcon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
+<p>The functionality of <code class="docutils literal notranslate"><span class="pre">colcon</span></code> is split over multiple Python packages.
+The package <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> provides the command line tool <code class="docutils literal notranslate"><span class="pre">colcon</span></code> itself as well as a few fundamental extensions.
+Additional functionality is provided by separate packages, e.g. <code class="docutils literal notranslate"><span class="pre">colcon-cmake</span></code> adds support for packages which use <a class="reference external" href="https://cmake.org/">CMake</a>.
+The following instructions install a set of common <code class="docutils literal notranslate"><span class="pre">colcon</span></code> packages.</p>
+<div class="section" id="using-debian-packages">
+<h2>Using Debian packages<a class="headerlink" href="#using-debian-packages" title="Permalink to this headline"></a></h2>
+<p>On platforms which support Debian packages using those is preferred since they will be updated using <code class="docutils literal notranslate"><span class="pre">apt</span></code> together with other system packages.</p>
+<div class="section" id="in-the-context-of-the-ros-project">
+<h3>In the context of the ROS project<a class="headerlink" href="#in-the-context-of-the-ros-project" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference external" href="https://www.ros.org/">ROS project</a> hosts copies of the Debian packages in their apt repositories.
+You can choose either of the two following apt repositories.</p>
+<ul>
+<li><p><a class="reference external" href="http://wiki.ros.org/Installation/Ubuntu#Installation.2BAC8-Ubuntu.2BAC8-Sources-4.Setup_your_sources.list">ROS 1 repository</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo sh -c <span class="s1">&#39;echo &quot;deb http://packages.ros.org/ros/ubuntu `lsb_release -cs` main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#39;</span>
+$ sudo apt-key adv --keyserver <span class="s1">&#39;hkp://keyserver.ubuntu.com:80&#39;</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+</pre></div>
+</div>
+</li>
+<li><p><a class="reference external" href="https://github.com/ros2/ros2/wiki/Linux-Install-Debians#setup-sources">ROS 2 repository</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo sh -c <span class="s1">&#39;echo &quot;deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main&quot; &gt; /etc/apt/sources.list.d/ros2-latest.list&#39;</span>
+$ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc <span class="p">|</span> sudo apt-key add -
+</pre></div>
+</div>
+</li>
+</ul>
+<p>After that you can install the Debian package which depends on <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> as well as commonly used extension packages (see <a class="reference external" href="https://github.com/colcon/colcon-common-extensions/blob/master/setup.cfg">setup.cfg</a>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt update
+$ sudo apt install python3-colcon-common-extensions
+</pre></div>
+</div>
+</div>
+<div class="section" id="outside-the-ros-project">
+<h3>Outside the ROS project<a class="headerlink" href="#outside-the-ros-project" title="Permalink to this headline"></a></h3>
+<p>The Debian packages are also hosted in an apt repository provided by <a class="reference external" href="https://packagecloud.io/">packagecloud</a>: <a class="reference external" href="https://packagecloud.io/dirk-thomas/colcon"><img alt="packagecloud" src="https://img.shields.io/badge/deb-packagecloud.io-844fec.svg" /></a></p>
+<p>You can add the GPG key as well as the apt repository using the following command (which is described <a class="reference external" href="https://packagecloud.io/dirk-thomas/colcon/install">here</a>).</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ curl -s https://packagecloud.io/install/repositories/dirk-thomas/colcon/script.deb.sh <span class="p">|</span> sudo bash
+</pre></div>
+</div>
+</div></blockquote>
+<p>After that you can install the Debian package which depends on <code class="docutils literal notranslate"><span class="pre">colcon-core</span></code> as well as commonly used extension packages (see <a class="reference external" href="https://github.com/colcon/colcon-common-extensions/blob/master/setup.cfg">setup.cfg</a>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install python3-colcon-common-extensions
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-pip-on-any-platform">
+<h2>Using pip on any platform<a class="headerlink" href="#using-pip-on-any-platform" title="Permalink to this headline"></a></h2>
+<p>On all non-Debian platforms the most common way of installation is the Python package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code>.
+The following assumes that you are using a virtual environment with Python 3.5 or higher.
+If you want to install the packages globally it might be necessary to invoke <code class="docutils literal notranslate"><span class="pre">pip3</span></code> instead of <code class="docutils literal notranslate"><span class="pre">pip</span></code> and require <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -U colcon-common-extensions
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The package <code class="docutils literal notranslate"><span class="pre">colcon-common-extensions</span></code> doesn’t contain any functionality itself but only depends on a set of other packages (see <a class="reference external" href="https://github.com/colcon/colcon-common-extensions/blob/master/setup.cfg">setup.cfg</a>).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find a list of released packages on <a class="reference external" href="https://pypi.org/search/?q=colcon">PyPI</a> using the keyword <code class="docutils literal notranslate"><span class="pre">colcon</span></code>.</p>
+</div>
+</div>
+<div class="section" id="installing-from-source">
+<h2>Installing from source<a class="headerlink" href="#installing-from-source" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This approach is commonly only used by advanced users.</p>
+</div>
+<p>Commonly this is the case when you want to try or leverage new features or bug fixes which have been committed already but are not available in a released version yet.
+In order to use the latest state of any of the above packages you can invoke <code class="docutils literal notranslate"><span class="pre">pip</span></code> with a URL of the GitHub repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -U git+https://github.com/colcon/colcon-common-extensions.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-custom-branches-from-source">
+<h2>Installing custom branches from source<a class="headerlink" href="#installing-custom-branches-from-source" title="Permalink to this headline"></a></h2>
+<p>To try a patch proposed in a pull request you can install the sources of that specific branch by appending the branch name to the URL:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install -U git+https://github.com/colcon/colcon-core.git@branch_name
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to uninstall that custom version again using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">&lt;name&gt;</span></code> to revert back to the previously used version.
+Otherwise if you use the Debian packages this pip installed package will overlay even newer Debian packages.</p>
+</div>
+</div>
+<div class="section" id="building-from-source">
+<h2>Building from source<a class="headerlink" href="#building-from-source" title="Permalink to this headline"></a></h2>
+<p>Since this is not a common use case for users you will find the documentation in the <a class="reference internal" href="../developer/bootstrap.html"><span class="doc">developer section</span></a>.</p>
+</div>
+<div class="section" id="quick-directory-changes">
+<h2>Quick directory changes<a class="headerlink" href="#quick-directory-changes" title="Permalink to this headline"></a></h2>
+<div class="section" id="sh-and-compatible-shells">
+<h3>Sh (and compatible shells)<a class="headerlink" href="#sh-and-compatible-shells" title="Permalink to this headline"></a></h3>
+<p>On Linux / macOS the above instructions install the package <code class="docutils literal notranslate"><span class="pre">colcon-cd</span></code> which offers a command to change to the directory a package specified by its name is in.
+To enable this feature you need to source the shell script provided by that package.
+The script is named <code class="docutils literal notranslate"><span class="pre">colcon_cd.sh</span></code>.
+For convenience you might want to source it in the user configuration, e.g. <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>:</p>
+<p>Depending on which instructions you followed to install the packages the location will vary:</p>
+<ul class="simple">
+<li><p>Debian package: <code class="docutils literal notranslate"><span class="pre">/usr/share/colcon_cd/function</span></code></p></li>
+<li><p>PIP - user specific: <code class="docutils literal notranslate"><span class="pre">$HOME/.local/share/colcon_cd/function</span></code></p></li>
+<li><p>PIP - global: <code class="docutils literal notranslate"><span class="pre">/usr/local/share/colcon_cd/function</span></code></p></li>
+</ul>
+<p>When building <code class="docutils literal notranslate"><span class="pre">colcon</span></code> from source the generated setup files will automatically include this hook.</p>
+</div>
+</div>
+<div class="section" id="enable-completion">
+<h2>Enable completion<a class="headerlink" href="#enable-completion" title="Permalink to this headline"></a></h2>
+<div class="section" id="bash-zsh">
+<h3>Bash / zsh<a class="headerlink" href="#bash-zsh" title="Permalink to this headline"></a></h3>
+<p>On Linux / macOS the above instructions install the package <code class="docutils literal notranslate"><span class="pre">colcon-argcomplete</span></code> which offers command completion for bash and bash-like shells.
+To enable this feature you need to source the shell-specific script provided by that package.
+These scripts are named <code class="docutils literal notranslate"><span class="pre">colcon-argcomplete.bash</span></code> / <code class="docutils literal notranslate"><span class="pre">colcon-argcomplete.zsh</span></code>.
+For convenience you might want to source the one matching your shell in the user configuration, e.g. <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>:</p>
+<p>Depending on which instructions you followed to install the packages the location will vary:</p>
+<ul class="simple">
+<li><p>Debian package: <code class="docutils literal notranslate"><span class="pre">/usr/share/colcon_argcomplete/hook</span></code></p></li>
+<li><p>PIP - user specific: <code class="docutils literal notranslate"><span class="pre">$HOME/.local/share/colcon_argcomplete/hook</span></code></p></li>
+<li><p>PIP - global: <code class="docutils literal notranslate"><span class="pre">/usr/local/share/colcon_argcomplete/hook</span></code></p></li>
+</ul>
+<p>When building <code class="docutils literal notranslate"><span class="pre">colcon</span></code> from source the generated setup files will automatically include this hook.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="colcon - collective construction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quick-start.html" class="btn btn-neutral float-right" title="Quick start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018, Dirk Thomas, licensed under the Creative Commons Attribution 4.0.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

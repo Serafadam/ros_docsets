@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integration/Unit Tests &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/tests/tests_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Concepts" href="../../concepts/concepts.html" />
+    <link rel="prev" title="Realtime Arm Servoing" href="../realtime_servo/realtime_servo_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../benchmarking/benchmarking_tutorial.html">Benchmarking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dual_arms/dual_arms_tutorial.html">Dual Arms with MoveIt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hybrid_planning/hybrid_planning_tutorial.html">Hybrid Planning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../realtime_servo/realtime_servo_tutorial.html">Realtime Arm Servoing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Integration/Unit Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#integration-test">Integration Test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-robots">Test Robots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unit-tests">Unit Tests</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#writing-unit-tests">Writing Unit Tests</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#running-unit-tests">Running Unit Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Integration/Unit Tests</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/tests/tests_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="integration-unit-tests">
+<h1>Integration/Unit Tests<a class="headerlink" href="#integration-unit-tests" title="Permalink to this headline"></a></h1>
+<p>How to test changes to MoveIt on various robots, including unit and integration tests.</p>
+<p><strong>Note:</strong> <em>This is a stub tutorial, to be expanded upon in the future</em></p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="integration-test">
+<h2>Integration Test<a class="headerlink" href="#integration-test" title="Permalink to this headline"></a></h2>
+<p>A Python-based integration test is available for testing higher-level move_group functionality in MoveIt - to run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rostest</span> <span class="n">moveit_ros_planning_interface</span> <span class="n">python_move_group</span><span class="o">.</span><span class="n">test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-robots">
+<h2>Test Robots<a class="headerlink" href="#test-robots" title="Permalink to this headline"></a></h2>
+<p><strong>Panda</strong></p>
+<p>From the package <a class="reference external" href="https://github.com/ros-planning/panda_moveit_config">panda_moveit_config</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">panda_moveit_config</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+<p><strong>Fanuc M-10iA</strong></p>
+<p>From the package <a class="reference external" href="https://github.com/ros-planning/moveit_resources">moveit_resources</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">moveit_resources</span> <span class="n">demo</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unit-tests">
+<h2>Unit Tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline"></a></h2>
+<div class="section" id="writing-unit-tests">
+<h3>Writing Unit Tests<a class="headerlink" href="#writing-unit-tests" title="Permalink to this headline"></a></h3>
+<p>The entire test file, with includes, can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/tests">here</a> in the moveit_tutorials GitHub project.</p>
+<p>MoveIt uses Google Test as a testing framework.</p>
+<p>Google Test has two kinds of testing functions. The first, <em>TEST</em>, simply runs the code inside.
+It takes two names: the name of the test case, also called a test suite, which is a group of several tests that are
+all related to the same component, and the name of the test.
+To actually check that your code does what is expected, you can add assertions.
+ASSERT will stop the test if it fails, and EXPECT will continue running, although the test will still fail.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span><span class="p">(</span><span class="n">MyFirstTestCase</span><span class="p">,</span><span class="w"> </span><span class="n">TestName</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">ASSERT_NE</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="cm">/* NE is &#39;not equal&#39; */</span><span class="w"></span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>A Test Fixture loads the same data repeatedly for multiple tests, so common setup code doesn’t have to be duplicated.
+To make a test fixture, first make a class that derives from ::testing::Test.
+You can use either the constructor or SetUp to load the information.
+Let’s use MoveIt’s testing utilities to load a robot model.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyTestFixture</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">::</span><span class="n">testing</span><span class="o">::</span><span class="n">Test</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Everything in the class can be protected:. */</span><span class="w"></span>
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">SetUp</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">robot_model_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">loadTestingRobotModel</span><span class="p">(</span><span class="s">&quot;panda&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* If you need to cleanup the resources any tests are using, you can do it in TearDown(). */</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">TearDown</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotModelConstPtr</span><span class="w"> </span><span class="n">robot_model_</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To make a test that uses the data loaded by this fixture, use TEST_F.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TEST_F</span><span class="p">(</span><span class="n">MyTestFixture</span><span class="p">,</span><span class="w"> </span><span class="n">InitOK</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">robot_model_</span><span class="o">-&gt;</span><span class="n">getURDF</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;panda&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">robot_model_</span><span class="o">-&gt;</span><span class="n">getSRDF</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;panda&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>MoveIt also provides a RobotModelBuilder class that helps you build simple robots with the link and joint structure
+that you need for a specific test.
+Let’s make a robot that has one branch, making a Y shape.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span><span class="p">(</span><span class="n">MyFirstTestCase</span><span class="p">,</span><span class="w"> </span><span class="n">SimpleYRobot</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotModelBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">(</span><span class="s">&quot;one_robot&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;base_link&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addChain</span><span class="p">(</span><span class="s">&quot;base_link-&gt;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;continuous&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addChain</span><span class="p">(</span><span class="s">&quot;a-&gt;b-&gt;c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fixed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addChain</span><span class="p">(</span><span class="s">&quot;a-&gt;d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fixed&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addChain</span><span class="p">(</span><span class="s">&quot;d-&gt;e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;continuous&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addVirtualJoint</span><span class="p">(</span><span class="s">&quot;odom&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;base_link&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;planar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;base_joint&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">builder</span><span class="p">.</span><span class="n">addGroup</span><span class="p">({},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;base_joint&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="s">&quot;base_joint&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">RobotModelConstPtr</span><span class="w"> </span><span class="n">robot_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">build</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/* Let&#39;s check that the link c is rigidly connected to link d, as it should be. */</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">moveit</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">LinkTransformMap</span><span class="w"> </span><span class="n">transforms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">robot_model</span><span class="o">-&gt;</span><span class="n">getLinkModel</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getAssociatedFixedTransforms</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">maybe_link_d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transforms</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">robot_model</span><span class="o">-&gt;</span><span class="n">getLinkModel</span><span class="p">(</span><span class="s">&quot;d&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">ASSERT_NE</span><span class="p">(</span><span class="n">maybe_link_d</span><span class="p">,</span><span class="w"> </span><span class="n">transforms</span><span class="p">.</span><span class="n">end</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">testing</span><span class="o">::</span><span class="n">InitGoogleTest</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">RUN_ALL_TESTS</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-unit-tests">
+<h3>Running Unit Tests<a class="headerlink" href="#running-unit-tests" title="Permalink to this headline"></a></h3>
+<p>To run unit tests locally on the entire MoveIt catkin workspace using catkin-tools:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catkin</span> <span class="n">run_tests</span> <span class="o">-</span><span class="n">iv</span>
+</pre></div>
+</div>
+<p>To run a test for just 1 package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catkin</span> <span class="n">run_tests</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">deps</span> <span class="o">--</span><span class="n">this</span> <span class="o">-</span><span class="n">iv</span>
+</pre></div>
+</div>
+<p>To ignore most of the log/print output of the tests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">catkin</span> <span class="n">run_tests</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">status</span> <span class="o">--</span><span class="n">summarize</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">deps</span> <span class="o">--</span><span class="n">this</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="code-coverage">
+<h2>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline"></a></h2>
+<p>Test coverage measures the lines of code that are executed while running the test suite.
+To accumulate statistics and create a html coverage report, build the code without optimization
+and run the special <code class="docutils literal notranslate"><span class="pre">_coverage</span></code> target:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">noetic</span><span class="o">-</span><span class="n">code</span><span class="o">-</span><span class="n">coverage</span>
+<span class="n">catkin</span> <span class="n">config</span> <span class="o">--</span><span class="n">cmake</span><span class="o">-</span><span class="n">args</span> <span class="o">-</span><span class="n">DENABLE_COVERAGE_TESTING</span><span class="o">=</span><span class="n">ON</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Debug</span>
+<span class="n">catkin</span> <span class="n">build</span>
+<span class="n">catkin</span> <span class="n">build</span> <span class="n">moveit_core</span> <span class="o">-</span><span class="n">v</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">deps</span> <span class="o">--</span><span class="n">catkin</span><span class="o">-</span><span class="n">make</span><span class="o">-</span><span class="n">args</span> <span class="n">moveit_core_coverage</span>
+</pre></div>
+</div>
+<p>The output will print where the coverage report is located and it looks similar to the following image:</p>
+<a class="reference internal image-reference" href="../../../_images/code_coverage_example.png"><img alt="example code coverage output" class="align-center" src="../../../_images/code_coverage_example.png" style="width: 300px;" /></a>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../realtime_servo/realtime_servo_tutorial.html" class="btn btn-neutral float-left" title="Realtime Arm Servoing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../concepts/concepts.html" class="btn btn-neutral float-right" title="Concepts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

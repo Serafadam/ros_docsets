@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realtime Arm Servoing &mdash; MoveIt documentation  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="canonical" href="https://moveit.picknik.ai/rolling/doc/examples/realtime_servo/realtime_servo_tutorial.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Integration/Unit Tests" href="../tests/tests_tutorial.html" />
+    <link rel="prev" title="Hybrid Planning" href="../hybrid_planning/hybrid_planning_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/rolling-small.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#movegroup-ros-wrappers-in-c">MoveGroup - ROS Wrappers in C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#using-moveit-directly-through-the-c-api">Using MoveIt Directly Through the C++ API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#integration-with-a-new-robot">Integration with a New Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#configuration">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#miscellaneous">Miscellaneous</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../benchmarking/benchmarking_tutorial.html">Benchmarking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dual_arms/dual_arms_tutorial.html">Dual Arms with MoveIt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hybrid_planning/hybrid_planning_tutorial.html">Hybrid Planning</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Realtime Arm Servoing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launching-a-servo-node">Launching a Servo Node</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#without-a-controller">Without a Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#expected-output">Expected Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#introspection">Introspection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-c-interface">Using the C++ Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Expected Output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entire-code">Entire Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#initializing-servo">Initializing Servo</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#sending-commands">Sending Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#servo-overview">Servo Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#inverse-kinematics-in-servo">Inverse Kinematics in Servo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-on-a-new-robot">Setup on a New Robot</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#preliminaries">Preliminaries</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#input-devices">Input Devices</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#servo-configs">Servo Configs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tests/tests_tutorial.html">Integration/Unit Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute/how_to_contribute.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MoveIt documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Realtime Arm Servoing</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/realtime_servo/realtime_servo_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+
+  <div class="section" id="realtime-arm-servoing">
+<h1>Realtime Arm Servoing<a class="headerlink" href="#realtime-arm-servoing" title="Permalink to this headline"></a></h1>
+<p>MoveIt Servo allows you to stream End Effector (EEF) velocity commands to your manipulator and have it execute them concurrently. This enables teleoperation via a wide range of input schemes, or for other autonomous software to control the robot - in visual servoing or closed loop position control for instance.</p>
+<p>This tutorial shows how to use MoveIt Servo to send real-time servo commands to a ROS-enabled robot. Some nice features of the servo node are singularity handling and collision checking that prevents the operator from breaking the robot.</p>
+<div style="position: relative; padding-bottom: 5%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+    <iframe width="700px" height="400px" src="https://www.youtube.com/embed/MF-_XKpGefY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div><div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>If you haven’t already done so, make sure you’ve completed the steps in <a class="reference internal" href="../../tutorials/getting_started/getting_started.html"><span class="doc">Getting Started</span></a>.</p>
+</div>
+<div class="section" id="launching-a-servo-node">
+<h2>Launching a Servo Node<a class="headerlink" href="#launching-a-servo-node" title="Permalink to this headline"></a></h2>
+<p>MoveIt Servo can be launched as a “node component” or a standalone node. The launch file, moveit_servo/servo_example.launch.py, launches a standalone node by default but also contains a commented component node. Commands are sent via ROS topics. The commands can come from anywhere, such as a joystick, keyboard, or other controller.</p>
+<p>This demo was written for an Xbox 1 controller, but can be easily modified to use any controller compatible with the <a class="reference external" href="https://index.ros.org/p/joy/#rolling">Joy package</a> by modifying the <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/moveit_servo/src/teleop_demo/joystick_servo_example.cpp">joystick_servo_example.cpp file</a></p>
+<p>To run the demo, make sure your controller is plugged in and can be detected by <code class="code docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">joy</span> <span class="pre">joy_node</span></code>. Usually this happens automatically after plugging the controller in. Then launch with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit_servo</span> <span class="n">servo_example</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Make a service request to start Servo</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">service</span> <span class="n">call</span> <span class="o">/</span><span class="n">servo_node</span><span class="o">/</span><span class="n">start_servo</span> <span class="n">std_srvs</span><span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">Trigger</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>You should be able to control the arm with your controller now, with MoveIt Servo automatically avoiding singularities and collisions.</p>
+<div class="section" id="without-a-controller">
+<h3>Without a Controller<a class="headerlink" href="#without-a-controller" title="Permalink to this headline"></a></h3>
+<p>If you do not have a joystick or game controller, you can still try the demo using your keyboard. With the demo still running, in a new terminal, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">moveit2_tutorials</span> <span class="n">servo_keyboard_input</span>
+</pre></div>
+</div>
+<p>You will be able to use your keyboard to servo the robot. Send Cartesian commands with arrow keys and the <code class="code docutils literal notranslate"><span class="pre">.</span></code> and <code class="code docutils literal notranslate"><span class="pre">;</span></code> keys. Change the Cartesian command frame with <code class="code docutils literal notranslate"><span class="pre">W</span></code> for world and <code class="code docutils literal notranslate"><span class="pre">E</span></code> for End-Effector. Send joint jogging commands with keys 1-7 (use <code class="code docutils literal notranslate"><span class="pre">R</span></code> to reverse direction)</p>
+</div>
+</div>
+<div class="section" id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Permalink to this headline"></a></h2>
+<video width="700px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/Servo_Teleop_Demo.webm" type="video/webm">
+    Teleoperation demo with controller
+</video><p>Note that the controller overlay here is just for demonstration purposes and is not actually included</p>
+</div>
+<div class="section" id="introspection">
+<h2>Introspection<a class="headerlink" href="#introspection" title="Permalink to this headline"></a></h2>
+<p>Here are some tips for inspecting and/or debugging the system.</p>
+<ol class="arabic simple">
+<li><p>View the <code class="code docutils literal notranslate"><span class="pre">ros2_controllers</span></code> that are currently active with <code class="code docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">control</span> <span class="pre">list_controllers</span></code>. You will see a <a class="reference external" href="https://github.com/ros-controls/ros2_controllers/tree/master/joint_trajectory_controller">JointTrajectoryController</a> that receives the joint position commands from Servo and handles them in the simulated robot driver. The JointTrajectoryController is very flexible; it can handle any combination of position/velocity/(position-and-velocity) input. Servo is also compatible with <a class="reference external" href="https://github.com/ros-controls/ros2_controllers/tree/master/position_controllers">JointGroupPosition</a> or <a class="reference external" href="https://github.com/ros-controls/ros2_controllers/tree/master/velocity_controllers">JointGroupVelocity</a>-type controllers.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">topic</span> <span class="pre">echo</span> <span class="pre">/servo_node/status</span></code> shows the current state of the Servo node. If <code class="code docutils literal notranslate"><span class="pre">0</span></code> is published, all is well. The definition for all enums can be seen <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/moveit_servo/include/moveit_servo/status_codes.h">here.</a></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">node</span> <span class="pre">list</span></code> shows the following. <code class="code docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">node</span> <span class="pre">info</span></code> can be used to get more information about any of these nodes.</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">/joy_node</span></code> handles commands from the XBox controller</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">/moveit_servo_demo_container</span></code> holds several ancillary ROS2 “component nodes” that are placed in a container for faster intra-process communication</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">/servo_node</span></code> which does the calculations and collision checking for this demo. <code class="code docutils literal notranslate"><span class="pre">servo_node</span></code> may be moved into the demo container in the future</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="using-the-c-interface">
+<h2>Using the C++ Interface<a class="headerlink" href="#using-the-c-interface" title="Permalink to this headline"></a></h2>
+<p>Instead of launching Servo as its own component, you can include Servo in your own nodes via the C++ interface. Sending commands to the robot is very similar in both cases, but for the C++ interface a little bit of setup for Servo is necessary. In exchange, you will be able to directly interact with Servo through its C++ API.</p>
+<p>This basic C++ interface demo moves the robot in a predetermined way and can be launched with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">moveit2_tutorials</span> <span class="n">servo_cpp_interface_demo</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>An Rviz window should appear with a Panda arm and collision object. The arm will joint-jog for a few seconds before switching to a Cartesian movement. As the arm approaches the collision object, it slows and stops.</p>
+</div>
+<div class="section" id="id1">
+<h2>Expected Output<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<video width="700px" controls="true" autoplay="true" loop="true">
+    <source src="../../../_static/videos/C++_Interface_Demo.webm" type="video/webm">
+    Joint and Cartesian jogging with collision prevention
+</video></div>
+<div class="section" id="entire-code">
+<h2>Entire Code<a class="headerlink" href="#entire-code" title="Permalink to this headline"></a></h2>
+<p>The entire code is available <a class="reference external" href="https://github.com/ros-planning/moveit2_tutorials/blob/main/doc/examples/realtime_servo/src/servo_cpp_interface_demo.cpp">here</a></p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline"></a></h3>
+<p>First we declare pointers to the node and publisher that will publish commands to Servo</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">node_</span><span class="p">;</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">control_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">JointJog</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">joint_cmd_pub_</span><span class="p">;</span><span class="w"></span>
+<span class="n">rclcpp</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">twist_cmd_pub_</span><span class="p">;</span><span class="w"></span>
+<span class="kt">size_t</span><span class="w"> </span><span class="n">count_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next we will set up the node, planning_scene_monitor, and collision object</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">rclcpp</span><span class="o">::</span><span class="n">NodeOptions</span><span class="w"> </span><span class="n">node_options</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This is false for now until we fix the QoS settings in moveit to enable intra process comms</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">node_options</span><span class="p">.</span><span class="n">use_intra_process_comms</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="n">node_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;servo_demo_node&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">node_options</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Pause for RViz to come up. This is necessary in an integrated demo with a single launch file</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Create the planning_scene_monitor. We need to pass this to Servo’s constructor, and we should set it up first
+before initializing any collision objects</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">tf_buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">tf2_ros</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">(</span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">get_clock</span><span class="p">());</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">planning_scene_monitor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">planning_scene_monitor</span><span class="o">::</span><span class="n">PlanningSceneMonitor</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">node_</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;robot_description&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tf_buffer</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;planning_scene_monitor&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Here we make sure the planning_scene_monitor is updating in real time from the joint states topic</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">getPlanningScene</span><span class="p">())</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">startStateMonitor</span><span class="p">(</span><span class="s">&quot;/joint_states&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">setPlanningScenePublishingFrequency</span><span class="p">(</span><span class="mi">25</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">startPublishingPlanningScene</span><span class="p">(</span><span class="n">planning_scene_monitor</span><span class="o">::</span><span class="n">PlanningSceneMonitor</span><span class="o">::</span><span class="n">UPDATE_SCENE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                       </span><span class="s">&quot;/moveit_servo/publish_planning_scene&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">startSceneMonitor</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">planning_scene_monitor</span><span class="o">-&gt;</span><span class="n">providePlanningSceneService</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_ERROR</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Planning scene not configured&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>These are the publishers that will send commands to MoveIt Servo. Two command types are supported: JointJog
+messages which will directly jog the robot in the joint space, and TwistStamped messages which will move the
+specified link with the commanded Cartesian velocity. In this demo, we jog the end effector link.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">joint_cmd_pub_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">control_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">JointJog</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;servo_demo_node/delta_joint_cmds&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="n">twist_cmd_pub_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;servo_demo_node/delta_twist_cmds&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next we will create a collision object in the way of the arm. As the arm is servoed towards it, it will slow down
+and stop before colliding</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">CollisionObject</span><span class="w"> </span><span class="n">collision_object</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;box&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Make a box and put it in the way</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">shape_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">SolidPrimitive</span><span class="w"> </span><span class="n">box</span><span class="p">;</span><span class="w"></span>
+<span class="n">box</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">box</span><span class="p">.</span><span class="n">BOX</span><span class="p">;</span><span class="w"></span>
+<span class="n">box</span><span class="p">.</span><span class="n">dimensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Pose</span><span class="w"> </span><span class="n">box_pose</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.6</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="n">box_pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.6</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Add the box as a collision object</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">collision_object</span><span class="p">.</span><span class="n">primitives</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">box</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">primitive_poses</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">box_pose</span><span class="p">);</span><span class="w"></span>
+<span class="n">collision_object</span><span class="p">.</span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collision_object</span><span class="p">.</span><span class="n">ADD</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Create the message to publish the collision object</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningSceneWorld</span><span class="w"> </span><span class="n">psw</span><span class="p">;</span><span class="w"></span>
+<span class="n">psw</span><span class="p">.</span><span class="n">collision_objects</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">collision_object</span><span class="p">);</span><span class="w"></span>
+<span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningScene</span><span class="w"> </span><span class="n">ps</span><span class="p">;</span><span class="w"></span>
+<span class="n">ps</span><span class="p">.</span><span class="n">is_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="n">ps</span><span class="p">.</span><span class="n">world</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psw</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Publish the collision object to the planning scene</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">scene_pub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">create_publisher</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PlanningScene</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;planning_scene&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="n">scene_pub</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">ps</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initializing-servo">
+<h3>Initializing Servo<a class="headerlink" href="#initializing-servo" title="Permalink to this headline"></a></h3>
+<p>Servo requires a number of parameters to dictate its behavior. These can be read automatically by using the
+<code class="code docutils literal notranslate"><span class="pre">makeServoParameters</span></code> helper function</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">servo_parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">moveit_servo</span><span class="o">::</span><span class="n">ServoParameters</span><span class="o">::</span><span class="n">makeServoParameters</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">servo_parameters</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">RCLCPP_FATAL</span><span class="p">(</span><span class="n">LOGGER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to load the servo parameters&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Initialize the Servo C++ interface by passing a pointer to the node, the parameters, and the PSM</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">moveit_servo</span><span class="o">::</span><span class="n">Servo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">node_</span><span class="p">,</span><span class="w"> </span><span class="n">servo_parameters</span><span class="p">,</span><span class="w"> </span><span class="n">planning_scene_monitor</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>You can start Servo directly using the C++ interface. If launched using the alternative ServoNode, a ROS
+service is used to start Servo. Before it is started, MoveIt Servo will not accept any commands or move the robot</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">servo</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-commands">
+<h3>Sending Commands<a class="headerlink" href="#sending-commands" title="Permalink to this headline"></a></h3>
+<p>For this demo, we will use a simple ROS timer to send joint and twist commands to the robot</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rclcpp</span><span class="o">::</span><span class="n">TimerBase</span><span class="o">::</span><span class="n">SharedPtr</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">create_wall_timer</span><span class="p">(</span><span class="mi">50</span><span class="n">ms</span><span class="p">,</span><span class="w"> </span><span class="n">publishCommands</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Here is the timer callback for publishing commands. The C++ interface sends commands through internal ROS topics,
+just like if Servo was launched using ServoNode.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">publishCommands</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+</pre></div>
+</div>
+<p>First we will publish 100 joint jogging commands. The <code class="code docutils literal notranslate"><span class="pre">joint_names</span></code> field allows you to specify individual
+joints to move, at the velocity in the corresponding <code class="code docutils literal notranslate"><span class="pre">velocities</span></code> field. It is important that the message
+contains a recent timestamp, or Servo will think the command is stale and will not move the robot.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count_</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">auto</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">control_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">JointJog</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">now</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">joint_names</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;panda_joint1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">velocities</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mf">0.3</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">joint_cmd_pub_</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="o">++</span><span class="n">count_</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>After a while, we switch to publishing twist commands. The provided frame is the frame in which the twist is
+defined, not the robot frame that will follow the command. Again, we need a recent timestamp in the message</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_</span><span class="o">-&gt;</span><span class="n">now</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;panda_link0&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">twist_cmd_pub_</span><span class="o">-&gt;</span><span class="n">publish</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We use a multithreaded executor here because Servo has concurrent processes for moving the robot and avoiding collisions</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">rclcpp</span><span class="o">::</span><span class="n">executors</span><span class="o">::</span><span class="n">MultiThreadedExecutor</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="n">executor</span><span class="o">-&gt;</span><span class="n">add_node</span><span class="p">(</span><span class="n">node_</span><span class="p">);</span><span class="w"></span>
+<span class="n">executor</span><span class="o">-&gt;</span><span class="n">spin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="servo-overview">
+<h2>Servo Overview<a class="headerlink" href="#servo-overview" title="Permalink to this headline"></a></h2>
+<p>The following sections give some background information about MoveIt Servo and describe the first steps to set it up on your robot.</p>
+<dl class="simple">
+<dt>Servo includes a number of nice features:</dt><dd><ol class="arabic simple">
+<li><p>Cartesian End-Effector twist commands</p></li>
+<li><p>Joint commands</p></li>
+<li><p>Collision checking</p></li>
+<li><p>Singularity checking</p></li>
+<li><p>Joint position and velocity limits enforced</p></li>
+<li><p>Inputs are generic ROS messages</p></li>
+</ol>
+</dd>
+</dl>
+<div class="section" id="inverse-kinematics-in-servo">
+<h3>Inverse Kinematics in Servo<a class="headerlink" href="#inverse-kinematics-in-servo" title="Permalink to this headline"></a></h3>
+<p>Inverse Kinematics may be handled internally by MoveIt Servo via inverse Jacobian calculations. However, you may also use an IK plugin.
+To configure an IK plugin for use in Servo, your robot config package must define one in a <code class="code docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> file, such as the one
+in the <a class="reference external" href="https://github.com/ros-planning/moveit_resources/blob/master/panda_moveit_config/config/kinematics.yaml">Panda config package</a>.
+Several IK plugins are available <a class="reference external" href="https://github.com/ros-planning/moveit2/tree/main/moveit_kinematics">within MoveIt</a>,
+as well as <a class="reference external" href="https://github.com/PickNikRobotics/bio_ik/tree/ros2">externally</a>.
+<code class="code docutils literal notranslate"><span class="pre">bio_ik/BioIKKinematicsPlugin</span></code> is the most common choice.</p>
+<p>Once your <code class="code docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> file has been populated, include it with the ROS parameters passed to the servo node in your launch file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">moveit_config</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">MoveItConfigsBuilder</span><span class="p">(</span><span class="s2">&quot;moveit_resources_panda&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">robot_description</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;config/panda.urdf.xacro&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_moveit_configs</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">servo_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+    <span class="n">package</span><span class="o">=</span><span class="s2">&quot;moveit_servo&quot;</span><span class="p">,</span>
+    <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;servo_node_main&quot;</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">servo_params</span><span class="p">,</span>
+        <span class="n">moveit_config</span><span class="o">.</span><span class="n">robot_description</span><span class="p">,</span>
+        <span class="n">moveit_config</span><span class="o">.</span><span class="n">robot_description_semantic</span><span class="p">,</span>
+        <span class="n">moveit_config</span><span class="o">.</span><span class="n">robot_description_kinematics</span><span class="p">,</span> <span class="c1"># here is where kinematics plugin parameters are passed</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The above excerpt is taken from <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/moveit_servo/launch/servo_example.launch.py">servo_example.launch.py</a> in MoveIt.
+In the above example, the <code class="code docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> file is taken from the <a class="reference external" href="https://github.com/ros-planning/moveit_resources">moveit_resources</a> repository in the workspace, specifically <code class="code docutils literal notranslate"><span class="pre">moveit_resources/panda_moveit_config/config/kinematics.yaml</span></code>.
+The actual ROS parameter names that get passed by loading the yaml file are of the form <code class="code docutils literal notranslate"><span class="pre">robot_description_kinematics.&lt;group_name&gt;.&lt;param_name&gt;</span></code>, e.g. <code class="code docutils literal notranslate"><span class="pre">robot_description_kinematics.panda_arm.kinematics_solver</span></code>.</p>
+<p>Since <code class="code docutils literal notranslate"><span class="pre">moveit_servo</span></code> does not allow undeclared parameters found in the <code class="code docutils literal notranslate"><span class="pre">kinematics.yaml</span></code> file to be set on the Servo node, custom solver parameters need to be declared from inside your plugin code.</p>
+<p>For example, <code class="code docutils literal notranslate"><span class="pre">bio_ik</span></code> defines a <code class="code docutils literal notranslate"><span class="pre">getROSParam()</span></code> function in <a class="reference external" href="https://github.com/PickNikRobotics/bio_ik/blob/ros2/src/kinematics_plugin.cpp#L160">bio_ik/src/kinematics_plugin.cpp</a> that declares parameters if they’re not found on the Servo Node.</p>
+</div>
+</div>
+<div class="section" id="setup-on-a-new-robot">
+<h2>Setup on a New Robot<a class="headerlink" href="#setup-on-a-new-robot" title="Permalink to this headline"></a></h2>
+<div class="section" id="preliminaries">
+<h3>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline"></a></h3>
+<dl class="simple">
+<dt>The bare minimum requirements for running MoveIt Servo with your robot include:</dt><dd><ol class="arabic simple">
+<li><p>A valid URDF and SRDF of the robot</p></li>
+<li><p>A controller that can accept joint positions or velocities from a ROS topic</p></li>
+<li><p>Joint encoders that provide rapid and accurate joint position feedback</p></li>
+</ol>
+</dd>
+</dl>
+<p>Because the kinematics are handled by the core parts of MoveIt, it is recommended that you have a valid config package for your robot and you can run the demo launch file included with it.</p>
+</div>
+<div class="section" id="input-devices">
+<h3>Input Devices<a class="headerlink" href="#input-devices" title="Permalink to this headline"></a></h3>
+<p>The two primary inputs to MoveIt Servo are Cartesian commands and joint commands. These come into Servo as <a class="reference external" href="http://docs.ros.org/en/api/geometry_msgs/html/msg/TwistStamped.html">TwistStamped</a> and <a class="reference external" href="http://docs.ros.org/en/api/control_msgs/html/msg/JointJog.html">JointJog</a> messages respectively. The source of the commands can be almost anything including: gamepads, voice commands, a SpaceNav mouse, or PID controllers (e.g. for visual servoing).</p>
+<dl class="simple">
+<dt>Requirements for incoming command messages, regardless of input device are:</dt><dd><ol class="arabic simple">
+<li><p><strong>TwistStamped and JointJog:</strong> need a timestamp in the header that is updated when the message is published</p></li>
+<li><p><strong>JointJog:</strong> must have valid joint names in the <code class="code docutils literal notranslate"><span class="pre">joint_names</span></code> field that correspond with the commands given in the <code class="code docutils literal notranslate"><span class="pre">displacements</span></code> or <code class="code docutils literal notranslate"><span class="pre">velocities</span></code> fields</p></li>
+<li><p><strong>(Optional) TwistStamped:</strong> can provide an arbitrary <code class="code docutils literal notranslate"><span class="pre">frame_id</span></code> in the header that the twist will be applied to. If empty, the default from the configs is used</p></li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="servo-configs">
+<h3>Servo Configs<a class="headerlink" href="#servo-configs" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference external" href="https://github.com/ros-planning/moveit2/blob/main/moveit_ros/moveit_servo/config/panda_simulated_config.yaml">demo config file</a> shows the parameters needed for MoveIt Servo and is well documented.</p>
+<dl class="simple">
+<dt>Start with the parameters from the demo file, but some must be changed for your specific setup:</dt><dd><ol class="arabic simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">robot_link_command_frame</span></code>: Update this to be a valid frame in your robot, recommended as the planning frame or EEF frame</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">command_in_type</span></code>: Set to “unitless” if your input comes from a joystick, “speed_units” if the input will be in meters/second or radians/second</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">command_out_topic</span></code>: Change this to be the input topic of your controller</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">command_out_type</span></code>: Change this based on the type of message your controller needs</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">publish_joint_positions</span></code> and <code class="code docutils literal notranslate"><span class="pre">publish_joint_velocities</span></code>: Change these based on what your controller needs. Note if <code class="code docutils literal notranslate"><span class="pre">command_out_type</span> <span class="pre">==</span> <span class="pre">std_msgs/Float64MultiArray</span></code>, only one of these can be True</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">joint_topic</span></code>: Change this to be the joint_state topic for your arm, usually <code class="code docutils literal notranslate"><span class="pre">/joint_states</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">move_group_name</span></code>: Change this to be the name of your move group, as defined in your SRDF</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">planning_frame</span></code>: This should be the planning frame of your group</p></li>
+</ol>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../hybrid_planning/hybrid_planning_tutorial.html" class="btn btn-neutral float-left" title="Hybrid Planning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tests/tests_tutorial.html" class="btn btn-neutral float-right" title="Integration/Unit Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PickNik Robotics.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108532843-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108532843-1', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
