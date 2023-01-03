@@ -98,5 +98,5 @@ for feed in "${FEEDS[@]}" ; do
       echo "    <url>$BASEURL/$VERSION/${docset// /_}.tgz</url>" >> "$filepath"
     fi
   done
-  echo "<entry>" >> "$filepath"
+  echo "</entry>" >> "$filepath"
 done
