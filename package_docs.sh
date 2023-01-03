@@ -8,24 +8,6 @@ PKGSDIR="${BASEDIR}/dist"                               # Absolute path for crea
 FEEDSDIR="${BASEDIR}/feeds"                             # Absolute path for created feeds
 
 BASEURL=https://github.com/Serafadam/ros_docsets/releases/download
-# Feeds
-FEEDS=(
-  core
-  extras
-  tools
-  full
-)
-# Docsets, as {name: feed name}
-declare -A DOCSETS=(
-  ["colcon"]="tools"
-  ["launch"]="tools"
-  ["rclcpp"]="core"
-  ["rclpy"]="core"
-  ["ros_core"]="core"
-  ["MoveIt documentation"]="extras"
-  ["Navigation 2"]="extras"
-  ["ROS 2 documentation"]="extras"
-)
 VERSION=
 
 
@@ -74,29 +56,32 @@ if [[ -z "$VERSION" ]] ; then
 fi
 
 
+readarray -t FOLDERS <<<"$(find "${DOCSDIR}" -mindepth 1 -maxdepth 1 -type d -exec basename "{}" \;)"
+
 echo "Creating archives and feeds for version $VERSION"
+echo "Found ${#FOLDERS[@]} docsets"
 echo
 mkdir -p "$PKGSDIR"
 mkdir -p "$FEEDSDIR"
 
 # Create docset archives
-for docset in "${!DOCSETS[@]}" ; do
-  echo -n "Archiving ${docset}.."
-  filepath="${PKGSDIR}/${docset// /_}.tgz"
-  tar -cvzf "$filepath" -C "$DOCSDIR" "${docset}.docset" >/dev/null
-  echo "  created $(basename "$PKGSDIR")/$(basename "$filepath") ($(du --bytes "$filepath" | cut -f1) bytes)"
+for folder in "${FOLDERS[@]}" ; do
+  echo -n "Archiving $(basename "$DOCSDIR")/${folder}.."
+  filepath="${PKGSDIR}/${folder%%.docset// /_}.tgz"
+  tar -cvzf "$filepath" --checkpoint=8192 --checkpoint-action="ttyout=." -C "$DOCSDIR" "${folder}" >/dev/null
+  echo "  created $(basename "$PKGSDIR")/$(basename "$filepath") ($(du --bytes "$filepath" | cut --fields 1) bytes)"
 done
+echo
 
 # Create feeds
-for feed in "${FEEDS[@]}" ; do
+for folder in "${FOLDERS[@]}" ; do
+  feed=$(TMP="${folder%%.docset}" && echo "${TMP// /_}")
   filepath="${FEEDSDIR}/${feed}.xml"
   echo "Creating $(basename "$FEEDSDIR")/$(basename "$filepath")"
-  echo "<entry>" > "$filepath"
-  echo "    <version>$VERSION</version>" >> "$filepath"
-  for docset in "${!DOCSETS[@]}" ; do
-    if [[ "$feed" == "full" ]] || [[ "$feed" == "${DOCSETS[$docset]}" ]] ; then
-      echo "    <url>$BASEURL/$VERSION/${docset// /_}.tgz</url>" >> "$filepath"
-    fi
-  done
-  echo "</entry>" >> "$filepath"
+  cat > "$filepath" << EOF
+<entry>
+  <version>$VERSION</version>
+  <url>$BASEURL/$VERSION/${feed}.tgz</url>
+</entry>
+EOF
 done
