@@ -5,20 +5,26 @@ Newest snapshot: 2022.12.13
 ![](docsets.gif)
 
 Docsets to use in Dash/Zeal. These allow you to browse documentation for ROS (specifically for ROS Humble/Rolling). Sadly, no automation yet, all of those were compiled manually with the use of few scripts, if there's interest I might add automatic generation.
+
 ## How to use
 
-To use with Zeal, download the repo, and put directories from `docsets` directory in `~/.local/share/Zeal/Zeal/docsets`
-Note, Zeal needs to be restarted if already running.
+To use with Zeal, add URLs for desired docsets from this repository's [feeds](feeds) directory to Zeal configuration.
+
+#### Using manually
+
+To manually provide the docsets to Zeal, download the repo, and put directories from `docsets` directory to Zeal's data folder,
+e.g. `~/.local/share/Zeal/Zeal/docsets`.
+Note, Zeal needs to be restarted afterwards if already running.
 
 ## Available docs
-* colcon
-* launch
-* Moveit2 
-* Naviagtion2
-* rclcpp
-* rclpy
-* main ros documentation
-* ros_core
+* colcon (feed: [colcon.xml](feeds/colcon.xml?raw=true))
+* launch (feed: [launch.xml](feeds/launch.xml?raw=true))
+* Moveit2 (feed: [Moveit2_documentation.xml](feeds/Moveit2_documentation.xml?raw=true))
+* Navigation2 (feed: [Navigation_2.xml](feeds/Navigation_2.xml?raw=true))
+* rclcpp (feed: [rclcpp.xml](feeds/rclcpp.xml?raw=true))
+* rclpy (feed: [rclpy.xml](feeds/rclpy.xml?raw=true))
+* main ros documentation (feed: [ROS_2_documentation.xml](feeds/ROS_2_documentation.xml?raw=true))
+* ros_core (feed: [ros_core.xml](feeds/ros_core.xml?raw=true))
 
 ## Recreating
 
