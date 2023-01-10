@@ -19,7 +19,7 @@ Note, Zeal needs to be restarted afterwards if already running.
 ## Available docs
 * colcon (feed: [colcon.xml](feeds/colcon.xml?raw=true))
 * launch (feed: [launch.xml](feeds/launch.xml?raw=true))
-* Moveit2 (feed: [Moveit2_documentation.xml](feeds/Moveit2_documentation.xml?raw=true))
+* Moveit2 (feed: [MoveIt_documentation.xml](feeds/MoveIt_documentation.xml?raw=true))
 * Navigation2 (feed: [Navigation_2.xml](feeds/Navigation_2.xml?raw=true))
 * rclcpp (feed: [rclcpp.xml](feeds/rclcpp.xml?raw=true))
 * rclpy (feed: [rclpy.xml](feeds/rclpy.xml?raw=true))
